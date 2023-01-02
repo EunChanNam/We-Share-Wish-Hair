@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.domain.point;
 
+import com.inq.wishhair.wesharewishhair.domain.auditing.BaseEntity;
 import com.inq.wishhair.wesharewishhair.domain.point.enums.PointType;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import jakarta.persistence.*;
@@ -10,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class PointHistory {
+public class PointHistory extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
