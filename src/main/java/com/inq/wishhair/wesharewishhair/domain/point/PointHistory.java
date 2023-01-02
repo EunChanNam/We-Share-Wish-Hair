@@ -16,6 +16,7 @@ public class PointHistory {
     private Long id;
 
     @Column(nullable = false, updatable = false)
+    @Enumerated(EnumType.STRING)
     private PointType pointType;
 
     @Column(nullable = false, updatable = false)
