@@ -41,6 +41,11 @@ public class LoginActivity extends AppCompatActivity {
                 String id = login_id.getText().toString();
                 String pw = login_pw.getText().toString();
 
+                //임시 로그인 패스 코드
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
+                finish();
+                /* 서버 연동 코드
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -48,10 +53,13 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
                             if (success) {
-                                //tttt String userId = jsonObject.getString("userId");
-                                //tttt String pw = jsonObject.getString("pw");
-                                //tttt intent.putExtra("userId", userId);
-                                //tttt intent.putExtra("pw", pw);
+                                *//*
+                                이거 뭐더라
+                                String userId = jsonObject.getString("userId");
+                                String pw = jsonObject.getString("pw");
+                                intent.putExtra("userId", userId);
+                                intent.putExtra("pw", pw);
+                                *//*
                                 Toast.makeText(getApplicationContext(), "success login", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
@@ -68,6 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                 LoginRequest loginRequest = new LoginRequest(id, pw, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add(loginRequest);
+                */
             }
         });
 
