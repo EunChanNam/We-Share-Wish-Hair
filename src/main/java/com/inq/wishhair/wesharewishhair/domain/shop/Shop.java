@@ -1,7 +1,6 @@
 package com.inq.wishhair.wesharewishhair.domain.shop;
 
 import com.inq.wishhair.wesharewishhair.domain.shop.embedded.Address;
-import com.inq.wishhair.wesharewishhair.domain.shop.enums.Score;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -17,10 +16,6 @@ public class Shop {
 
     @Column(nullable = false)
     private String name;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Score score;
 
     @Embedded
     private Address address;
