@@ -70,12 +70,14 @@
             android:layout_width="wrap_content"
             android:orientation="horizontal">
             <RadioButton
+                android:id="@+id/radio_sex_man"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="남"
                 android:textSize="20sp"
                 />
             <RadioButton
+                android:id="@+id/radio_sex_woman"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="여"
