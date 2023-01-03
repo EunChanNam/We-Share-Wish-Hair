@@ -32,10 +32,13 @@ public class User {
     private Sex sex;
 
     //=생성 메서드=//
-    public static User createUser(String loginId, String pw, Sex sex) {
+    public static User createUser(String loginId, String pw,
+                                  String name, String nickname, Sex sex) {
         User user = new User();
         user.loginId = loginId;
         user.pw = pw;
+        user.name = name;
+        user.nickname = nickname;
         user.sex = sex;
         return user;
     }
