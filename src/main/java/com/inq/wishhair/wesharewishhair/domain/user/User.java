@@ -3,6 +3,7 @@ package com.inq.wishhair.wesharewishhair.domain.user;
 import com.inq.wishhair.wesharewishhair.domain.user.enums.Sex;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -32,14 +33,12 @@ public class User {
     private Sex sex;
 
     //=생성 메서드=//
-    public static User createUser(String loginId, String pw,
-                                  String name, String nickname, Sex sex) {
-        User user = new User();
-        user.loginId = loginId;
-        user.pw = pw;
-        user.name = name;
-        user.nickname = nickname;
-        user.sex = sex;
-        return user;
+    @Builder
+    public User(String loginId, String pw, String name, String nickname, Sex sex) {
+        this.loginId = loginId;
+        this.pw = pw;
+        this.name = name;
+        this.nickname = nickname;
+        this.sex = sex;
     }
 }
