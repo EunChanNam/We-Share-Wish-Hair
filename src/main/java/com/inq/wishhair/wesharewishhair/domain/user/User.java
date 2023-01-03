@@ -23,4 +23,13 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     private Sex sex;
+
+    //=생성 메서드=//
+    public static User createUser(String loginId, String pw, Sex sex) {
+        User user = new User();
+        user.loginId = loginId;
+        user.pw = pw;
+        user.sex = sex;
+        return user;
+    }
 }
