@@ -21,7 +21,14 @@ public class User {
     @Column(nullable = false)
     private String pw;
 
+    @Column(nullable = false, length = 10)
+    private String name;
+
+    @Column(nullable = false, length = 10)
+    private String nickname;
+
     @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
     private Sex sex;
 
     //=생성 메서드=//
