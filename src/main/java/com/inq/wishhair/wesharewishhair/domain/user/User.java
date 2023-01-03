@@ -25,7 +25,7 @@ public class User {
     @Column(nullable = false, length = 10)
     private String name;
 
-    @Column(nullable = false, length = 10)
+    @Column(nullable = false, unique = true, length = 10)
     private String nickname;
 
     @Enumerated(EnumType.STRING)
