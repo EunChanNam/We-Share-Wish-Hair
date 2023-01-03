@@ -3,13 +3,14 @@ package com.inq.wishhair.wesharewishhair.web;
 import com.inq.wishhair.wesharewishhair.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.exception.ErrorResponse;
 import com.inq.wishhair.wesharewishhair.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.web.login.LoginController;
 import com.inq.wishhair.wesharewishhair.web.user.UserController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice(assignableTypes = {
-        UserController.class
+        UserController.class, LoginController.class
 })
 public class ApiExceptionHandler {
 
