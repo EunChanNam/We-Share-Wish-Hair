@@ -41,11 +41,11 @@ public class LoginActivity extends AppCompatActivity {
                 String id = login_id.getText().toString();
                 String pw = login_pw.getText().toString();
 
-                //임시 로그인 패스 코드
+                /*//임시 로그인 패스 코드
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
-                finish();
-                /* 서버 연동 코드
+                finish();*/
+                 //서버 연동 코드
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -53,18 +53,18 @@ public class LoginActivity extends AppCompatActivity {
                             JSONObject jsonObject = new JSONObject(response);
                             boolean success = jsonObject.getBoolean("success");
                             if (success) {
-                                *//*
-                                이거 뭐더라
+
+                                /*이거 뭐더라
                                 String userId = jsonObject.getString("userId");
                                 String pw = jsonObject.getString("pw");
                                 intent.putExtra("userId", userId);
-                                intent.putExtra("pw", pw);
-                                *//*
-                                Toast.makeText(getApplicationContext(), "success login", Toast.LENGTH_SHORT).show();
+                                intent.putExtra("pw", pw);*/
+
+                                Toast.makeText(getApplicationContext(), "login success", Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                                 startActivity(intent);
                             } else {
-                                Toast.makeText(getApplicationContext(), "fail login", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getApplicationContext(), "login failed", Toast.LENGTH_LONG).show();
                                 return;
                             }
                         } catch (JSONException e) {
@@ -76,7 +76,6 @@ public class LoginActivity extends AppCompatActivity {
                 LoginRequest loginRequest = new LoginRequest(id, pw, responseListener);
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add(loginRequest);
-                */
             }
         });
 

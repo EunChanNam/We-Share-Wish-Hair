@@ -39,7 +39,7 @@
         android:hint="이름 "/>
 
     <EditText
-        android:id="@+id/edPOSITION"
+        android:id="@+id/edNICKNAME"
         android:layout_width="160dp"
         android:layout_height="40dp"
         android:layout_centerHorizontal="true"
@@ -47,24 +47,50 @@
         android:layout_marginTop="50dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:hint="포지션 "/>
-
-    <EditText
-        android:id="@+id/edSKILL"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
+        android:hint="닉네임 "/>
+    <LinearLayout
+        android:id="@+id/linearLayoutSEX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_below="@id/edPOSITION"
-        android:layout_marginTop="50dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="스킬 "/>
+        android:layout_below="@id/edNICKNAME"
+        android:layout_alignStart="@id/edNICKNAME"
+        android:layout_marginTop="50dp">
+        <TextView
+            android:id="@+id/textViewSEX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="성별 : "
+            android:textSize="23sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center_vertical"/>
+        <RadioGroup
+            android:id="@+id/radioGroupSEX"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="남"
+                android:textSize="20sp"
+                />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="여"
+                android:textSize="20sp"
+                />
+        </RadioGroup>
+
+    </LinearLayout>
+
 
     <Button
         android:id="@+id/btn_join"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/edSKILL"
+        android:layout_below="@id/linearLayoutSEX"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:backgroundTint="#0088BD"

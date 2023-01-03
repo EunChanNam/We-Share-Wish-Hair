@@ -11,15 +11,15 @@ public class RegisterRequest extends StringRequest {
     final static private String URL = "";
     private Map<String, String> map;
 
-    public RegisterRequest(String loginId, String pw, String name, String position, String skills, Response.Listener<String> listener) {
+    public RegisterRequest(String loginId, String pw, String name, String nickname, String sex, Response.Listener<String> listener) {
         super(Method.POST, URL, listener, null);
 
         map = new HashMap<>();
         map.put("loginId", loginId);
         map.put("pw", pw);
         map.put("name", name);
-        map.put("position", position);
-        map.put("skills", skills);
+        map.put("nickname", nickname);
+        map.put("sex", sex);
     }
 
     @Override
