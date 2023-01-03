@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class UserJoinRequest {
+public class UserCreateRequest {
 
     private String loginId;
 
