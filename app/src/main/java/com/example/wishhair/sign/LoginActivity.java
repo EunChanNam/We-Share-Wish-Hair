@@ -38,7 +38,6 @@ public class LoginActivity extends AppCompatActivity {
         login_loginBtn = findViewById(R.id.btn_login);
         login_registerBtn = findViewById(R.id.btn_register);
 
-
         login_loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,16 +49,24 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();*/
                  //서버 연동 코드
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        Toast.makeText( getApplicationContext(), "성공", Toast.LENGTH_SHORT ).show();
-                    }
+                Response.Listener<String> responseListener = response -> {
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
                 };
-                Response.ErrorListener errorResponse = new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
 
+                Response.ErrorListener errorResponse = error -> {
+                    NetworkResponse networkResponse = error.networkResponse;
+                    if (networkResponse != null && networkResponse.data != null) {
+                        String jsonError = new String(networkResponse.data);
+                        try {
+                            JSONObject jsonObject = new JSONObject(jsonError);
+                            String message = jsonObject.getString("message");
+                            Toast.makeText( getApplicationContext(), message, Toast.LENGTH_SHORT ).show();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        login_id.setText("");
+                        login_pw.setText("");
                     }
                 };
 
