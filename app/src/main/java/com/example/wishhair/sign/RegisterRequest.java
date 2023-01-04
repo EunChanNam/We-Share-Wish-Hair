@@ -8,11 +8,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterRequest extends StringRequest {
-    final static private String URL = UrlConst.URL;
+    final static private String URL = UrlConst.URL + "/api/user";
     private Map<String, String> map;
 
-    public RegisterRequest(String loginId, String pw, String name, String nickname, String sex, Response.Listener<String> listener) {
-        super(Method.POST, URL, listener, null);
+    public RegisterRequest(String loginId, String pw, String name, String nickname, String sex, Response.Listener<String> listener, Response.ErrorListener errorListener) {
+        super(Method.POST, URL, listener, errorListener);
 
         map = new HashMap<>();
         map.put("loginId", loginId);

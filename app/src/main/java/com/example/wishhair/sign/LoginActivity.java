@@ -10,8 +10,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.Volley;
 import com.example.wishhair.MainActivity;
 import com.example.wishhair.R;
@@ -51,22 +53,17 @@ public class LoginActivity extends AppCompatActivity {
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        /*try {
-                            JSONObject jsonObject = null;
-                            if (response.isEmpty()){
-                                System.out.println("hello");
-                            } else {
-                                jsonObject = new JSONObject(response);
-                                String message = jsonObject.getString("message");
-                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }*/
+                        Toast.makeText( getApplicationContext(), "성공", Toast.LENGTH_SHORT ).show();
+                    }
+                };
+                Response.ErrorListener errorResponse = new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
                     }
                 };
 
-                LoginRequest loginRequest = new LoginRequest(id, pw, responseListener);
+                LoginRequest loginRequest = new LoginRequest(id, pw, responseListener, errorResponse);
                 loginRequest.setShouldCache(false);
 
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);

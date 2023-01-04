@@ -1,5 +1,6 @@
 package com.example.wishhair.sign;
 
+import com.android.volley.VolleyError;
 import com.example.wishhair.R;
 
 import android.annotation.SuppressLint;
@@ -61,16 +62,16 @@ public class RegisterActivity extends AppCompatActivity {
             String nickname = ed_nickname.getText().toString();
 
             Response.Listener<String> responseListener = response -> {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                Toast.makeText( getApplicationContext(), "register success", Toast.LENGTH_SHORT ).show();
+            };
+            Response.ErrorListener errorResponse = new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
                 }
             };
 
-            RegisterRequest registerRequest = new RegisterRequest(id, pw, name, nickname, "MAN", responseListener);
+            RegisterRequest registerRequest = new RegisterRequest(id, pw, name, nickname, "MAN", responseListener, errorResponse);
             registerRequest.setShouldCache(false);
 
             RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
