@@ -8,7 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterRequest extends StringRequest {
-    final static private String URL = "";
+    final static private String URL = "https://0a49-210-103-3-198.jp.ngrok.io/api/user";
     private Map<String, String> map;
 
     public RegisterRequest(String loginId, String pw, String name, String nickname, String sex, Response.Listener<String> listener) {

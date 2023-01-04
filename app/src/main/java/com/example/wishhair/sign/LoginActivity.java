@@ -2,6 +2,7 @@ package com.example.wishhair.sign;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText login_id, login_pw;
     private Button login_loginBtn, login_registerBtn;
 
+    //https://wonpaper.tistory.com/232
 
     @Override
     protected  void onCreate(Bundle savedInstanceState) {
@@ -49,31 +51,24 @@ public class LoginActivity extends AppCompatActivity {
                 Response.Listener<String> responseListener = new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success");
-                            if (success) {
-
-                                /*이거 뭐더라
-                                String userId = jsonObject.getString("userId");
-                                String pw = jsonObject.getString("pw");
-                                intent.putExtra("userId", userId);
-                                intent.putExtra("pw", pw);*/
-
-                                Toast.makeText(getApplicationContext(), "login success", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                                startActivity(intent);
+                        /*try {
+                            JSONObject jsonObject = null;
+                            if (response.isEmpty()){
+                                System.out.println("hello");
                             } else {
-                                Toast.makeText(getApplicationContext(), "login failed", Toast.LENGTH_LONG).show();
-                                return;
+                                jsonObject = new JSONObject(response);
+                                String message = jsonObject.getString("message");
+                                Toast.makeText(getApplicationContext(), message, Toast.LENGTH_LONG).show();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
-                        }
+                        }*/
                     }
                 };
 
                 LoginRequest loginRequest = new LoginRequest(id, pw, responseListener);
+                loginRequest.setShouldCache(false);
+
                 RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
                 queue.add(loginRequest);
             }

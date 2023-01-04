@@ -42,53 +42,39 @@ public class RegisterActivity extends AppCompatActivity {
         radioButton_man = findViewById(R.id.radio_sex_man);
         radioButton_woman = findViewById(R.id.radio_sex_woman);
 
-        radioGroup_sex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-                switch (checkedId) {
-                    case R.id.radio_sex_man:
-                        select_sex = radioButton_man.getText().toString();
-                        break;
-                    case R.id.radio_sex_woman:
-                        select_sex = radioButton_woman.getText().toString();
-                        break;
-                }
+        radioGroup_sex.setOnCheckedChangeListener((radioGroup, checkedId) -> {
+            switch (checkedId) {
+                case R.id.radio_sex_man:
+                    select_sex = radioButton_man.getText().toString();
+                    break;
+                case R.id.radio_sex_woman:
+                    select_sex = radioButton_woman.getText().toString();
+                    break;
             }
         });
 
         btn_join = findViewById(R.id.btn_join);
-        btn_join.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String id = ed_id.getText().toString();
-                String pw = ed_pw.getText().toString();
-                String name = ed_name.getText().toString();
-                String nickname = ed_nickname.getText().toString();
+        btn_join.setOnClickListener(view -> {
+            String id = ed_id.getText().toString();
+            String pw = ed_pw.getText().toString();
+            String name = ed_name.getText().toString();
+            String nickname = ed_nickname.getText().toString();
 
-                Response.Listener<String> responseListener = new Response.Listener<String>() {
-                    @Override
-                    public void onResponse(String response) {
-                        try {
-                            JSONObject jsonObject = new JSONObject(response);
-                            boolean success = jsonObject.getBoolean("success");
-                            if (success) {
-                                Toast.makeText(getApplicationContext(), "success register", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                startActivity(intent);
-                            } else {
-                                Toast.makeText(getApplicationContext(), "fail register", Toast.LENGTH_LONG).show();
-                                return;
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                };
-                RegisterRequest registerRequest = new RegisterRequest(id, pw, name, nickname, select_sex, responseListener);
-                RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
-                queue.add(registerRequest);
-            }
+            Response.Listener<String> responseListener = response -> {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            };
+
+            RegisterRequest registerRequest = new RegisterRequest(id, pw, name, nickname, "MAN", responseListener);
+            registerRequest.setShouldCache(false);
+
+            RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
+            queue.add(registerRequest);
         });
     }
 }
