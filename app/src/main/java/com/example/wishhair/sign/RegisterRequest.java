@@ -9,7 +9,7 @@ import java.util.Map;
 
 public class RegisterRequest extends StringRequest {
     final static private String URL = UrlConst.URL + "/api/user";
-    private Map<String, String> map;
+    private final Map<String, String> map;
 
     public RegisterRequest(String loginId, String pw, String name, String nickname, String sex, Response.Listener<String> listener, Response.ErrorListener errorListener) {
         super(Method.POST, URL, listener, errorListener);
@@ -23,7 +23,7 @@ public class RegisterRequest extends StringRequest {
     }
 
     @Override
-    protected Map<String, String> getParams() throws AuthFailureError {
+    protected Map<String, String> getParams() {
         return map;
     }
 

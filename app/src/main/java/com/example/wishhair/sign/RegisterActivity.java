@@ -1,12 +1,9 @@
 package com.example.wishhair.sign;
 
-import com.android.volley.VolleyError;
 import com.example.wishhair.R;
 
 import android.annotation.SuppressLint;
-import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -19,17 +16,13 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 public class RegisterActivity extends AppCompatActivity {
 
     private EditText ed_id, ed_pw, ed_name, ed_nickname;
-    private Button btn_join;
     private RadioButton radioButton_man, radioButton_woman;
-    private RadioGroup radioGroup_sex;
     private String select_sex;
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +32,7 @@ public class RegisterActivity extends AppCompatActivity {
         ed_pw = findViewById(R.id.edPW);
         ed_name = findViewById(R.id.edNAME);
         ed_nickname = findViewById(R.id.edNICKNAME);
-        radioGroup_sex = findViewById(R.id.radioGroupSEX);
+        RadioGroup radioGroup_sex = findViewById(R.id.radioGroupSEX);
         radioButton_man = findViewById(R.id.radio_sex_man);
         radioButton_woman = findViewById(R.id.radio_sex_woman);
 
@@ -54,24 +47,17 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        btn_join = findViewById(R.id.btn_join);
+        Button btn_join = findViewById(R.id.btn_join);
         btn_join.setOnClickListener(view -> {
             String id = ed_id.getText().toString();
             String pw = ed_pw.getText().toString();
             String name = ed_name.getText().toString();
             String nickname = ed_nickname.getText().toString();
 
-            Response.Listener<String> responseListener = response -> {
-                Toast.makeText( getApplicationContext(), "register success", Toast.LENGTH_SHORT ).show();
-            };
-            Response.ErrorListener errorResponse = new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    error.printStackTrace();
-                }
-            };
+            Response.Listener<String> responseListener = response -> Toast.makeText( getApplicationContext(), "register success", Toast.LENGTH_SHORT ).show();
+            Response.ErrorListener errorResponse = Throwable::printStackTrace;
 
-            RegisterRequest registerRequest = new RegisterRequest(id, pw, name, nickname, "MAN", responseListener, errorResponse);
+            RegisterRequest registerRequest = new RegisterRequest(id, pw, name, nickname, select_sex, responseListener, errorResponse);
             registerRequest.setShouldCache(false);
 
             RequestQueue queue = Volley.newRequestQueue(RegisterActivity.this);
