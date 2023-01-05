@@ -1,5 +1,6 @@
-package com.inq.wishhair.wesharewishhair.domain.hairstyle;
+package com.inq.wishhair.wesharewishhair.domain.hairstyle.repository;
 
+import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.hashtag.enums.Tag;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

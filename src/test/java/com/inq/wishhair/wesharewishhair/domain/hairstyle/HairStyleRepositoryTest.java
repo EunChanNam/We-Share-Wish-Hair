@@ -1,8 +1,8 @@
 package com.inq.wishhair.wesharewishhair.domain.hairstyle;
 
+import com.inq.wishhair.wesharewishhair.domain.hairstyle.repository.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.domain.hashtag.enums.Tag;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
