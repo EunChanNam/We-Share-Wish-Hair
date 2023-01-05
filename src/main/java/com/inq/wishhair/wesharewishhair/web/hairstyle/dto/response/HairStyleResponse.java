@@ -4,7 +4,6 @@ import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.photo.Photo;
 import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -12,10 +11,12 @@ public class HairStyleResponse {
 
     private String name;
 
-    private List<Photo> photos;
+    private List<PhotoResponse> photos;
 
     public HairStyleResponse(HairStyle hairStyle) {
         this.name = hairStyle.getName();
-        this.photos = hairStyle.getPhotos();
+        this.photos = hairStyle.getPhotos()
+                .stream().map(PhotoResponse::new)
+                .toList();
     }
 }
