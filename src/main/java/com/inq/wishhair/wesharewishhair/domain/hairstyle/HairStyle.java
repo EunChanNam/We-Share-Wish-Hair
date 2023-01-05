@@ -25,5 +25,13 @@ public class HairStyle {
     @OneToMany(mappedBy = "hairStyle",
             cascade = CascadeType.ALL,
             orphanRemoval = true) // 사진을 값타입 컬렉션 처럼 사용
-    List<Photo> photos = new ArrayList<>();
+    private List<Photo> photos = new ArrayList<>();
+
+    @Transient
+    private Boolean hasPhotos = true;
+
+    //==편의 메서드==//
+    public void notHasPhoto() {
+        this.hasPhotos = false;
+    }
 }

@@ -15,8 +15,10 @@ public class HairStyleResponse {
 
     public HairStyleResponse(HairStyle hairStyle) {
         this.name = hairStyle.getName();
-        this.photos = hairStyle.getPhotos()
-                .stream().map(PhotoResponse::new)
-                .toList();
+        if (hairStyle.getHasPhotos()) {
+            this.photos = hairStyle.getPhotos()
+                    .stream().map(PhotoResponse::new)
+                    .toList();
+        }
     }
 }
