@@ -12,7 +12,6 @@
         android:layout_marginBottom="307dp"
         android:ems="10"
         android:hint="ID"
-        android:inputType="textPersonName"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

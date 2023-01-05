@@ -13,8 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:ems="10"
-        android:hint="ID "
-        android:inputType="textPersonName" />
+        android:hint="아이디 " />
 
     <EditText
         android:id="@+id/edPW"
@@ -24,8 +23,8 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:ems="10"
-        android:hint="PW "
-        android:inputType="textPersonName" />
+        android:hint="비밀번호 "
+        android:inputType="textPassword" />
 
     <EditText
         android:id="@+id/edNAME"
@@ -35,8 +34,8 @@
         android:layout_below="@id/edPW"
         android:layout_marginTop="50dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="이름 "/>
+        android:hint="이름 "
+        android:inputType="textPersonName"/>
 
     <EditText
         android:id="@+id/edNICKNAME"
@@ -46,8 +45,8 @@
         android:layout_below="@id/edNAME"
         android:layout_marginTop="50dp"
         android:ems="10"
-        android:inputType="textPersonName"
-        android:hint="닉네임 "/>
+        android:hint="닉네임 " />
+
     <LinearLayout
         android:id="@+id/linearLayoutSEX"
         android:layout_width="wrap_content"
@@ -74,19 +73,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="남"
-                android:textSize="17sp"
-                />
+                android:tag="MAN"
+                android:textSize="17sp" />
             <RadioButton
                 android:id="@+id/radio_sex_woman"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="여"
-                android:textSize="17sp"
-                />
+                android:tag="WOMAN"
+                android:textSize="17sp" />
         </RadioGroup>
-
     </LinearLayout>
-
 
     <Button
         android:id="@+id/btn_join"
@@ -96,7 +93,5 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
         android:backgroundTint="#0088BD"
-        android:text="join" />
-
-
+        android:text="가입" />
 </RelativeLayout>
