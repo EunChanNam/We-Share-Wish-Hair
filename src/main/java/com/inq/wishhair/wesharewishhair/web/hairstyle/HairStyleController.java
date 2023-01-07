@@ -3,6 +3,8 @@ package com.inq.wishhair.wesharewishhair.web.hairstyle;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.service.HairStyleService;
 import com.inq.wishhair.wesharewishhair.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
+import com.inq.wishhair.wesharewishhair.web.common.consts.SessionConst;
 import com.inq.wishhair.wesharewishhair.web.hairstyle.dto.response.HairStyleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +22,10 @@ public class HairStyleController {
 
     @GetMapping("/hair_style/recommend")
     public ResponseEntity<List<HairStyleResponse>> respondRecommendedHairStyle(
-            @RequestParam List<Tag> tags) {
+            @RequestParam List<Tag> tags,
+            @SessionAttribute(SessionConst.LONGIN_MEMBER) UserSessionDto sessionDto) {
 
-        List<HairStyle> hairStyles = hairStyleService.findRecommendedHairStyle(tags);
+        List<HairStyle> hairStyles = hairStyleService.findRecommendedHairStyle(tags, sessionDto);
 
         List<HairStyleResponse> result = hairStyles.stream()
                 .map(HairStyleResponse::new)
