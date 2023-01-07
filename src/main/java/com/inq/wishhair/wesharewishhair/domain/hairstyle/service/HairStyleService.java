@@ -1,12 +1,10 @@
 package com.inq.wishhair.wesharewishhair.domain.hairstyle.service;
 
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
-import com.inq.wishhair.wesharewishhair.domain.hairstyle.photo.Photo;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.repository.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.domain.hashtag.enums.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Hibernate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
