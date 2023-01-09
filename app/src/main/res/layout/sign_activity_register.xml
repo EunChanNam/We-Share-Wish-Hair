@@ -15,6 +15,15 @@
         android:ems="10"
         android:hint="아이디 " />
 
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_id_dup_check"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_toEndOf="@+id/edID"
+        android:layout_alignBaseline="@+id/edID"
+        android:background="@color/white"
+        android:text="중복체크"/>
+
     <EditText
         android:id="@+id/edPW"
         android:layout_width="160dp"

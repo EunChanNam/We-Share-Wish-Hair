@@ -54,6 +54,8 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+        Button btn_id_dup_check = findViewById(R.id.btn_id_dup_check);
+
         Button btn_join = findViewById(R.id.btn_join);
         btn_join.setOnClickListener(view -> {
             String id = ed_id.getText().toString();
