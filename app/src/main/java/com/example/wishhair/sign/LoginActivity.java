@@ -37,12 +37,12 @@ public class LoginActivity extends AppCompatActivity {
             String id = login_id.getText().toString();
             String pw = login_pw.getText().toString();
 
-            /*//임시 로그인 패스 코드
+            //임시 로그인 패스 코드
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
-            finish();*/
+            finish();
              //서버 연동 코드
-            Response.Listener<String> responseListener = response -> {
+            /*Response.Listener<String> responseListener = response -> {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
             };
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
 
         login_registerBtn.setOnClickListener(view -> {
             Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(intent);
+            startActivity(intent);*/
         });
     }
 
