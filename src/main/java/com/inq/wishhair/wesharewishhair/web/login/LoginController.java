@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,8 @@ public class LoginController {
     private final LoginService loginService;
 
     @PostMapping("/login")
-    public ResponseEntity<Void> login(LoginRequest loginRequest, HttpServletRequest request) {
+    public ResponseEntity<Void> login(@ModelAttribute LoginRequest loginRequest,
+                                      HttpServletRequest request) {
 
         UserSessionDto sessionDto = loginService.login(loginRequest.getLoginId(), loginRequest.getPw());
         HttpSession session = request.getSession(true);
