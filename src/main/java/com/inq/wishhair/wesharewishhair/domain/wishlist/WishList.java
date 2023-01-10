@@ -31,4 +31,13 @@ public class WishList {
         this.hairStyle = hairStyle;
         this.user = user;
     }
+
+    //==편의 메서드==//
+    public void registerHairStyle(HairStyle hairStyle) {
+        this.hairStyle = hairStyle;
+    }
+
+    public void registerUser(User user) {
+        this.user = user;
+    }
 }
