@@ -33,4 +33,10 @@ public class WishListService {
 
         return wishListRepository.save(wishList).getId();
     }
+
+    @Transactional
+    public void deleteWishList(Long wishListId) {
+
+        wishListRepository.deleteById(wishListId);
+    }
 }
