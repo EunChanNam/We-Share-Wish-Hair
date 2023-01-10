@@ -9,8 +9,10 @@ import java.util.List;
 
 public interface WishListRepository extends JpaRepository<WishList, Long> {
 
-    @Query("select w from WishList w " +
+    @Query("select distinct w from WishList w " +
+            "join fetch w.hairStyle h " +
+            "left outer join fetch h.photos " +
             "where w.user.id = :userId " +
             "order by w.createdDate desc")
-    public List<WishList> findByUser(@Param("userId") Long userId);
+    List<WishList> findByUser(@Param("userId") Long userId);
 }
