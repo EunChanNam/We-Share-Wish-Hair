@@ -9,11 +9,14 @@ import java.util.List;
 @Getter
 public class HairStyleResponse {
 
+    private Long hairStyleId;
+
     private String name;
 
     private List<PhotoResponse> photos;
 
     public HairStyleResponse(HairStyle hairStyle) {
+        this.hairStyleId = hairStyle.getId();
         this.name = hairStyle.getName();
         if (hairStyle.getHasPhotos()) {
             this.photos = hairStyle.getPhotos()
