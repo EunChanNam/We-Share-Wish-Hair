@@ -4,11 +4,13 @@ import com.inq.wishhair.wesharewishhair.common.consts.SessionConst;
 import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
 import com.inq.wishhair.wesharewishhair.domain.wishlist.WishList;
 import com.inq.wishhair.wesharewishhair.domain.wishlist.service.WishListService;
+import com.inq.wishhair.wesharewishhair.web.wishlist.dto.response.WishListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -37,4 +39,17 @@ public class WishListController {
         wishListService.deleteWishList(id);
         return ResponseEntity.noContent().build();
     }
+
+    @GetMapping("/wish_list")
+    public ResponseEntity<List<WishListResponse>> getWishList(
+            @SessionAttribute(SessionConst.LONGIN_MEMBER) UserSessionDto sessionDto) {
+
+        List<WishList> wishLists = wishListService.getWishList(sessionDto.getId());
+        List<WishListResponse> result = wishLists.stream()
+                .map(wishList -> new WishListResponse(wishList.getHairStyle()))
+                .toList();
+
+        return ResponseEntity.ok(result);
+    }
+
 }
