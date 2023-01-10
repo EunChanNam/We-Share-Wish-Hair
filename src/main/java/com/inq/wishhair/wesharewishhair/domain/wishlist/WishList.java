@@ -3,14 +3,11 @@ package com.inq.wishhair.wesharewishhair.domain.wishlist;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class WishList {
 
     @Id
@@ -27,9 +24,7 @@ public class WishList {
 
     //==생성 메서드==//
     @Builder
-    public WishList(HairStyle hairStyle, User user) {
-        this.hairStyle = hairStyle;
-        this.user = user;
+    public WishList() {
     }
 
     //==편의 메서드==//
