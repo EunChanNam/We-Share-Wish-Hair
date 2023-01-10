@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.domain.wishlist;
 
+import com.inq.wishhair.wesharewishhair.domain.auditing.BaseEntity;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import jakarta.persistence.*;
@@ -8,7 +9,7 @@ import lombok.Getter;
 
 @Entity
 @Getter
-public class WishList {
+public class WishList extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
