@@ -30,4 +30,11 @@ public class WishListController {
                 .created(URI.create("/api/wish_list/" + wishListId))
                 .build();
     }
+
+    @DeleteMapping("wish_list/{id}")
+    public ResponseEntity<Void> deleteWishList(@PathVariable Long id) {
+
+        wishListService.deleteWishList(id);
+        return ResponseEntity.noContent().build();
+    }
 }
