@@ -4,6 +4,7 @@ import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -23,4 +24,11 @@ public class WishList {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
+
+    //==생성 메서드==//
+    @Builder
+    public WishList(HairStyle hairStyle, User user) {
+        this.hairStyle = hairStyle;
+        this.user = user;
+    }
 }
