@@ -1,5 +1,6 @@
-package com.inq.wishhair.wesharewishhair.domain.T;
+package com.inq.wishhair.wesharewishhair.domain.photo;
 
+import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.exception.WishHairException;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Component
-public class PhotoStore<T> {
+public class PhotoStore {
 
     @Value("${file.dir}")
     private String fileDir;
@@ -22,7 +23,17 @@ public class PhotoStore<T> {
         return fileDir + filename;
     }
 
-    public T storeFile(MultipartFile multipartFile) {
+    public List<Photo> storePhotos(List<MultipartFile> multipartFiles) {
+        if (multipartFiles == null) return new ArrayList<>(); // 사진을 저장하지 않는경우 null 방지
+        List<Photo> resultList = new ArrayList<>();
+        for (MultipartFile multipartFile : multipartFiles) {
+            Photo photo = storePhoto(multipartFile);
+            resultList.add(photo);
+        }
+        return resultList;
+    }
+
+    private Photo storePhoto(MultipartFile multipartFile) {
         if (!multipartFile.isEmpty()) {
             String originalFilename = multipartFile.getOriginalFilename();
             String storeFilename = createStoreFilename(originalFilename);
@@ -34,24 +45,13 @@ public class PhotoStore<T> {
             } catch (IOException e) {
                 throw new WishHairException(ErrorCode.FILE_TRANSFER_EX);
             }
-
-            //TODO 응답부분 마저 작성하기
+            return new Photo(originalFilename, storeFilename);
         } else throw new WishHairException(ErrorCode.EMPTY_FILE_EX);
-    }
-
-    public List<T> storeFiles(List<MultipartFile> multipartFiles) {
-        if (multipartFiles == null) return new ArrayList<>(); // 사진을 저장하지 않는경우 null 방지
-        List<T> resultList = new ArrayList<>();
-        for (MultipartFile multipartFile : multipartFiles) {
-            T photo = storeFile(multipartFile);
-            resultList.add(photo);
-        }
-        return resultList;
     }
 
     private String createStoreFilename(String originalFilename) {
         String ext = getExt(originalFilename);
-        return UUID.randomUUID().toString() + ext;
+        return UUID.randomUUID() + ext;
     }
 
     private String getExt(String originalFilename) {

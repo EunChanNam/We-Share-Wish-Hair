@@ -28,4 +28,10 @@ public class Photo {
 
     @Column(nullable = false, updatable = false)
     private String storeFilename;
+
+    //==생성 메서드==//
+    public Photo(String originalFilename, String storeFilename) {
+        this.originalFilename = originalFilename;
+        this.storeFilename = storeFilename;
+    }
 }
