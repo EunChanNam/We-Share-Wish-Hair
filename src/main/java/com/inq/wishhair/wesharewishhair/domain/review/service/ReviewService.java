@@ -4,7 +4,7 @@ import com.inq.wishhair.wesharewishhair.domain.photo.PhotoStore;
 import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.domain.review.Review;
 import com.inq.wishhair.wesharewishhair.domain.review.repository.ReviewRepository;
-import com.inq.wishhair.wesharewishhair.domain.review.service.dto.request.ReviewRequestDto;
+import com.inq.wishhair.wesharewishhair.domain.review.service.dto.ReviewCreateDto;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import com.inq.wishhair.wesharewishhair.domain.user.repository.UserRepository;
 import com.inq.wishhair.wesharewishhair.exception.ErrorCode;
@@ -25,7 +25,7 @@ public class ReviewService {
     private final PhotoStore photoStore;
 
     @Transactional
-    public Long createReview(ReviewRequestDto dto) {
+    public Long createReview(ReviewCreateDto dto) {
 
         List<Photo> photos = photoStore.storePhotos(dto.getFiles());
         User user = userRepository.findById(dto.getUserId())

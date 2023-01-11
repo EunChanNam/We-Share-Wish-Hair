@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.domain.review.service.dto.request;
+package com.inq.wishhair.wesharewishhair.domain.review.service.dto;
 
 import com.inq.wishhair.wesharewishhair.domain.review.enums.Score;
 import lombok.AllArgsConstructor;
@@ -9,7 +9,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class ReviewRequestDto {
+public class ReviewCreateDto {
 
     private Long userId;
 
