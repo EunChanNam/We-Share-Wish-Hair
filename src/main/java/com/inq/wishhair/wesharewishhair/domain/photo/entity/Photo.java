@@ -1,5 +1,6 @@
-package com.inq.wishhair.wesharewishhair.domain.photo;
+package com.inq.wishhair.wesharewishhair.domain.photo.entity;
 
+import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.review.Review;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -9,11 +10,14 @@ import lombok.NoArgsConstructor;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ReviewPhoto {
+public class Photo {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hair_style_id")
+    private HairStyle hairStyle;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id")
@@ -25,4 +29,3 @@ public class ReviewPhoto {
     @Column(nullable = false, updatable = false)
     private String storeFilename;
 }
-

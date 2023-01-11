@@ -1,8 +1,7 @@
 package com.inq.wishhair.wesharewishhair.domain.review;
 
-import com.inq.wishhair.wesharewishhair.domain.photo.ReviewPhoto;
+import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.domain.review.enums.Score;
-import com.inq.wishhair.wesharewishhair.domain.shop.Shop;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -38,5 +37,5 @@ public class Review {
     @OneToMany(mappedBy = "review",
             cascade = CascadeType.ALL,
             orphanRemoval = true) // 사진을 값타입 컬렉션 처럼 사용
-    private List<ReviewPhoto> photos = new ArrayList<>();
+    private List<Photo> photos = new ArrayList<>();
 }
