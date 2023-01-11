@@ -2,7 +2,7 @@ package com.inq.wishhair.wesharewishhair.web.login;
 
 import com.inq.wishhair.wesharewishhair.domain.login.LoginService;
 import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
-import com.inq.wishhair.wesharewishhair.web.common.consts.SessionConst;
+import com.inq.wishhair.wesharewishhair.common.consts.SessionConst;
 import com.inq.wishhair.wesharewishhair.web.login.dto.LoginRequest;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
