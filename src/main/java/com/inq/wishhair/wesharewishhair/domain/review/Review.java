@@ -47,5 +47,7 @@ public class Review {
         review.contents = contents;
         review.score = score;
         review.photos.addAll(photos);
+        return review;
     }
+
 }
