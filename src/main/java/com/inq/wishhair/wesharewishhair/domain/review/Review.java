@@ -38,4 +38,14 @@ public class Review {
             cascade = CascadeType.ALL,
             orphanRemoval = true) // 사진을 값타입 컬렉션 처럼 사용
     private List<Photo> photos = new ArrayList<>();
+
+    public static Review createReview(
+            User user, String title, String contents, Score score, List<Photo> photos) {
+        Review review = new Review();
+        review.user = user;
+        review.title = title;
+        review.contents = contents;
+        review.score = score;
+        review.photos.addAll(photos);
+    }
 }
