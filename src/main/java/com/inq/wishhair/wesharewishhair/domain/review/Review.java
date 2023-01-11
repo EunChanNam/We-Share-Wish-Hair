@@ -46,7 +46,10 @@ public class Review {
         review.title = title;
         review.contents = contents;
         review.score = score;
-        review.photos.addAll(photos);
+        photos.forEach(photo -> {
+            photo.registerReview(review);
+            review.photos.add(photo);
+        });
         return review;
     }
 

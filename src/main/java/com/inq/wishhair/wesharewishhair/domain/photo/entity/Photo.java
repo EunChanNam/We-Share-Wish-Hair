@@ -34,4 +34,9 @@ public class Photo {
         this.originalFilename = originalFilename;
         this.storeFilename = storeFilename;
     }
+
+    //==편의 메서드==//
+    public void registerReview(Review review) {
+        this.review = review;
+    }
 }
