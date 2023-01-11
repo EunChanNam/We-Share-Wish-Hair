@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.domain.hairstyle;
 
-import com.inq.wishhair.wesharewishhair.domain.hairstyle.photo.Photo;
+import com.inq.wishhair.wesharewishhair.domain.photo.HairPhoto;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.repository.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.domain.user.enums.Sex;
@@ -31,7 +31,7 @@ class HairStyleRepositoryTest {
         assertThat(hairStyles.get(0).getName()).isEqualTo("헤일로 펌");
         assertThat(hairStyles.size()).isEqualTo(1);
         assertThat(hairStyles.get(0).getPhotos().size()).isEqualTo(4);
-        for (Photo p : hairStyles.get(0).getPhotos()) {
+        for (HairPhoto p : hairStyles.get(0).getPhotos()) {
             System.out.println(p.getOriginalFilename());
         }
     }

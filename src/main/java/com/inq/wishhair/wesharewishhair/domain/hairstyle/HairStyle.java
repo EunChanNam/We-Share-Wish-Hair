@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.domain.hairstyle;
 
 
-import com.inq.wishhair.wesharewishhair.domain.hairstyle.photo.Photo;
+import com.inq.wishhair.wesharewishhair.domain.photo.HairPhoto;
 import com.inq.wishhair.wesharewishhair.domain.user.enums.Sex;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -26,7 +26,7 @@ public class HairStyle {
     @OneToMany(mappedBy = "hairStyle",
             cascade = CascadeType.ALL,
             orphanRemoval = true) // 사진을 값타입 컬렉션 처럼 사용
-    private List<Photo> photos = new ArrayList<>();
+    private List<HairPhoto> photos = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Sex sex;
