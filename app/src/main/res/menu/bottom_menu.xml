@@ -1,30 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/home"
+        android:id="@+id/bot_nav_home"
         android:enabled="true"
         android:icon="@drawable/home"
-        android:title="home"
+        android:title="홈"
         />
 
     <item
-        android:id="@+id/menu2"
+        android:id="@+id/bot_nav_recommend"
         android:icon="@drawable/home"
-        android:title="menu2"
-        android:enabled="true"
-        />
-
-    <item
-        android:id="@+id/menu3"
-        android:icon="@drawable/home"
-        android:title="menu3"
+        android:title="Ai 추천받기"
         android:enabled="true"
         />
 
     <item
-        android:id="@+id/menu4"
+        android:id="@+id/bot_nav_review"
         android:icon="@drawable/home"
-        android:title="menu4"
+        android:title="후기"
+        android:enabled="true"
+        />
+
+    <item
+        android:id="@+id/bot_nav_myPage"
+        android:icon="@drawable/home"
+        android:title="내 정보"
         android:enabled="true"
         />
 
