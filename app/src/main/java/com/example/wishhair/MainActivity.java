@@ -1,5 +1,6 @@
 package com.example.wishhair;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -13,11 +14,11 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private FragmentManager fragmentManager = getSupportFragmentManager();
-    private FragmentHome fragmentHome = new FragmentHome();
-    private Fragment2 fragment2 = new Fragment2();
-    private Fragment3 fragment3 = new Fragment3();
-    private Fragment4 fragment4 = new Fragment4();
+    private final FragmentManager fragmentManager = getSupportFragmentManager();
+    private final FragmentHome fragmentHome = new FragmentHome();
+    private final RecommendFragment recommendFragment = new RecommendFragment();
+    private final ReviewFragment reviewFragment = new ReviewFragment();
+    private final MyPageFragment myPageFragment = new MyPageFragment();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,30 +27,31 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.MainLayout, fragmentHome).commitAllowingStateLoss();
 
-        BottomNavigationView BottomNavigation = findViewById(R.id.BottomNevigation);
+        BottomNavigationView BottomNavigation = findViewById(R.id.BottomNavigation);
         BottomNavigation.setOnItemSelectedListener(new BottomNavigationItemSelectedListener());
 
     }
 
     class BottomNavigationItemSelectedListener implements NavigationBarView.OnItemSelectedListener{
 
+        @SuppressLint("NonConstantResourceId")
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             FragmentTransaction transaction = fragmentManager.beginTransaction();
 
             switch(item.getItemId())
             {
-                case R.id.home:
+                case R.id.bot_nav_home:
                     transaction.replace(R.id.MainLayout, fragmentHome).commitAllowingStateLoss();
                     break;
-                case R.id.menu2:
-                    transaction.replace(R.id.MainLayout, fragment2).commitAllowingStateLoss();
+                case R.id.bot_nav_recommend:
+                    transaction.replace(R.id.MainLayout, recommendFragment).commitAllowingStateLoss();
                     break;
-                case R.id.menu3:
-                    transaction.replace(R.id.MainLayout, fragment3).commitAllowingStateLoss();
+                case R.id.bot_nav_review:
+                    transaction.replace(R.id.MainLayout, reviewFragment).commitAllowingStateLoss();
                     break;
-                case R.id.menu4:
-                    transaction.replace(R.id.MainLayout,fragment4).commitAllowingStateLoss();
+                case R.id.bot_nav_myPage:
+                    transaction.replace(R.id.MainLayout, myPageFragment).commitAllowingStateLoss();
                     break;
             }
             return true;

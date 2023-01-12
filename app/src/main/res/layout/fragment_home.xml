@@ -12,6 +12,6 @@
         android:layout_gravity="center"
         android:text="Home Fragment TEST"
         android:textColor="#262626"
-        android:textSize="55dp"
+        android:textSize="55sp"
         android:gravity="center"/>
 </FrameLayout>
