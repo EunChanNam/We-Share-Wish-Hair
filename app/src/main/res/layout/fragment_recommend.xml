@@ -5,10 +5,47 @@
     android:layout_height="match_parent"
     tools:context=".RecommendFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/reco_linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <include
+            layout="@layout/fragment_topbar"
+            android:id="@+id/reco_topBar"/>
 
+        <RelativeLayout
+            android:id="@+id/reco_relativeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp">
+            <Button
+                android:id="@+id/reco_btn_submitPicture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:text="사진등록"/>
+            <LinearLayout
+                android:id="@+id/reco_ll_submittedPicture"
+                android:layout_below="@id/reco_btn_submitPicture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/reco_textView_noSubmittedPicture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="'사진등록' 버튼을 눌러 사진을 등록해 주세요" />
+            </LinearLayout>
+            <Button
+                android:id="@+id/reco_btn_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/reco_ll_submittedPicture"
+                android:text="추천 시작"/>
+        </RelativeLayout>
+
+    </LinearLayout>
 </FrameLayout>
