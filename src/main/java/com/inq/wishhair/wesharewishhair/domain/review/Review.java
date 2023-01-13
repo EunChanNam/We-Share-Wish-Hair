@@ -1,5 +1,7 @@
 package com.inq.wishhair.wesharewishhair.domain.review;
 
+import com.inq.wishhair.wesharewishhair.domain.auditing.BaseEntity;
+import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.domain.review.enums.Score;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
@@ -14,7 +16,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Review {
+public class Review extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,8 +41,12 @@ public class Review {
             orphanRemoval = true) // 사진을 값타입 컬렉션 처럼 사용
     private List<Photo> photos = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "hair_style_id")
+    private HairStyle hairStyle;
+
     public static Review createReview(
-            User user, String title, String contents, Score score, List<Photo> photos) {
+            User user, String title, String contents, Score score, List<Photo> photos, HairStyle hairStyle) {
         Review review = new Review();
         review.user = user;
         review.title = title;
@@ -50,6 +56,7 @@ public class Review {
             photo.registerReview(review);
             review.photos.add(photo);
         });
+        review.hairStyle = hairStyle;
         return review;
     }
 

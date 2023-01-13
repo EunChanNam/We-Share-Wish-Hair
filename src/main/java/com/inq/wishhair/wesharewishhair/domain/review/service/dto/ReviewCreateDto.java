@@ -13,6 +13,8 @@ public class ReviewCreateDto {
 
     private Long userId;
 
+    private Long hairStyleId;
+
     private String title;
 
     private String contents;

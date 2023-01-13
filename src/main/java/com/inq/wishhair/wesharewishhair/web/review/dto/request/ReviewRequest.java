@@ -21,9 +21,12 @@ public class ReviewRequest {
 
     private List<MultipartFile> files = new ArrayList<>();
 
+    private Long hairStyleId;
+
     public ReviewCreateDto toReviewCreateDto(Long userId) {
         return new ReviewCreateDto(
                 userId,
+                this.hairStyleId,
                 this.title,
                 this.contents,
                 this.score,

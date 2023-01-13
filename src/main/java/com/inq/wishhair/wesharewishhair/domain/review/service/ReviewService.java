@@ -1,5 +1,7 @@
 package com.inq.wishhair.wesharewishhair.domain.review.service;
 
+import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
+import com.inq.wishhair.wesharewishhair.domain.hairstyle.repository.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.domain.photo.PhotoStore;
 import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.domain.review.Review;
@@ -22,6 +24,7 @@ public class ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
+    private final HairStyleRepository hairStyleRepository;
     private final PhotoStore photoStore;
 
     @Transactional
@@ -30,13 +33,16 @@ public class ReviewService {
         List<Photo> photos = photoStore.storePhotos(dto.getFiles());
         User user = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+        HairStyle hairStyle = hairStyleRepository.findById(dto.getHairStyleId())
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
 
         Review review = Review.createReview(
                 user,
                 dto.getTitle(),
                 dto.getContents(),
                 dto.getScore(),
-                photos
+                photos,
+                hairStyle
         );
         return reviewRepository.save(review).getId();
     }
