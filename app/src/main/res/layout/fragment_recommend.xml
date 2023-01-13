@@ -46,6 +46,5 @@
                 android:layout_below="@id/reco_ll_submittedPicture"
                 android:text="추천 시작"/>
         </RelativeLayout>
-
     </LinearLayout>
 </FrameLayout>
