@@ -3,12 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MyPageFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:id="@+id/toolbar"
+        app:title="My Page"
+        app:titleTextColor="@color/black"
+        android:background="@color/white">
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_marginTop="?attr/actionBarSize"
+        android:background="#74292828">
+
+    </FrameLayout>
+
+    <!-- TODO: Update blank fragment layout -->
 
 </FrameLayout>
