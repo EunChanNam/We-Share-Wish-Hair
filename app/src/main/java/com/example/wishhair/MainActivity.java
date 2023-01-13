@@ -15,7 +15,7 @@ import com.google.android.material.navigation.NavigationBarView;
 public class MainActivity extends AppCompatActivity {
 
     private final FragmentManager fragmentManager = getSupportFragmentManager();
-    private final FragmentHome fragmentHome = new FragmentHome();
+    private final HomeFragment homeFragment = new HomeFragment();
     private final RecommendFragment recommendFragment = new RecommendFragment();
     private final ReviewFragment reviewFragment = new ReviewFragment();
     private final MyPageFragment myPageFragment = new MyPageFragment();
@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        fragmentTransaction.replace(R.id.MainLayout, fragmentHome).commitAllowingStateLoss();
+        fragmentTransaction.replace(R.id.MainLayout, homeFragment).commitAllowingStateLoss();
 
         BottomNavigationView BottomNavigation = findViewById(R.id.BottomNavigation);
         BottomNavigation.setOnItemSelectedListener(new BottomNavigationItemSelectedListener());
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
             switch(item.getItemId())
             {
                 case R.id.bot_nav_home:
-                    transaction.replace(R.id.MainLayout, fragmentHome).commitAllowingStateLoss();
+                    transaction.replace(R.id.MainLayout, homeFragment).commitAllowingStateLoss();
                     break;
                 case R.id.bot_nav_recommend:
                     transaction.replace(R.id.MainLayout, recommendFragment).commitAllowingStateLoss();
