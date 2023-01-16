@@ -46,7 +46,7 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "hair_style_id")
     private HairStyle hairStyle;
 
-    @OneToMany(mappedBy = "review_id")
+    @OneToMany(mappedBy = "review")
     private List<LikeReview> likeReviews = new ArrayList<>();
 
     //==생성 메서드==//
