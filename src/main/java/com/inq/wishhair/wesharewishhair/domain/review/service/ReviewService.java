@@ -14,6 +14,7 @@ import com.inq.wishhair.wesharewishhair.domain.user.repository.UserRepository;
 import com.inq.wishhair.wesharewishhair.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.exception.WishHairException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -60,4 +61,11 @@ public class ReviewService {
         LikeReview likeReview = LikeReview.createLikeReview(user, review);
         likeReviewRepository.save(likeReview);
     }
+
+//    public List<Review> getReviews(Pageable pageable) {
+//        List<Review> reviews = reviewRepository.findReviewByPaging(pageable);
+//        if (!reviews.isEmpty()) {
+//            reviews.get(0).getLikeReviews().isEmpty();
+//        }
+//    }
 }

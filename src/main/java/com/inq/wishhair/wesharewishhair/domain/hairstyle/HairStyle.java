@@ -31,11 +31,4 @@ public class HairStyle {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    @Transient
-    private Boolean hasPhotos = true;
-
-    //==편의 메서드==//
-    public void notHasPhoto() {
-        this.hasPhotos = false;
-    }
 }
