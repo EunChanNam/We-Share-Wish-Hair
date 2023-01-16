@@ -8,7 +8,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ReviewResponse {
+public class ReviewsResponse {
 
     private String title;
 
@@ -22,7 +22,7 @@ public class ReviewResponse {
 
     private Integer likes;
 
-    public ReviewResponse(Review review) {
+    public ReviewsResponse(Review review) {
         this.title = review.getTitle();
         this.hairStyleName = review.getHairStyle().getName();
         this.userNickName = review.getUser().getName();
