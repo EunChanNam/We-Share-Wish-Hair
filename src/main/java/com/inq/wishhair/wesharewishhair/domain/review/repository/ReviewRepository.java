@@ -9,6 +9,7 @@ import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
+    //photos 는 fetch join, likeReviews 는 batch_fetch_size 로 해결
     @Query("select r from Review r " +
             "left outer join fetch r.photos " +
             "group by r.id")

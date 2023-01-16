@@ -3,6 +3,7 @@ package com.inq.wishhair.wesharewishhair.web.review.dto.response;
 import com.inq.wishhair.wesharewishhair.domain.review.Review;
 import com.inq.wishhair.wesharewishhair.domain.review.enums.Score;
 import com.inq.wishhair.wesharewishhair.web.photo.dto.response.PhotoResponse;
+import jakarta.persistence.Persistence;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -27,9 +28,13 @@ public class ReviewsResponse {
         this.hairStyleName = review.getHairStyle().getName();
         this.userNickName = review.getUser().getName();
         this.score = review.getScore();
+        //fetch join 을 사용해서 따로 지연로딩 처리를 안해줌
         if (!review.getPhotos().isEmpty()) {
             this.photo = new PhotoResponse(review.getPhotos().get(0));
         }
-        this.likes = review.getLikeReviews().size();
+        //지연로딩 처리 (batch_fetch_size)
+        if (Persistence.getPersistenceUtil().isLoaded(review.getLikeReviews())) {
+            this.likes = review.getLikeReviews().size();
+        } else this.likes = 0;
     }
 }

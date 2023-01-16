@@ -62,10 +62,11 @@ public class ReviewService {
         likeReviewRepository.save(likeReview);
     }
 
-//    public List<Review> getReviews(Pageable pageable) {
-//        List<Review> reviews = reviewRepository.findReviewByPaging(pageable);
-//        if (!reviews.isEmpty()) {
-//            reviews.get(0).getLikeReviews().isEmpty();
-//        }
-//    }
+    public List<Review> getReviews(Pageable pageable) {
+        List<Review> reviews = reviewRepository.findReviewByPaging(pageable);
+        if (!reviews.isEmpty()) {
+            reviews.get(0).getLikeReviews().isEmpty();
+        }
+        return reviews;
+    }
 }

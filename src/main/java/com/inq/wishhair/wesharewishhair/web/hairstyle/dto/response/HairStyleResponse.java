@@ -19,7 +19,7 @@ public class HairStyleResponse {
     public HairStyleResponse(HairStyle hairStyle) {
         this.hairStyleId = hairStyle.getId();
         this.name = hairStyle.getName();
-        if (Persistence.getPersistenceUtil().isLoaded(hairStyle.getHasPhotos())) {
+        if (Persistence.getPersistenceUtil().isLoaded(hairStyle.getPhotos())) {
             this.photos = hairStyle.getPhotos()
                     .stream().map(PhotoResponse::new)
                     .toList();
