@@ -33,6 +33,7 @@ public class ReviewController {
             @PathVariable Long reviewId,
             @SessionAttribute(SessionConst.LONGIN_MEMBER) UserSessionDto sessionDto) {
 
-
+        reviewService.LikeReview(reviewId, sessionDto.getId());
+        return ResponseEntity.noContent().build();
     }
 }
