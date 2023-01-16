@@ -23,4 +23,12 @@ public class LikeReview {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id")
     private Review review;
+
+    //==생성 메서드==//
+    public static LikeReview createLikeReview(User user, Review review) {
+        LikeReview likeReview = new LikeReview();
+        likeReview.user = user;
+        likeReview.review = review;
+        return likeReview;
+    }
 }

@@ -2,6 +2,8 @@ package com.inq.wishhair.wesharewishhair.domain.review.service;
 
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.repository.HairStyleRepository;
+import com.inq.wishhair.wesharewishhair.domain.likereview.LikeReview;
+import com.inq.wishhair.wesharewishhair.domain.likereview.repository.LikeReviewRepository;
 import com.inq.wishhair.wesharewishhair.domain.photo.PhotoStore;
 import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.domain.review.Review;
@@ -26,6 +28,7 @@ public class ReviewService {
     private final UserRepository userRepository;
     private final HairStyleRepository hairStyleRepository;
     private final PhotoStore photoStore;
+    private final LikeReviewRepository likeReviewRepository;
 
     @Transactional
     public Long createReview(ReviewCreateDto dto) {
@@ -45,5 +48,16 @@ public class ReviewService {
                 hairStyle
         );
         return reviewRepository.save(review).getId();
+    }
+
+    @Transactional
+    public void LikeReview(Long reviewId, Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+
+        LikeReview likeReview = LikeReview.createLikeReview(user, review);
+        likeReviewRepository.save(likeReview);
     }
 }
