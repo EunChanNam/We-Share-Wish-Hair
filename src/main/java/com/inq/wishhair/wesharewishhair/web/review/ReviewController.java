@@ -27,4 +27,12 @@ public class ReviewController {
                 .created(URI.create("/api/review/" + reviewId))
                 .build();
     }
+
+    @PostMapping("/review/like/{reviewId}")
+    public ResponseEntity<Void> likeReview(
+            @PathVariable Long reviewId,
+            @SessionAttribute(SessionConst.LONGIN_MEMBER) UserSessionDto sessionDto) {
+
+
+    }
 }
