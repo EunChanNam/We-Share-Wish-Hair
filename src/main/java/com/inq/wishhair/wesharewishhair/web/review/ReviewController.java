@@ -36,4 +36,6 @@ public class ReviewController {
         reviewService.LikeReview(reviewId, sessionDto.getId());
         return ResponseEntity.noContent().build();
     }
+
+
 }

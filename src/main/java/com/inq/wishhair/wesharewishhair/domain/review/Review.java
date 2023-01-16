@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.domain.review;
 
 import com.inq.wishhair.wesharewishhair.domain.auditing.BaseEntity;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
+import com.inq.wishhair.wesharewishhair.domain.likereview.LikeReview;
 import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.domain.review.enums.Score;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
@@ -45,6 +46,10 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "hair_style_id")
     private HairStyle hairStyle;
 
+    @OneToMany(mappedBy = "review_id")
+    private List<LikeReview> likeReviews = new ArrayList<>();
+
+    //==생성 메서드==//
     public static Review createReview(
             User user, String title, String contents, Score score, List<Photo> photos, HairStyle hairStyle) {
         Review review = new Review();
