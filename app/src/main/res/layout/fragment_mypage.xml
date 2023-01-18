@@ -1,18 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#ffffff"
     tools:context=".MyPageFragment">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:id="@+id/toolbar"
+        android:background="@color/white"
         app:title="My Page"
-        app:titleTextColor="@color/black"
-        android:background="@color/white">
+        app:titleTextColor="@color/black">
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -20,8 +21,47 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="?attr/actionBarSize"
-        android:background="#74292828">
+        android:background="#74FBF9F9">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="328dp"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <Button
+                android:id="@+id/toMyInformation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:text="Button"
+                android:textColor="#161616" />
+
+            <Button
+                android:id="@+id/MyStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:text="Button"
+                android:textColor="#161616" />
+
+            <Button
+                android:id="@+id/MyCheckList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_weight="1"
+                android:background="@color/white"
+                android:text="Button"
+                android:textColor="#161616" />
+        </LinearLayout>
     </FrameLayout>
 
     <!-- TODO: Update blank fragment layout -->

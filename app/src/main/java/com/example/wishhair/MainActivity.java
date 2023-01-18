@@ -3,9 +3,11 @@ package com.example.wishhair;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -19,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private final RecommendFragment recommendFragment = new RecommendFragment();
     private final ReviewFragment reviewFragment = new ReviewFragment();
     private final MyPageFragment myPageFragment = new MyPageFragment();
+
+    private final MyInformationFragment myInformationFragment = new MyInformationFragment();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,5 +60,19 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         }
+    }
+
+    public void ChangeFragment(int index) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        switch(index)
+        {
+            case 1:
+                transaction.replace(R.id.MainLayout, myInformationFragment).commitAllowingStateLoss();
+                break;
+            case 2:
+                transaction.replace(R.id.MainLayout, myPageFragment).commitAllowingStateLoss();
+                break;
+        }
+
     }
 }
