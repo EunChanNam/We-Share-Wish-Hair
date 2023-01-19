@@ -18,18 +18,55 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="?android:attr/actionBarSize">
+        <LinearLayout
+            android:id="@+id/review_linearLayout_hot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="40dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="핫게"/>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/review_recyclerView_hot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:layout_marginEnd="40dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/review_textView_recent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="채신 게시물"/>
 
-
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/review_recyclerView_recent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/review_floatingButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/plus">
+        android:layout_margin="30dp"
+        android:layout_gravity="bottom|right"
+        android:src="@drawable/plus"
+        android:contentDescription="@string/review_plus_button">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
-
 
 </FrameLayout>
