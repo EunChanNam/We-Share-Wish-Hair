@@ -14,11 +14,12 @@ import com.example.wishhair.R;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class RecyclerViewAdapterHot extends RecyclerView.Adapter<RecyclerViewAdapterHot.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView thumbnailImageView;
         TextView title, description;
+
         ViewHolder(View itemView) {
             super(itemView);
 
@@ -30,7 +31,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     private ArrayList<RecyclerViewItem> recyclerViewItems = null;
 
-    public RecyclerViewAdapter(ArrayList<RecyclerViewItem> recyclerViewItems) {
+    public RecyclerViewAdapterHot(ArrayList<RecyclerViewItem> recyclerViewItems) {
         this.recyclerViewItems = recyclerViewItems;
     }
 
@@ -41,9 +42,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View view = inflater.inflate(R.layout.recycler_item_review_hot, parent, false);
-        RecyclerViewAdapter.ViewHolder viewHolder = new RecyclerViewAdapter.ViewHolder(view);
 
-        return viewHolder;
+        return new ViewHolder(view);
     }
 
     @Override
