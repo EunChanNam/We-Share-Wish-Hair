@@ -3,16 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".RecommendFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@drawable/topbar_border"
+        app:title="Ai 추천 받기"/>
 
     <LinearLayout
         android:id="@+id/reco_parentLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="?android:attr/actionBarSize"
         android:orientation="vertical">
-        <include
-            layout="@layout/fragment_topbar"
-            android:id="@+id/reco_topBar"/>
 
         <RelativeLayout
             android:id="@+id/reco_relativeLayout"
