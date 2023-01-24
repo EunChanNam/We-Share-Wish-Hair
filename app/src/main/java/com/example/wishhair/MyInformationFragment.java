@@ -1,6 +1,7 @@
 package com.example.wishhair;
 
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,8 +9,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.ToggleButton;
+
 import androidx.appcompat.widget.Toolbar;
 
 /**
@@ -80,6 +88,7 @@ public class MyInformationFragment extends Fragment {
                 mainActivity.ChangeFragment(2);
             }
         });
+
     }
 
     @Override
