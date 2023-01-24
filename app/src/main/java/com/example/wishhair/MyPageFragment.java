@@ -8,15 +8,11 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,11 +76,26 @@ public class MyPageFragment extends Fragment {
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
-        Button button1 = view.findViewById(R.id.toMyInformation);
-        button1.setOnClickListener(new View.OnClickListener() {
+        Button toMyInformationButton = view.findViewById(R.id.toMyInformation);
+        Button toMyStyleButton = view.findViewById(R.id.toMyStyle);
+        Button toMySelectionlistButton = view.findViewById(R.id.toMySelectionlist);
+
+        toMyInformationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mainActivity.ChangeFragment(1);
+            }
+        });
+        toMyStyleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.ChangeFragment(3);
+            }
+        });
+        toMySelectionlistButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.ChangeFragment(4);
             }
         });
 

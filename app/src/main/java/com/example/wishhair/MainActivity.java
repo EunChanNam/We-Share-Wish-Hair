@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private final RecommendFragment recommendFragment = new RecommendFragment();
     private final ReviewFragment reviewFragment = new ReviewFragment();
     private final MyPageFragment myPageFragment = new MyPageFragment();
+    private final MyStyleFragment myStyleFragment = new MyStyleFragment();
+    private final MySelectionlistFragment mySelectionlistFragment = new MySelectionlistFragment();
 
     private final MyInformationFragment myInformationFragment = new MyInformationFragment();
 
@@ -72,6 +74,11 @@ public class MainActivity extends AppCompatActivity {
             case 2:
                 transaction.replace(R.id.MainLayout, myPageFragment).commitAllowingStateLoss();
                 break;
+            case 3:
+                transaction.replace(R.id.MainLayout, myStyleFragment).commitAllowingStateLoss();
+                break;
+            case 4:
+                transaction.replace(R.id.MainLayout, mySelectionlistFragment).commitAllowingStateLoss();
         }
 
     }

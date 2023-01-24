@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/MyPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
@@ -26,10 +27,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="328dp"
-            android:orientation="vertical"
-            android:layout_marginTop="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/toMyInformation"
@@ -38,28 +39,28 @@
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:text="Button"
+                android:text="내 정보"
                 android:textColor="#161616" />
 
             <Button
-                android:id="@+id/MyStyle"
+                android:id="@+id/toMyStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:text="Button"
+                android:text="내 스타일"
                 android:textColor="#161616" />
 
             <Button
-                android:id="@+id/MyCheckList"
+                android:id="@+id/toMySelectionlist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:layout_weight="1"
                 android:background="@color/white"
-                android:text="Button"
+                android:text="찜 리스트"
                 android:textColor="#161616" />
         </LinearLayout>
     </FrameLayout>
