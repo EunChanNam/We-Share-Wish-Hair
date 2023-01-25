@@ -65,8 +65,10 @@ public class ReviewService {
     public List<Review> getReviews(Pageable pageable) {
         List<Review> reviews = reviewRepository.findReviewByPaging(pageable);
         if (!reviews.isEmpty()) {
-            reviews.get(0).getLikeReviews().isEmpty();
+            reviews.get(0).getPhotos().isEmpty();
         }
+        // Query 에서 정렬이 안돼서 Service 에서 정렬
+        reviews.sort((a, b) -> Integer.compare(b.getLikeReviews().size(), a.getLikeReviews().size()));
         return reviews;
     }
 }

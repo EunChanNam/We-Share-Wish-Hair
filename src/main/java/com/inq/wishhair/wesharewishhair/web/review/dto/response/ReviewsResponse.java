@@ -29,12 +29,14 @@ public class ReviewsResponse {
         this.userNickName = review.getUser().getName();
         this.score = review.getScore();
         //fetch join 을 사용해서 따로 지연로딩 처리를 안해줌
-        if (!review.getPhotos().isEmpty()) {
-            this.photo = new PhotoResponse(review.getPhotos().get(0));
-        }
-        //지연로딩 처리 (batch_fetch_size)
-        if (Persistence.getPersistenceUtil().isLoaded(review.getLikeReviews())) {
+        if (!review.getLikeReviews().isEmpty()) {
             this.likes = review.getLikeReviews().size();
         } else this.likes = 0;
+        //지연로딩 처리 (batch_fetch_size)
+        if (Persistence.getPersistenceUtil().isLoaded(review.getPhotos())) {
+            if (!review.getPhotos().isEmpty()) {
+                this.photo = new PhotoResponse(review.getPhotos().get(0));
+            }
+        }
     }
 }
