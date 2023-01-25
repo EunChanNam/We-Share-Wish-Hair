@@ -44,9 +44,10 @@ public class ReviewController {
     }
 
     @GetMapping("/review")
-    public ResponseEntity<List<ReviewsResponse>> getReviews(Pageable pageable) {
+    public ResponseEntity<List<ReviewsResponse>> getReviews(Pageable pageable,
+                                                            @RequestParam String condition) {
 
-        List<Review> reviews = reviewService.getReviews(pageable);
+        List<Review> reviews = reviewService.getReviews(pageable, condition);
         List<ReviewsResponse> result = reviews.stream()
                 .map(ReviewsResponse::new)
                 .toList();
