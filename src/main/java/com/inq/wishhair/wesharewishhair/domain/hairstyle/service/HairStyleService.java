@@ -23,10 +23,8 @@ public class HairStyleService {
 
         List<HairStyle> hairStyles = hairStyleRepository.findByHashTags(tags, tags.size(), sessionDto.getSex());
         /*지연로딩 데이터 가져오는 부분*/
-        for (HairStyle hairStyle : hairStyles) {
-            if (hairStyle.getPhotos().isEmpty()) {
-                hairStyle.notHasPhoto();
-            }
+        if (!hairStyles.isEmpty()) {
+            hairStyles.get(0).getPhotos().isEmpty();
         }
 
         return hairStyles;

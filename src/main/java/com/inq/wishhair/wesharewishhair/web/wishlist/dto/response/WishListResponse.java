@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.web.wishlist.dto.response;
 
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
-import com.inq.wishhair.wesharewishhair.web.hairstyle.dto.response.PhotoResponse;
+import com.inq.wishhair.wesharewishhair.web.photo.dto.response.PhotoResponse;
 import lombok.Getter;
 
 @Getter

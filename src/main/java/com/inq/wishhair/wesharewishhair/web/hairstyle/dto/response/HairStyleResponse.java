@@ -1,7 +1,8 @@
 package com.inq.wishhair.wesharewishhair.web.hairstyle.dto.response;
 
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
-import com.inq.wishhair.wesharewishhair.domain.hairstyle.photo.Photo;
+import com.inq.wishhair.wesharewishhair.web.photo.dto.response.PhotoResponse;
+import jakarta.persistence.Persistence;
 import lombok.Getter;
 
 import java.util.List;
@@ -18,7 +19,7 @@ public class HairStyleResponse {
     public HairStyleResponse(HairStyle hairStyle) {
         this.hairStyleId = hairStyle.getId();
         this.name = hairStyle.getName();
-        if (hairStyle.getHasPhotos()) {
+        if (Persistence.getPersistenceUtil().isLoaded(hairStyle.getPhotos())) {
             this.photos = hairStyle.getPhotos()
                     .stream().map(PhotoResponse::new)
                     .toList();

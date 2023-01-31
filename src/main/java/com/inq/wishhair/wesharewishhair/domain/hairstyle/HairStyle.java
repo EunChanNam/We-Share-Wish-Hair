@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.domain.hairstyle;
 
 
-import com.inq.wishhair.wesharewishhair.domain.hairstyle.photo.Photo;
+import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.domain.user.enums.Sex;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -31,11 +31,4 @@ public class HairStyle {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    @Transient
-    private Boolean hasPhotos = true;
-
-    //==편의 메서드==//
-    public void notHasPhoto() {
-        this.hasPhotos = false;
-    }
 }
