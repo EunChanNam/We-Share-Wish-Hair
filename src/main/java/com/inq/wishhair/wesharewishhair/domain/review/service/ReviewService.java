@@ -59,8 +59,11 @@ public class ReviewService {
         Review review = reviewRepository.findById(reviewId)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
 
-        LikeReview likeReview = LikeReview.createLikeReview(user, review);
-        likeReviewRepository.save(likeReview);
+        likeReviewRepository.findByUserAndReview(user, review)
+                .ifPresentOrElse(likeReviewRepository::delete, () -> {
+                    LikeReview likeReview = LikeReview.createLikeReview(user, review);
+                    likeReviewRepository.save(likeReview);
+                });
     }
 
     public List<Review> getReviews(Pageable pageable, String condition) {
