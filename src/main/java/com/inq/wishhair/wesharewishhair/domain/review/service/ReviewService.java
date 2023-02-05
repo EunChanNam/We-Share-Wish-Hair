@@ -7,6 +7,7 @@ import com.inq.wishhair.wesharewishhair.domain.likereview.LikeReview;
 import com.inq.wishhair.wesharewishhair.domain.likereview.repository.LikeReviewRepository;
 import com.inq.wishhair.wesharewishhair.domain.photo.PhotoStore;
 import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
+import com.inq.wishhair.wesharewishhair.domain.point.service.PointHistoryService;
 import com.inq.wishhair.wesharewishhair.domain.review.Review;
 import com.inq.wishhair.wesharewishhair.domain.review.repository.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.domain.review.service.dto.ReviewCreateDto;
@@ -31,17 +32,21 @@ public class ReviewService {
     private final HairStyleRepository hairStyleRepository;
     private final PhotoStore photoStore;
     private final LikeReviewRepository likeReviewRepository;
+    private final PointHistoryService pointHistoryService;
 
     @Transactional
     public Long createReview(ReviewCreateDto dto) {
 
+        //리뷰 생성 파트
         List<Photo> photos = photoStore.storePhotos(dto.getFiles());
         User user = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
         HairStyle hairStyle = hairStyleRepository.findById(dto.getHairStyleId())
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
-
         Review review = Review.createReview(dto, user, photos, hairStyle);
+        //포인트 충전 파트
+        pointHistoryService.chargePoint(300L, user);
+
         return reviewRepository.save(review).getId();
     }
 

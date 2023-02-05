@@ -33,7 +33,6 @@ public class PointHistoryService {
     @Transactional
     public void chargePoint(Long chargeAmount, User user) {
 
-
         PointHistory recentPoint = pointHistoryRepository.findTopByUserOrderByCreatedDateDesc(user)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
 
