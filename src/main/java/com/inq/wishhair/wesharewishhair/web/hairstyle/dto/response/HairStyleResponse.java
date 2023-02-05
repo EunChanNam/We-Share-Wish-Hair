@@ -3,11 +3,13 @@ package com.inq.wishhair.wesharewishhair.web.hairstyle.dto.response;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.web.photo.dto.response.PhotoResponse;
 import jakarta.persistence.Persistence;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.util.List;
 
 @Getter
+@AllArgsConstructor
 public class HairStyleResponse {
 
     private Long hairStyleId;
