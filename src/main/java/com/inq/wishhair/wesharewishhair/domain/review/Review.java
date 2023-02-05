@@ -5,6 +5,7 @@ import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.likereview.LikeReview;
 import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.domain.review.enums.Score;
+import com.inq.wishhair.wesharewishhair.domain.review.service.dto.ReviewCreateDto;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -51,12 +52,12 @@ public class Review extends BaseEntity {
 
     //==생성 메서드==//
     public static Review createReview(
-            User user, String title, String contents, Score score, List<Photo> photos, HairStyle hairStyle) {
+            ReviewCreateDto dto, User user, List<Photo> photos, HairStyle hairStyle) {
         Review review = new Review();
         review.user = user;
-        review.title = title;
-        review.contents = contents;
-        review.score = score;
+        review.title = dto.getTitle();
+        review.contents = dto.getContents();
+        review.score = dto.getScore();
         photos.forEach(photo -> {
             photo.registerReview(review);
             review.photos.add(photo);

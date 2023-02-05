@@ -41,14 +41,7 @@ public class ReviewService {
         HairStyle hairStyle = hairStyleRepository.findById(dto.getHairStyleId())
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
 
-        Review review = Review.createReview(
-                user,
-                dto.getTitle(),
-                dto.getContents(),
-                dto.getScore(),
-                photos,
-                hairStyle
-        );
+        Review review = Review.createReview(dto, user, photos, hairStyle);
         return reviewRepository.save(review).getId();
     }
 
