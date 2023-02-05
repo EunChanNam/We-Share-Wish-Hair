@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -20,7 +22,10 @@ public class PointHistoryService {
     public PointHistory getRecentPointHistory(Long userId) {
 
         Pageable pageable = PageRequest.of(0, 1); // limit 1 의 역할
-        return pointHistoryRepository.findRecentPointByUserId(userId, pageable)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+
+        // Optional 로 처리하려면 User 에 대한 쿼리가 추가적으로 필요해서 List 로 처리
+        List<PointHistory> pointHistories = pointHistoryRepository.findRecentPointByUserId(userId, pageable);
+        if (pointHistories.isEmpty()) throw new WishHairException(ErrorCode.NOT_EXIST_KEY);
+        return pointHistories.get(0);
     }
 }
