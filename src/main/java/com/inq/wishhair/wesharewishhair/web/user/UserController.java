@@ -2,6 +2,8 @@ package com.inq.wishhair.wesharewishhair.web.user;
 
 import com.inq.wishhair.wesharewishhair.common.consts.SessionConst;
 import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
+import com.inq.wishhair.wesharewishhair.domain.point.PointHistory;
+import com.inq.wishhair.wesharewishhair.domain.point.service.PointHistoryService;
 import com.inq.wishhair.wesharewishhair.domain.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.web.user.dto.request.UserCreateRequest;
 import com.inq.wishhair.wesharewishhair.web.user.dto.response.MyPageResponse;
@@ -17,6 +19,7 @@ import java.net.URI;
 public class UserController {
 
     private final UserService userService;
+    private final PointHistoryService pointHistoryService;
 
     @PostMapping("/user")
     public ResponseEntity<Void> createUser(@ModelAttribute UserCreateRequest createRequest) {
@@ -32,6 +35,9 @@ public class UserController {
             @SessionAttribute(SessionConst.LONGIN_MEMBER) UserSessionDto sessionDto) {
 
 
-        return null;
+        PointHistory recentPointHistory = pointHistoryService.getRecentPointHistory(sessionDto.getId());
+        MyPageResponse myPageResponse = new MyPageResponse(sessionDto, recentPointHistory);
+
+        return ResponseEntity.ok(myPageResponse);
     }
 }

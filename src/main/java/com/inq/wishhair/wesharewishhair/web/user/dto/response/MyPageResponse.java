@@ -1,5 +1,7 @@
 package com.inq.wishhair.wesharewishhair.web.user.dto.response;
 
+import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
+import com.inq.wishhair.wesharewishhair.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.domain.user.enums.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,5 +16,12 @@ public class MyPageResponse {
 
     private Sex sex;
 
-    private Integer point;
+    private Long point;
+
+    public MyPageResponse(UserSessionDto userSessionDto, PointHistory pointHistory) {
+        this.name = userSessionDto.getName();
+        this.nickname = userSessionDto.getNickname();
+        this.sex = userSessionDto.getSex();
+        this.point = pointHistory.getPoint();
+    }
 }
