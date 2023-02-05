@@ -1,7 +1,10 @@
 package com.inq.wishhair.wesharewishhair.web.user;
 
+import com.inq.wishhair.wesharewishhair.common.consts.SessionConst;
+import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
 import com.inq.wishhair.wesharewishhair.domain.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.web.user.dto.request.UserCreateRequest;
+import com.inq.wishhair.wesharewishhair.web.user.dto.response.MyPageResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,5 +25,13 @@ public class UserController {
         return ResponseEntity
                 .created(URI.create("/api/user/" + userId))
                 .build();
+    }
+
+    @GetMapping("/my_page")
+    public ResponseEntity<MyPageResponse> getMyPageInfo(
+            @SessionAttribute(SessionConst.LONGIN_MEMBER) UserSessionDto sessionDto) {
+
+
+        return null;
     }
 }
