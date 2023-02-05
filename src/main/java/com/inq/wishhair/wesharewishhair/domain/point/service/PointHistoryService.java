@@ -40,4 +40,9 @@ public class PointHistoryService {
                 user, chargeAmount, recentPoint.getPoint() + chargeAmount);
         pointHistoryRepository.save(chargePointHistory);
     }
+
+    public List<PointHistory> getPointHistories(Long userId, Pageable pageable) {
+
+        return pointHistoryRepository.findRecentPointByUserId(userId, pageable);
+    }
 }
