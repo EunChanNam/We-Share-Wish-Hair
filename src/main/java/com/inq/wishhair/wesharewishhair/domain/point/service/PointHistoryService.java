@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.domain.point.service;
 
 import com.inq.wishhair.wesharewishhair.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.domain.point.repository.PointHistoryRepository;
+import com.inq.wishhair.wesharewishhair.domain.user.User;
 import com.inq.wishhair.wesharewishhair.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.exception.WishHairException;
 import lombok.RequiredArgsConstructor;
@@ -27,5 +28,17 @@ public class PointHistoryService {
         List<PointHistory> pointHistories = pointHistoryRepository.findRecentPointByUserId(userId, pageable);
         if (pointHistories.isEmpty()) throw new WishHairException(ErrorCode.NOT_EXIST_KEY);
         return pointHistories.get(0);
+    }
+
+    @Transactional
+    public void chargePoint(Long chargeAmount, User user) {
+
+
+        PointHistory recentPoint = pointHistoryRepository.findTopByUserOrderByCreatedDateDesc(user)
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+
+        PointHistory chargePointHistory = PointHistory.createChargePointHistory(
+                user, chargeAmount, recentPoint.getPoint() + chargeAmount);
+        pointHistoryRepository.save(chargePointHistory);
     }
 }

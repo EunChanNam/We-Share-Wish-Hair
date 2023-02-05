@@ -31,11 +31,22 @@ public class PointHistory extends BaseEntity {
     private User user;
 
     //==생성 메서드==//
+    // 신규 유저 포인트 생성
     public static PointHistory createJoinPointHistory(User user) {
         PointHistory pointHistory = new PointHistory();
         pointHistory.pointType = PointType.JOIN;
         pointHistory.dealAmount = 0L;
         pointHistory.point = 0L;
+        pointHistory.user = user;
+        return pointHistory;
+    }
+
+    // 리뷰를 통한 충전 포인트 생성
+    public static PointHistory createChargePointHistory(User user, Long dealAmount, Long point) {
+        PointHistory pointHistory = new PointHistory();
+        pointHistory.pointType = PointType.CHARGE;
+        pointHistory.dealAmount = dealAmount;
+        pointHistory.point = point;
         pointHistory.user = user;
         return pointHistory;
     }

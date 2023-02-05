@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.domain.point.repository;
 
 import com.inq.wishhair.wesharewishhair.domain.point.PointHistory;
+import com.inq.wishhair.wesharewishhair.domain.user.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -16,4 +17,6 @@ public interface PointHistoryRepository extends JpaRepository<PointHistory, Long
             "order by p.createdDate desc")
     List<PointHistory> findRecentPointByUserId(@Param("userId") Long userId,
                                                Pageable pageable);
+
+    Optional<PointHistory> findTopByUserOrderByCreatedDateDesc(User user);
 }
