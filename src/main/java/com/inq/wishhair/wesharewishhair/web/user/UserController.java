@@ -7,11 +7,14 @@ import com.inq.wishhair.wesharewishhair.domain.point.service.PointHistoryService
 import com.inq.wishhair.wesharewishhair.domain.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.web.user.dto.request.UserCreateRequest;
 import com.inq.wishhair.wesharewishhair.web.user.dto.response.MyPageResponse;
+import com.inq.wishhair.wesharewishhair.web.user.dto.response.PointResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,5 +42,17 @@ public class UserController {
         MyPageResponse myPageResponse = new MyPageResponse(sessionDto, recentPointHistory);
 
         return ResponseEntity.ok(myPageResponse);
+    }
+
+    @GetMapping("/user/point")
+    public ResponseEntity<List<PointResponse>> getPointHistories(
+            Pageable pageable,
+            @SessionAttribute(SessionConst.LONGIN_MEMBER) UserSessionDto sessionDto) {
+
+        List<PointResponse> pointResponses = pointHistoryService.getPointHistories(sessionDto.getId(), pageable)
+                .stream()
+                .map(PointResponse::new)
+                .toList();
+        return ResponseEntity.ok(pointResponses);
     }
 }
