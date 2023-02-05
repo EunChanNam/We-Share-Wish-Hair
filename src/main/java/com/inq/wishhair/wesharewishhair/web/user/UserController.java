@@ -4,10 +4,7 @@ import com.inq.wishhair.wesharewishhair.domain.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.web.user.dto.request.UserCreateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
