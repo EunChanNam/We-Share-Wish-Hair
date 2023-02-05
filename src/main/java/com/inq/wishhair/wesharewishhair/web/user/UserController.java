@@ -30,7 +30,7 @@ public class UserController {
                 .build();
     }
 
-    @GetMapping("/my_page")
+    @GetMapping("/user/my_page")
     public ResponseEntity<MyPageResponse> getMyPageInfo(
             @SessionAttribute(SessionConst.LONGIN_MEMBER) UserSessionDto sessionDto) {
 
