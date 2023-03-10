@@ -23,13 +23,13 @@ public enum UserFixture {
 
     private final Sex sex;
 
-    public User toEntity(UserFixture fixture) {
+    public User toEntity() {
         return User.builder()
-                .loginId(fixture.loginId)
-                .pw(fixture.getPw())
-                .name(fixture.getName())
-                .nickname(fixture.getNickname())
-                .sex(fixture.getSex())
+                .loginId(loginId)
+                .pw(getPw())
+                .name(getName())
+                .nickname(getNickname())
+                .sex(getSex())
                 .build();
     }
 }

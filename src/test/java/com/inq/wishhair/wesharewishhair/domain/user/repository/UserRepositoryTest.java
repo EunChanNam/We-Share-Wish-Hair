@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.domain.user.repository;
 
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import com.inq.wishhair.wesharewishhair.domain.user.enums.Sex;
+import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -13,15 +14,8 @@ class UserRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    void saveTest() {
-        User userA = User.builder()
-                .loginId("testA")
-                .pw("test@")
-                .nickname("userA")
-                .name("userA")
-                .sex(Sex.MAN)
-                .build();
+    void userSaveTest() {
+        User user = UserFixture.A.toEntity();
 
-        userRepository.save(userA);
     }
 }
