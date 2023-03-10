@@ -1,11 +1,8 @@
 package com.inq.wishhair.wesharewishhair.domain.user.repository;
 
 import com.inq.wishhair.wesharewishhair.domain.user.User;
-import com.inq.wishhair.wesharewishhair.domain.user.enums.Sex;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
@@ -20,17 +17,24 @@ class UserRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Test
-    @DisplayName("회원 저장 테스트")
-    void userSaveTest() {
-        User userA = UserFixture.A.toEntity();
-        User userB = UserFixture.B.toEntity();
-        User userC = UserFixture.C.toEntity();
+    private User userA;
+    private User userB;
+    private User userC;
+
+    @BeforeEach
+    void saveUsers() {
+        userA = UserFixture.A.toEntity();
+        userB = UserFixture.B.toEntity();
+        userC = UserFixture.C.toEntity();
 
         userRepository.save(userA);
         userRepository.save(userB);
         userRepository.save(userC);
+    }
 
+    @Test
+    @DisplayName("회원 저장 테스트")
+    void userSaveTest() {
         User findUserA = userRepository.findById(userA.getId()).get();
         User findUserB = userRepository.findById(userB.getId()).get();
         User findUserC = userRepository.findById(userC.getId()).get();
@@ -42,5 +46,17 @@ class UserRepositoryTest {
         );
     }
 
+    @Test
+    @DisplayName("로그인 아이디로 회원 조회 테스트")
+    void findByLoginIdTest() {
+        User findUserA = userRepository.findByLoginId(this.userA.getLoginId()).get();
+        User findUserB = userRepository.findByLoginId(this.userB.getLoginId()).get();
+        User findUserC = userRepository.findByLoginId(this.userC.getLoginId()).get();
 
+        assertAll(
+                () -> assertThat(findUserA.getPw()).isEqualTo(findUserA.getPw()),
+                () -> assertThat(findUserB.getPw()).isEqualTo(findUserB.getPw()),
+                () -> assertThat(userC.getPw()).isEqualTo(findUserC.getPw())
+        );
+    }
 }
