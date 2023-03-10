@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/wishhair-db-test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        default_batch_fetch_size: 100
+        format_sql: true # ddl을 이쁘게 하려고 킴
+    open-in-view: false
+
+file:
+  dir : /Users/eunchan/Desktop/Projects/we-share-wish-hair/src/main/resources/static/images/review/
