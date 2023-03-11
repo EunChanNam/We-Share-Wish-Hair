@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.common.testbase;
+package com.inq.wishhair.wesharewishhair.common.base;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

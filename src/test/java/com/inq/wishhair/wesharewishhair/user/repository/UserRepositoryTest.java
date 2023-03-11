@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.repository;
 
-import com.inq.wishhair.wesharewishhair.common.testbase.RepositoryTest;
+import com.inq.wishhair.wesharewishhair.common.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import com.inq.wishhair.wesharewishhair.domain.user.repository.UserRepository;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;

@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
-import com.inq.wishhair.wesharewishhair.common.testbase.ControllerTest;
+import com.inq.wishhair.wesharewishhair.common.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.UserCreateRequestUtils;
 import com.inq.wishhair.wesharewishhair.web.user.dto.request.UserCreateRequest;
 import org.junit.jupiter.api.DisplayName;

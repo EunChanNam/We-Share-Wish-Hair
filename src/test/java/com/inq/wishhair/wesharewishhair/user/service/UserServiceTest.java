@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
-import com.inq.wishhair.wesharewishhair.common.testbase.ServiceTest;
+import com.inq.wishhair.wesharewishhair.common.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import com.inq.wishhair.wesharewishhair.domain.user.service.UserService;

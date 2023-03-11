@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.common.testbase;
+package com.inq.wishhair.wesharewishhair.common.base;
 
 import com.inq.wishhair.wesharewishhair.WeShareWishHairApplication;
 import com.inq.wishhair.wesharewishhair.common.testrepository.PointHistoryTestRepository;

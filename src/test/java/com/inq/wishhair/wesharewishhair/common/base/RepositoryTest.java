@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.common.testbase;
+package com.inq.wishhair.wesharewishhair.common.base;
 
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
