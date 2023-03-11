@@ -5,4 +5,7 @@
     <string name="review_plus_button">review_plus_button</string>
     <string name="centerDot"> · </string>
     <string name="review_recent_item_btn"><![CDATA[전체보기 >]]></string>
+    <string name="review_filter_whole">전체</string>
+    <string name="review_filter_man">남성</string>
+    <string name="review_filter_woman">여성</string>
 </resources>

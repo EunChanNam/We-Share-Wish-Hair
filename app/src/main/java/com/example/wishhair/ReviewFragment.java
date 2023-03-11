@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.example.wishhair.recyclerView.RecyclerViewAdapterRecent;
 import com.example.wishhair.recyclerView.RecyclerViewItem;
@@ -17,18 +19,26 @@ import com.example.wishhair.recyclerView.RecyclerViewItem;
 import java.util.ArrayList;
 
 public class ReviewFragment extends Fragment {
-// recyclerView 내용 업데이트 및 갱신 : https://kadosholy.tistory.com/55
+// recyclerView 내용 업데이트 및 갱신
+// https://kadosholy.tistory.com/55
+// https://velog.io/@yamamamo/%EC%95%88%EB%93%9C%EB%A1%9C%EC%9D%B4%EB%93%9C-%EC%A0%84%ED%99%94%EB%B2%88%ED%98%B8%EB%B6%80%EC%95%B12-%EB%A6%AC%EC%82%AC%EC%9D%B4%ED%81%B4%EB%9F%AC%EB%B7%B0-%EC%95%84%EC%9D%B4%ED%85%9C-%ED%81%B4%EB%A6%AD-%EC%88%98%EC%A0%95-%EC%82%AD%EC%A0%9C
 
     public ReviewFragment() {
         // Required empty public constructor
         }
 
     ArrayList<RecyclerViewItem> recentRecyclerViewItems;
-
+    RadioGroup filter;
+    RadioButton filter_whole, filter_man, filter_woman;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_review, container, false);
+
+        filter = v.findViewById(R.id.review_fragment_filter_radioGroup);
+        filter_whole = v.findViewById(R.id.review_fragment_filter_whole);
+        filter_man = v.findViewById(R.id.review_fragment_filter_man);
+        filter_man = v.findViewById(R.id.review_fragment_filter_woman);
 
         RecyclerView recentRecyclerView = v.findViewById(R.id.review_recyclerView_recent);
         recentRecyclerViewItems = new ArrayList<>();

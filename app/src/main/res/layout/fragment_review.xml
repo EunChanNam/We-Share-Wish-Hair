@@ -23,12 +23,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-            <TextView
-                android:id="@+id/review_textView_recent"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="채신 게시물"/>
+
+                <RadioGroup
+                    android:id="@+id/review_fragment_filter_radioGroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/review_fragment_filter_whole"
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="5dp"
+                        android:button="@null"
+                        android:background="@drawable/review_radio_button"
+                        android:text="@string/review_filter_whole"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:checked="true"/>
+                    <RadioButton
+                        android:id="@+id/review_fragment_filter_man"
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:layout_marginEnd="5dp"
+                        android:button="@null"
+                        android:background="@drawable/review_radio_button"
+                        android:text="@string/review_filter_man"
+                        android:textColor="@color/white"
+                        android:gravity="center"/>
+                    <RadioButton
+                        android:id="@+id/review_fragment_filter_woman"
+                        android:layout_width="50dp"
+                        android:layout_height="20dp"
+                        android:button="@null"
+                        android:background="@drawable/review_radio_button"
+                        android:text="@string/review_filter_woman"
+                        android:textColor="@color/white"
+                        android:gravity="center"/>
+                </RadioGroup>
+
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/review_recyclerView_recent"
