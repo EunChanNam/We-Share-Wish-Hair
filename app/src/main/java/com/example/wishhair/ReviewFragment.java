@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.wishhair.recyclerView.RecyclerViewAdapterHot;
 import com.example.wishhair.recyclerView.RecyclerViewAdapterRecent;
 import com.example.wishhair.recyclerView.RecyclerViewItem;
 
@@ -22,9 +21,8 @@ public class ReviewFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private RecyclerView hotRecyclerView, recentRecyclerView;
-    private ArrayList<RecyclerViewItem> hotRecyclerViewItems, recentRecyclerViewItems;
-    private RecyclerViewAdapterHot hotRecyclerViewAdapter;
+    private RecyclerView recentRecyclerView;
+    private ArrayList<RecyclerViewItem> recentRecyclerViewItems;
     private RecyclerViewAdapterRecent recentRecyclerViewAdapter;
 
     @Override
@@ -32,23 +30,15 @@ public class ReviewFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_review, container, false);
 
-        hotRecyclerView = v.findViewById(R.id.review_recyclerView_hot);
-        hotRecyclerViewItems = new ArrayList<>();
         recentRecyclerView = v.findViewById(R.id.review_recyclerView_recent);
         recentRecyclerViewItems = new ArrayList<>();
 
         //===============================dummy data===============================
-        for (int i=0;i<5;i++){
-            addItemHot("thumbnail", "title" + i, "description");
-        }
+
 
         for (int i=0;i<5;i++){
             addItemRecent("thumbnail", "title" + i, "descriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescriptiondescription");
         }
-
-        hotRecyclerViewAdapter = new RecyclerViewAdapterHot(hotRecyclerViewItems);
-        hotRecyclerView.setAdapter(hotRecyclerViewAdapter);
-        hotRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
 
         recentRecyclerViewAdapter = new RecyclerViewAdapterRecent(recentRecyclerViewItems);
         recentRecyclerView.setAdapter(recentRecyclerViewAdapter);
@@ -56,15 +46,7 @@ public class ReviewFragment extends Fragment {
 
         return v;
     }
-    public void addItemHot(String thumbnail, String title, String description) {
-        RecyclerViewItem item = new RecyclerViewItem();
 
-        item.setThumbnail(thumbnail);
-        item.setTitle(title);
-        item.setDescription(description);
-
-        hotRecyclerViewItems.add(item);
-    }
     public void addItemRecent(String thumbnail, String title, String description) {
         RecyclerViewItem item = new RecyclerViewItem();
 

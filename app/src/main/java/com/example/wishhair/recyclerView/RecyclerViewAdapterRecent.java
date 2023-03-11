@@ -17,14 +17,19 @@ import java.util.ArrayList;
 public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerViewAdapterRecent.ViewHolder> {
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView thumbnailImageView;
-        TextView title, description;
+        ImageView profileImage, contentImage1, contentImage2;
+        TextView nickname, authorReviewCount, authorAvgGrade, content, grade, heart;
         ViewHolder(View itemView) {
             super(itemView);
-
-            thumbnailImageView = itemView.findViewById(R.id.item_review_recent_imageView_Thumbnail);
-            title = itemView.findViewById(R.id.item_review_recent_textView_title);
-            description = itemView.findViewById(R.id.item_review_recent_textView_description);
+            profileImage = itemView.findViewById(R.id.review_recent_profile_image);
+            contentImage1 = itemView.findViewById(R.id.review_recent_contentImage1);
+            contentImage2 = itemView.findViewById(R.id.review_recent_contentImage2);
+            nickname = itemView.findViewById(R.id.review_recent_tv_name);
+            authorAvgGrade = itemView.findViewById(R.id.review_recent_tv_authorAvgGrade);
+            authorReviewCount = itemView.findViewById(R.id.review_recent_tv_reviewCount);
+            content = itemView.findViewById(R.id.review_recent_tv_content);
+            grade = itemView.findViewById(R.id.review_recent_tv_grade);
+            heart = itemView.findViewById(R.id.review_recent_imageBtn_heart);
         }
     }
 
@@ -49,9 +54,8 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RecyclerViewItem item = recyclerViewItems.get(position);
 
-        holder.thumbnailImageView.setImageResource(R.drawable.home);
-        holder.title.setText(item.getTitle());
-        holder.description.setText(item.getDescription());
+        holder.profileImage.setImageResource(R.drawable.user_sample);
+
     }
 
     @Override
