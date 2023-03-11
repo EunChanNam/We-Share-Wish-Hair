@@ -1,12 +1,11 @@
 package com.inq.wishhair.wesharewishhair.user.repository;
 
-import com.inq.wishhair.wesharewishhair.common.RepositoryTest;
+import com.inq.wishhair.wesharewishhair.common.testbase.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import com.inq.wishhair.wesharewishhair.domain.user.repository.UserRepository;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;

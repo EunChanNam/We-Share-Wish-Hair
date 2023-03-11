@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.point.repository;
+package com.inq.wishhair.wesharewishhair.common.testrepository;
 
 import com.inq.wishhair.wesharewishhair.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.domain.user.User;

@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.common;
+package com.inq.wishhair.wesharewishhair.common.testbase;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inq.wishhair.wesharewishhair.domain.user.service.UserService;

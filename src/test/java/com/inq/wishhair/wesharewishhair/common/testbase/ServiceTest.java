@@ -1,7 +1,7 @@
-package com.inq.wishhair.wesharewishhair.common;
+package com.inq.wishhair.wesharewishhair.common.testbase;
 
 import com.inq.wishhair.wesharewishhair.WeShareWishHairApplication;
-import com.inq.wishhair.wesharewishhair.point.repository.PointHistoryTestRepository;
+import com.inq.wishhair.wesharewishhair.common.testrepository.PointHistoryTestRepository;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest(classes = {WeShareWishHairApplication.class, PointHistoryTestRepository.class})
