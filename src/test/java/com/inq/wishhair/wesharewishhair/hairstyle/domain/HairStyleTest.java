@@ -4,7 +4,6 @@ import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,21 +17,21 @@ public class HairStyleTest {
     @DisplayName("HairStyle 생성 메서드 테스트")
     void createHairStyleTest() {
         //given
-        HairStyleFixture A = HairStyleFixture.MAN;
+        HairStyleFixture B = HairStyleFixture.B;
 
         //when -> toEntity() 안에 생성 메서드 포함
-        HairStyle hairStyle = A.toEntity();
+        HairStyle hairStyle = B.toEntity();
 
         //then
         assertAll(
-                () -> assertThat(hairStyle.getName()).isEqualTo(A.getName()),
-                () -> assertThat(hairStyle.getSex()).isEqualTo(A.getSex()),
+                () -> assertThat(hairStyle.getName()).isEqualTo(B.getName()),
+                () -> assertThat(hairStyle.getSex()).isEqualTo(B.getSex()),
                 () -> assertThat(hairStyle.getPhotos().stream()
                         .map(Photo::getOriginalFilename).toList())
-                        .containsAll(A.getOriginalFilenames()),
+                        .containsAll(B.getOriginalFilenames()),
                 () -> assertThat(hairStyle.getHashTags().stream()
                         .map(HashTag::getTag).toList())
-                        .containsAll(A.getTags())
+                        .containsAll(B.getTags())
         );
 
     }
