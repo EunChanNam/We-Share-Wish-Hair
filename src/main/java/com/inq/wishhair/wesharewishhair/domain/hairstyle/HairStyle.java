@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.domain.hairstyle;
 
 
+import com.inq.wishhair.wesharewishhair.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.domain.user.enums.Sex;
 import jakarta.persistence.*;
@@ -27,6 +28,11 @@ public class HairStyle {
             cascade = CascadeType.ALL,
             orphanRemoval = true) // 사진을 값타입 컬렉션 처럼 사용
     private List<Photo> photos = new ArrayList<>();
+
+    @OneToMany(mappedBy = "hairStyle",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true) // 해쉬태그를 값타입 컬렉션 처럼 사용
+    private List<HashTag> hashTags = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Sex sex;
