@@ -11,10 +11,11 @@ public class RecyclerViewItem {
     private String content;
     private String grade;
     private String heart;
+    private String date;
 
     public RecyclerViewItem() {}
 
-    public RecyclerViewItem(String profileImage, String nickname, String authorReviewCount, String authorAvgGrade, String contentImage1, String contentImage2, String content, String grade, String heart) {
+    public RecyclerViewItem(String profileImage, String nickname, String authorReviewCount, String authorAvgGrade, String contentImage1, String contentImage2, String content, String grade, String heart, String date) {
         this.profileImage = profileImage;
         this.nickname = nickname;
         this.authorReviewCount = authorReviewCount;
@@ -24,6 +25,7 @@ public class RecyclerViewItem {
         this.content = content;
         this.grade = grade;
         this.heart = heart;
+        this.date = date;
     }
 
     public String getProfileImage() {
@@ -96,5 +98,13 @@ public class RecyclerViewItem {
 
     public void setHeart(String heart) {
         this.heart = heart;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

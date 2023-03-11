@@ -130,7 +130,10 @@
         android:id="@+id/review_recent_tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/review_recent_rl_grade"/>
+        android:layout_below="@id/review_recent_rl_grade"
+        android:ems="100"
+        android:maxLines="2"
+        android:ellipsize="end"/>
 <!--    Button_view -->
     <TextView
         android:layout_width="wrap_content"

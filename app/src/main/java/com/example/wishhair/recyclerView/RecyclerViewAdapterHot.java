@@ -51,8 +51,6 @@ public class RecyclerViewAdapterHot extends RecyclerView.Adapter<RecyclerViewAda
         RecyclerViewItem item = recyclerViewItems.get(position);
 
         holder.thumbnailImageView.setImageResource(R.drawable.home);
-        holder.title.setText(item.getTitle());
-        holder.description.setText(item.getDescription());
     }
 
     @Override
