@@ -1,14 +1,37 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.inq.wishhair.wesharewishhair.common.testbase.ControllerTest;
-import com.inq.wishhair.wesharewishhair.domain.user.User;
-import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
-import org.junit.jupiter.api.BeforeEach;
+import com.inq.wishhair.wesharewishhair.user.controller.utils.UserCreateRequestUtils;
+import com.inq.wishhair.wesharewishhair.web.user.dto.request.UserCreateRequest;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.mockito.BDDMockito.given;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+@DisplayName("UserControllerTest - Mock")
 public class UserControllerTest extends ControllerTest {
 
-    @BeforeEach
-    void init() {
-        User userA = UserFixture.A.toEntity();
+    private static final String JOIN_URL = "/api/user";
+
+    @Test
+    @DisplayName("성공적인 회원가입 테스트")
+    void successCreateUserTest() throws Exception {
+
+        UserCreateRequest request = UserCreateRequestUtils.createRequest();
+        given(userService.createUser(request.toEntity())).willReturn(1L);
+
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post(JOIN_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(getJsonAsString(request));
+
+        mockMvc.perform(requestBuilder)
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$").doesNotExist());
     }
 }

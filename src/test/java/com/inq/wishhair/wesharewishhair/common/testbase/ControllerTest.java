@@ -1,6 +1,8 @@
 package com.inq.wishhair.wesharewishhair.common.testbase;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.inq.wishhair.wesharewishhair.domain.point.service.PointHistoryService;
 import com.inq.wishhair.wesharewishhair.domain.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.web.user.UserController;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,4 +21,11 @@ public abstract class ControllerTest {
 
     @MockBean
     protected UserService userService;
+
+    @MockBean
+    protected PointHistoryService pointService;
+
+    protected String getJsonAsString(Object target) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(target);
+    }
 }
