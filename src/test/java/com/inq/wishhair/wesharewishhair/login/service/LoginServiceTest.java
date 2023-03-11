@@ -53,4 +53,16 @@ public class LoginServiceTest extends ServiceTest {
                 .isInstanceOf(WishHairException.class)
                 .hasMessageContaining(errorCode.getMessage());
     }
+
+    @Test
+    @DisplayName("잘못된 비밀번호로 로그인 실패")
+    void loginFailByPw() {
+
+        ErrorCode errorCode = ErrorCode.LOGIN_FAIL;
+
+        //when and then
+        assertThatThrownBy(() -> loginService.login(user.getLoginId(), user.getPw() + "fail"))
+                .isInstanceOf(WishHairException.class)
+                .hasMessageContaining(errorCode.getMessage());
+    }
 }
