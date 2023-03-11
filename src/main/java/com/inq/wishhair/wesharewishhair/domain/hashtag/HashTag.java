@@ -32,4 +32,9 @@ public class HashTag {
     public static HashTag from(HairStyle hairStyle, Tag tag) {
         return new HashTag(tag, hairStyle);
     }
+
+    //==편의 메서드==//
+    public void registerHairStyle(HairStyle hairStyle) {
+        this.hairStyle = hairStyle;
+    }
 }

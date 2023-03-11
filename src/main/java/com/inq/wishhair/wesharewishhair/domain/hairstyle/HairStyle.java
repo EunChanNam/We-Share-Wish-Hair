@@ -38,14 +38,17 @@ public class HairStyle {
     private Sex sex;
 
     //==생성 메서드==//
-    private HairStyle(String name, Sex sex, List<Photo> photos) {
+    private HairStyle(String name, Sex sex, List<Photo> photos, List<HashTag> hashTags) {
         this.name = name;
         this.sex = sex;
         photos.forEach(photo -> photo.registerHairStyle(this));
+        hashTags.forEach(hashTag -> hashTag.registerHairStyle(this));
         this.photos.addAll(photos);
+        this.hashTags.addAll(hashTags);
     }
 
-    public static HairStyle createHairStyle(String name, Sex sex, List<Photo> photos) {
-        return new HairStyle(name, sex, photos);
+    public static HairStyle createHairStyle(
+            String name, Sex sex, List<Photo> photos, List<HashTag> hashTags) {
+        return new HairStyle(name, sex, photos, hashTags);
     }
 }
