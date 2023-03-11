@@ -30,4 +30,15 @@ public class HairStyle {
 
     @Enumerated(EnumType.STRING)
     private Sex sex;
+
+    //==생성 메서드==//
+    private HairStyle(String name, Sex sex, List<Photo> photos) {
+        this.name = name;
+        this.sex = sex;
+        this.photos = photos;
+    }
+
+    public static HairStyle createHairStyle(String name, Sex sex, List<Photo> photos) {
+        return new HairStyle(name, sex, photos);
+    }
 }
