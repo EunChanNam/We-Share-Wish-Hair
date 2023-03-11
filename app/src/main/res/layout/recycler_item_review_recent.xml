@@ -98,8 +98,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_below="@id/review_recent_image">
-        <ImageButton
-            android:id="@+id/review_recent_imageBtn_gradeMark"
+        <ImageView
+            android:id="@+id/review_recent_imageView_gradeMark"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="5dp"
@@ -108,15 +108,13 @@
             android:id="@+id/review_recent_tv_grade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/review_recent_imageBtn_gradeMark"
+            android:layout_toEndOf="@id/review_recent_imageView_gradeMark"
             android:text="500"/>
-
-        <ImageButton
-            android:id="@+id/review_recent_imageBtn_heart"
+        <ImageView
+            android:id="@+id/review_recent_imageView_isHeart"
             android:layout_width="20dp"
             android:layout_height="20dp"
             android:layout_marginEnd="5dp"
-            android:background="@drawable/heart_empty"
             android:layout_toStartOf="@id/review_recent_tv_heartCount"/>
         <TextView
             android:id="@+id/review_recent_tv_heartCount"
@@ -135,14 +133,15 @@
         android:maxLines="2"
         android:ellipsize="end"/>
 <!--    Button_view -->
-    <TextView
+    <Button
+        android:id="@+id/review_recent_Button_viewContent"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:layout_alignParentEnd="true"
         android:layout_below="@id/review_recent_tv_content"
         android:text="@string/review_recent_item_btn"
-        android:clickable="true"
-        android:focusable="true"/>
+        style="?android:borderlessButtonStyle"
+        android:textColor="@color/black" />
 
 </RelativeLayout>
