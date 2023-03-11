@@ -24,13 +24,12 @@ public class HashTag {
     private HairStyle hairStyle;
 
     //==생성 메서드==//
-    private HashTag(Tag tag, HairStyle hairStyle) {
+    private HashTag(Tag tag) {
         this.tag = tag;
-        this.hairStyle = hairStyle;
     }
 
-    public static HashTag from(HairStyle hairStyle, Tag tag) {
-        return new HashTag(tag, hairStyle);
+    public static HashTag of(Tag tag) {
+        return new HashTag(tag);
     }
 
     //==편의 메서드==//

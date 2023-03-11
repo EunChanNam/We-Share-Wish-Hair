@@ -30,9 +30,13 @@ public class Photo {
     private String storeFilename;
 
     //==생성 메서드==//
-    public Photo(String originalFilename, String storeFilename) {
+    private Photo(String originalFilename, String storeFilename) {
         this.originalFilename = originalFilename;
         this.storeFilename = storeFilename;
+    }
+
+    public static Photo of(String originalFilename, String storeFilename) {
+        return new Photo(originalFilename, storeFilename);
     }
 
     //==편의 메서드==//

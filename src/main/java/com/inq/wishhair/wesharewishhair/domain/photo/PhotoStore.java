@@ -45,7 +45,7 @@ public class PhotoStore {
             } catch (IOException e) {
                 throw new WishHairException(ErrorCode.FILE_TRANSFER_EX);
             }
-            return new Photo(originalFilename, storeFilename);
+            return Photo.of(originalFilename, storeFilename);
         } else throw new WishHairException(ErrorCode.EMPTY_FILE_EX);
     }
 
