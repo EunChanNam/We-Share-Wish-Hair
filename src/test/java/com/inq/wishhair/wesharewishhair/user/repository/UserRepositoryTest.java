@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.repository;
 
+import com.inq.wishhair.wesharewishhair.common.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import com.inq.wishhair.wesharewishhair.domain.user.repository.UserRepository;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
@@ -11,9 +12,8 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-@DataJpaTest
 @DisplayName("UserRepository Test")
-class UserRepositoryTest {
+class UserRepositoryTest extends RepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
