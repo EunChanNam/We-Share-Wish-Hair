@@ -30,5 +30,4 @@ public class HairStyle {
 
     @Enumerated(EnumType.STRING)
     private Sex sex;
-
 }
