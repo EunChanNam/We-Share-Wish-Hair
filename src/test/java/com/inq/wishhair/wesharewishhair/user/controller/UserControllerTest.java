@@ -1,6 +1,5 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.inq.wishhair.wesharewishhair.common.testbase.ControllerTest;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.UserCreateRequestUtils;
 import com.inq.wishhair.wesharewishhair.web.user.dto.request.UserCreateRequest;
