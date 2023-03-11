@@ -1,23 +1,21 @@
-package com.example.wishhair;
+package com.example.wishhair.MyPage;
 
-import android.content.Context;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.wishhair.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link InformationModifyFragment#newInstance} factory method to
+ * Use the {@link MyPointCoupon#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class InformationModifyFragment extends Fragment {
+public class MyPointCoupon extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,31 +26,8 @@ public class InformationModifyFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    MainActivity mainActivity;
-
-    public InformationModifyFragment() {
+    public MyPointCoupon() {
         // Required empty public constructor
-    }
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        Toolbar toolbar = getView().findViewById(R.id.toolbar);
-
-        toolbar.setNavigationIcon(R.drawable.back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainActivity.ChangeFragment(1);
-            }
-        });
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        mainActivity = (MainActivity) getActivity();
     }
 
     /**
@@ -61,14 +36,11 @@ public class InformationModifyFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment InformationModifyFragment.
+     * @return A new instance of fragment MyPointCoupon.
      */
-
-
-
     // TODO: Rename and change types and number of parameters
-    public static InformationModifyFragment newInstance(String param1, String param2) {
-        InformationModifyFragment fragment = new InformationModifyFragment();
+    public static MyPointCoupon newInstance(String param1, String param2) {
+        MyPointCoupon fragment = new MyPointCoupon();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -89,6 +61,6 @@ public class InformationModifyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_information_modify, container, false);
+        return inflater.inflate(R.layout.fragment_my_point_coupon, container, false);
     }
 }

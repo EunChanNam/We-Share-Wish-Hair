@@ -1,4 +1,4 @@
-package com.example.wishhair;
+package com.example.wishhair.MyPage;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,6 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import androidx.appcompat.widget.Toolbar;
+
+import com.example.wishhair.MainActivity;
+import com.example.wishhair.R;
 
 /**
  * A simple {@link Fragment} subclass.

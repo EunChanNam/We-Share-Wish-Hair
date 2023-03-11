@@ -1,4 +1,4 @@
-package com.example.wishhair;
+package com.example.wishhair.MyPage;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,12 +12,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.wishhair.MainActivity;
+import com.example.wishhair.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MySelectionlistFragment#newInstance} factory method to
+ * Use the {@link MyStyleFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MySelectionlistFragment extends Fragment {
+public class MyStyleFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,7 +33,7 @@ public class MySelectionlistFragment extends Fragment {
 
     MainActivity mainActivity;
 
-    public MySelectionlistFragment() {
+    public MyStyleFragment() {
         // Required empty public constructor
     }
 
@@ -40,11 +43,11 @@ public class MySelectionlistFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MySelectionlistFragment.
+     * @return A new instance of fragment MyStyleFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MySelectionlistFragment newInstance(String param1, String param2) {
-        MySelectionlistFragment fragment = new MySelectionlistFragment();
+    public static MyStyleFragment newInstance(String param1, String param2) {
+        MyStyleFragment fragment = new MyStyleFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -86,6 +89,6 @@ public class MySelectionlistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_selectionlist, container, false);
+        return inflater.inflate(R.layout.fragment_my_style, container, false);
     }
 }

@@ -1,7 +1,6 @@
-package com.example.wishhair;
+package com.example.wishhair.MyPage;
 
 import android.content.Context;
-import android.graphics.Point;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,23 +8,19 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.PopupMenu;
-import android.widget.ToggleButton;
-
 import androidx.appcompat.widget.Toolbar;
+
+import com.example.wishhair.MainActivity;
+import com.example.wishhair.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MyInformationFragment#newInstance} factory method to
+ * Use the {@link MySelectionlistFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MyInformationFragment extends Fragment {
+public class MySelectionlistFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -38,7 +33,7 @@ public class MyInformationFragment extends Fragment {
 
     MainActivity mainActivity;
 
-    public MyInformationFragment() {
+    public MySelectionlistFragment() {
         // Required empty public constructor
     }
 
@@ -48,11 +43,11 @@ public class MyInformationFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment MyInformationFragment.
+     * @return A new instance of fragment MySelectionlistFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MyInformationFragment newInstance(String param1, String param2) {
-        MyInformationFragment fragment = new MyInformationFragment();
+    public static MySelectionlistFragment newInstance(String param1, String param2) {
+        MySelectionlistFragment fragment = new MySelectionlistFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,15 +59,6 @@ public class MyInformationFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mainActivity = (MainActivity) getActivity();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -88,21 +74,21 @@ public class MyInformationFragment extends Fragment {
                 mainActivity.ChangeFragment(2);
             }
         });
+    }
 
-        Button toInformationModify = view.findViewById(R.id.toInformationModify);
-        toInformationModify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainActivity.ChangeFragment(5);
-            }
-        });
-
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_information, container, false);
+        return inflater.inflate(R.layout.fragment_my_selectionlist, container, false);
     }
 }

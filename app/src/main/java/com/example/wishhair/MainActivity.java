@@ -3,14 +3,17 @@ package com.example.wishhair;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.wishhair.MyPage.InformationModifyFragment;
+import com.example.wishhair.MyPage.MyInformationFragment;
+import com.example.wishhair.MyPage.MyPageFragment;
+import com.example.wishhair.MyPage.MySelectionlistFragment;
+import com.example.wishhair.MyPage.MyStyleFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 

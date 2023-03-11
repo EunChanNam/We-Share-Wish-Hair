@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
-    tools:context=".MyPageFragment">
+    tools:context=".MyPage.MyPageFragment">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -13,7 +13,8 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
         app:title="내 정보 수정"
-        app:titleTextColor="#666666">
+        app:titleTextColor="#666666"
+        app:menu="@menu/toolbar_commit_menu">
 
     </androidx.appcompat.widget.Toolbar>
 
