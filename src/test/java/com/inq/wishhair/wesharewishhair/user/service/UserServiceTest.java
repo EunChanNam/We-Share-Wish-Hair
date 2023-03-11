@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
 import com.inq.wishhair.wesharewishhair.WeShareWishHairApplication;
+import com.inq.wishhair.wesharewishhair.common.ServiceTest;
 import com.inq.wishhair.wesharewishhair.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import com.inq.wishhair.wesharewishhair.domain.user.service.UserService;
@@ -11,14 +12,12 @@ import com.inq.wishhair.wesharewishhair.point.repository.PointHistoryTestReposit
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-@SpringBootTest(classes = {WeShareWishHairApplication.class, PointHistoryTestRepository.class})
 @DisplayName("UserServiceTest - SpringBootTest")
-class UserServiceTest {
+class UserServiceTest extends ServiceTest {
 
     @Autowired
     private UserService userService;
