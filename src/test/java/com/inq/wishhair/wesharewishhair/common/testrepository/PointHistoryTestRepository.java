@@ -4,13 +4,10 @@ import com.inq.wishhair.wesharewishhair.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-
-@Repository
 @RequiredArgsConstructor
 public class PointHistoryTestRepository {
 
@@ -29,5 +26,10 @@ public class PointHistoryTestRepository {
 
     public void save(PointHistory pointHistory) {
         em.persist(pointHistory);
+    }
+
+    public List<PointHistory> findAll() {
+        return em.createQuery("select p from PointHistory p", PointHistory.class)
+                .getResultList();
     }
 }
