@@ -1,9 +1,10 @@
-package com.inq.wishhair.wesharewishhair.domain.user.service;
+package com.inq.wishhair.wesharewishhair.user.service;
 
 import com.inq.wishhair.wesharewishhair.WeShareWishHairApplication;
 import com.inq.wishhair.wesharewishhair.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.domain.point.repository.PointHistoryTestRepository;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
+import com.inq.wishhair.wesharewishhair.domain.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
@@ -25,7 +26,7 @@ class UserServiceTest {
     @Autowired
     private PointHistoryTestRepository pointHistoryTestRepository;
 
-    @Test
+    @Test //todo 포인트 테스트 부분을 분리 해야되는지 확인
     @DisplayName("회원가입 서비스 로직 테스트")
     void createUserTest() {
         User userA = UserFixture.A.toEntity();

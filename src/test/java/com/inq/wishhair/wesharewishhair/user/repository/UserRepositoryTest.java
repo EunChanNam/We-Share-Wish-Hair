@@ -1,6 +1,7 @@
-package com.inq.wishhair.wesharewishhair.domain.user.repository;
+package com.inq.wishhair.wesharewishhair.user.repository;
 
 import com.inq.wishhair.wesharewishhair.domain.user.User;
+import com.inq.wishhair.wesharewishhair.domain.user.repository.UserRepository;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
