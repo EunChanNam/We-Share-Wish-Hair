@@ -39,4 +39,8 @@ public class Photo {
     public void registerReview(Review review) {
         this.review = review;
     }
+
+    public void registerHairStyle(HairStyle hairStyle) {
+        this.hairStyle = hairStyle;
+    }
 }

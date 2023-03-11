@@ -35,7 +35,8 @@ public class HairStyle {
     private HairStyle(String name, Sex sex, List<Photo> photos) {
         this.name = name;
         this.sex = sex;
-        this.photos = photos;
+        photos.forEach(photo -> photo.registerHairStyle(this));
+        this.photos.addAll(photos);
     }
 
     public static HairStyle createHairStyle(String name, Sex sex, List<Photo> photos) {
