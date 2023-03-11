@@ -18,12 +18,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @DisplayName("UserServiceTest - SpringBootTest")
 class UserServiceTest extends ServiceTest {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private PointHistoryTestRepository pointHistoryTestRepository;
-
     @Test //todo 포인트 테스트 부분을 분리 해야되는지 확인
     @DisplayName("회원가입 서비스 로직 테스트")
     void createUserTest() {
