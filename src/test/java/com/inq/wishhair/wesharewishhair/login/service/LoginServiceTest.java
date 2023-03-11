@@ -41,4 +41,16 @@ public class LoginServiceTest extends ServiceTest {
                 () -> assertThat(sessionDto.getName()).isEqualTo(user.getName())
         );
     }
+
+    @Test
+    @DisplayName("잘못된 아이디로 로그인 실패")
+    void loginFailByLoginId() {
+
+        ErrorCode errorCode = ErrorCode.LOGIN_FAIL;
+
+        //when and then
+        assertThatThrownBy(() -> loginService.login(user.getLoginId() + "fail", user.getPw()))
+                .isInstanceOf(WishHairException.class)
+                .hasMessageContaining(errorCode.getMessage());
+    }
 }
