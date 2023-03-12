@@ -9,21 +9,21 @@
 
     <item
         android:id="@+id/bot_nav_recommend"
-        android:icon="@drawable/home"
+        android:icon="@drawable/heart_fill"
         android:title="Ai 추천받기"
         android:enabled="true"
         />
 
     <item
         android:id="@+id/bot_nav_review"
-        android:icon="@drawable/home"
+        android:icon="@drawable/clipboard"
         android:title="후기"
         android:enabled="true"
         />
 
     <item
         android:id="@+id/bot_nav_myPage"
-        android:icon="@drawable/home"
+        android:icon="@drawable/mypage"
         android:title="내 정보"
         android:enabled="true"
         />

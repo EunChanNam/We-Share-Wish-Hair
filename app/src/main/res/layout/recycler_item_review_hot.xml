@@ -9,7 +9,7 @@
         android:id="@+id/item_review_hot_imageView_Thumbnail"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:src="@drawable/home" />
+        android:src="@drawable/user_sample" />
     <TextView
         android:id="@+id/item_review_hot_textView_title"
         android:layout_width="wrap_content"
