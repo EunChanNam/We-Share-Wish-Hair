@@ -14,6 +14,24 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("UserRepository Test")
 class UserRepositoryTest extends RepositoryTest {
 
+    @Autowired
+    protected UserRepository userRepository;
+
+    protected User userA;
+    protected User userB;
+    protected User userC;
+
+    @BeforeEach
+    void saveUsers() {
+        userA = UserFixture.A.toEntity();
+        userB = UserFixture.B.toEntity();
+        userC = UserFixture.C.toEntity();
+
+        userRepository.save(userA);
+        userRepository.save(userB);
+        userRepository.save(userC);
+    }
+
     @Test
     @DisplayName("회원 저장 테스트")
     void userSaveTest() {

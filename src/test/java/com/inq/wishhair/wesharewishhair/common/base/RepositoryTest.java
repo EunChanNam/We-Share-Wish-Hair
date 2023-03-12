@@ -9,22 +9,4 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 @DataJpaTest
 public abstract class RepositoryTest {
-
-    @Autowired
-    protected UserRepository userRepository;
-
-    protected User userA;
-    protected User userB;
-    protected User userC;
-
-    @BeforeEach
-    void saveUsers() {
-        userA = UserFixture.A.toEntity();
-        userB = UserFixture.B.toEntity();
-        userC = UserFixture.C.toEntity();
-
-        userRepository.save(userA);
-        userRepository.save(userB);
-        userRepository.save(userC);
-    }
 }
