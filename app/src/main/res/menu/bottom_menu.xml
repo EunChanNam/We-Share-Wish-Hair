@@ -27,6 +27,4 @@
         android:title="내 정보"
         android:enabled="true"
         />
-
-
 </menu>
