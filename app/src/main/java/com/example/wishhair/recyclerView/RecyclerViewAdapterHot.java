@@ -29,10 +29,10 @@ public class RecyclerViewAdapterHot extends RecyclerView.Adapter<RecyclerViewAda
         }
     }
 
-    private ArrayList<RecyclerViewItem> recyclerViewItems = null;
+    private ArrayList<RecentItem> recentItems = null;
 
-    public RecyclerViewAdapterHot(ArrayList<RecyclerViewItem> recyclerViewItems) {
-        this.recyclerViewItems = recyclerViewItems;
+    public RecyclerViewAdapterHot(ArrayList<RecentItem> recentItems) {
+        this.recentItems = recentItems;
     }
 
     @NonNull
@@ -48,14 +48,14 @@ public class RecyclerViewAdapterHot extends RecyclerView.Adapter<RecyclerViewAda
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        RecyclerViewItem item = recyclerViewItems.get(position);
+        RecentItem item = recentItems.get(position);
 
         holder.thumbnailImageView.setImageResource(R.drawable.home);
     }
 
     @Override
     public int getItemCount() {
-        return recyclerViewItems.size();
+        return recentItems.size();
     }
 
 }

@@ -1,22 +1,34 @@
 package com.example.wishhair.recyclerView;
 
-public class RecyclerViewItem {
+public class RecentItem {
 
-    private int profileImage;
-    private String nickname;
-    private String authorReviewCount;
+    // common
     private String authorAvgGrade;
-    private int contentImage1;
-    private int contentImage2;
     private String content;
     private String grade;
-    private boolean isHeart;
     private int heartCount;
     private String date;
 
-    public RecyclerViewItem() {}
+    // recent
+    private int profileImage;
+    private String nickname;
+    private String authorReviewCount;
+    private boolean isHeart;
+    private int contentImage1;
+    private int contentImage2;
 
-    public RecyclerViewItem(int profileImage, String nickname, String authorReviewCount, String authorAvgGrade, int contentImage1, int contentImage2, String content, String grade,boolean isHeart, int heartCount, String date) {
+    // my
+    private int hairImage;
+    private String hairStyle;
+    private String tags;
+    private boolean isPoint;
+
+
+
+
+
+
+    public RecentItem(int profileImage, String nickname, String authorReviewCount, String authorAvgGrade, int contentImage1, int contentImage2, String content, String grade, boolean isHeart, int heartCount, String date) {
         this.profileImage = profileImage;
         this.nickname = nickname;
         this.authorReviewCount = authorReviewCount;

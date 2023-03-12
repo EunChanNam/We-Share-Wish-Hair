@@ -13,7 +13,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.wishhair.recyclerView.RecyclerViewAdapterRecent;
-import com.example.wishhair.recyclerView.RecyclerViewItem;
+import com.example.wishhair.recyclerView.RecentItem;
 
 import java.util.ArrayList;
 
@@ -26,7 +26,7 @@ public class ReviewListFragment extends Fragment {
         // Required empty public constructor
         }
 
-    ArrayList<RecyclerViewItem> recentRecyclerViewItems;
+    ArrayList<RecentItem> recentRecentItems;
     RadioGroup filter;
     RadioButton filter_whole, filter_man, filter_woman;
     @Override
@@ -40,15 +40,15 @@ public class ReviewListFragment extends Fragment {
         filter_woman = v.findViewById(R.id.review_fragment_filter_woman);
 
         RecyclerView recentRecyclerView = v.findViewById(R.id.review_recyclerView_recent);
-        recentRecyclerViewItems = new ArrayList<>();
+        recentRecentItems = new ArrayList<>();
 
         //===============================dummy data===============================
         for (int i=0;i<5;i++){
-            RecyclerViewItem newItem = new RecyclerViewItem(R.drawable.user_sample, "현정" + " 님", "3" + " 개", "3.03", R.drawable.star_fill, R.drawable.heart_fill, " is a root vegetable, typically orange in color, though purple, black, red, white, and yellow cultivars exist,[2][3][4] all of which are domesticated forms of the wild carrot, Daucus carota, native to Europe and Southwestern Asia. The plant probably originated in Persia and was originally cultivated for its leaves and seeds. The most commonly eaten part of the plant is the taproot, although the stems and leaves are also eaten. The domestic carrot has been selectively bred for its enlarged, more palatable, less woody-textured taproot.", "3.8", false, 314+i, "22.05.13");
-            recentRecyclerViewItems.add(newItem);
+            RecentItem newItem = new RecentItem(R.drawable.user_sample, "현정" + " 님", "3" + " 개", "3.03", R.drawable.star_fill, R.drawable.heart_fill, " is a root vegetable, typically orange in color, though purple, black, red, white, and yellow cultivars exist,[2][3][4] all of which are domesticated forms of the wild carrot, Daucus carota, native to Europe and Southwestern Asia. The plant probably originated in Persia and was originally cultivated for its leaves and seeds. The most commonly eaten part of the plant is the taproot, although the stems and leaves are also eaten. The domestic carrot has been selectively bred for its enlarged, more palatable, less woody-textured taproot.", "3.8", false, 314+i, "22.05.13");
+            recentRecentItems.add(newItem);
         }
 
-        RecyclerViewAdapterRecent recentRecyclerViewAdapter = new RecyclerViewAdapterRecent(recentRecyclerViewItems);
+        RecyclerViewAdapterRecent recentRecyclerViewAdapter = new RecyclerViewAdapterRecent(recentRecentItems);
         recentRecyclerView.setAdapter(recentRecyclerViewAdapter);
         recentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 

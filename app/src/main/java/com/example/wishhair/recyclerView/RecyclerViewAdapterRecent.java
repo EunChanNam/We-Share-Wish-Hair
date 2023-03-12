@@ -17,10 +17,10 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerViewAdapterRecent.ViewHolder> {
 
-    private final ArrayList<RecyclerViewItem> recyclerViewItems;
+    private final ArrayList<RecentItem> recentItems;
 
-    public RecyclerViewAdapterRecent(ArrayList<RecyclerViewItem> recyclerViewItems) {
-        this.recyclerViewItems = recyclerViewItems;
+    public RecyclerViewAdapterRecent(ArrayList<RecentItem> recentItems) {
+        this.recentItems = recentItems;
     }
 
     public interface OnItemClickListener {
@@ -44,7 +44,7 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        RecyclerViewItem item = recyclerViewItems.get(position);
+        RecentItem item = recentItems.get(position);
 
         holder.profileImage.setImageResource(item.getProfileImage());
         holder.contentImage1.setImageResource(item.getContentImage1());
@@ -98,6 +98,6 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public int getItemCount() {
-        return recyclerViewItems.size();
+        return recentItems.size();
     }
 }
