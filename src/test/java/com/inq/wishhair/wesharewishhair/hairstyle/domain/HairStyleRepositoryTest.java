@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class HairStyleRepositoryTest extends RepositoryTest {
@@ -32,13 +33,18 @@ public class HairStyleRepositoryTest extends RepositoryTest {
     }
 
     @Test
-    @DisplayName("해시태그가 두개인 헤어스타일을 세개의 해시태그로 조회하면 아무것도 조회되지 않는다.")
-    void findByHashTagsTest() {
+    @DisplayName("가진 해시태그보다 많은 해시태그로 조회 시 헤어스타일이 조회되지 않는다")
+    void overHashTagSizeTest() {
+        //given
+        List<Tag> tags = A.getTags();
+        tags.add(Tag.BANGS);
+
         //when
-        List<Tag> tags = new ArrayList<>(List.of(Tag.NO_PERM, Tag.SHORT, Tag.PERM));
-        List<HairStyle> result = hairStyleRepository.findByHashTags(tags, tags.size(), Sex.MAN);
+        List<HairStyle> result = hairStyleRepository.findByHashTags(tags, tags.size(), A.getSex());
 
         //then
         assertThat(result).isEmpty();
     }
+
+
 }
