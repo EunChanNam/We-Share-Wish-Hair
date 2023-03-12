@@ -35,7 +35,7 @@ public class HairStyleRepositoryTest extends RepositoryTest {
     @DisplayName("해시태그가 두개인 헤어스타일을 세개의 해시태그로 조회하면 아무것도 조회되지 않는다.")
     void findByHashTagsTest() {
         //when
-        List<Tag> tags = new ArrayList<>(List.of(Tag.펌X, Tag.짧은머리, Tag.펌O));
+        List<Tag> tags = new ArrayList<>(List.of(Tag.NO_PERM, Tag.SHORT, Tag.PERM));
         List<HairStyle> result = hairStyleRepository.findByHashTags(tags, tags.size(), Sex.MAN);
 
         //then

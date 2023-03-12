@@ -17,9 +17,11 @@ import java.util.UUID;
 public enum HairStyleFixture {
 
     A("hairStyleA", new ArrayList<>(List.of("test1.png", "test2.png", "test3.png", "test4.png")),
-            new ArrayList<>(List.of(Tag.PERM, Tag.LONG)), Sex.WOMAN),
+            new ArrayList<>(List.of(Tag.PERM, Tag.LONG, Tag.SQUARE, Tag.UPSTAGE)), Sex.WOMAN),
     B("hairStyleB", new ArrayList<>(List.of("test5.png", "test6.png", "test7.png", "test8.png")),
-            new ArrayList<>(List.of(Tag.NO_PERM, Tag.SHORT)), Sex.MAN);
+            new ArrayList<>(List.of(Tag.NO_PERM, Tag.SHORT, Tag.NEAT, Tag.OVAL)), Sex.MAN),
+    C("hairStyleC", new ArrayList<>(List.of("test9.png", "test10.png", "test11.png", "test12.png")),
+            new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.MEDIUM, Tag.FORMAL, Tag.OBLONG)), Sex.MAN);
 
     private final String name;
 
