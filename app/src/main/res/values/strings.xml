@@ -8,4 +8,6 @@
     <string name="review_filter_whole">전체</string>
     <string name="review_filter_man">남성</string>
     <string name="review_filter_woman">여성</string>
+    <string name="review_list">리뷰 목록</string>
+    <string name="review_my">나의 리뷰</string>
 </resources>

@@ -4,7 +4,6 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp">
 
-    <!--todo : set thumbnail, title, description after connect db-->
     <ImageView
         android:id="@+id/item_review_hot_imageView_Thumbnail"
         android:layout_width="100dp"

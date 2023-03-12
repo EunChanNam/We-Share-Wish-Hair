@@ -6,7 +6,6 @@
     android:padding="10dp"
     android:background="@drawable/recycler_item_border">
 
-    <!--todo : set thumbnail, title, description after connect db-->
 <!--    profile-->
     <RelativeLayout
         android:id="@+id/review_recent_item_profile"

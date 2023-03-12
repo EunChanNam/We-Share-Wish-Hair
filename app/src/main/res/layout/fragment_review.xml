@@ -1,87 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".ReviewFragment">
+    tools:context=".ReviewFragment"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@drawable/topbar_border"
-        app:title="사용자 후기"/>
+        app:title="사용자 후기" />
 
-    <LinearLayout
-        android:id="@+id/review_parentLinearLayout"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/review_tabLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="?android:attr/actionBarSize">
+        android:layout_height="wrap_content" >
+    </com.google.android.material.tabs.TabLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/review_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
 
-                <RadioGroup
-                    android:id="@+id/review_fragment_filter_radioGroup"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:orientation="horizontal">
-                    <RadioButton
-                        android:id="@+id/review_fragment_filter_whole"
-                        android:layout_width="50dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="5dp"
-                        android:button="@null"
-                        android:background="@drawable/review_radio_button"
-                        android:text="@string/review_filter_whole"
-                        android:textColor="@color/white"
-                        android:gravity="center"
-                        android:checked="true"/>
-                    <RadioButton
-                        android:id="@+id/review_fragment_filter_man"
-                        android:layout_width="50dp"
-                        android:layout_height="20dp"
-                        android:layout_marginEnd="5dp"
-                        android:button="@null"
-                        android:background="@drawable/review_radio_button"
-                        android:text="@string/review_filter_man"
-                        android:textColor="@color/white"
-                        android:gravity="center"/>
-                    <RadioButton
-                        android:id="@+id/review_fragment_filter_woman"
-                        android:layout_width="50dp"
-                        android:layout_height="20dp"
-                        android:button="@null"
-                        android:background="@drawable/review_radio_button"
-                        android:text="@string/review_filter_woman"
-                        android:textColor="@color/white"
-                        android:gravity="center"/>
-                </RadioGroup>
-
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/review_recyclerView_recent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </androidx.recyclerview.widget.RecyclerView>
-        </LinearLayout>
-    </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/review_floatingButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:layout_gravity="bottom|right"
-        android:src="@drawable/plus"
-        android:contentDescription="@string/review_plus_button">
-
-    </com.google.android.material.floatingactionbutton.FloatingActionButton>
-
-</FrameLayout>
+    </androidx.viewpager2.widget.ViewPager2>
+</LinearLayout>
