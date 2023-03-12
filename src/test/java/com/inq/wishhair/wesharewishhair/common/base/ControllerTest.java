@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.common.base;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.inq.wishhair.wesharewishhair.domain.hairstyle.service.HairStyleService;
 import com.inq.wishhair.wesharewishhair.domain.point.service.PointHistoryService;
 import com.inq.wishhair.wesharewishhair.domain.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.web.user.UserController;
@@ -21,6 +22,9 @@ public abstract class ControllerTest {
 
     @MockBean
     protected UserService userService;
+
+    @MockBean
+    protected HairStyleService hairStyleService;
 
     @MockBean
     protected PointHistoryService pointService;
