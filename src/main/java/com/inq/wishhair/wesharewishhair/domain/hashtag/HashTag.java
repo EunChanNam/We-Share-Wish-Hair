@@ -22,4 +22,18 @@ public class HashTag {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "hair_style_id")
     private HairStyle hairStyle;
+
+    //==생성 메서드==//
+    private HashTag(Tag tag) {
+        this.tag = tag;
+    }
+
+    public static HashTag of(Tag tag) {
+        return new HashTag(tag);
+    }
+
+    //==편의 메서드==//
+    public void registerHairStyle(HairStyle hairStyle) {
+        this.hairStyle = hairStyle;
+    }
 }
