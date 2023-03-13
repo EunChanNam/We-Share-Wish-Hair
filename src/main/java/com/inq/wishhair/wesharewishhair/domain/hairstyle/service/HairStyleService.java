@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Service
@@ -19,9 +20,10 @@ public class HairStyleService {
 
     private final HairStyleRepository hairStyleRepository;
 
-    public List<HairStyle> findRecommendedHairStyle(List<Tag> tags, UserSessionDto sessionDto) {
+    public List<HairStyle> findRecommendedHairStyle(
+            List<Tag> tags, UserSessionDto sessionDto, Pageable pageable) {
 
-        List<HairStyle> hairStyles = hairStyleRepository.findByHashTags(tags, sessionDto.getSex());
+        List<HairStyle> hairStyles = hairStyleRepository.findByHashTags(tags, sessionDto.getSex(), pageable);
         /*지연로딩 데이터 가져오는 부분*/
         if (!hairStyles.isEmpty()) {
             hairStyles.get(0).getPhotos().isEmpty();
