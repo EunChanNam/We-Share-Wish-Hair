@@ -25,13 +25,19 @@ public class HairStyleRepositoryTest extends RepositoryTest {
     @Autowired
     private HairStyleRepository hairStyleRepository;
 
+    private HairStyle a;
+    private HairStyle b;
+    private HairStyle c;
+    private HairStyle d;
+
+
     @BeforeEach
     void init() {
         //given
-        HairStyle a = A.toEntity();
-        HairStyle b = B.toEntity();
-        HairStyle c = C.toEntity();
-        HairStyle d = D.toEntity();
+        a = A.toEntity();
+        b = B.toEntity();
+        c = C.toEntity();
+        d = D.toEntity();
         hairStyleRepository.save(a);
         hairStyleRepository.save(b);
         hairStyleRepository.save(c);
@@ -64,5 +70,21 @@ public class HairStyleRepositoryTest extends RepositoryTest {
         );
     }
 
+    @Test
+    @DisplayName("성별이 맞고 태그가 하나라도 포함되면 해당 헤어스타일은 조회된다")
+    void test2() {
+        //given
+        List<Tag> tags = A.getTags();
+        Sex sex = A.getSex();
+        Pageable pageable = PageRequest.of(0, 4);
 
+        //when
+        List<HairStyle> result = hairStyleRepository.findByHashTags(tags, sex, pageable);
+
+        //then
+        assertAll(
+                () -> assertThat(result.size()).isEqualTo(3),
+                () -> assertThat(result).contains(a, c, d)
+        );
+    }
 }
