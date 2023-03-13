@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp">
+    android:layout_marginBottom="10dp"
+    android:background="@drawable/recycler_item_border">
 <!--    headline-->
     <RelativeLayout
         android:id="@+id/review_my_item_profile"
@@ -11,7 +12,7 @@
         android:layout_margin="10dp">
         <!--            TODO: what is this image-->
         <ImageView
-            android:id="@+id/whatimage"
+            android:id="@+id/hairStyleImage"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginEnd="10dp"
@@ -20,11 +21,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_toEndOf="@id/whatimage"
+            android:layout_toEndOf="@id/hairStyleImage"
             android:layout_centerVertical="true">
 
             <TextView
-                android:id="@+id/review_my_tv_hair"
+                android:id="@+id/review_my_tv_hairStyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="헤어스타일 이름" />

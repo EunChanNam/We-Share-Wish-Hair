@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ReviewListFragment">
+    tools:context=".review.ReviewListFragment">
 
     <LinearLayout
         android:id="@+id/review_parentLinearLayout"
@@ -58,7 +58,7 @@
 
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/review_recyclerView_recent"
+                android:id="@+id/review_recent_recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
             </androidx.recyclerview.widget.RecyclerView>

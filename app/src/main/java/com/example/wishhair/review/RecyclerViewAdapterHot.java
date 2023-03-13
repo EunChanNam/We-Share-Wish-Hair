@@ -1,4 +1,4 @@
-package com.example.wishhair.recyclerView;
+package com.example.wishhair.review;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -29,10 +29,10 @@ public class RecyclerViewAdapterHot extends RecyclerView.Adapter<RecyclerViewAda
         }
     }
 
-    private ArrayList<RecentItem> recentItems = null;
+    private ArrayList<ReviewItem> reviewItems = null;
 
-    public RecyclerViewAdapterHot(ArrayList<RecentItem> recentItems) {
-        this.recentItems = recentItems;
+    public RecyclerViewAdapterHot(ArrayList<ReviewItem> reviewItems) {
+        this.reviewItems = reviewItems;
     }
 
     @NonNull
@@ -48,14 +48,14 @@ public class RecyclerViewAdapterHot extends RecyclerView.Adapter<RecyclerViewAda
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        RecentItem item = recentItems.get(position);
+        ReviewItem item = reviewItems.get(position);
 
         holder.thumbnailImageView.setImageResource(R.drawable.home);
     }
 
     @Override
     public int getItemCount() {
-        return recentItems.size();
+        return reviewItems.size();
     }
 
 }

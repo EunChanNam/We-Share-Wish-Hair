@@ -1,18 +1,19 @@
-package com.example.wishhair.recyclerView;
+package com.example.wishhair.review;
 
-public class RecentItem {
+public class ReviewItem {
 
     // common
-    private String authorAvgGrade;
     private String content;
-    private String grade;
-    private int heartCount;
     private String date;
+    private int heartCount;
+    private String grade;
+
 
     // recent
     private int profileImage;
     private String nickname;
     private String authorReviewCount;
+    private String authorAvgGrade;
     private boolean isHeart;
     private int contentImage1;
     private int contentImage2;
@@ -23,12 +24,7 @@ public class RecentItem {
     private String tags;
     private boolean isPoint;
 
-
-
-
-
-
-    public RecentItem(int profileImage, String nickname, String authorReviewCount, String authorAvgGrade, int contentImage1, int contentImage2, String content, String grade, boolean isHeart, int heartCount, String date) {
+    public ReviewItem(int profileImage, String nickname, String authorReviewCount, String authorAvgGrade, int contentImage1, int contentImage2, String content, String grade, boolean isHeart, int heartCount, String date) {
         this.profileImage = profileImage;
         this.nickname = nickname;
         this.authorReviewCount = authorReviewCount;
@@ -40,6 +36,17 @@ public class RecentItem {
         this.isHeart = isHeart;
         this.heartCount = heartCount;
         this.date = date;
+    }
+
+    public ReviewItem(int hairImage, String hairStyle, String tags, String content, String grade, int heartCount, String date, boolean isPoint) {
+        this.hairImage = hairImage;
+        this.hairStyle = hairStyle;
+        this.tags = tags;
+        this.grade = grade;
+        this.heartCount = heartCount;
+        this.content = content;
+        this.date = date;
+        this.isPoint = isPoint;
     }
 
     public int getProfileImage() {
@@ -110,7 +117,7 @@ public class RecentItem {
         return isHeart;
     }
 
-    public void setIsHeart(boolean isHeart) {
+    public void setHeart(boolean isHeart) {
         this.isHeart = isHeart;
     }
 
@@ -128,5 +135,37 @@ public class RecentItem {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public int getHairImage() {
+        return hairImage;
+    }
+
+    public void setHairImage(int hairImage) {
+        this.hairImage = hairImage;
+    }
+
+    public String getHairStyle() {
+        return hairStyle;
+    }
+
+    public void setHairStyle(String hairStyle) {
+        this.hairStyle = hairStyle;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public boolean getIsPoint() {
+        return isPoint;
+    }
+
+    public void setPoint(boolean point) {
+        isPoint = point;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.wishhair.recyclerView;
+package com.example.wishhair.review;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -17,10 +17,10 @@ import java.util.ArrayList;
 
 public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerViewAdapterRecent.ViewHolder> {
 
-    private final ArrayList<RecentItem> recentItems;
+    private final ArrayList<ReviewItem> reviewItems;
 
-    public RecyclerViewAdapterRecent(ArrayList<RecentItem> recentItems) {
-        this.recentItems = recentItems;
+    public RecyclerViewAdapterRecent(ArrayList<ReviewItem> reviewItems) {
+        this.reviewItems = reviewItems;
     }
 
     public interface OnItemClickListener {
@@ -44,7 +44,7 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        RecentItem item = recentItems.get(position);
+        ReviewItem item = reviewItems.get(position);
 
         holder.profileImage.setImageResource(item.getProfileImage());
         holder.contentImage1.setImageResource(item.getContentImage1());
@@ -98,6 +98,6 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
 
     @Override
     public int getItemCount() {
-        return recentItems.size();
+        return reviewItems.size();
     }
 }
