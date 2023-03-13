@@ -21,7 +21,9 @@ public enum HairStyleFixture {
     B("hairStyleB", new ArrayList<>(List.of("test5.png", "test6.png", "test7.png", "test8.png")),
             new ArrayList<>(List.of(Tag.NO_PERM, Tag.SHORT, Tag.NEAT, Tag.OVAL)), Sex.MAN),
     C("hairStyleC", new ArrayList<>(List.of("test9.png", "test10.png", "test11.png", "test12.png")),
-            new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.MEDIUM, Tag.FORMAL, Tag.OBLONG)), Sex.MAN);
+            new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.MEDIUM, Tag.FORMAL, Tag.OBLONG)), Sex.WOMAN),
+    D("hairStyleD", new ArrayList<>(List.of("test13.png", "test14.png", "test15.png", "test16.png")),
+            new ArrayList<>(List.of(Tag.PERM, Tag.LONG, Tag.MEDIUM, Tag.FORMAL, Tag.OBLONG)), Sex.WOMAN);
 
     private final String name;
 
