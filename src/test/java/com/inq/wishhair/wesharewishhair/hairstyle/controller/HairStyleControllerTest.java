@@ -63,12 +63,13 @@ public class HairStyleControllerTest extends ControllerTest {
 
         //then
         mockMvc.perform(requestBuilder)
-                .andExpect(status().isOk());
+                .andExpectAll(
+                        status().isOk(),
+                        jsonPath("$.size()").value(1),
+                        jsonPath("$[0].name").value(A.getName()),
+                        jsonPath("$[0].photos.size()").value(4)
+                );
     }
-//    status().isOk(),
-//    jsonPath("$.size()").value(1),
-//    jsonPath("$[0].name").value(A.getName()),
-//    jsonPath("$[0].photos.size()").value(4)
 
     private MultiValueMap<String, String> getAParams(List<Tag> tags) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
