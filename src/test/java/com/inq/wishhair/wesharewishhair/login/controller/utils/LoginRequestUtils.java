@@ -4,7 +4,7 @@ package com.inq.wishhair.wesharewishhair.login.controller.utils;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.web.login.dto.LoginRequest;
 
-public class LoginRequestUtils {
+public abstract class LoginRequestUtils {
 
     private static final UserFixture A = UserFixture.A;
     private static final String wrongLoginId = A.getLoginId() + "fail";

@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.login.controller;
 
 import com.inq.wishhair.wesharewishhair.common.base.ControllerTest;
+import com.inq.wishhair.wesharewishhair.common.utils.UserSessionDtoUtils;
 import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import com.inq.wishhair.wesharewishhair.exception.ErrorCode;
@@ -30,7 +31,7 @@ public class LoginControllerTest extends ControllerTest {
         //given
         LoginRequest request = LoginRequestUtils.createRequest();
         given(loginService.login(request.getLoginId(), request.getPw()))
-                .willReturn(getSessionDto());
+                .willReturn(UserSessionDtoUtils.getSessionDto());
 
         //todo 세션에 등록되는 정보는 테스트를 따로 안해줘도 되는지
         //when
@@ -95,14 +96,5 @@ public class LoginControllerTest extends ControllerTest {
                         jsonPath("$.code").value(expectedError.getCode()),
                         jsonPath("$.message").value(expectedError.getMessage())
                 );
-    }
-
-    //todo common 패키지에 공용메서드로 분리하기
-    private UserSessionDto getSessionDto() {
-        return new UserSessionDto(createUser());
-    }
-
-    private User createUser() {
-        return UserFixture.A.toEntity();
     }
 }

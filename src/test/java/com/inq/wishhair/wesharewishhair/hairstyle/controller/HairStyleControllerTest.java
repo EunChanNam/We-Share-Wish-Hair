@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 
 import com.inq.wishhair.wesharewishhair.common.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.common.consts.SessionConst;
+import com.inq.wishhair.wesharewishhair.common.utils.UserSessionDtoUtils;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
@@ -34,7 +35,7 @@ public class HairStyleControllerTest extends ControllerTest {
 
     @BeforeEach
     void setUp() {
-        sessionDto = getSessionDto();
+        sessionDto = UserSessionDtoUtils.getSessionDto();
         session = new MockHttpSession();
         session.setAttribute(SessionConst.LONGIN_MEMBER, sessionDto);
     }
@@ -71,13 +72,4 @@ public class HairStyleControllerTest extends ControllerTest {
                 .map(Enum::toString).toList()));
         return params;
     }
-
-    private UserSessionDto getSessionDto() {
-        return new UserSessionDto(createUser());
-    }
-
-    private User createUser() {
-        return UserFixture.A.toEntity();
-    }
-
 }
