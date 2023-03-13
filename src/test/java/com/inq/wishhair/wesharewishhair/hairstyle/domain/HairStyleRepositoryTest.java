@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture.*;
@@ -74,7 +75,7 @@ public class HairStyleRepositoryTest extends RepositoryTest {
     @DisplayName("성별이 맞고 태그가 하나라도 포함되면 해당 헤어스타일은 조회된다")
     void test2() {
         //given
-        List<Tag> tags = A.getTags();
+        List<Tag> tags = new ArrayList<>(List.of(Tag.PERM));
         Sex sex = A.getSex();
         Pageable pageable = PageRequest.of(0, 4);
 
