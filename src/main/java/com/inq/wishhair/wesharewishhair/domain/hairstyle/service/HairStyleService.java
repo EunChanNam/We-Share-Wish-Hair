@@ -21,7 +21,7 @@ public class HairStyleService {
 
     public List<HairStyle> findRecommendedHairStyle(List<Tag> tags, UserSessionDto sessionDto) {
 
-        List<HairStyle> hairStyles = hairStyleRepository.findByHashTags(tags, tags.size(), sessionDto.getSex());
+        List<HairStyle> hairStyles = hairStyleRepository.findByHashTags(tags, sessionDto.getSex());
         /*지연로딩 데이터 가져오는 부분*/
         if (!hairStyles.isEmpty()) {
             hairStyles.get(0).getPhotos().isEmpty();
