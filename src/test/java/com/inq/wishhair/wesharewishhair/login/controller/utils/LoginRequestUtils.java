@@ -8,6 +8,7 @@ public class LoginRequestUtils {
 
     private static final UserFixture A = UserFixture.A;
     private static final String wrongLoginId = A.getLoginId() + "fail";
+    private static final String wrongPw = A.getPw() + "fail";
 
     public static LoginRequest createRequest() {
         return new LoginRequest(
@@ -20,6 +21,13 @@ public class LoginRequestUtils {
         return new LoginRequest(
                 wrongLoginId,
                 A.getPw()
+        );
+    }
+
+    public static LoginRequest createWrongPwRequest() {
+        return new LoginRequest(
+                A.getLoginId(),
+                wrongPw
         );
     }
 }

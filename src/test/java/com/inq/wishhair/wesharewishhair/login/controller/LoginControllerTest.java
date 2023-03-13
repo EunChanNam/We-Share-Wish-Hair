@@ -72,6 +72,31 @@ public class LoginControllerTest extends ControllerTest {
                 );
     }
 
+    @Test
+    @DisplayName("올바르지 않은 비밀번호로 시도해 로그인에 실패한다.")
+    void test3() throws Exception {
+        //given
+        ErrorCode expectedError = ErrorCode.LOGIN_FAIL;
+        LoginRequest request = LoginRequestUtils.createWrongPwRequest();
+        given(loginService.login(request.getLoginId(), request.getPw()))
+                .willThrow(new WishHairException(expectedError));
+
+        //when
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .post(LOGIN_URL)
+                .param("loginId", request.getLoginId())
+                .param("pw", request.getPw());
+
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpectAll(
+                        status().isBadRequest(),
+                        jsonPath("$").exists(),
+                        jsonPath("$.code").value(expectedError.getCode()),
+                        jsonPath("$.message").value(expectedError.getMessage())
+                );
+    }
+
     //todo common 패키지에 공용메서드로 분리하기
     private UserSessionDto getSessionDto() {
         return new UserSessionDto(createUser());
