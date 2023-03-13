@@ -47,7 +47,7 @@ public class HairStyleControllerTest extends ControllerTest {
         List<Tag> tags = HairStyleFixture.A.getTags();
         MultiValueMap<String, String> params = getAParams(tags);
         List<HairStyle> response = new ArrayList<>(List.of(A));
-        given(hairStyleService.findRecommendedHairStyle(tags, sessionDto))
+        given(hairStyleService.findRecommendedHairStyle(tags, sessionDto, null))
                 .willReturn(response);
 
         //when

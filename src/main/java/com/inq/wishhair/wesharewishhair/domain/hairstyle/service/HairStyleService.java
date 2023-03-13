@@ -6,10 +6,10 @@ import com.inq.wishhair.wesharewishhair.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Service

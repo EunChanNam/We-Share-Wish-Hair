@@ -7,14 +7,13 @@ import com.inq.wishhair.wesharewishhair.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.domain.user.enums.Sex;
-import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture.*;
@@ -29,50 +28,41 @@ public class HairStyleRepositoryTest extends RepositoryTest {
     @BeforeEach
     void init() {
         //given
-        HairStyle A = HairStyleFixture.A.toEntity();
-        HairStyle B = HairStyleFixture.B.toEntity();
-        HairStyle C = HairStyleFixture.C.toEntity();
-        hairStyleRepository.save(A);
-        hairStyleRepository.save(B);
-        hairStyleRepository.save(C);
+        HairStyle a = A.toEntity();
+        HairStyle b = B.toEntity();
+        HairStyle c = C.toEntity();
+        HairStyle d = D.toEntity();
+        hairStyleRepository.save(a);
+        hairStyleRepository.save(b);
+        hairStyleRepository.save(c);
+        hairStyleRepository.save(d);
     }
 
+    //todo 이런거 조건 여러개 따지면서 테스트하는 부분은 레포에서 해야되는지 서비스에서 해야되는지
     @Test
-    @DisplayName("가진 해시태그보다 많은 해시태그로 조회 시 헤어스타일이 조회되지 않는다")
-    void overHashTagSizeTest() {
+    @DisplayName("태그와 유저의 성별을 통해서 헤어스타일을 조회한다.")
+    void test1() {
         //given
-        List<Tag> tags = A.getTags();
-        tags.add(Tag.BANGS);
+        List<Tag> tags = B.getTags();
+        Sex sex = B.getSex();
+        Pageable pageable = PageRequest.of(0, 4);
 
         //when
-        List<HairStyle> result = hairStyleRepository.findByHashTags(tags, tags.size(), A.getSex());
-
-        //then
-        assertThat(result).isEmpty();
-    }
-
-    @Test
-    @DisplayName("가진 해시태그보다 많은 해시태그로 조회해도 size 를 줄이면 조회 성공한다.")
-    void properHasTagSizeTest() {
-        //given
-        List<Tag> aTags = A.getTags();
-        List<Tag> tags = new ArrayList<>(aTags);
-        tags.add(Tag.BANGS);
-
-        //when
-        List<HairStyle> result = hairStyleRepository.findByHashTags(tags, tags.size() - 1, A.getSex());
+        List<HairStyle> result = hairStyleRepository.findByHashTags(tags, sex, pageable);
 
         //then
         assertAll(
                 () -> assertThat(result.size()).isEqualTo(1),
-                () -> assertThat(result.get(0).getName()).isEqualTo(A.getName()),
-                () -> assertThat(result.get(0).getSex()).isEqualTo(A.getSex()),
+                () -> assertThat(result.get(0).getSex()).isEqualTo(sex),
+                () -> assertThat(result.get(0).getName()).isEqualTo(B.getName()),
                 () -> assertThat(result.get(0).getHashTags().stream()
                         .map(HashTag::getTag).toList())
-                        .containsAll(A.getTags()),
+                        .containsAll(tags),
                 () -> assertThat(result.get(0).getPhotos().stream()
                         .map(Photo::getOriginalFilename).toList())
-                        .containsAll(A.getOriginalFilenames())
+                        .containsAll(B.getOriginalFilenames())
         );
     }
+
+
 }

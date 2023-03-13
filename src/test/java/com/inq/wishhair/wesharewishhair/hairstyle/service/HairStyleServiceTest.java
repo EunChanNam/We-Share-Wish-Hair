@@ -45,7 +45,7 @@ public class HairStyleServiceTest extends ServiceTest {
         //given
         User user = UserFixture.B.toEntity();
         //when
-        List<HairStyle> result = hairStyleService.findRecommendedHairStyle(A.getTags(), new UserSessionDto(user));
+        List<HairStyle> result = hairStyleService.findRecommendedHairStyle(A.getTags(), new UserSessionDto(user), null);
 
         //then
         Assertions.assertAll(
