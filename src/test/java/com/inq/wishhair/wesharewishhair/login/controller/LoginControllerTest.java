@@ -2,17 +2,12 @@ package com.inq.wishhair.wesharewishhair.login.controller;
 
 import com.inq.wishhair.wesharewishhair.common.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.common.utils.UserSessionDtoUtils;
-import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
-import com.inq.wishhair.wesharewishhair.domain.user.User;
 import com.inq.wishhair.wesharewishhair.exception.ErrorCode;
-import com.inq.wishhair.wesharewishhair.exception.ErrorResponse;
 import com.inq.wishhair.wesharewishhair.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.login.controller.utils.LoginRequestUtils;
 import com.inq.wishhair.wesharewishhair.web.login.dto.LoginRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -31,7 +26,7 @@ public class LoginControllerTest extends ControllerTest {
         //given
         LoginRequest request = LoginRequestUtils.createRequest();
         given(loginService.login(request.getLoginId(), request.getPw()))
-                .willReturn(UserSessionDtoUtils.getSessionDto());
+                .willReturn(UserSessionDtoUtils.getASessionDto());
 
         //todo 세션에 등록되는 정보는 테스트를 따로 안해줘도 되는지
         //when

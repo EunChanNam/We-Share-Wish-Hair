@@ -6,9 +6,7 @@ import com.inq.wishhair.wesharewishhair.common.utils.UserSessionDtoUtils;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
-import com.inq.wishhair.wesharewishhair.domain.user.User;
 import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
-import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -35,7 +33,7 @@ public class HairStyleControllerTest extends ControllerTest {
 
     @BeforeEach
     void setUp() {
-        sessionDto = UserSessionDtoUtils.getSessionDto();
+        sessionDto = UserSessionDtoUtils.getASessionDto();
         session = new MockHttpSession();
         session.setAttribute(SessionConst.LONGIN_MEMBER, sessionDto);
     }
