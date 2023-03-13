@@ -8,17 +8,12 @@ import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
-import com.inq.wishhair.wesharewishhair.web.hairstyle.dto.response.HairStyleResponse;
-import lombok.SneakyThrows;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
-import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
@@ -57,7 +52,6 @@ public class HairStyleControllerTest extends ControllerTest {
         //when
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get(BASE_URL)
-                .contentType(MediaType.APPLICATION_JSON)
                 .params(params)
                 .session(session);
 

@@ -34,8 +34,4 @@ public abstract class ControllerTest {
 
     @MockBean
     protected LoginService loginService;
-
-    protected String getJsonAsString(Object target) throws JsonProcessingException {
-        return objectMapper.writeValueAsString(target);
-    }
 }
