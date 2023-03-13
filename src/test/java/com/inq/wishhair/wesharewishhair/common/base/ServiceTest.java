@@ -6,8 +6,10 @@ import com.inq.wishhair.wesharewishhair.domain.login.LoginService;
 import com.inq.wishhair.wesharewishhair.domain.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 @SpringBootTest(classes = {WeShareWishHairApplication.class, PointHistoryTestRepository.class})
+@Transactional
 public abstract class ServiceTest {
 
     @Autowired
