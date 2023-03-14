@@ -25,9 +25,6 @@ public class HairStyleServiceTest extends ServiceTest {
     @Autowired
     private HairStyleService hairStyleService;
 
-    @Autowired
-    private HairStyleRepository hairStyleRepository;
-
     private HairStyle a;
     private HairStyle b;
     private HairStyle c;
