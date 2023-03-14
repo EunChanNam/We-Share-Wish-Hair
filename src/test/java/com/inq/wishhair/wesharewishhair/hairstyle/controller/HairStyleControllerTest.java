@@ -19,6 +19,7 @@ import org.springframework.util.MultiValueMap;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture.*;
 import static org.mockito.BDDMockito.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class HairStyleControllerTest extends ControllerTest {
 
     private static final String BASE_URL = "/api/hair_style/recommend";
-    private static final HairStyle A = HairStyleFixture.A.toEntity();
+
     private MockHttpSession session;
     private UserSessionDto sessionDto;
 
@@ -38,13 +39,18 @@ public class HairStyleControllerTest extends ControllerTest {
         session.setAttribute(SessionConst.LONGIN_MEMBER, sessionDto);
     }
 
+    //todo 컨트롤러에서 서비스 목 데이터를 넣을때는 서비스에서 검증이된 값만 넣어야 하는지
     @Test
     @DisplayName("Tag 를 이용해서 헤어스타일 조회")
     void test1() throws Exception {
         //given
-        List<Tag> tags = HairStyleFixture.A.getTags();
+        HairStyle a = A.toEntity();
+        HairStyle c = C.toEntity();
+        HairStyle d = D.toEntity();
+
+        List<Tag> tags = A.getTags();
         MultiValueMap<String, String> params = getAParams(tags);
-        List<HairStyle> response = new ArrayList<>(List.of(A));
+        List<HairStyle> response = new ArrayList<>(List.of(a));
         given(hairStyleService.findRecommendedHairStyle(tags, sessionDto, null))
                 .willReturn(response);
 
@@ -59,7 +65,7 @@ public class HairStyleControllerTest extends ControllerTest {
                 .andExpectAll(
                         status().isOk(),
                         jsonPath("$.size()").value(1),
-                        jsonPath("$[0].name").value(A.getName()),
+                        jsonPath("$[0].name").value(a.getName()),
                         jsonPath("$[0].photos.size()").value(4)
                 );
     }
