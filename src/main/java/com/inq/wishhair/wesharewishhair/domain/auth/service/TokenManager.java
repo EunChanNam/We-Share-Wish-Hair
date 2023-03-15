@@ -16,7 +16,7 @@ public class TokenManager {
 
     @Transactional
     public void synchronizeRefreshToken(User user, String refreshToken) {
-        tokenRepository.findByUserAndRefreshToken(user, refreshToken)
+        tokenRepository.findByUser(user)
                 .ifPresentOrElse(
                         token -> token.updateRefreshToken(refreshToken),
                         () -> tokenRepository.save(Token.issue(user, refreshToken))
