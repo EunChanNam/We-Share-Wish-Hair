@@ -29,7 +29,7 @@ public class Token {
         this.refreshToken = refreshToken;
     }
 
-    public static Token issueRefreshToken(User user, String refreshToken) {
+    public static Token issue(User user, String refreshToken) {
         return new Token(user, refreshToken);
     }
 
