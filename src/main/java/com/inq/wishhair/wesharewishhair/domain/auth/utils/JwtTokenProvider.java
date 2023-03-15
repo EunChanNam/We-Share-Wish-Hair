@@ -49,4 +49,16 @@ public class JwtTokenProvider {
                 .compact();
     }
 
+    public Long getId(String token) {
+        return getClaims(token)
+                .getBody()
+                .get("id", Long.class);
+    }
+
+    private Jws<Claims> getClaims(String token) {
+        return Jwts.parser()
+                .setSigningKey(secretKey)
+                .parseClaimsJws(token);
+    }
+
 }
