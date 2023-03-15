@@ -27,4 +27,9 @@ public class TokenManager {
         return tokenRepository.findByUserIdAndRefreshToken(userId, refreshToken)
                 .isPresent();
     }
+
+    @Transactional
+    public void deleteToken(Long userId) {
+        tokenRepository.deleteByUserId(userId);
+    }
 }

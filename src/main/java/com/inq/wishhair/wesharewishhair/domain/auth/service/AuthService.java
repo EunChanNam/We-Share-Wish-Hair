@@ -19,6 +19,7 @@ public class AuthService {
     private final UserRepository userRepository;
     private final JwtTokenProvider provider;
 
+    @Transactional
     public TokenResponse login(String loginId, String pw) {
         User user = userRepository.findByLoginId(loginId)
                 .filter(findUser -> findUser.getPw().equals(pw))
@@ -34,5 +35,10 @@ public class AuthService {
         tokenManager.synchronizeRefreshToken(user, refreshToken);
 
         return TokenResponse.of(accessToken, refreshToken);
+    }
+
+    @Transactional
+    public void logout(Long userId) {
+        tokenManager.deleteToken(userId);
     }
 }
