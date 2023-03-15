@@ -6,7 +6,6 @@ import com.example.wishhair.R;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -34,10 +33,10 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_activity_register);
 
-        ed_id = findViewById(R.id.edID);
-        ed_pw = findViewById(R.id.edPW);
-        ed_name = findViewById(R.id.edNAME);
-        ed_nickname = findViewById(R.id.edNICKNAME);
+        ed_id = findViewById(R.id.sign_register_et_id);
+        ed_pw = findViewById(R.id.sign_register_et_password);
+        ed_name = findViewById(R.id.register3rdInput);
+        ed_nickname = findViewById(R.id.register4thInput);
 
         RadioGroup radioGroup_sex = findViewById(R.id.radioGroupSEX);
         radioButton_man = findViewById(R.id.radio_sex_man);
@@ -54,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
-        Button btn_id_dup_check = findViewById(R.id.btn_id_dup_check);
+//        Button btn_id_dup_check = findViewById(R.id.btn_id_dup_check);
 
         Button btn_join = findViewById(R.id.btn_join);
         btn_join.setOnClickListener(view -> {

@@ -1,69 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".sign.RegisterActivity">
+    tools:context=".sign.RegisterActivity"
+    android:orientation="vertical"
+    android:layout_gravity="center">
 
-    <EditText
-        android:id="@+id/edID"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="100dp"
-        android:ems="10"
-        android:hint="아이디 " />
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_id_dup_check"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_toEndOf="@+id/edID"
-        android:layout_alignBaseline="@+id/edID"
-        android:background="@color/white"
-        android:text="중복체크"/>
-
-    <EditText
-        android:id="@+id/edPW"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
-        android:layout_below="@id/edID"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:ems="10"
-        android:hint="비밀번호 "
-        android:inputType="textPassword" />
-
-    <EditText
-        android:id="@+id/edNAME"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/edPW"
-        android:layout_marginTop="50dp"
-        android:ems="10"
-        android:hint="이름 "
-        android:inputType="textPersonName"/>
-
-    <EditText
-        android:id="@+id/edNICKNAME"
-        android:layout_width="160dp"
-        android:layout_height="40dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/edNAME"
-        android:layout_marginTop="50dp"
-        android:ems="10"
-        android:hint="닉네임 " />
-
-    <LinearLayout
-        android:id="@+id/linearLayoutSEX"
+    <TextView
+        android:id="@+id/login_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/edNICKNAME"
-        android:layout_alignStart="@id/edNICKNAME"
-        android:layout_marginTop="50dp">
+        android:layout_marginTop="40dp"
+        android:text="@string/App_name"
+        android:textColor="@color/black"
+        android:textSize="37sp"
+        android:textStyle="bold" />
+<!--    user info -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:text="@string/register_message_1"
+        android:textColor="@color/black"/>
+<!--    id-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:weightSum="5">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:src="@drawable/sign_id"
+            android:background="@drawable/border_sign_image"
+            android:contentDescription="@string/login_hint_id" />
+
+        <EditText
+            android:id="@+id/sign_register_et_id"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingStart="5dp"
+            android:layout_weight="4"
+            android:background="@drawable/border_sign_text"
+            android:ems="10"
+            android:hint="@string/register_hint_id"
+            android:inputType="text"
+            android:importantForAutofill="no"
+            tools:ignore="RtlSymmetry" />
+    </LinearLayout>
+<!--    pw-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:weightSum="5">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:src="@drawable/sign_pw"
+            android:background="@drawable/border_sign_image"
+            android:contentDescription="@string/login_hint_id" />
+
+        <EditText
+            android:id="@+id/sign_register_et_password"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingStart="5dp"
+            android:layout_weight="4"
+            android:background="@drawable/border_sign_text"
+            android:ems="10"
+            android:hint="@string/login_hint_pw"
+            android:inputType="textPassword"
+            android:importantForAutofill="no"
+            tools:ignore="RtlSymmetry"/>
+    </LinearLayout>
+    <!-- #TODO define register info-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:weightSum="5">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:src="@drawable/sign_id"
+            android:background="@drawable/border_sign_image"
+            android:contentDescription="@string/login_hint_id" />
+        <EditText
+            android:id="@+id/register3rdInput"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingStart="5dp"
+            android:layout_weight="4"
+            android:background="@drawable/border_sign_text"
+            android:ems="10"
+            android:hint="3rd"
+            android:inputType="text"
+            android:importantForAutofill="no"
+            tools:ignore="RtlSymmetry" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:weightSum="5">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:src="@drawable/sign_id"
+            android:background="@drawable/border_sign_image"
+            android:contentDescription="@string/login_hint_id" />
+
+        <EditText
+            android:id="@+id/register4thInput"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="4"
+            android:background="@drawable/border_sign_text"
+            android:ems="10"
+            android:hint="4th"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:paddingStart="5dp"
+            android:textColorHint="#757575"
+            tools:ignore="RtlSymmetry" />
+    </LinearLayout>
+<!--    sex-->
+<!--        #TODO  DESIGN-->
+    <LinearLayout
+        android:id="@+id/linearLayoutSEX"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp">
         <TextView
             android:id="@+id/textViewSEX"
             android:layout_width="wrap_content"
@@ -94,13 +171,52 @@
         </RadioGroup>
     </LinearLayout>
 
+<!--        terms-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/register_message_2"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/register_term_1" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/register_term_2" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/register_term_3" />
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:text="@string/register_term_4" />
+    </LinearLayout>
+
     <Button
         android:id="@+id/btn_join"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/linearLayoutSEX"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
-        android:backgroundTint="#0088BD"
-        android:text="가입" />
-</RelativeLayout>
+        android:layout_marginTop="40dp"
+        android:background="@drawable/border_sign_button"
+        android:text="동의하고 가입하기 " />
+
+
+
+<!--    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_id_dup_check"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@color/white"
+        android:text="중복체크"/>-->
+
+</LinearLayout>
