@@ -15,6 +15,9 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.wishhair.review.detail.ImageSliderAdapter;
+import com.example.wishhair.review.detail.ReviewDetailActivity;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -22,7 +25,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private EditText login_id, login_pw;
-
     //https://wonpaper.tistory.com/232
 
     @Override
@@ -77,7 +79,16 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-                startActivity(intent);
+                LoginActivity.this.startActivity(intent);
+            }
+        });
+        Button btn_findPassword = findViewById(R.id.btn_findPassword);
+        btn_findPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, ReviewDetailActivity.class);
+                LoginActivity.this.startActivity(intent);
+                LoginActivity.this.finish();
             }
         });
     }

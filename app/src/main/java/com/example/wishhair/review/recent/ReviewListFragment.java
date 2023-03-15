@@ -1,5 +1,6 @@
 package com.example.wishhair.review.recent;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.RadioGroup;
 
 import com.example.wishhair.R;
 import com.example.wishhair.review.ReviewItem;
+import com.example.wishhair.review.detail.ImageSliderAdapter;
 
 import java.util.ArrayList;
 
@@ -56,7 +58,6 @@ public class ReviewListFragment extends Fragment {
         recentRecyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapterRecent.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-
             }
         });
         return v;
