@@ -22,4 +22,9 @@ public class TokenManager {
                         () -> tokenRepository.save(Token.issue(user, refreshToken))
                 );
     }
+
+    boolean existByUserIdAndRefreshToken(Long userId, String refreshToken) {
+        return tokenRepository.findByUserIdAndRefreshToken(userId, refreshToken)
+                .isPresent();
+    }
 }
