@@ -5,48 +5,118 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".sign.LoginActivity">
-    <EditText
-        android:id="@+id/ed_login_id"
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="307dp"
-        android:ems="10"
-        android:hint="ID"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <EditText
-        android:id="@+id/ed_login_pw"
+        app:layout_constraintTop_toTopOf="parent">
+<!--        head line -->
+    <TextView
+        android:id="@+id/login_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="PW"
-        android:inputType="textPassword"
-        app:layout_constraintEnd_toEndOf="@+id/ed_login_id"
-        app:layout_constraintTop_toBottomOf="@+id/ed_login_id" />
+        android:layout_marginTop="70dp"
+        android:text="@string/App_name"
+        android:textColor="@color/black"
+        android:textSize="37sp"
+        android:textStyle="bold" />
 
+<!--    id -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="60dp"
+        android:weightSum="5">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:src="@drawable/sign_id"
+            android:background="@drawable/border_sign_image"
+            android:contentDescription="@string/login_hint_id" />
+
+        <EditText
+            android:id="@+id/ed_login_id"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingStart="5dp"
+            android:layout_weight="4"
+            android:ems="10"
+            android:hint="@string/login_hint_id"
+            android:inputType="text"
+            android:autofillHints="username"
+            android:background="@drawable/border_sign_text"
+            tools:ignore="RtlSymmetry" />
+
+    </LinearLayout>
+<!--    pw -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:weightSum="5">
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:padding="5dp"
+            android:src="@drawable/sign_pw"
+            android:background="@drawable/border_sign_image"
+            android:contentDescription="@string/login_hint_pw" />
+        <EditText
+            android:id="@+id/ed_login_pw"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:paddingStart="5dp"
+            android:layout_weight="4"
+            android:ems="10"
+            android:hint="@string/login_hint_pw"
+            android:inputType="textPassword"
+            android:importantForAutofill="no"
+            android:background="@drawable/border_sign_text"
+            tools:ignore="RtlSymmetry" />
+    </LinearLayout>
+
+<!--    button -->
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="150dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:backgroundTint="#0088BD"
-        android:text="login"
-        app:layout_constraintEnd_toEndOf="@+id/ed_login_pw"
-        app:layout_constraintStart_toStartOf="@+id/ed_login_pw"
-        app:layout_constraintTop_toBottomOf="@+id/ed_login_pw" />
+        android:layout_marginTop="30dp"
+        android:background="@drawable/border_sign_button"
+        android:text="@string/sign_button_login"
+        android:textSize="20sp"/>
 
-    <Button
-        android:id="@+id/btn_register"
-        android:layout_width="150dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:backgroundTint="#FFD303"
-        android:text="register"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_login" />
+       <LinearLayout
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_marginTop="15dp">
+           <Button
+               android:id="@+id/btn_register"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               style="?borderlessButtonStyle"
+               android:textColor="@color/black"
+               android:text="@string/sign_button_register"
+               android:textSize="12sp"
+               android:textStyle="bold"/>
 
+           <Button
+               android:id="@+id/btn_findPassword"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:layout_marginStart="15dp"
+               style="?borderlessButtonStyle"
+               android:textColor="@color/black"
+               android:text="@string/sign_button_findPassword"
+               android:textSize="12sp"
+               android:textStyle="bold"/>
+       </LinearLayout>
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

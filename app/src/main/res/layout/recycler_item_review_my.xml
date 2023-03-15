@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
-    android:background="@drawable/recycler_item_border">
+    android:background="@drawable/border_recycler_item">
 <!--    headline-->
     <RelativeLayout
         android:id="@+id/review_my_item_profile"
