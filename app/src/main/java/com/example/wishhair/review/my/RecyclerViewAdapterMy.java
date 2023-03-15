@@ -1,4 +1,4 @@
-package com.example.wishhair.review;
+package com.example.wishhair.review.my;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wishhair.R;
+import com.example.wishhair.review.recent.RecyclerViewAdapterRecent;
+import com.example.wishhair.review.ReviewItem;
 
 import java.util.ArrayList;
 

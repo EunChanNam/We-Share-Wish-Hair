@@ -1,4 +1,4 @@
-package com.example.wishhair.review;
+package com.example.wishhair.review.recent;
 
 import android.os.Bundle;
 
@@ -13,7 +13,6 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.wishhair.R;
-import com.example.wishhair.review.RecyclerViewAdapterRecent;
 import com.example.wishhair.review.ReviewItem;
 
 import java.util.ArrayList;

@@ -5,8 +5,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import com.example.wishhair.review.ReviewListFragment;
-import com.example.wishhair.review.ReviewMyFragment;
+import com.example.wishhair.review.my.ReviewMyFragment;
+import com.example.wishhair.review.recent.ReviewListFragment;
 
 public class ReviewPagerAdapter extends FragmentStateAdapter {
     private final int mPageCount = 2;
