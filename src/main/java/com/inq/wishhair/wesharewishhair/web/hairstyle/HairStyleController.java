@@ -30,12 +30,12 @@ public class HairStyleController {
 
         List<HairStyle> hairStyles = hairStyleService.findRecommendedHairStyle(tags, sessionDto, pageable);
 
-        List<HairStyleResponse> result = toResponse(hairStyles);
+        List<HairStyleResponse> result = toHairResponse(hairStyles);
 
         return ResponseEntity.ok(toPagedResponse(result, result.size()));
     }
 
-    private static List<HairStyleResponse> toResponse(List<HairStyle> hairStyles) {
+    private static List<HairStyleResponse> toHairResponse(List<HairStyle> hairStyles) {
         return hairStyles.stream()
                 .map(HairStyleResponse::new)
                 .toList();
