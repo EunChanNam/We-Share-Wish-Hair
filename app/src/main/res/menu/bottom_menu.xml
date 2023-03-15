@@ -23,7 +23,7 @@
 
     <item
         android:id="@+id/bot_nav_myPage"
-        android:icon="@drawable/mypage"
+        android:icon="@drawable/my_page"
         android:title="내 정보"
         android:enabled="true"
         />

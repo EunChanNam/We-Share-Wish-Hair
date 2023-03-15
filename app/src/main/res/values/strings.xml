@@ -8,4 +8,8 @@
     <string name="review_filter_whole">전체</string>
     <string name="review_filter_man">남성</string>
     <string name="review_filter_woman">여성</string>
+    <string name="App_name">We Share Wish Hair</string>
+    <string name="login_hint_id">ID</string>
+    <string name="login_hint_pw">PW</string>
+    <string name="sign_button_login">로그인</string>
 </resources>

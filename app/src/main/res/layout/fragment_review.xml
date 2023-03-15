@@ -10,7 +10,7 @@
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/topbar_border"
+        android:background="@drawable/border_topbar"
         app:title="사용자 후기" />
 
     <com.google.android.material.tabs.TabLayout

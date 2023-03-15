@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
     android:padding="10dp"
-    android:background="@drawable/recycler_item_border">
+    android:background="@drawable/border_recycler_item">
 
 <!--    profile-->
     <RelativeLayout
