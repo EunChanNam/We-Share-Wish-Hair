@@ -1,5 +1,7 @@
 package com.inq.wishhair.wesharewishhair.domain.auth.utils;
 
+import com.inq.wishhair.wesharewishhair.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.exception.WishHairException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -61,4 +63,16 @@ public class JwtTokenProvider {
                 .parseClaimsJws(token);
     }
 
+    public boolean isValidToken(String token) {
+        try {
+            Jws<Claims> claims = getClaims(token);
+            Date expiration = claims.getBody().getExpiration();
+            Date now = new Date();
+            return expiration.after(now);
+        } catch (ExpiredJwtException e) {
+            throw new WishHairException(ErrorCode.AUTH_EXPIRED_TOKEN);
+        } catch (SecurityException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
+            throw new WishHairException(ErrorCode.AUTH_INVALID_TOKEN);
+        }
+    }
 }
