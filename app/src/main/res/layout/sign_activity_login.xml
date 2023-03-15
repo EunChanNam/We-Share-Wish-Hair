@@ -19,7 +19,7 @@
         android:id="@+id/login_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="70dp"
         android:text="@string/App_name"
         android:textColor="@color/black"
         android:textSize="37sp"
@@ -29,7 +29,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="60dp"
         android:weightSum="5">
         <ImageView
             android:layout_width="0dp"
@@ -44,12 +44,14 @@
             android:id="@+id/ed_login_id"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:paddingStart="5dp"
             android:layout_weight="4"
             android:ems="10"
             android:hint="@string/login_hint_id"
             android:inputType="text"
             android:autofillHints="username"
-            android:background="@drawable/border_sign_text"/>
+            android:background="@drawable/border_sign_text"
+            tools:ignore="RtlSymmetry" />
 
     </LinearLayout>
 <!--    pw -->
@@ -70,12 +72,14 @@
             android:id="@+id/ed_login_pw"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:paddingStart="5dp"
             android:layout_weight="4"
             android:ems="10"
             android:hint="@string/login_hint_pw"
             android:inputType="textPassword"
             android:importantForAutofill="no"
-            android:background="@drawable/border_sign_text"/>
+            android:background="@drawable/border_sign_text"
+            tools:ignore="RtlSymmetry" />
     </LinearLayout>
 
 <!--    button -->
@@ -106,7 +110,7 @@
                android:id="@+id/btn_findPassword"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-               android:layout_marginLeft="15dp"
+               android:layout_marginStart="15dp"
                style="?borderlessButtonStyle"
                android:textColor="@color/black"
                android:text="@string/sign_button_findPassword"

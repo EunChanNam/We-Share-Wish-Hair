@@ -6,6 +6,7 @@ import com.example.wishhair.R;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -42,7 +43,8 @@ public class LoginActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
              //서버 연동 코드
-            /*Response.Listener<String> responseListener = response -> {
+            /*
+            Response.Listener<String> responseListener = response -> {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
             };
@@ -68,11 +70,15 @@ public class LoginActivity extends AppCompatActivity {
 
             RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
             queue.add(loginRequest);
-        });
 
-        login_registerBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
-            startActivity(intent);*/
+        */
+        });
+        login_registerBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+                startActivity(intent);
+            }
         });
     }
 
