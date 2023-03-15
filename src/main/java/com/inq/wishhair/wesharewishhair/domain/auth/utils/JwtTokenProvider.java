@@ -4,12 +4,14 @@ import com.inq.wishhair.wesharewishhair.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.exception.WishHairException;
 import io.jsonwebtoken.*;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
+@Component
 public class JwtTokenProvider {
 
     private final SecretKey secretKey;
