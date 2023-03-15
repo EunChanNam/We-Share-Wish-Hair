@@ -12,4 +12,6 @@
     <string name="login_hint_id">ID</string>
     <string name="login_hint_pw">PW</string>
     <string name="sign_button_login">로그인</string>
+    <string name="sign_button_register"><![CDATA[회원가입 >]]></string>
+    <string name="sign_button_findPassword"><![CDATA[비밀번호 찾기 >]]></string>
 </resources>
