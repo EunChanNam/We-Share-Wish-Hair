@@ -22,6 +22,8 @@ dependencies {
 	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1") //P6Spy
 	implementation 'javax.annotation:javax.annotation-api:1.3.2' //javax.annotation import 버그 해결
 
+	implementation 'io.jsonwebtoken:jjwt:0.9.1' //jwt
+
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	compileOnly 'org.projectlombok:lombok'
