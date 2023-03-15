@@ -18,16 +18,18 @@ public class TokenReissueService {
 
     public TokenResponse reissueToken(Long userId, String refreshToken) {
 
+        //추출한 userId 와 refresh 토큰이 유요한지 검사
         if (!tokenManager.existByUserIdAndRefreshToken(userId, refreshToken)) {
             throw new WishHairException(ErrorCode.AUTH_INVALID_TOKEN);
         }
 
-        if (!provider.isValidToken(refreshToken)) {
-            throw new WishHairException(ErrorCode.AUTH_EXPIRED_TOKEN);
-        }
-
-        //토큰으로 부터 추출한 claims 가 유효하고 refreshToken 이 유효하다, access 토큰만 재발금
+        //access 토큰만 재발금
         String newAccessToken = provider.createAccessToken(userId);
+
+        //refresh 토큰이 만료됐으면 새로운 Refresh 토큰 발급
+        if (!provider.isValidToken(refreshToken)) {
+            refreshToken = provider.createRefreshToken(userId);
+        }
 
         return TokenResponse.of(newAccessToken, refreshToken);
     }
