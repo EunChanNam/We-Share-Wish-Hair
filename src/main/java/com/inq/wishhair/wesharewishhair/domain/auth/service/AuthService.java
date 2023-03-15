@@ -24,8 +24,12 @@ public class AuthService {
                 .filter(findUser -> findUser.getPw().equals(pw))
                 .orElseThrow(() -> new WishHairException(ErrorCode.LOGIN_FAIL));
 
-        String accessToken = provider.createAccessToken(user.getId());
+        return issueAndSynchronizeToken(user);
+    }
+
+    private TokenResponse issueAndSynchronizeToken(User user) {
         String refreshToken = provider.createRefreshToken(user.getId());
+        String accessToken = provider.createAccessToken(user.getId());
 
         tokenManager.synchronizeRefreshToken(user, refreshToken);
 
