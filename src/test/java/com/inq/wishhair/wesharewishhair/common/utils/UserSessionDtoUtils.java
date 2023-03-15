@@ -6,11 +6,15 @@ import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 
 public abstract class UserSessionDtoUtils {
 
-    public static UserSessionDto getSessionDto() {
-        return new UserSessionDto(createUser());
+    public static UserSessionDto getASessionDto() {
+        return new UserSessionDto(createUser(UserFixture.A));
     }
 
-    private static User createUser() {
-        return UserFixture.A.toEntity();
+    public static UserSessionDto getBSessionDto() {
+        return new UserSessionDto(createUser(UserFixture.B));
+    }
+
+    private static User createUser(UserFixture fixture) {
+        return fixture.toEntity();
     }
 }
