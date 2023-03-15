@@ -21,4 +21,5 @@
     <string name="register_term_2">[필수] 이용약관 동의</string>
     <string name="register_term_3">[필수] 개인정보 수집 및 이용 동의</string>
     <string name="register_term_4">[필수] 개인정보 제공 동의</string>
+    <string name="register_button_submit">동의하고 가입하기</string>
 </resources>

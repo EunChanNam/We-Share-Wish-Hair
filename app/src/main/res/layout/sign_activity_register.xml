@@ -171,7 +171,7 @@
         </RadioGroup>
     </LinearLayout>
 
-<!--        terms-->
+<!--    terms-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -201,16 +201,14 @@
             android:layout_height="40dp"
             android:text="@string/register_term_4" />
     </LinearLayout>
-
+<!--    submit-->
     <Button
         android:id="@+id/btn_join"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="40dp"
         android:background="@drawable/border_sign_button"
-        android:text="동의하고 가입하기 " />
-
-
+        android:text="@string/register_button_submit" />
 
 <!--    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_id_dup_check"
