@@ -6,6 +6,8 @@
     android:layout_height="match_parent"
     tools:context=".review.WriteReviewActivity"
     android:orientation="vertical">
+<!--    topBar -->
+    <include layout="@layout/top_bar_title" />
 <!--    style info -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -88,8 +90,6 @@
             android:layout_width="120dp"
             android:layout_height="match_parent"
             android:background="@drawable/write_review_plus" />
-
-
 
     </LinearLayout>
 
