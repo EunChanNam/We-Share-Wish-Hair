@@ -23,6 +23,9 @@
     <string name="register_term_3">[필수] 개인정보 수집 및 이용 동의</string>
     <string name="register_term_4">[필수] 개인정보 제공 동의</string>
     <string name="register_button_submit">동의하고 가입하기</string>
+    <!--    write review -->
     <string name="write_review_message_1">시술은 만족스러우셨나요?</string>
     <string name="write_review_massage_2">시술에 대한 별점을 매겨주세요</string>
+    <string name="write_review_massage_3">최소 15자 이상 작성해주세요</string>
+    <string name="write_review_submit">등록하기</string>
 </resources>
