@@ -8,14 +8,27 @@
         <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_2.xml" value="0.1" />
         <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_3.xml" value="0.14722222222222223" />
         <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_home.xml" value="0.358695652173913" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_information_modify.xml" value="0.25" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_my_coupon.xml" value="0.358695652173913" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_my_information.xml" value="0.33" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_my_point_coupon.xml" value="0.358695652173913" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_my_point_list.xml" value="0.3515625" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_my_selectionlist.xml" value="0.17097264437689969" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_my_style.xml" value="0.17806484295845998" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_mypage.xml" value="0.33" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_recommend.xml" value="0.17806484295845998" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_review.xml" value="0.17806484295845998" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/mypage_toolbar.xml" value="0.17097264437689969" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/pointbuttonlist.xml" value="0.18" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/sign_activity_login.xml" value="0.17806484295845998" />
         <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/menu/bottom_menu.xml" value="0.17291666666666666" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/menu/mypage_topmenu.xml" value="0.2638888888888889" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/menu/pointmenu.xml" value="0.2638888888888889" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/menu/toolbar_commit_menu.xml" value="0.2638888888888889" />
       </map>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="18" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
-  </component>
-  <component name="ProjectType">
-    <option name="id" value="jpab" />
   </component>
 </project>

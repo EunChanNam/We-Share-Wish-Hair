@@ -28,6 +28,13 @@ public class MainActivity extends AppCompatActivity {
     private final RecommendFragment recommendFragment = new RecommendFragment();
     private final ReviewFragment reviewFragment = new ReviewFragment();
     private final MyPageFragment myPageFragment = new MyPageFragment();
+    private final MyStyleFragment myStyleFragment = new MyStyleFragment();
+    private final MySelectionlistFragment mySelectionlistFragment = new MySelectionlistFragment();
+    private final InformationModifyFragment informationModifyFragment = new InformationModifyFragment();
+    private final MyCouponFragment myCouponFragment = new MyCouponFragment();
+    private final MyPointList myPointList = new MyPointList();
+
+    private final MyInformationFragment myInformationFragment = new MyInformationFragment();
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,5 +72,34 @@ public class MainActivity extends AppCompatActivity {
             }
             return true;
         }
+    }
+
+    public void ChangeFragment(int index) {
+        FragmentTransaction transaction = fragmentManager.beginTransaction();
+        switch(index)
+        {
+            case 1:
+                transaction.replace(R.id.MainLayout, myInformationFragment).commitAllowingStateLoss();
+                break;
+            case 2:
+                transaction.replace(R.id.MainLayout, myPageFragment).commitAllowingStateLoss();
+                break;
+            case 3:
+                transaction.replace(R.id.MainLayout, myStyleFragment).commitAllowingStateLoss();
+                break;
+            case 4:
+                transaction.replace(R.id.MainLayout, mySelectionlistFragment).commitAllowingStateLoss();
+                break;
+            case 5:\
+                transaction.replace(R.id.MainLayout, informationModifyFragment).commitAllowingStateLoss();
+                break;
+            case 6:
+                transaction.replace(R.id.MainLayout, myCouponFragment).commitAllowingStateLoss();
+                break;
+            case 7:
+                transaction.replace(R.id.MainLayout, myPointList).commitAllowingStateLoss();
+                break;
+        }
+
     }
 }
