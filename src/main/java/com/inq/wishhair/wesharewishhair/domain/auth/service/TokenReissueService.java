@@ -23,14 +23,16 @@ public class TokenReissueService {
             throw new WishHairException(ErrorCode.AUTH_INVALID_TOKEN);
         }
 
-        //access 토큰만 재발금
-        String newAccessToken = provider.createAccessToken(userId);
-
-        //refresh 토큰이 만료됐으면 새로운 Refresh 토큰 발급
+        //RefreshToken 이 만료됐으면 다시 로그인을 통해 인증하도록 에러던짐
         if (!provider.isValidToken(refreshToken)) {
-            refreshToken = provider.createRefreshToken(userId);
+            throw new WishHairException(ErrorCode.AUTH_EXPIRED_TOKEN);
         }
 
-        return TokenResponse.of(newAccessToken, refreshToken);
+        String newAccessToken = provider.createAccessToken(userId);
+        String newRefreshToken = provider.createRefreshToken(userId);
+
+        tokenManager.updateRefreshTokenByRTR(userId, newRefreshToken);
+
+        return TokenResponse.of(newAccessToken, newRefreshToken);
     }
 }
