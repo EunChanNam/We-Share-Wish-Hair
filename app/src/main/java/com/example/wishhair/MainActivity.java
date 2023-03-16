@@ -16,6 +16,8 @@ import com.example.wishhair.MyPage.MyPageFragment;
 import com.example.wishhair.MyPage.MyPointList;
 import com.example.wishhair.MyPage.MySelectionlistFragment;
 import com.example.wishhair.MyPage.MyStyleFragment;
+
+import com.example.wishhair.review.ReviewFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             case 4:
                 transaction.replace(R.id.MainLayout, mySelectionlistFragment).commitAllowingStateLoss();
                 break;
-            case 5:
+            case 5:\
                 transaction.replace(R.id.MainLayout, informationModifyFragment).commitAllowingStateLoss();
                 break;
             case 6:
