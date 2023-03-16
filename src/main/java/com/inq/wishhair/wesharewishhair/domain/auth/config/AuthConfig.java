@@ -1,11 +1,13 @@
 package com.inq.wishhair.wesharewishhair.domain.auth.config;
 
+import com.inq.wishhair.wesharewishhair.domain.auth.config.interceptor.AuthInterceptor;
 import com.inq.wishhair.wesharewishhair.domain.auth.config.resolver.PayloadResolver;
 import com.inq.wishhair.wesharewishhair.domain.auth.config.resolver.TokenResolver;
 import com.inq.wishhair.wesharewishhair.domain.auth.utils.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.List;
@@ -15,6 +17,11 @@ import java.util.List;
 public class AuthConfig implements WebMvcConfigurer {
 
     private final JwtTokenProvider provider;
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new AuthInterceptor(provider));
+    }
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
