@@ -3,7 +3,10 @@ package com.inq.wishhair.wesharewishhair.domain.hairstyle.service;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.repository.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.domain.hashtag.enums.Tag;
-import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
+import com.inq.wishhair.wesharewishhair.domain.user.User;
+import com.inq.wishhair.wesharewishhair.domain.user.repository.UserRepository;
+import com.inq.wishhair.wesharewishhair.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.exception.WishHairException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -19,11 +22,14 @@ import java.util.List;
 public class HairStyleService {
 
     private final HairStyleRepository hairStyleRepository;
+    private final UserRepository userRepository;
 
     public List<HairStyle> findRecommendedHairStyle(
-            List<Tag> tags, UserSessionDto sessionDto, Pageable pageable) {
+            List<Tag> tags, Long userId, Pageable pageable) {
 
-        List<HairStyle> hairStyles = hairStyleRepository.findByHashTags(tags, sessionDto.getSex(), pageable);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+        List<HairStyle> hairStyles = hairStyleRepository.findByHashTags(tags, user.getSex(), pageable);
         /*지연로딩 데이터 가져오는 부분*/
         if (!hairStyles.isEmpty()) {
             hairStyles.get(0).getPhotos().isEmpty();
