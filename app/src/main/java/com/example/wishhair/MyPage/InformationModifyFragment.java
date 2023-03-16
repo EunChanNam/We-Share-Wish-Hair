@@ -49,7 +49,7 @@ public class InformationModifyFragment extends Fragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.ChangeFragment(1);
+                mainActivity.ChangeFragment(2);
             }
         });
     }

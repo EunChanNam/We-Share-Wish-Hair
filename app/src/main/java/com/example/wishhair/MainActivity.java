@@ -10,8 +10,10 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.example.wishhair.MyPage.InformationModifyFragment;
+import com.example.wishhair.MyPage.MyCouponFragment;
 import com.example.wishhair.MyPage.MyInformationFragment;
 import com.example.wishhair.MyPage.MyPageFragment;
+import com.example.wishhair.MyPage.MyPointList;
 import com.example.wishhair.MyPage.MySelectionlistFragment;
 import com.example.wishhair.MyPage.MyStyleFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -27,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private final MyStyleFragment myStyleFragment = new MyStyleFragment();
     private final MySelectionlistFragment mySelectionlistFragment = new MySelectionlistFragment();
     private final InformationModifyFragment informationModifyFragment = new InformationModifyFragment();
+    private final MyCouponFragment myCouponFragment = new MyCouponFragment();
+    private final MyPointList myPointList = new MyPointList();
 
     private final MyInformationFragment myInformationFragment = new MyInformationFragment();
 
@@ -86,6 +90,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 5:
                 transaction.replace(R.id.MainLayout, informationModifyFragment).commitAllowingStateLoss();
+                break;
+            case 6:
+                transaction.replace(R.id.MainLayout, myCouponFragment).commitAllowingStateLoss();
+                break;
+            case 7:
+                transaction.replace(R.id.MainLayout, myPointList).commitAllowingStateLoss();
                 break;
         }
 

@@ -80,27 +80,28 @@ public class MyPageFragment extends Fragment {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
         Button toMyInformationButton = view.findViewById(R.id.toMyInformation);
-        Button toMyStyleButton = view.findViewById(R.id.toMyStyle);
-        Button toMySelectionlistButton = view.findViewById(R.id.toMySelectionlist);
+        Button toMyPointList = view.findViewById(R.id.toMyPointList);
+        Button toMyCoupon = view.findViewById(R.id.toMyCoupon);
 
         toMyInformationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.ChangeFragment(1);
+                mainActivity.ChangeFragment(5);
             }
         });
-        toMyStyleButton.setOnClickListener(new View.OnClickListener() {
+        toMyPointList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.ChangeFragment(3);
+                mainActivity.ChangeFragment(6);
             }
         });
-        toMySelectionlistButton.setOnClickListener(new View.OnClickListener() {
+        toMyCoupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.ChangeFragment(4);
+                mainActivity.ChangeFragment(7);
             }
         });
+
 
 /*      HomeFragment로 이동하는 버튼 <불필요 시 삭제>
         toolbar.setNavigationIcon(R.drawable.back);
