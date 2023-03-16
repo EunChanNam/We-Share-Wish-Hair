@@ -32,4 +32,9 @@ public class TokenManager {
     public void deleteToken(Long userId) {
         tokenRepository.deleteByUserId(userId);
     }
+
+    @Transactional
+    public void updateRefreshTokenByRTR(Long userId, String refreshToken) {
+        tokenRepository.updateRefreshTokenByUserId(userId, refreshToken);
+    }
 }

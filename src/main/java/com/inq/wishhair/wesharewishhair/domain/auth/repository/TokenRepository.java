@@ -27,5 +27,5 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
     @Query("update Token SET refreshToken = :refreshToken " +
             "where user.id = :userId")
     void updateRefreshTokenByUserId(@Param("userId") Long userId,
-                                    @Param("refreshToken") String refreshToken)
+                                    @Param("refreshToken") String refreshToken);
 }
