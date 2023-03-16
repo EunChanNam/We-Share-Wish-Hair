@@ -1,17 +1,12 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 
 import com.inq.wishhair.wesharewishhair.common.base.ControllerTest;
-import com.inq.wishhair.wesharewishhair.common.consts.SessionConst;
-import com.inq.wishhair.wesharewishhair.common.utils.UserSessionDtoUtils;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.hashtag.enums.Tag;
-import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
@@ -30,16 +25,6 @@ public class HairStyleControllerTest extends ControllerTest {
 
     private static final String BASE_URL = "/api/hair_style/recommend";
 
-    private MockHttpSession session;
-    private UserSessionDto sessionDto;
-
-    @BeforeEach
-    void setUp() {
-        sessionDto = UserSessionDtoUtils.getBSessionDto();
-        session = new MockHttpSession();
-        session.setAttribute(SessionConst.LONGIN_MEMBER, sessionDto);
-    }
-
     @Test
     @DisplayName("Tag 를 이용해서 헤어스타일 조회")
     void test1() throws Exception {
@@ -51,15 +36,14 @@ public class HairStyleControllerTest extends ControllerTest {
         MultiValueMap<String, String> params = getTagParams(A.getTags());
         List<HairStyle> response = new ArrayList<>(List.of(a, c, d));
         Pageable pageable = PageRequest.of(0, 4);
-        given(hairStyleService.findRecommendedHairStyle(A.getTags(), sessionDto, pageable))
+        given(hairStyleService.findRecommendedHairStyle(A.getTags(), null, pageable))
                 .willReturn(response);
 
         //when
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get(BASE_URL)
                 .queryParam("size", "4")
-                .params(params)
-                .session(session);
+                .params(params);
 
         //then
         mockMvc.perform(requestBuilder)
