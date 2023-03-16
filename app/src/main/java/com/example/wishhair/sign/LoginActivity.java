@@ -82,15 +82,8 @@ public class LoginActivity extends AppCompatActivity {
                 LoginActivity.this.startActivity(intent);
             }
         });
+//        TODO 0316 : 비밀번호 찾기 구현 여부
         Button btn_findPassword = findViewById(R.id.btn_findPassword);
-        btn_findPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, ReviewDetailActivity.class);
-                LoginActivity.this.startActivity(intent);
-                LoginActivity.this.finish();
-            }
-        });
     }
 
 }
