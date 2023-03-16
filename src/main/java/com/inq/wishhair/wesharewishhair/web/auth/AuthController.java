@@ -32,6 +32,7 @@ public class AuthController {
     @PostMapping
     public ResponseEntity<Void> logout(HttpServletRequest request) {
 
+        //todo ArgumentResolver 로 추상화 하기
         String token = AuthorizationExtractor.extract(request);
         authService.logout(provider.getId(token));
 
