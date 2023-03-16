@@ -11,7 +11,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 public class TokenResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return false;
+        return parameter.hasParameterAnnotation(ExtractToken.class);
     }
 
     @Override
