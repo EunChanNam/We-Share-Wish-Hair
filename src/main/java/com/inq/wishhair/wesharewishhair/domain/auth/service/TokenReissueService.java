@@ -18,7 +18,7 @@ public class TokenReissueService {
 
     public TokenResponse reissueToken(Long userId, String refreshToken) {
 
-        //추출한 userId 와 refresh 토큰이 유요한지 검사
+        //사용하지 않은 RTR 토큰인지, 존재하는지 확인
         if (!tokenManager.existByUserIdAndRefreshToken(userId, refreshToken)) {
             throw new WishHairException(ErrorCode.AUTH_INVALID_TOKEN);
         }
