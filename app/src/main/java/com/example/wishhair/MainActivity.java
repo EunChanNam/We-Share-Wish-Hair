@@ -90,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             case 4:
                 transaction.replace(R.id.MainLayout, mySelectionlistFragment).commitAllowingStateLoss();
                 break;
-            case 5:\
+            case 5:
                 transaction.replace(R.id.MainLayout, informationModifyFragment).commitAllowingStateLoss();
                 break;
             case 6:
