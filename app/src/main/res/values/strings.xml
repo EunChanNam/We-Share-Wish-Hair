@@ -1,19 +1,20 @@
 <resources>
     <string name="app_name">WishHair</string>
-
+    <string name="App_title_name">We Share Wish Hair</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="review_plus_button">review_plus_button</string>
+    <!--    review -->
     <string name="centerDot"> · </string>
     <string name="review_recent_item_btn"><![CDATA[전체보기 >]]></string>
     <string name="review_filter_whole">전체</string>
     <string name="review_filter_man">남성</string>
     <string name="review_filter_woman">여성</string>
-    <string name="App_name">We Share Wish Hair</string>
+    <!--    login -->
     <string name="login_hint_id">ID</string>
     <string name="login_hint_pw">PW</string>
     <string name="sign_button_login">로그인</string>
     <string name="sign_button_register"><![CDATA[회원가입 >]]></string>
     <string name="sign_button_findPassword"><![CDATA[비밀번호 찾기 >]]></string>
+    <!--    register -->
     <string name="register_hint_id">InQInQ@email.com</string>
     <string name="register_message_2">서비스 약관에 동의해주세요</string>
     <string name="register_message_1">회원정보를 입력해 주세요</string>
@@ -22,4 +23,9 @@
     <string name="register_term_3">[필수] 개인정보 수집 및 이용 동의</string>
     <string name="register_term_4">[필수] 개인정보 제공 동의</string>
     <string name="register_button_submit">동의하고 가입하기</string>
+    <!--    write review -->
+    <string name="write_review_message_1">시술은 만족스러우셨나요?</string>
+    <string name="write_review_massage_2">시술에 대한 별점을 매겨주세요</string>
+    <string name="write_review_massage_3">최소 15자 이상 작성해주세요</string>
+    <string name="write_review_submit">등록하기</string>
 </resources>

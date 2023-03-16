@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".review.ReviewListFragment">
+    tools:context=".review.recent.ReviewListFragment">
 
     <LinearLayout
         android:id="@+id/review_parentLinearLayout"
@@ -56,7 +56,6 @@
                         android:gravity="center"/>
                 </RadioGroup>
 
-
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/review_recent_recyclerView"
                 android:layout_width="match_parent"
@@ -64,16 +63,5 @@
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
     </LinearLayout>
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/review_floatingButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:layout_gravity="bottom|right"
-        android:src="@drawable/plus"
-        android:contentDescription="@string/review_plus_button">
-
-    </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 </FrameLayout>

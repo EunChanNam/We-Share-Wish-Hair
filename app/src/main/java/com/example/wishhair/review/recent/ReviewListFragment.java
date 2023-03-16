@@ -1,5 +1,6 @@
-package com.example.wishhair.review;
+package com.example.wishhair.review.recent;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,10 +12,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import com.example.wishhair.R;
-import com.example.wishhair.review.RecyclerViewAdapterRecent;
 import com.example.wishhair.review.ReviewItem;
+import com.example.wishhair.review.detail.ImageSliderAdapter;
+import com.example.wishhair.review.detail.ReviewDetailActivity;
 
 import java.util.ArrayList;
 
@@ -57,26 +60,10 @@ public class ReviewListFragment extends Fragment {
         recentRecyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapterRecent.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-
+                Intent intent = new Intent(v.getContext(), ReviewDetailActivity.class);
+                startActivity(intent);
             }
         });
         return v;
     }
-   /* public void addItemRecent(String profileImage, String nickname, String authorReviewCount, String authorAvgGrade, String contentImage1, String contentImage2, String content, String grade,boolean isHeart, int heartCount, String date) {
-        RecyclerViewItem item = new RecyclerViewItem();
-
-        item.setProfileImage(profileImage);
-        item.setNickname(nickname);
-        item.setAuthorReviewCount(authorReviewCount);
-        item.setAuthorAvgGrade(authorAvgGrade);
-        item.setContentImage1(contentImage1);
-        item.setContentImage2(contentImage2);
-        item.setContent(content);
-        item.setGrade(grade);
-        item.setHeartCount(heartCount);
-        item.setIsHeart(false);
-        item.setDate(date);
-
-        recentRecyclerViewItems.add(item);
-    }*/
 }

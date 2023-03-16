@@ -1,4 +1,4 @@
-package com.example.wishhair.review;
+package com.example.wishhair.review.my;
 
 import android.os.Bundle;
 
@@ -11,8 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wishhair.R;
-import com.example.wishhair.review.RecyclerViewAdapterMy;
-import com.example.wishhair.review.RecyclerViewAdapterRecent;
+import com.example.wishhair.review.recent.RecyclerViewAdapterRecent;
 import com.example.wishhair.review.ReviewItem;
 
 import java.util.ArrayList;
