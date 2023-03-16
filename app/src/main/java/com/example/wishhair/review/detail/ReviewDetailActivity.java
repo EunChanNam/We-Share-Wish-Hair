@@ -25,7 +25,7 @@ public class ReviewDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_review_detail);
+        setContentView(R.layout.review_activity_detail);
 
         sliderViewPager = findViewById(R.id.review_detail_viewPager);
         circleIndicator = findViewById(R.id.review_detail_indicator);

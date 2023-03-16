@@ -38,7 +38,7 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.recycler_item_review_recent, parent, false);
+        View view = inflater.inflate(R.layout.review_recycler_item_recent, parent, false);
 
         return new ViewHolder(view);
     }
