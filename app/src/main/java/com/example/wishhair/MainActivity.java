@@ -9,6 +9,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.wishhair.MyPage.InformationModifyFragment;
+import com.example.wishhair.MyPage.MyCouponFragment;
+import com.example.wishhair.MyPage.MyInformationFragment;
+import com.example.wishhair.MyPage.MyPageFragment;
+import com.example.wishhair.MyPage.MyPointList;
+import com.example.wishhair.MyPage.MySelectionlistFragment;
+import com.example.wishhair.MyPage.MyStyleFragment;
+
 import com.example.wishhair.review.ReviewFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
