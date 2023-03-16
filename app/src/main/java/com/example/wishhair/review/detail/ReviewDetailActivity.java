@@ -6,6 +6,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wishhair.R;
@@ -26,11 +27,13 @@ public class ReviewDetailActivity extends AppCompatActivity {
     };
 
     Button btn_back;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_activity_detail);
+
+        TextView title = findViewById(R.id.toolbar_textView_title);
+        title.setText(" ");
 
         btn_back = findViewById(R.id.toolbar_btn_back);
         btn_back.setOnClickListener(view -> finish());
