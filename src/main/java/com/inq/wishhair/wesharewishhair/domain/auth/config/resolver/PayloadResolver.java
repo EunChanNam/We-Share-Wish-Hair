@@ -11,13 +11,13 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 @RequiredArgsConstructor
-public class PayLoadResolver implements HandlerMethodArgumentResolver {
+public class PayloadResolver implements HandlerMethodArgumentResolver {
 
     private final JwtTokenProvider provider;
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return false;
+        return parameter.hasParameterAnnotation(ExtractPayload.class);
     }
 
     @Override
