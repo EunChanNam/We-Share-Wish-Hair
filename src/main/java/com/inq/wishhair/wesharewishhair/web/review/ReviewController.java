@@ -1,9 +1,7 @@
 package com.inq.wishhair.wesharewishhair.web.review;
 
-import com.inq.wishhair.wesharewishhair.common.consts.SessionConst;
-import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
+import com.inq.wishhair.wesharewishhair.domain.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.domain.review.Review;
-import com.inq.wishhair.wesharewishhair.domain.review.repository.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.domain.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.web.review.dto.request.ReviewRequest;
 import com.inq.wishhair.wesharewishhair.web.review.dto.response.ReviewsResponse;
@@ -21,14 +19,13 @@ import java.util.List;
 public class ReviewController {
 
     private final ReviewService reviewService;
-    private final ReviewRepository reviewRepository;
 
     @PostMapping("/review")
     public ResponseEntity<Void> createReview(
             @ModelAttribute ReviewRequest reviewRequest,
-            @SessionAttribute(SessionConst.LONGIN_MEMBER) UserSessionDto sessionDto) {
+            @ExtractPayload Long userId) {
 
-        Long reviewId = reviewService.createReview(reviewRequest.toReviewCreateDto(sessionDto.getId()));
+        Long reviewId = reviewService.createReview(reviewRequest.toReviewCreateDto(userId));
         return ResponseEntity
                 .created(URI.create("/api/review/" + reviewId))
                 .build();
@@ -37,9 +34,9 @@ public class ReviewController {
     @PostMapping("/review/like/{reviewId}")
     public ResponseEntity<Void> likeReview(
             @PathVariable Long reviewId,
-            @SessionAttribute(SessionConst.LONGIN_MEMBER) UserSessionDto sessionDto) {
+            @ExtractPayload Long userId) {
 
-        reviewService.LikeReview(reviewId, sessionDto.getId());
+        reviewService.LikeReview(reviewId, userId);
         return ResponseEntity.noContent().build();
     }
 

@@ -1,10 +1,9 @@
 package com.inq.wishhair.wesharewishhair.web.hairstyle;
 
+import com.inq.wishhair.wesharewishhair.domain.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.hairstyle.service.HairStyleService;
 import com.inq.wishhair.wesharewishhair.domain.hashtag.enums.Tag;
-import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
-import com.inq.wishhair.wesharewishhair.common.consts.SessionConst;
 import com.inq.wishhair.wesharewishhair.web.hairstyle.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.web.hairstyle.dto.response.PagedHairStyleResponse;
 import lombok.RequiredArgsConstructor;
@@ -26,9 +25,9 @@ public class HairStyleController {
     public ResponseEntity<PagedHairStyleResponse<List<HairStyleResponse>>> respondRecommendedHairStyle(
             @PageableDefault(size = 3) Pageable pageable,
             @RequestParam List<Tag> tags,
-            @SessionAttribute(SessionConst.LONGIN_MEMBER) UserSessionDto sessionDto) {
+            @ExtractPayload Long userId) {
 
-        List<HairStyle> hairStyles = hairStyleService.findRecommendedHairStyle(tags, sessionDto, pageable);
+        List<HairStyle> hairStyles = hairStyleService.findRecommendedHairStyle(tags, userId, pageable);
 
         List<HairStyleResponse> result = toHairResponse(hairStyles);
 
