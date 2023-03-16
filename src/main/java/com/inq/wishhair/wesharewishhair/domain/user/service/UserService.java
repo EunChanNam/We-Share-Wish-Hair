@@ -4,6 +4,8 @@ import com.inq.wishhair.wesharewishhair.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.domain.point.repository.PointHistoryRepository;
 import com.inq.wishhair.wesharewishhair.domain.user.User;
 import com.inq.wishhair.wesharewishhair.domain.user.repository.UserRepository;
+import com.inq.wishhair.wesharewishhair.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.exception.WishHairException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,5 +25,10 @@ public class UserService {
         pointHistoryRepository.save(joinPointHistory);
 
         return saveUser.getId();
+    }
+
+    public User findByUserId(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 }
