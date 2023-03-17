@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.domain;
 
-import com.inq.wishhair.wesharewishhair.hashtag.HashTag;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
 import org.junit.jupiter.api.DisplayName;
