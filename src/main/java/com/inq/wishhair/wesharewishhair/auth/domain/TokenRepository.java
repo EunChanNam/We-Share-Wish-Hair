@@ -1,7 +1,6 @@
-package com.inq.wishhair.wesharewishhair.auth.repository;
+package com.inq.wishhair.wesharewishhair.auth.domain;
 
-import com.inq.wishhair.wesharewishhair.auth.Token;
-import com.inq.wishhair.wesharewishhair.user.User;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

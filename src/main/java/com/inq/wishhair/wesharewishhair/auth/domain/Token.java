@@ -1,6 +1,6 @@
-package com.inq.wishhair.wesharewishhair.auth;
+package com.inq.wishhair.wesharewishhair.auth.domain;
 
-import com.inq.wishhair.wesharewishhair.user.User;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

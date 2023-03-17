@@ -1,6 +1,5 @@
-package com.inq.wishhair.wesharewishhair.user.repository;
+package com.inq.wishhair.wesharewishhair.user.domain;
 
-import com.inq.wishhair.wesharewishhair.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

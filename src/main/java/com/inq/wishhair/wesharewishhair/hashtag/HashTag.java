@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.hashtag;
 
-import com.inq.wishhair.wesharewishhair.hairstyle.HairStyle;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hashtag.enums.Tag;
 import jakarta.persistence.*;
 import lombok.AccessLevel;

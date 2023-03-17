@@ -1,8 +1,8 @@
 package com.inq.wishhair.wesharewishhair.wishlist;
 
 import com.inq.wishhair.wesharewishhair.auditing.BaseEntity;
-import com.inq.wishhair.wesharewishhair.hairstyle.HairStyle;
-import com.inq.wishhair.wesharewishhair.user.User;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;

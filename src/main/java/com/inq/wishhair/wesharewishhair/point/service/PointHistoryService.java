@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.point.service;
 
-import com.inq.wishhair.wesharewishhair.point.PointHistory;
-import com.inq.wishhair.wesharewishhair.point.repository.PointHistoryRepository;
+import com.inq.wishhair.wesharewishhair.point.domain.PointHistory;
+import com.inq.wishhair.wesharewishhair.point.domain.PointHistoryRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import lombok.RequiredArgsConstructor;

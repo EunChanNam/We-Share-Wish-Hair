@@ -2,8 +2,8 @@ package com.inq.wishhair.wesharewishhair.auth.service;
 
 import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
 import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
-import com.inq.wishhair.wesharewishhair.user.User;
-import com.inq.wishhair.wesharewishhair.user.repository.UserRepository;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
+import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import lombok.RequiredArgsConstructor;

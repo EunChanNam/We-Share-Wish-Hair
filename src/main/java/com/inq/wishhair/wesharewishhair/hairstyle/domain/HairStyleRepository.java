@@ -1,6 +1,5 @@
-package com.inq.wishhair.wesharewishhair.hairstyle.repository;
+package com.inq.wishhair.wesharewishhair.hairstyle.domain;
 
-import com.inq.wishhair.wesharewishhair.hairstyle.HairStyle;
 import com.inq.wishhair.wesharewishhair.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import org.springframework.data.domain.Pageable;

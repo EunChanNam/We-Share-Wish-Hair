@@ -1,11 +1,11 @@
-package com.inq.wishhair.wesharewishhair.review;
+package com.inq.wishhair.wesharewishhair.review.domain;
 
 import com.inq.wishhair.wesharewishhair.auditing.BaseEntity;
-import com.inq.wishhair.wesharewishhair.hairstyle.HairStyle;
-import com.inq.wishhair.wesharewishhair.likereview.LikeReview;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
+import com.inq.wishhair.wesharewishhair.likereview.domain.LikeReview;
 import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.review.enums.Score;
-import com.inq.wishhair.wesharewishhair.user.User;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

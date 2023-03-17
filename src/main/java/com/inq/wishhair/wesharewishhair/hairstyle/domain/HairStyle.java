@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.hairstyle;
+package com.inq.wishhair.wesharewishhair.hairstyle.domain;
 
 
 import com.inq.wishhair.wesharewishhair.hashtag.HashTag;

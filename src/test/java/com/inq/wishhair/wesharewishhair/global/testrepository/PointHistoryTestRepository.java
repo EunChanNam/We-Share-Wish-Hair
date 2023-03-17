@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.global.testrepository;
 
-import com.inq.wishhair.wesharewishhair.point.PointHistory;
-import com.inq.wishhair.wesharewishhair.user.User;
+import com.inq.wishhair.wesharewishhair.point.domain.PointHistory;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;

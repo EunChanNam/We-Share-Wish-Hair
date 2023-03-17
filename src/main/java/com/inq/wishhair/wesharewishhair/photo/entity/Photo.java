@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.photo.entity;
 
-import com.inq.wishhair.wesharewishhair.hairstyle.HairStyle;
-import com.inq.wishhair.wesharewishhair.review.Review;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
+import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

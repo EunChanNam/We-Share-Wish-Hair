@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.user;
+package com.inq.wishhair.wesharewishhair.user.domain;
 
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import jakarta.persistence.*;

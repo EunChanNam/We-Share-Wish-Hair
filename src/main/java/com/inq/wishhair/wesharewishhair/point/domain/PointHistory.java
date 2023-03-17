@@ -1,8 +1,8 @@
-package com.inq.wishhair.wesharewishhair.point;
+package com.inq.wishhair.wesharewishhair.point.domain;
 
 import com.inq.wishhair.wesharewishhair.auditing.BaseEntity;
 import com.inq.wishhair.wesharewishhair.point.enums.PointType;
-import com.inq.wishhair.wesharewishhair.user.User;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

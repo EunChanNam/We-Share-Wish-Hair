@@ -2,7 +2,7 @@ package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.utils.UserSessionDtoUtils;
-import com.inq.wishhair.wesharewishhair.hairstyle.HairStyle;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

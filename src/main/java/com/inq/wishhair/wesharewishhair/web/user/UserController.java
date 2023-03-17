@@ -1,9 +1,9 @@
 package com.inq.wishhair.wesharewishhair.web.user;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
-import com.inq.wishhair.wesharewishhair.point.PointHistory;
+import com.inq.wishhair.wesharewishhair.point.domain.PointHistory;
 import com.inq.wishhair.wesharewishhair.point.service.PointHistoryService;
-import com.inq.wishhair.wesharewishhair.user.User;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.web.user.dto.request.UserCreateRequest;
 import com.inq.wishhair.wesharewishhair.web.user.dto.response.MyPageResponse;

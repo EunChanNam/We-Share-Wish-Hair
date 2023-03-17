@@ -1,6 +1,6 @@
-package com.inq.wishhair.wesharewishhair.point.repository;
+package com.inq.wishhair.wesharewishhair.point.domain;
 
-import com.inq.wishhair.wesharewishhair.point.PointHistory;
+import com.inq.wishhair.wesharewishhair.point.domain.PointHistory;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

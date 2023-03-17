@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.web.user.dto.request;
 
-import com.inq.wishhair.wesharewishhair.user.User;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

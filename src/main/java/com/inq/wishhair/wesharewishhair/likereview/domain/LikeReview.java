@@ -1,7 +1,7 @@
-package com.inq.wishhair.wesharewishhair.likereview;
+package com.inq.wishhair.wesharewishhair.likereview.domain;
 
-import com.inq.wishhair.wesharewishhair.review.Review;
-import com.inq.wishhair.wesharewishhair.user.User;
+import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

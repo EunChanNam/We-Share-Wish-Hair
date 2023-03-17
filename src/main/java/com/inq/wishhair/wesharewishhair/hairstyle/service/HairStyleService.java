@@ -1,10 +1,10 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
-import com.inq.wishhair.wesharewishhair.hairstyle.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.repository.HairStyleRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.hashtag.enums.Tag;
-import com.inq.wishhair.wesharewishhair.user.User;
-import com.inq.wishhair.wesharewishhair.user.repository.UserRepository;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
+import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.web.hairstyle;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
-import com.inq.wishhair.wesharewishhair.hairstyle.HairStyle;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleService;
 import com.inq.wishhair.wesharewishhair.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.web.hairstyle.dto.response.HairStyleResponse;

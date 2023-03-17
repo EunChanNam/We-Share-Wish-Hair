@@ -1,17 +1,17 @@
 package com.inq.wishhair.wesharewishhair.review.service;
 
 import com.inq.wishhair.wesharewishhair.global.consts.Condition;
-import com.inq.wishhair.wesharewishhair.hairstyle.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.repository.HairStyleRepository;
-import com.inq.wishhair.wesharewishhair.likereview.LikeReview;
-import com.inq.wishhair.wesharewishhair.likereview.repository.LikeReviewRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
+import com.inq.wishhair.wesharewishhair.likereview.domain.LikeReview;
+import com.inq.wishhair.wesharewishhair.likereview.domain.LikeReviewRepository;
 import com.inq.wishhair.wesharewishhair.photo.PhotoStore;
 import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
-import com.inq.wishhair.wesharewishhair.review.Review;
-import com.inq.wishhair.wesharewishhair.review.repository.ReviewRepository;
+import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.service.dto.ReviewCreateDto;
-import com.inq.wishhair.wesharewishhair.user.User;
-import com.inq.wishhair.wesharewishhair.user.repository.UserRepository;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
+import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
-package com.inq.wishhair.wesharewishhair.review.repository;
+package com.inq.wishhair.wesharewishhair.review.domain;
 
-import com.inq.wishhair.wesharewishhair.review.Review;
+import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

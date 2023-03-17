@@ -1,8 +1,8 @@
 package com.inq.wishhair.wesharewishhair.auth.service;
 
-import com.inq.wishhair.wesharewishhair.auth.Token;
-import com.inq.wishhair.wesharewishhair.auth.repository.TokenRepository;
-import com.inq.wishhair.wesharewishhair.user.User;
+import com.inq.wishhair.wesharewishhair.auth.domain.Token;
+import com.inq.wishhair.wesharewishhair.auth.domain.TokenRepository;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

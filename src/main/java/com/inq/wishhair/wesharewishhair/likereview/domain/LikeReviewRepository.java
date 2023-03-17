@@ -1,8 +1,7 @@
-package com.inq.wishhair.wesharewishhair.likereview.repository;
+package com.inq.wishhair.wesharewishhair.likereview.domain;
 
-import com.inq.wishhair.wesharewishhair.likereview.LikeReview;
-import com.inq.wishhair.wesharewishhair.review.Review;
-import com.inq.wishhair.wesharewishhair.user.User;
+import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

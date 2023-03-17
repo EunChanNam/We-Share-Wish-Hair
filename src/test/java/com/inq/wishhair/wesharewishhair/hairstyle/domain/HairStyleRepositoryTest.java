@@ -1,8 +1,6 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.domain;
 
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
-import com.inq.wishhair.wesharewishhair.hairstyle.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.repository.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.photo.entity.Photo;

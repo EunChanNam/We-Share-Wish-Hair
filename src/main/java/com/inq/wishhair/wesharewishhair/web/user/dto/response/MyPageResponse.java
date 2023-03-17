@@ -1,8 +1,8 @@
 package com.inq.wishhair.wesharewishhair.web.user.dto.response;
 
 import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
-import com.inq.wishhair.wesharewishhair.point.PointHistory;
-import com.inq.wishhair.wesharewishhair.user.User;
+import com.inq.wishhair.wesharewishhair.point.domain.PointHistory;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
