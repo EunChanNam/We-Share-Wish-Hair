@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.point.enums;
+package com.inq.wishhair.wesharewishhair.user.domain.point.enums;
 
 public enum PointType {
     JOIN, //신규 가입

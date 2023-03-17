@@ -1,7 +1,7 @@
-package com.inq.wishhair.wesharewishhair.point.service;
+package com.inq.wishhair.wesharewishhair.user.service;
 
-import com.inq.wishhair.wesharewishhair.point.domain.PointHistory;
-import com.inq.wishhair.wesharewishhair.point.domain.PointHistoryRepository;
+import com.inq.wishhair.wesharewishhair.user.domain.point.domain.PointHistory;
+import com.inq.wishhair.wesharewishhair.user.domain.point.domain.PointRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import lombok.RequiredArgsConstructor;
@@ -15,9 +15,9 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class PointHistoryService {
+public class UserPointService {
 
-    private final PointHistoryRepository pointHistoryRepository;
+    private final PointRepository pointHistoryRepository;
 
     public PointHistory getRecentPointHistory(Long userId) {
 
