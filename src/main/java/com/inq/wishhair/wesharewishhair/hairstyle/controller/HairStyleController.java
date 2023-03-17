@@ -4,7 +4,7 @@ import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleService;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
-import com.inq.wishhair.wesharewishhair.hairstyle.controller.dto.response.HairStyleResponse;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.dto.response.PagedHairStyleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -27,17 +27,9 @@ public class HairStyleController {
             @RequestParam List<Tag> tags,
             @ExtractPayload Long userId) {
 
-        List<HairStyle> hairStyles = hairStyleService.findRecommendedHairStyle(tags, userId, pageable);
-
-        List<HairStyleResponse> result = toHairResponse(hairStyles);
+        List<HairStyleResponse> result = hairStyleService.findRecommendedHairStyle(tags, userId, pageable);
 
         return ResponseEntity.ok(toPagedResponse(result, result.size()));
-    }
-
-    private static List<HairStyleResponse> toHairResponse(List<HairStyle> hairStyles) {
-        return hairStyles.stream()
-                .map(HairStyleResponse::new)
-                .toList();
     }
 
     private <T> PagedHairStyleResponse<T> toPagedResponse(T result, int size) {
