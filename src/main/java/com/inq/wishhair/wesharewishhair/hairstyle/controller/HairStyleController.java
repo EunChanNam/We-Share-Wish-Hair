@@ -27,17 +27,9 @@ public class HairStyleController {
             @RequestParam List<Tag> tags,
             @ExtractPayload Long userId) {
 
-        List<HairStyle> hairStyles = hairStyleService.findRecommendedHairStyle(tags, userId, pageable);
-
-        List<HairStyleResponse> result = toHairResponse(hairStyles);
+        List<HairStyleResponse> result = hairStyleService.findRecommendedHairStyle(tags, userId, pageable);
 
         return ResponseEntity.ok(toPagedResponse(result, result.size()));
-    }
-
-    private static List<HairStyleResponse> toHairResponse(List<HairStyle> hairStyles) {
-        return hairStyles.stream()
-                .map(HairStyleResponse::new)
-                .toList();
     }
 
     private <T> PagedHairStyleResponse<T> toPagedResponse(T result, int size) {
