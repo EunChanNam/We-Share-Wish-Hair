@@ -4,7 +4,7 @@ import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewRequest;
-import com.inq.wishhair.wesharewishhair.review.controller.dto.response.ReviewsResponse;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -41,12 +41,12 @@ public class ReviewController {
     }
 
     @GetMapping("/review")
-    public ResponseEntity<List<ReviewsResponse>> getReviews(Pageable pageable,
-                                                            @RequestParam String condition) {
+    public ResponseEntity<List<ReviewResponse>> getReviews(Pageable pageable,
+                                                           @RequestParam String condition) {
 
         List<Review> reviews = reviewService.getReviews(pageable, condition);
-        List<ReviewsResponse> result = reviews.stream()
-                .map(ReviewsResponse::new)
+        List<ReviewResponse> result = reviews.stream()
+                .map(ReviewResponse::new)
                 .toList();
 
         return ResponseEntity.ok(result);

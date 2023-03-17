@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.review.controller.dto.response;
+package com.inq.wishhair.wesharewishhair.review.service.dto.response;
 
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.enums.Score;
@@ -9,7 +9,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class ReviewsResponse {
+public class ReviewResponse {
 
     private String title;
 
@@ -23,7 +23,7 @@ public class ReviewsResponse {
 
     private Integer likes;
 
-    public ReviewsResponse(Review review) {
+    public ReviewResponse(Review review) {
         this.title = review.getTitle();
         this.hairStyleName = review.getHairStyle().getName();
         this.userNickName = review.getUser().getName();
