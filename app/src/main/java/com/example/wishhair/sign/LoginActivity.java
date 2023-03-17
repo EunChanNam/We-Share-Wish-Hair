@@ -15,6 +15,7 @@ import com.android.volley.NetworkResponse;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.toolbox.Volley;
+import com.example.wishhair.review.WriteReviewActivity;
 import com.example.wishhair.review.detail.ImageSliderAdapter;
 import com.example.wishhair.review.detail.ReviewDetailActivity;
 
@@ -84,6 +85,13 @@ public class LoginActivity extends AppCompatActivity {
         });
 //        TODO 0316 : 비밀번호 찾기 구현 여부
         Button btn_findPassword = findViewById(R.id.btn_findPassword);
+        btn_findPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, WriteReviewActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }

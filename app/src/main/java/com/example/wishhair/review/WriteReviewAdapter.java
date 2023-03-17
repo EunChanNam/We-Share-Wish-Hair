@@ -1,32 +1,74 @@
 package com.example.wishhair.review;
 
 import android.content.Context;
+import android.net.Uri;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
 
-import java.util.List;
-import java.util.Vector;
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class WriteReviewAdapter {
-    private final Context context;
-    private List<WriteReviewItem> items = new Vector<>();
+import com.bumptech.glide.Glide;
+import com.example.wishhair.R;
 
-    public WriteReviewAdapter(Context context, List<WriteReviewItem> items) {
-        this.context = context;
+import java.util.ArrayList;
+
+public class WriteReviewAdapter extends RecyclerView.Adapter<WriteReviewAdapter.WriteViewHolder> {
+
+    private ArrayList<Uri> items = new ArrayList<>();
+    private Context context;
+
+    public WriteReviewAdapter(ArrayList<Uri> items, Context context) {
         this.items = items;
+        this.context = context;
     }
 
-    public class WriteReviewItem {
-        private int image;
+    @NonNull
+    @Override
+    public WriteViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
-        public WriteReviewItem(int image) {
-            this.image = image;
-        }
-
-        public int getImage() {
-            return image;
-        }
-
-        public void setImage(int image) {
-            this.image = image;
-        }
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.review_item_write_picture, parent, false);
+        return new WriteViewHolder(view);
     }
+
+    @Override
+    public void onBindViewHolder(@NonNull WriteViewHolder viewHolder, int position) {
+        Uri imageURI = items.get(position);
+
+        Glide.with(context).load(imageURI).into(viewHolder.imageView);
+    }
+
+    @Override
+    public int getItemCount() {
+        return items.size();
+    }
+
+    class WriteViewHolder extends RecyclerView.ViewHolder {
+        ImageView imageView;
+
+        WriteViewHolder(View itemView) {
+            super(itemView);
+
+            imageView=itemView.findViewById(R.id.review_item_write_imageview);
+        }
+
+    }
+
+    /*public static class WriteReviewItem {
+        private String imageURL;
+
+        public WriteReviewItem(String imageURL) {
+            this.imageURL = imageURL;
+        }
+
+        public String getImageURL() {
+            return imageURL;
+        }
+
+        public void setImageURL(String imageURL) {
+            this.imageURL = imageURL;
+        }
+    }*/
 }
