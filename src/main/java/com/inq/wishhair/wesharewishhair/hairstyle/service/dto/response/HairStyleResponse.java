@@ -2,7 +2,6 @@ package com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponse;
-import jakarta.persistence.Persistence;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -21,10 +20,9 @@ public class HairStyleResponse {
     public HairStyleResponse(HairStyle hairStyle) {
         this.hairStyleId = hairStyle.getId();
         this.name = hairStyle.getName();
-        if (Persistence.getPersistenceUtil().isLoaded(hairStyle.getPhotos())) {
-            this.photos = hairStyle.getPhotos()
-                    .stream().map(PhotoResponse::new)
-                    .toList();
-        }
+        //지연 로딩
+        this.photos = hairStyle.getPhotos()
+                .stream().map(PhotoResponse::new)
+                .toList();
     }
 }
