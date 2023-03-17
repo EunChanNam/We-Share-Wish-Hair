@@ -10,6 +10,7 @@ import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.service.dto.ReviewCreateDto;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -66,7 +67,7 @@ public class ReviewService {
                 });
     }
 
-    public List<Review> getReviews(Pageable pageable, String condition) {
+    public List<ReviewResponse> getReviews(Pageable pageable, String condition) {
         List<Review> reviews = reviewRepository.findReviewByPaging(pageable);
         if (!reviews.isEmpty()) {
             reviews.get(0).getPhotos().isEmpty();
@@ -75,6 +76,13 @@ public class ReviewService {
         if (condition.equals(Condition.LIKES)) {
             reviews.sort((a, b) -> Integer.compare(b.getLikeReviews().size(), a.getLikeReviews().size()));
         }
-        return reviews;
+
+        return toResponse(reviews);
+    }
+
+    public List<ReviewResponse> toResponse(List<Review> reviews) {
+        return reviews.stream()
+                .map(ReviewResponse::new)
+                .toList();
     }
 }

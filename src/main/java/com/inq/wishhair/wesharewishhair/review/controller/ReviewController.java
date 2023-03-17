@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.review.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
+import com.inq.wishhair.wesharewishhair.review.controller.dto.response.PagedReviewResponse;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewRequest;
@@ -41,14 +42,15 @@ public class ReviewController {
     }
 
     @GetMapping("/review")
-    public ResponseEntity<List<ReviewResponse>> getReviews(Pageable pageable,
+    public ResponseEntity<PagedReviewResponse<List<ReviewResponse>>> getReviews(Pageable pageable,
                                                            @RequestParam String condition) {
 
-        List<Review> reviews = reviewService.getReviews(pageable, condition);
-        List<ReviewResponse> result = reviews.stream()
-                .map(ReviewResponse::new)
-                .toList();
+        List<ReviewResponse> result = reviewService.getReviews(pageable, condition);
 
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(toPagedResponse(result, result.size()));
+    }
+
+    private <T> PagedReviewResponse<T> toPagedResponse(T result, int contentSize) {
+        return new PagedReviewResponse<>(result, contentSize);
     }
 }
