@@ -1,9 +1,9 @@
 package com.inq.wishhair.wesharewishhair.web.user;
 
-import com.inq.wishhair.wesharewishhair.common.consts.SessionConst;
-import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
+import com.inq.wishhair.wesharewishhair.domain.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.domain.point.service.PointHistoryService;
+import com.inq.wishhair.wesharewishhair.domain.user.User;
 import com.inq.wishhair.wesharewishhair.domain.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.web.user.dto.request.UserCreateRequest;
 import com.inq.wishhair.wesharewishhair.web.user.dto.response.MyPageResponse;
@@ -32,11 +32,13 @@ public class UserController {
 
     @GetMapping("/my_page")
     public ResponseEntity<MyPageResponse> getMyPageInfo(
-            @SessionAttribute(SessionConst.LONGIN_MEMBER) UserSessionDto sessionDto) {
+            @ExtractPayload Long userId) {
 
+        //todo myPageService 따로 만들어서 트랜잭션 통일 -> user-service 구조에
+        PointHistory recentPointHistory = pointHistoryService.getRecentPointHistory(userId);
+        User user = userService.findByUserId(userId);
 
-        PointHistory recentPointHistory = pointHistoryService.getRecentPointHistory(sessionDto.getId());
-        MyPageResponse myPageResponse = new MyPageResponse(sessionDto, recentPointHistory);
+        MyPageResponse myPageResponse = new MyPageResponse(user, recentPointHistory);
 
         return ResponseEntity.ok(myPageResponse);
     }

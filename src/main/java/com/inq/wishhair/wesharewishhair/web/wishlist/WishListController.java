@@ -1,7 +1,6 @@
 package com.inq.wishhair.wesharewishhair.web.wishlist;
 
-import com.inq.wishhair.wesharewishhair.common.consts.SessionConst;
-import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
+import com.inq.wishhair.wesharewishhair.domain.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.domain.wishlist.WishList;
 import com.inq.wishhair.wesharewishhair.domain.wishlist.service.WishListService;
 import com.inq.wishhair.wesharewishhair.web.wishlist.dto.response.WishListResponse;
@@ -22,11 +21,11 @@ public class WishListController {
     @PostMapping("/wish_list/{hairStyleId}")
     public ResponseEntity<Void> createWishList(
             @PathVariable Long hairStyleId,
-            @SessionAttribute(SessionConst.LONGIN_MEMBER) UserSessionDto sessionDto) {
+            @ExtractPayload Long userId) {
 
         WishList wishList = WishList.builder()
                 .build();
-        Long wishListId = wishListService.createWishList(wishList, hairStyleId, sessionDto.getId());
+        Long wishListId = wishListService.createWishList(wishList, hairStyleId, userId);
 
         return ResponseEntity
                 .created(URI.create("/api/wish_list/" + wishListId))
@@ -42,9 +41,9 @@ public class WishListController {
 
     @GetMapping("/wish_list")
     public ResponseEntity<List<WishListResponse>> getWishList(
-            @SessionAttribute(SessionConst.LONGIN_MEMBER) UserSessionDto sessionDto) {
+            @ExtractPayload Long userId) {
 
-        List<WishList> wishLists = wishListService.getWishList(sessionDto.getId());
+        List<WishList> wishLists = wishListService.getWishList(userId);
         List<WishListResponse> result = wishLists.stream()
                 .map(wishList -> new WishListResponse(wishList.getHairStyle()))
                 .toList();

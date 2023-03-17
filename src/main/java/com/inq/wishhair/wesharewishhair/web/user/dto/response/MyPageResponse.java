@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.web.user.dto.response;
 
 import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
 import com.inq.wishhair.wesharewishhair.domain.point.PointHistory;
+import com.inq.wishhair.wesharewishhair.domain.user.User;
 import com.inq.wishhair.wesharewishhair.domain.user.enums.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,10 +19,10 @@ public class MyPageResponse {
 
     private Long point;
 
-    public MyPageResponse(UserSessionDto userSessionDto, PointHistory pointHistory) {
-        this.name = userSessionDto.getName();
-        this.nickname = userSessionDto.getNickname();
-        this.sex = userSessionDto.getSex();
+    public MyPageResponse(User user, PointHistory pointHistory) {
+        this.name = user.getName();
+        this.nickname = user.getNickname();
+        this.sex = user.getSex();
         this.point = pointHistory.getPoint();
     }
 }
