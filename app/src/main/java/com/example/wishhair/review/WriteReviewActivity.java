@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class WriteReviewActivity extends AppCompatActivity {
     private static final String TAG = "WriteReviewActivity";
 
-    private Button btn_del, btn_addPicture;
+    private Button btn_del, btn_addPicture, btn_back;
 
     private RecyclerView recyclerView;
     private WriteReviewAdapter writeReviewAdapter;
@@ -36,6 +36,9 @@ public class WriteReviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_activity_write);
+//        back
+        btn_back = findViewById(R.id.toolbar_btn_back);
+        btn_back.setOnClickListener(view -> finish());
 
         recyclerView = findViewById(R.id.write_review_picture_recyclerView);
         btn_del = findViewById(R.id.review_item_write_btn_delete);
@@ -45,16 +48,13 @@ public class WriteReviewActivity extends AppCompatActivity {
 
 //        addPicture
         btn_addPicture = findViewById(R.id.write_review_addPicture);
-        btn_addPicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
-                intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
+        btn_addPicture.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
 
-                intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(intent, 2222);
-            }
+            intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            startActivityForResult(intent, 2222);
         });
 
         btn_del = findViewById(R.id.review_item_write_btn_delete);

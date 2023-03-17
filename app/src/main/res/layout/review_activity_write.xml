@@ -91,6 +91,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
             android:background="@drawable/write_review_plus" />
 
         <androidx.recyclerview.widget.RecyclerView

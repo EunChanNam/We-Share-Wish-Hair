@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,13 @@ public class WriteReviewAdapter extends RecyclerView.Adapter<WriteReviewAdapter.
         Uri imageURI = items.get(position);
 
         Glide.with(context).load(imageURI).into(viewHolder.imageView);
+
+        viewHolder.btn_del.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deleteItems(position);
+            }
+        });
     }
 
     @Override
@@ -47,13 +55,20 @@ public class WriteReviewAdapter extends RecyclerView.Adapter<WriteReviewAdapter.
 
     class WriteViewHolder extends RecyclerView.ViewHolder {
         ImageView imageView;
-
+        ImageButton btn_del;
         WriteViewHolder(View itemView) {
             super(itemView);
 
-            imageView=itemView.findViewById(R.id.review_item_write_imageview);
+            imageView = itemView.findViewById(R.id.review_item_write_imageview);
+            btn_del = itemView.findViewById(R.id.review_item_write_btn_delete);
         }
 
+    }
+
+    public void deleteItems(int position) {
+        items.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeRemoved(position, items.size());
     }
 
     /*public static class WriteReviewItem {
