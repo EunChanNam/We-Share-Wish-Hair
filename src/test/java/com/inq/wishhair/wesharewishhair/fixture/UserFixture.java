@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.fixture;
 
-import com.inq.wishhair.wesharewishhair.domain.user.User;
-import com.inq.wishhair.wesharewishhair.domain.user.enums.Sex;
+import com.inq.wishhair.wesharewishhair.user.User;
+import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

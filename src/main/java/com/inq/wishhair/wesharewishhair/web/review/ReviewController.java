@@ -1,8 +1,8 @@
 package com.inq.wishhair.wesharewishhair.web.review;
 
-import com.inq.wishhair.wesharewishhair.domain.auth.config.resolver.ExtractPayload;
-import com.inq.wishhair.wesharewishhair.domain.review.Review;
-import com.inq.wishhair.wesharewishhair.domain.review.service.ReviewService;
+import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
+import com.inq.wishhair.wesharewishhair.review.Review;
+import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.web.review.dto.request.ReviewRequest;
 import com.inq.wishhair.wesharewishhair.web.review.dto.response.ReviewsResponse;
 import lombok.RequiredArgsConstructor;

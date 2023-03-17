@@ -1,8 +1,8 @@
 package com.inq.wishhair.wesharewishhair.web.auth;
 
-import com.inq.wishhair.wesharewishhair.domain.auth.config.resolver.ExtractPayload;
-import com.inq.wishhair.wesharewishhair.domain.auth.service.AuthService;
-import com.inq.wishhair.wesharewishhair.domain.auth.service.dto.response.TokenResponse;
+import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
+import com.inq.wishhair.wesharewishhair.auth.service.AuthService;
+import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
 import com.inq.wishhair.wesharewishhair.web.auth.dto.request.LoginRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

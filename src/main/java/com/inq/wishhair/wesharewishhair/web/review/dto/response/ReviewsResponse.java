@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.web.review.dto.response;
 
-import com.inq.wishhair.wesharewishhair.domain.review.Review;
-import com.inq.wishhair.wesharewishhair.domain.review.enums.Score;
+import com.inq.wishhair.wesharewishhair.review.Review;
+import com.inq.wishhair.wesharewishhair.review.enums.Score;
 import com.inq.wishhair.wesharewishhair.web.photo.dto.response.PhotoResponse;
 import jakarta.persistence.Persistence;
 import lombok.AllArgsConstructor;

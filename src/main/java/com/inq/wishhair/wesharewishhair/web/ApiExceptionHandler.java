@@ -1,8 +1,8 @@
 package com.inq.wishhair.wesharewishhair.web;
 
-import com.inq.wishhair.wesharewishhair.exception.ErrorCode;
-import com.inq.wishhair.wesharewishhair.exception.ErrorResponse;
-import com.inq.wishhair.wesharewishhair.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.global.exception.ErrorResponse;
+import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.web.auth.AuthController;
 import com.inq.wishhair.wesharewishhair.web.hairstyle.HairStyleController;
 import com.inq.wishhair.wesharewishhair.web.review.ReviewController;

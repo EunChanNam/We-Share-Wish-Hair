@@ -1,10 +1,10 @@
 package com.inq.wishhair.wesharewishhair.fixture;
 
-import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
-import com.inq.wishhair.wesharewishhair.domain.hashtag.HashTag;
-import com.inq.wishhair.wesharewishhair.domain.hashtag.enums.Tag;
-import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
-import com.inq.wishhair.wesharewishhair.domain.user.enums.Sex;
+import com.inq.wishhair.wesharewishhair.hairstyle.HairStyle;
+import com.inq.wishhair.wesharewishhair.hashtag.HashTag;
+import com.inq.wishhair.wesharewishhair.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
+import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

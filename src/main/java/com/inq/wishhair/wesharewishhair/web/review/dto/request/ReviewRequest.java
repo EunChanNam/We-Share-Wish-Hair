@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.web.review.dto.request;
 
-import com.inq.wishhair.wesharewishhair.domain.review.enums.Score;
-import com.inq.wishhair.wesharewishhair.domain.review.service.dto.ReviewCreateDto;
+import com.inq.wishhair.wesharewishhair.review.enums.Score;
+import com.inq.wishhair.wesharewishhair.review.service.dto.ReviewCreateDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;

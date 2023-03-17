@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.web.photo.dto.response;
 
-import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
+import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
