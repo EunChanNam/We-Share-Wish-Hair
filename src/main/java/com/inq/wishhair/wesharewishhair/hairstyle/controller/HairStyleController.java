@@ -4,7 +4,7 @@ import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleService;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
-import com.inq.wishhair.wesharewishhair.hairstyle.controller.dto.response.HairStyleResponse;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.dto.response.PagedHairStyleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
