@@ -1,6 +1,5 @@
 package com.inq.wishhair.wesharewishhair.user.controller.dto.response;
 
-import com.inq.wishhair.wesharewishhair.domain.login.dto.UserSessionDto;
 import com.inq.wishhair.wesharewishhair.user.domain.point.domain.PointHistory;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
