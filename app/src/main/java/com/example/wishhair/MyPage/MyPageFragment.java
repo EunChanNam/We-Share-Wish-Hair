@@ -1,6 +1,8 @@
 package com.example.wishhair.MyPage;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,8 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wishhair.MainActivity;
 import com.example.wishhair.R;
@@ -35,6 +40,10 @@ public class MyPageFragment extends Fragment {
     private String mParam2;
 
     MainActivity mainActivity;
+    RecyclerView HeartlistRecyclerView;
+    MyPageRecyclerViewAdapter adapter;
+    RecyclerDecoration recyclerDecoration;
+
 
     public MyPageFragment() {
         // Required empty public constructor
@@ -82,6 +91,23 @@ public class MyPageFragment extends Fragment {
         Button toMyInformationButton = view.findViewById(R.id.toMyInformation);
         Button toMyPointList = view.findViewById(R.id.toMyPointList);
         Button toMyCoupon = view.findViewById(R.id.toMyCoupon);
+
+        HeartlistRecyclerView = view.findViewById(R.id.HeartlistRecyclerView);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        HeartlistRecyclerView.setLayoutManager(layoutManager);
+//        recyclerDecoration = new RecyclerDecoration(-200);
+//        HeartlistRecyclerView.addItemDecoration(recyclerDecoration);
+
+        adapter = new MyPageRecyclerViewAdapter();
+        adapter.addItem(new HeartlistItem());
+        adapter.addItem(new HeartlistItem());
+        adapter.addItem(new HeartlistItem());
+        adapter.addItem(new HeartlistItem());
+        adapter.addItem(new HeartlistItem());
+        adapter.addItem(new HeartlistItem());
+        adapter.addItem(new HeartlistItem());
+
+        HeartlistRecyclerView.setAdapter(adapter);
 
         toMyInformationButton.setOnClickListener(new View.OnClickListener() {
             @Override

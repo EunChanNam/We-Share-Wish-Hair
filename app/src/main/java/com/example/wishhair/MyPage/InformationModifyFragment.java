@@ -3,6 +3,7 @@ package com.example.wishhair.MyPage;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
@@ -34,6 +35,7 @@ public class InformationModifyFragment extends Fragment {
     private String mParam2;
 
     MainActivity mainActivity;
+    private OnBackPressedCallback callback;
 
     public InformationModifyFragment() {
         // Required empty public constructor
@@ -58,6 +60,13 @@ public class InformationModifyFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mainActivity = (MainActivity) getActivity();
+        callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                mainActivity.ChangeFragment(2);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     /**

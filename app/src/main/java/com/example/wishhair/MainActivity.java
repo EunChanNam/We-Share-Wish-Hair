@@ -14,7 +14,7 @@ import com.example.wishhair.MyPage.MyCouponFragment;
 import com.example.wishhair.MyPage.MyInformationFragment;
 import com.example.wishhair.MyPage.MyPageFragment;
 import com.example.wishhair.MyPage.MyPointList;
-import com.example.wishhair.MyPage.MySelectionlistFragment;
+import com.example.wishhair.MyPage.MyHeartlistFragment;
 import com.example.wishhair.MyPage.MyStyleFragment;
 
 import com.example.wishhair.review.ReviewFragment;
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private final ReviewFragment reviewFragment = new ReviewFragment();
     private final MyPageFragment myPageFragment = new MyPageFragment();
     private final MyStyleFragment myStyleFragment = new MyStyleFragment();
-    private final MySelectionlistFragment mySelectionlistFragment = new MySelectionlistFragment();
+    private final MyHeartlistFragment myHeartlistFragment = new MyHeartlistFragment();
     private final InformationModifyFragment informationModifyFragment = new InformationModifyFragment();
     private final MyCouponFragment myCouponFragment = new MyCouponFragment();
     private final MyPointList myPointList = new MyPointList();
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 transaction.replace(R.id.MainLayout, myStyleFragment).commitAllowingStateLoss();
                 break;
             case 4:
-                transaction.replace(R.id.MainLayout, mySelectionlistFragment).commitAllowingStateLoss();
+                transaction.replace(R.id.MainLayout, myHeartlistFragment).commitAllowingStateLoss();
                 break;
             case 5:
                 transaction.replace(R.id.MainLayout, informationModifyFragment).commitAllowingStateLoss();

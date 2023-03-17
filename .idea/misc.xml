@@ -18,8 +18,13 @@
         <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_mypage.xml" value="0.33" />
         <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_recommend.xml" value="0.17806484295845998" />
         <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/fragment_review.xml" value="0.17806484295845998" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/heartlist_item.xml" value="0.5" />
         <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/mypage_toolbar.xml" value="0.17097264437689969" />
         <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/pointbuttonlist.xml" value="0.18" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/recycler_item_review_hot.xml" value="0.33" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/recycler_item_review_my.xml" value="0.17806484295845998" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/recycler_item_review_recent.xml" value="0.17806484295845998" />
+        <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/selectionlist_item.xml" value="0.67" />
         <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/layout/sign_activity_login.xml" value="0.17806484295845998" />
         <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/menu/bottom_menu.xml" value="0.17291666666666666" />
         <entry key="..\:/Android Project/We-Share-Wish-Hair/app/src/main/res/menu/mypage_topmenu.xml" value="0.2638888888888889" />

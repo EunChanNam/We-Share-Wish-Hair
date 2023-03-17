@@ -17,10 +17,10 @@ import com.example.wishhair.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link MySelectionlistFragment#newInstance} factory method to
+ * Use the {@link MyHeartlistFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class MySelectionlistFragment extends Fragment {
+public class MyHeartlistFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,7 +33,7 @@ public class MySelectionlistFragment extends Fragment {
 
     MainActivity mainActivity;
 
-    public MySelectionlistFragment() {
+    public MyHeartlistFragment() {
         // Required empty public constructor
     }
 
@@ -46,8 +46,8 @@ public class MySelectionlistFragment extends Fragment {
      * @return A new instance of fragment MySelectionlistFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static MySelectionlistFragment newInstance(String param1, String param2) {
-        MySelectionlistFragment fragment = new MySelectionlistFragment();
+    public static MyHeartlistFragment newInstance(String param1, String param2) {
+        MyHeartlistFragment fragment = new MyHeartlistFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
