@@ -1,8 +1,8 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
-import com.inq.wishhair.wesharewishhair.point.domain.PointHistory;
-import com.inq.wishhair.wesharewishhair.point.service.PointHistoryService;
+import com.inq.wishhair.wesharewishhair.user.domain.point.domain.PointHistory;
+import com.inq.wishhair.wesharewishhair.user.service.UserPointService;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserCreateRequest;
@@ -19,7 +19,7 @@ import java.net.URI;
 public class UserController {
 
     private final UserService userService;
-    private final PointHistoryService pointHistoryService;
+    private final UserPointService pointHistoryService;
 
     @PostMapping("/user")
     public ResponseEntity<Void> createUser(@ModelAttribute UserCreateRequest createRequest) {

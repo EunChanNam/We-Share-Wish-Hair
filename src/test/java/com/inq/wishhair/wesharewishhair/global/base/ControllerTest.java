@@ -3,7 +3,7 @@ package com.inq.wishhair.wesharewishhair.global.base;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleService;
 import com.inq.wishhair.wesharewishhair.domain.login.LoginService;
-import com.inq.wishhair.wesharewishhair.point.service.PointHistoryService;
+import com.inq.wishhair.wesharewishhair.user.service.UserPointService;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleController;
 import com.inq.wishhair.wesharewishhair.web.login.LoginController;
@@ -29,7 +29,7 @@ public abstract class ControllerTest {
     protected HairStyleService hairStyleService;
 
     @MockBean
-    protected PointHistoryService pointService;
+    protected UserPointService pointService;
 
     @MockBean
     protected LoginService loginService;

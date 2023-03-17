@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
-import com.inq.wishhair.wesharewishhair.point.domain.PointHistory;
-import com.inq.wishhair.wesharewishhair.point.domain.PointHistoryRepository;
+import com.inq.wishhair.wesharewishhair.user.domain.point.domain.PointHistory;
+import com.inq.wishhair.wesharewishhair.user.domain.point.domain.PointRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PointHistoryRepository pointHistoryRepository;
+    private final PointRepository pointHistoryRepository;
 
     @Transactional
     public Long createUser(User user) {
