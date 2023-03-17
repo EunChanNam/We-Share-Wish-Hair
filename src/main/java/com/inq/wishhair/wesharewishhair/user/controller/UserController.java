@@ -19,7 +19,7 @@ import java.net.URI;
 public class UserController {
 
     private final UserService userService;
-    private final UserPointService pointHistoryService;
+    private final UserPointService userPointService;
 
     @PostMapping("/user")
     public ResponseEntity<Void> createUser(@ModelAttribute UserCreateRequest createRequest) {
@@ -35,7 +35,7 @@ public class UserController {
             @ExtractPayload Long userId) {
 
         //todo myPageService 따로 만들어서 트랜잭션 통일 -> user-service 구조에
-        PointHistory recentPointHistory = pointHistoryService.getRecentPointHistory(userId);
+        PointHistory recentPointHistory = userPointService.getRecentPointHistory(userId);
         User user = userService.findByUserId(userId);
 
         MyPageResponse myPageResponse = new MyPageResponse(user, recentPointHistory);
