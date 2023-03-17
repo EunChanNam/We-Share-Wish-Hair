@@ -1,8 +1,8 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 
-import com.inq.wishhair.wesharewishhair.common.base.ControllerTest;
-import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
-import com.inq.wishhair.wesharewishhair.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.PageRequest;
