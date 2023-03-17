@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.user.controller.utils;
 
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserCreateRequest;
+import com.inq.wishhair.wesharewishhair.web.user.dto.request.UserCreateRequest;
 
 public abstract class UserCreateRequestUtils {
     private static final UserFixture a = UserFixture.A;

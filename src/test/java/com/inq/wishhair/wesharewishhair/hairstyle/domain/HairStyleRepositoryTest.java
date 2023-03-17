@@ -1,10 +1,12 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.domain;
 
-import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
-import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
-import com.inq.wishhair.wesharewishhair.user.enums.Sex;
+import com.inq.wishhair.wesharewishhair.common.base.RepositoryTest;
+import com.inq.wishhair.wesharewishhair.domain.hairstyle.HairStyle;
+import com.inq.wishhair.wesharewishhair.domain.hairstyle.repository.HairStyleRepository;
+import com.inq.wishhair.wesharewishhair.domain.hashtag.HashTag;
+import com.inq.wishhair.wesharewishhair.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.domain.photo.entity.Photo;
+import com.inq.wishhair.wesharewishhair.domain.user.enums.Sex;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
