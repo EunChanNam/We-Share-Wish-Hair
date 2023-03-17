@@ -45,6 +45,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
 //        RatingBar
         ratingBar = findViewById(R.id.write_review_ratingBar);
+        ratingBar.setOnRatingBarChangeListener((ratingBar, v, b) -> ratingBar.setRating(v));
 
 //        addPicture
         btn_addPicture = findViewById(R.id.write_review_addPicture);
@@ -80,6 +81,7 @@ public class WriteReviewActivity extends AppCompatActivity {
             } else { // 이미지 여러장
                 ClipData clipData = data.getClipData();
 //                이미지 선택 갯수 제한
+//                !TODO : 이미지 여러장 나눠서 첨부하면 4장이상 들어감 >> items maxsize 설정해서 하면 될 것 같음
                 if (clipData.getItemCount() > 4) {
                     Toast.makeText(this, "사진은 4장까지만 선택 가능합니다", Toast.LENGTH_SHORT).show();
                 } else {
