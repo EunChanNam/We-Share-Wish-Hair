@@ -9,18 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.android.volley.NetworkResponse;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
-import com.example.wishhair.review.WriteReviewActivity;
-import com.example.wishhair.review.detail.ImageSliderAdapter;
-import com.example.wishhair.review.detail.ReviewDetailActivity;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.wishhair.review.write.WriteReviewActivity;
 
 public class LoginActivity extends AppCompatActivity {
 

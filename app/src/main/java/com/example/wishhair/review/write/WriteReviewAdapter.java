@@ -1,4 +1,4 @@
-package com.example.wishhair.review;
+package com.example.wishhair.review.write;
 
 import android.content.Context;
 import android.net.Uri;

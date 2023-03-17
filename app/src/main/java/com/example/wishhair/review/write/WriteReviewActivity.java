@@ -1,4 +1,4 @@
-package com.example.wishhair.review;
+package com.example.wishhair.review.write;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,8 +11,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
@@ -31,6 +31,8 @@ public class WriteReviewActivity extends AppCompatActivity {
     private ArrayList<Uri> items = new ArrayList<>();
 
     private RatingBar ratingBar;
+
+    EditText editText_content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +63,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         btn_del = findViewById(R.id.review_item_write_btn_delete);
 
 //        content
+        editText_content = findViewById(R.id.write_review_content);
 
     }
 
