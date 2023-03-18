@@ -33,15 +33,15 @@ public class ReviewController {
     }
 
     @GetMapping("/review")
-    public ResponseEntity<PagedReviewResponse<List<ReviewResponse>>> getReviews(Pageable pageable,
+    public ResponseEntity<PagedReviewResponse> getReviews(Pageable pageable,
                                                            @RequestParam String condition) {
 
         List<ReviewResponse> result = reviewService.getReviews(pageable, condition);
 
-        return ResponseEntity.ok(toPagedResponse(result, result.size()));
+        return ResponseEntity.ok(toPagedResponse(result));
     }
 
-    private <T> PagedReviewResponse<T> toPagedResponse(T result, int contentSize) {
-        return new PagedReviewResponse<>(result, contentSize);
+    private PagedReviewResponse toPagedResponse(List<ReviewResponse> result) {
+        return PagedReviewResponse.of(result);
     }
 }
