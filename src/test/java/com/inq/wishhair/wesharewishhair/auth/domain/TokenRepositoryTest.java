@@ -67,4 +67,21 @@ public class TokenRepositoryTest extends RepositoryTest {
                 }
         );
     }
+
+    @Test
+    @DisplayName("유저의 아이디와 리프레쉬 토큰으로 토큰을 조회한다.")
+    void test3() {
+        //when
+        Optional<Token> result = tokenRepository.findByUserIdAndRefreshToken(user.getId(), REFRESH_TOKEN);
+
+        //then
+        assertAll(
+                () -> assertThat(result).isPresent(),
+                () -> {
+                    Token token = result.get();
+                    assertThat(token.getUser()).isEqualTo(user);
+                    assertThat(token.getRefreshToken()).isEqualTo(REFRESH_TOKEN);
+                }
+        );
+    }
 }
