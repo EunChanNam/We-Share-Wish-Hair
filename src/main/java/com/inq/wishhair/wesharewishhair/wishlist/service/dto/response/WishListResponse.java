@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.wishlist.controller.dto.response;
+package com.inq.wishhair.wesharewishhair.wishlist.service.dto.response;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponse;
