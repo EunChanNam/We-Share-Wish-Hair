@@ -13,12 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class MyPageService {
 
     private final UserPointService userPointService;
-    private final UserService userService;
+    private final UserFindService userFindService;
 
     public MyPageResponse getMyPageInfo(Long userId) {
 
         PointHistory recentPoint = userPointService.getRecentPointHistory(userId);
-        User user = userService.findByUserId(userId);
+        User user = userFindService.findByUserId(userId);
 
         return new MyPageResponse(user, recentPoint);
     }
