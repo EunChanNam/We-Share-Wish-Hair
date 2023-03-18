@@ -47,10 +47,7 @@ public class WishListController {
             @PageableDefault(size = 4) Pageable pageable,
             @ExtractPayload Long userId) {
 
-        List<WishList> wishLists = wishListService.getWishList(userId, pageable);
-        List<WishListResponse> result = wishLists.stream()
-                .map(wishList -> new WishListResponse(wishList.getHairStyle()))
-                .toList();
+        List<WishListResponse> result = wishListService.getWishList(userId, pageable);
 
         return ResponseEntity.ok(PagedWishListResponse.of(result));
     }
