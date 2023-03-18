@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.wishlist.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
+import com.inq.wishhair.wesharewishhair.wishlist.controller.dto.response.PagedWishListResponse;
 import com.inq.wishhair.wesharewishhair.wishlist.domain.WishList;
 import com.inq.wishhair.wesharewishhair.wishlist.service.WishListService;
 import com.inq.wishhair.wesharewishhair.wishlist.service.dto.response.WishListResponse;
@@ -42,7 +43,7 @@ public class WishListController {
     }
 
     @GetMapping("/wish_list")
-    public ResponseEntity<List<WishListResponse>> getWishList(
+    public ResponseEntity<PagedWishListResponse> getWishList(
             @PageableDefault(size = 4) Pageable pageable,
             @ExtractPayload Long userId) {
 
@@ -51,7 +52,6 @@ public class WishListController {
                 .map(wishList -> new WishListResponse(wishList.getHairStyle()))
                 .toList();
 
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(PagedWishListResponse.of(result));
     }
-
 }
