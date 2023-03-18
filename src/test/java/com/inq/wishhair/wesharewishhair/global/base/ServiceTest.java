@@ -3,7 +3,6 @@ package com.inq.wishhair.wesharewishhair.global.base;
 import com.inq.wishhair.wesharewishhair.WeShareWishHairApplication;
 import com.inq.wishhair.wesharewishhair.global.testrepository.PointHistoryTestRepository;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
-import com.inq.wishhair.wesharewishhair.domain.login.LoginService;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,9 +17,6 @@ public abstract class ServiceTest {
 
     @Autowired
     protected PointHistoryTestRepository pointHistoryTestRepository;
-
-    @Autowired
-    protected LoginService loginService;
 
     @Autowired
     protected HairStyleRepository hairStyleRepository;
