@@ -32,15 +32,6 @@ public class ReviewController {
                 .build();
     }
 
-    @PostMapping("/review/like/{reviewId}")
-    public ResponseEntity<Void> likeReview(
-            @PathVariable Long reviewId,
-            @ExtractPayload Long userId) {
-
-        reviewService.LikeReview(reviewId, userId);
-        return ResponseEntity.noContent().build();
-    }
-
     @GetMapping("/review")
     public ResponseEntity<PagedReviewResponse<List<ReviewResponse>>> getReviews(Pageable pageable,
                                                            @RequestParam String condition) {
