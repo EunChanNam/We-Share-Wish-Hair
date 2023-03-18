@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.user.controller.dto.response;
+package com.inq.wishhair.wesharewishhair.user.service.dto.response;
 
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
