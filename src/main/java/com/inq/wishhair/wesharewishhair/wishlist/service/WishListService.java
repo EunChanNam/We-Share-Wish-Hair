@@ -9,6 +9,7 @@ import com.inq.wishhair.wesharewishhair.wishlist.domain.WishListRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +43,7 @@ public class WishListService {
         wishListRepository.deleteById(wishListId);
     }
 
-    public List<WishList> getWishList(Long userId) {
-        return wishListRepository.findByUser(userId);
+    public List<WishList> getWishList(Long userId, Pageable pageable) {
+        return wishListRepository.findByUser(userId, pageable);
     }
 }

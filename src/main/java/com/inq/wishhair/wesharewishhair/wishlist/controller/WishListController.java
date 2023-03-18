@@ -5,6 +5,8 @@ import com.inq.wishhair.wesharewishhair.wishlist.domain.WishList;
 import com.inq.wishhair.wesharewishhair.wishlist.service.WishListService;
 import com.inq.wishhair.wesharewishhair.wishlist.service.dto.response.WishListResponse;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +34,7 @@ public class WishListController {
                 .build();
     }
 
-    @DeleteMapping("wish_list/{id}")
+    @DeleteMapping("/wish_list/{id}")
     public ResponseEntity<Void> deleteWishList(@PathVariable Long id) {
 
         wishListService.deleteWishList(id);
@@ -41,9 +43,10 @@ public class WishListController {
 
     @GetMapping("/wish_list")
     public ResponseEntity<List<WishListResponse>> getWishList(
+            @PageableDefault(size = 4) Pageable pageable,
             @ExtractPayload Long userId) {
 
-        List<WishList> wishLists = wishListService.getWishList(userId);
+        List<WishList> wishLists = wishListService.getWishList(userId, pageable);
         List<WishListResponse> result = wishLists.stream()
                 .map(wishList -> new WishListResponse(wishList.getHairStyle()))
                 .toList();
