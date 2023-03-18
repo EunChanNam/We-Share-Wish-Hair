@@ -4,7 +4,6 @@ import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("TokenRepositoryTest - DataJpaTest")
 public class TokenRepositoryTest extends RepositoryTest {
@@ -49,5 +49,22 @@ public class TokenRepositoryTest extends RepositoryTest {
 
         //then
         assertThat(result).isPresent();
+    }
+
+    @Test
+    @DisplayName("User 로 토큰을 조회한다.")
+    void test2() {
+        //when
+        Optional<Token> result = tokenRepository.findByUser(user);
+
+        //then
+        assertAll(
+                () -> assertThat(result).isPresent(),
+                () -> {
+                    Token token = result.get();
+                    assertThat(token.getUser()).isEqualTo(user);
+                    assertThat(token.getRefreshToken()).isEqualTo(REFRESH_TOKEN);
+                }
+        );
     }
 }
