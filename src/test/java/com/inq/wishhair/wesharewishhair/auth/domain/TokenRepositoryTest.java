@@ -84,4 +84,15 @@ public class TokenRepositoryTest extends RepositoryTest {
                 }
         );
     }
+
+    @Test
+    @DisplayName("유저의 아이디로 토큰을 삭제한다.")
+    void test4() {
+        //when
+        tokenRepository.deleteByUserId(user.getId());
+
+        //then
+        Optional<Token> token = tokenRepository.findByUser(user);
+        assertThat(token).isNotPresent();
+    }
 }
