@@ -4,6 +4,8 @@ import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,6 +36,9 @@ public class TokenRepositoryTest extends RepositoryTest {
 
     @Autowired
     private UserRepository userRepository;
+
+    @PersistenceContext
+    private EntityManager em;
 
     @Test
     @DisplayName("토큰을 저장한다.")
@@ -94,5 +99,28 @@ public class TokenRepositoryTest extends RepositoryTest {
         //then
         Optional<Token> token = tokenRepository.findByUser(user);
         assertThat(token).isNotPresent();
+    }
+
+    @Test
+    @DisplayName("유저의 아이디를 가진 토큰의 리프레쉬 토큰을 업데이트 한다.")
+    void test5() {
+        //when
+        String newRefreshToken = "new_refresh_token";
+        tokenRepository.updateRefreshTokenByUserId(user.getId(), newRefreshToken);
+
+        flushPersistence();
+
+        //then
+        Token token = tokenRepository.findByUser(user).get();
+        assertAll(
+                () -> assertThat(token.getRefreshToken()).isEqualTo(newRefreshToken),
+                () -> assertThat(token.getUser().getId()).isEqualTo(user.getId())
+        );
+
+    }
+
+    private void flushPersistence() {
+        em.flush();
+        em.clear();
     }
 }
