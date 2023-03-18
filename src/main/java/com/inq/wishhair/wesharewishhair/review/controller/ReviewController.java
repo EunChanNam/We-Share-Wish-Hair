@@ -1,10 +1,11 @@
 package com.inq.wishhair.wesharewishhair.review.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
+import com.inq.wishhair.wesharewishhair.review.controller.dto.response.PagedReviewResponse;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewRequest;
-import com.inq.wishhair.wesharewishhair.review.controller.dto.response.ReviewsResponse;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -31,24 +32,16 @@ public class ReviewController {
                 .build();
     }
 
-    @PostMapping("/review/like/{reviewId}")
-    public ResponseEntity<Void> likeReview(
-            @PathVariable Long reviewId,
-            @ExtractPayload Long userId) {
+    @GetMapping("/review")
+    public ResponseEntity<PagedReviewResponse<List<ReviewResponse>>> getReviews(Pageable pageable,
+                                                           @RequestParam String condition) {
 
-        reviewService.LikeReview(reviewId, userId);
-        return ResponseEntity.noContent().build();
+        List<ReviewResponse> result = reviewService.getReviews(pageable, condition);
+
+        return ResponseEntity.ok(toPagedResponse(result, result.size()));
     }
 
-    @GetMapping("/review")
-    public ResponseEntity<List<ReviewsResponse>> getReviews(Pageable pageable,
-                                                            @RequestParam String condition) {
-
-        List<Review> reviews = reviewService.getReviews(pageable, condition);
-        List<ReviewsResponse> result = reviews.stream()
-                .map(ReviewsResponse::new)
-                .toList();
-
-        return ResponseEntity.ok(result);
+    private <T> PagedReviewResponse<T> toPagedResponse(T result, int contentSize) {
+        return new PagedReviewResponse<>(result, contentSize);
     }
 }
