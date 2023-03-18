@@ -7,6 +7,8 @@ import jakarta.persistence.Persistence;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 public class ReviewResponse {
@@ -19,7 +21,7 @@ public class ReviewResponse {
 
     private Score score;
 
-    private PhotoResponse photo;
+    private List<PhotoResponse> photos;
 
     private Integer likes;
 
@@ -33,8 +35,7 @@ public class ReviewResponse {
             this.likes = review.getLikeReviews().size();
         } else this.likes = 0;
         //지연로딩 처리 (batch_fetch_size)
-        if (!review.getPhotos().isEmpty()) {
-            this.photo = new PhotoResponse(review.getPhotos().get(0));
-        }
+        this.photos =  review.getPhotos().stream()
+                .map(PhotoResponse::new).toList();
     }
 }
