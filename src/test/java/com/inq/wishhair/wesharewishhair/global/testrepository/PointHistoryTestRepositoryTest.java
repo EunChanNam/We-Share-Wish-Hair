@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.global.testrepository;
 
 
-import com.inq.wishhair.wesharewishhair.user.domain.point.domain.PointHistory;
+import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;

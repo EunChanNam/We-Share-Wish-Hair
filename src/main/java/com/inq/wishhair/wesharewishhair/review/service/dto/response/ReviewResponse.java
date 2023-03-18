@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.review.controller.dto.response;
+package com.inq.wishhair.wesharewishhair.review.service.dto.response;
 
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.enums.Score;
@@ -7,9 +7,11 @@ import jakarta.persistence.Persistence;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
-public class ReviewsResponse {
+public class ReviewResponse {
 
     private String title;
 
@@ -19,24 +21,21 @@ public class ReviewsResponse {
 
     private Score score;
 
-    private PhotoResponse photo;
+    private List<PhotoResponse> photos;
 
     private Integer likes;
 
-    public ReviewsResponse(Review review) {
+    public ReviewResponse(Review review) {
         this.title = review.getTitle();
         this.hairStyleName = review.getHairStyle().getName();
         this.userNickName = review.getUser().getName();
         this.score = review.getScore();
-        //fetch join 을 사용해서 따로 지연로딩 처리를 안해줌
-        if (!review.getLikeReviews().isEmpty()) {
+        //fetch join 을 하고도 값이 없을때 지연로딩 쿼리 방지
+        if (Persistence.getPersistenceUtil().isLoaded(review.getLikeReviews())) {
             this.likes = review.getLikeReviews().size();
         } else this.likes = 0;
         //지연로딩 처리 (batch_fetch_size)
-        if (Persistence.getPersistenceUtil().isLoaded(review.getPhotos())) {
-            if (!review.getPhotos().isEmpty()) {
-                this.photo = new PhotoResponse(review.getPhotos().get(0));
-            }
-        }
+        this.photos =  review.getPhotos().stream()
+                .map(PhotoResponse::new).toList();
     }
 }

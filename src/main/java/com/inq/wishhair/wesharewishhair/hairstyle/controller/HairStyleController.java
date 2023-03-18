@@ -1,10 +1,9 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleService;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
-import com.inq.wishhair.wesharewishhair.hairstyle.controller.dto.response.HairStyleResponse;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.dto.response.PagedHairStyleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -22,25 +21,17 @@ public class HairStyleController {
     private final HairStyleService hairStyleService;
 
     @GetMapping("/hair_style/recommend")
-    public ResponseEntity<PagedHairStyleResponse<List<HairStyleResponse>>> respondRecommendedHairStyle(
+    public ResponseEntity<PagedHairStyleResponse> respondRecommendedHairStyle(
             @PageableDefault(size = 3) Pageable pageable,
             @RequestParam List<Tag> tags,
             @ExtractPayload Long userId) {
 
-        List<HairStyle> hairStyles = hairStyleService.findRecommendedHairStyle(tags, userId, pageable);
+        List<HairStyleResponse> result = hairStyleService.findRecommendedHairStyle(tags, userId, pageable);
 
-        List<HairStyleResponse> result = toHairResponse(hairStyles);
-
-        return ResponseEntity.ok(toPagedResponse(result, result.size()));
+        return ResponseEntity.ok(toPagedResponse(result));
     }
 
-    private static List<HairStyleResponse> toHairResponse(List<HairStyle> hairStyles) {
-        return hairStyles.stream()
-                .map(HairStyleResponse::new)
-                .toList();
-    }
-
-    private <T> PagedHairStyleResponse<T> toPagedResponse(T result, int size) {
-        return new PagedHairStyleResponse<>(result, size);
+    private PagedHairStyleResponse toPagedResponse(List<HairStyleResponse> result) {
+        return PagedHairStyleResponse.of(result);
     }
 }

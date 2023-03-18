@@ -3,6 +3,7 @@ package com.inq.wishhair.wesharewishhair.hairstyle.service;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -24,17 +25,19 @@ public class HairStyleService {
     private final HairStyleRepository hairStyleRepository;
     private final UserRepository userRepository;
 
-    public List<HairStyle> findRecommendedHairStyle(
+    public List<HairStyleResponse> findRecommendedHairStyle(
             List<Tag> tags, Long userId, Pageable pageable) {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
         List<HairStyle> hairStyles = hairStyleRepository.findByHashTags(tags, user.getSex(), pageable);
-        /*지연로딩 데이터 가져오는 부분*/
-        if (!hairStyles.isEmpty()) {
-            hairStyles.get(0).getPhotos().isEmpty();
-        }
 
-        return hairStyles;
+        return toHairResponse(hairStyles);
+    }
+
+    private List<HairStyleResponse> toHairResponse(List<HairStyle> hairStyles) {
+        return hairStyles.stream()
+                .map(HairStyleResponse::new)
+                .toList();
     }
 }

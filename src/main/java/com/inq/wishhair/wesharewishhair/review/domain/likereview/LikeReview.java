@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.review.domain.likereview.domain;
+package com.inq.wishhair.wesharewishhair.review.domain.likereview;
 
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
