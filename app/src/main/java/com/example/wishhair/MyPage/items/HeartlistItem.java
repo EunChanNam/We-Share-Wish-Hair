@@ -1,4 +1,4 @@
-package com.example.wishhair.MyPage;
+package com.example.wishhair.MyPage.items;
 
 import android.widget.ImageView;
 import android.widget.TextView;

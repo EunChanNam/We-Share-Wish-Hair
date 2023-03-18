@@ -8,13 +8,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wishhair.MainActivity;
+import com.example.wishhair.MyPage.adapters.CouponAdapter;
+import com.example.wishhair.MyPage.adapters.CouponPagerAdapter;
 import com.example.wishhair.R;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,6 +39,11 @@ public class MyCouponFragment extends Fragment {
     private String mParam2;
 
     MainActivity mainActivity;
+    RecyclerView couponRecyclerView;
+    CouponAdapter couponAdapter;
+    ViewPager2 viewPager;
+    CouponPagerAdapter couponPagerAdapter;
+    String[] tabs = {"내 쿠폰", "쿠폰 받기"};
     private OnBackPressedCallback callback;
 
     public MyCouponFragment() {
@@ -92,6 +103,24 @@ public class MyCouponFragment extends Fragment {
                 mainActivity.ChangeFragment(2);
             }
         });
+
+//        couponRecyclerView = view.findViewById(R.id.coupon_recyclerview);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+//        couponRecyclerView.setLayoutManager(layoutManager);
+//        couponAdapter = new CouponAdapter();
+
+//        couponAdapter.addItem(new CouponItem());
+//        couponAdapter.addItem(new CouponItem());
+//        couponRecyclerView.setAdapter(couponAdapter);
+
+        viewPager = view.findViewById(R.id.coupon_viewPager);
+        couponPagerAdapter = new CouponPagerAdapter(getActivity());
+        viewPager.setAdapter(couponPagerAdapter);
+
+        TabLayout tabLayout = view.findViewById(R.id.coupon_tabLayout);
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> tab.setText(tabs[position])
+        ).attach();
     }
 
     @Override

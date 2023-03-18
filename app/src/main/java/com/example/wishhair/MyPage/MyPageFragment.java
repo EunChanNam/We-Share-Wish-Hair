@@ -1,8 +1,6 @@
 package com.example.wishhair.MyPage;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,13 +11,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wishhair.MainActivity;
+import com.example.wishhair.MyPage.adapters.MyPageRecyclerViewAdapter;
+import com.example.wishhair.MyPage.items.HeartlistItem;
 import com.example.wishhair.R;
 
 /**
@@ -118,13 +117,13 @@ public class MyPageFragment extends Fragment {
         toMyPointList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.ChangeFragment(6);
+                mainActivity.ChangeFragment(7);
             }
         });
         toMyCoupon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.ChangeFragment(7);
+                mainActivity.ChangeFragment(6);
             }
         });
 
