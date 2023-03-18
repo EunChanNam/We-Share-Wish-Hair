@@ -26,9 +26,4 @@ public class UserService {
 
         return saveUser.getId();
     }
-
-    public User findByUserId(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
-    }
 }
