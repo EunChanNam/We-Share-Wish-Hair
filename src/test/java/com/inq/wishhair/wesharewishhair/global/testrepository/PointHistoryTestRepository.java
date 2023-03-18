@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.global.testrepository;
 
-import com.inq.wishhair.wesharewishhair.user.domain.point.domain.PointHistory;
+import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;

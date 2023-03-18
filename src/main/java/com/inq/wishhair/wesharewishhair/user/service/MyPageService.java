@@ -2,7 +2,7 @@ package com.inq.wishhair.wesharewishhair.user.service;
 
 import com.inq.wishhair.wesharewishhair.user.controller.dto.response.MyPageResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
-import com.inq.wishhair.wesharewishhair.user.domain.point.domain.PointHistory;
+import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
