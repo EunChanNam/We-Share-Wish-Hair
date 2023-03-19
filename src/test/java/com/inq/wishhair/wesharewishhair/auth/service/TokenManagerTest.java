@@ -67,4 +67,22 @@ public class TokenManagerTest extends ServiceTest {
             );
         }
     }
+
+    @Test
+    @DisplayName("사용자 아이디로 토큰을 삭제한다")
+    void test() {
+        //given
+        Long userId = user.getId();
+        String refreshToken = provider.createRefreshToken(user.getId());
+        tokenRepository.save(Token.issue(user, refreshToken));
+
+        //when
+        tokenManager.deleteToken(userId);
+
+        //then
+        Optional<Token> result = tokenRepository.findByUser(user);
+        assertThat(result).isNotPresent();
+    }
+
+
 }
