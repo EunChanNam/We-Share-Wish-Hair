@@ -1,10 +1,12 @@
 package com.inq.wishhair.wesharewishhair.auth.utils;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.setAllowComparingPrivateFields;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("JwtTokenProviderTest")
@@ -48,5 +50,19 @@ public class JwtTokenProviderTest {
                 () -> assertThat(provider.getId(accessToken)).isEqualTo(1L),
                 () -> assertThat(provider.isValidToken(accessToken)).isTrue()
         );
+    }
+
+    @Test
+    @DisplayName("토큰에서 아이디를 추출한다")
+    void test3() {
+        //given
+        provider = new JwtTokenProvider(secretKey, successAccessTokenValidity, successRefreshTokenValidity);
+        String token = provider.createAccessToken(1L);
+
+        //when
+        Long result = provider.getId(token);
+
+        //then
+        assertThat(result).isEqualTo(1L);
     }
 }
