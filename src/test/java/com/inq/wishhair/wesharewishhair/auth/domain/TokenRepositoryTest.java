@@ -21,13 +21,14 @@ public class TokenRepositoryTest extends RepositoryTest {
 
     private static final String REFRESH_TOKEN = "refresh_token";
     private User user;
+    private Token token;
 
     @BeforeEach
     void setUp() {
         //given
         user = UserFixture.A.toEntity();
         userRepository.save(user);
-        Token token = Token.issue(user, REFRESH_TOKEN);
+        token = Token.issue(user, REFRESH_TOKEN);
         tokenRepository.save(token);
     }
 
@@ -43,12 +44,6 @@ public class TokenRepositoryTest extends RepositoryTest {
     @Test
     @DisplayName("토큰을 저장한다.")
     void test1() {
-        //given
-        User user2 = UserFixture.B.toEntity();
-        userRepository.save(user2);
-        Token token = Token.issue(user2, "SAVE_TEST");
-        tokenRepository.save(token);
-
         //when
         Optional<Token> result = tokenRepository.findById(token.getId());
 

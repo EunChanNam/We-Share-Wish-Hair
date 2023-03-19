@@ -16,16 +16,12 @@ public class TokenReissueService {
     private final TokenManager tokenManager;
     private final JwtTokenProvider provider;
 
+    @Transactional
     public TokenResponse reissueToken(Long userId, String refreshToken) {
 
         //사용하지 않은 RTR 토큰인지, 존재하는지 확인
         if (!tokenManager.existByUserIdAndRefreshToken(userId, refreshToken)) {
             throw new WishHairException(ErrorCode.AUTH_INVALID_TOKEN);
-        }
-
-        //RefreshToken 이 만료됐으면 다시 로그인을 통해 인증하도록 에러던짐
-        if (!provider.isValidToken(refreshToken)) {
-            throw new WishHairException(ErrorCode.AUTH_EXPIRED_TOKEN);
         }
 
         String newAccessToken = provider.createAccessToken(userId);
