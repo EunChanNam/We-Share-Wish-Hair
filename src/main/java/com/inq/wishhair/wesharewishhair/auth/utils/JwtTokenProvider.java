@@ -3,11 +3,12 @@ package com.inq.wishhair.wesharewishhair.auth.utils;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
@@ -23,7 +24,7 @@ public class JwtTokenProvider {
             @Value("${jwt.access-token-validity}") long accessTokenValidityInMilliseconds,
             @Value("${jwt.refresh-token-validity}") long refreshTokenValidityInMilliseconds) {
 
-        this.secretKey = new SecretKeySpec(secretKey.getBytes(), SignatureAlgorithm.HS256.getJcaName());
+        this.secretKey = Keys.hmacShaKeyFor(secretKey.getBytes(StandardCharsets.UTF_8));
         this.accessTokenValidityInMilliseconds = accessTokenValidityInMilliseconds;
         this.refreshTokenValidityInMilliseconds = refreshTokenValidityInMilliseconds;
     }
@@ -49,19 +50,20 @@ public class JwtTokenProvider {
                 .setClaims(claims)
                 .setIssuedAt(Date.from(now.toInstant()))
                 .setExpiration(Date.from(expiration.toInstant()))
-                .signWith(SignatureAlgorithm.HS256, secretKey)
+                .signWith(secretKey, SignatureAlgorithm.HS256)
                 .compact();
     }
 
     public Long getId(String token) {
         return getClaims(token)
                 .getBody()
-                .get("id", Long.class);
+                .get("userId", Long.class);
     }
 
     private Jws<Claims> getClaims(String token) {
-        return Jwts.parser()
+        return Jwts.parserBuilder()
                 .setSigningKey(secretKey)
+                .build()
                 .parseClaimsJws(token);
     }
 
