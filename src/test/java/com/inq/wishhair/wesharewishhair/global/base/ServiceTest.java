@@ -7,6 +7,8 @@ import com.inq.wishhair.wesharewishhair.global.testrepository.PointHistoryTestRe
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,4 +34,7 @@ public abstract class ServiceTest {
 
     @Autowired
     protected JwtTokenProvider provider;
+
+    @PersistenceContext
+    protected EntityManager em;
 }

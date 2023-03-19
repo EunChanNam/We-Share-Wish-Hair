@@ -70,7 +70,7 @@ public class TokenManagerTest extends ServiceTest {
 
     @Test
     @DisplayName("사용자 아이디로 토큰을 삭제한다")
-    void test() {
+    void test3() {
         //given
         Long userId = user.getId();
         String refreshToken = provider.createRefreshToken(user.getId());
@@ -84,5 +84,26 @@ public class TokenManagerTest extends ServiceTest {
         assertThat(result).isNotPresent();
     }
 
+    //todo 마지막 user 쿼리 왜나가지는 모르겠음
+    @Test
+    @DisplayName("RTR 정책에 의해 Refresh 토큰을 업데이트한다.")
+    void test4() {
+        //given
+        String refreshToken = provider.createRefreshToken(user.getId());
+        tokenRepository.save(Token.issue(user, refreshToken));
+        String newRefreshToken = refreshToken + "diff";
 
+        //when
+        tokenManager.updateRefreshTokenByRTR(user.getId(), newRefreshToken);
+        flushPersistence();
+
+        //then
+        Token token = tokenRepository.findByUser(user).get();
+        assertThat(token.getRefreshToken()).isEqualTo(newRefreshToken);
+    }
+
+    private void flushPersistence() {
+        em.flush();
+        em.clear();
+    }
 }
