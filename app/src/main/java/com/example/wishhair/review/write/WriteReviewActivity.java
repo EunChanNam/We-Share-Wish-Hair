@@ -23,7 +23,7 @@ import java.util.ArrayList;
 public class WriteReviewActivity extends AppCompatActivity {
     private static final String TAG = "WriteReviewActivity";
 
-    private Button btn_del, btn_addPicture, btn_back;
+    private Button btn_del, btn_addPicture, btn_back, btn_submit;
 
     private RecyclerView recyclerView;
     private WriteReviewAdapter writeReviewAdapter;
@@ -64,6 +64,9 @@ public class WriteReviewActivity extends AppCompatActivity {
 
 //        content
         editText_content = findViewById(R.id.write_review_content);
+
+//        submit
+        btn_submit = findViewById(R.id.write_review_submit);
 
     }
 
