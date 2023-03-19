@@ -14,7 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-@WebMvcTest(value = {UserController.class, HairStyleController.class})
+@WebMvcTest(value = {UserController.class, HairStyleController.class, JwtTokenProvider.class})
 public abstract class ControllerTest {
 
     @Autowired
