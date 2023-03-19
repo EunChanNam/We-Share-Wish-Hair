@@ -3,7 +3,6 @@ package com.inq.wishhair.wesharewishhair.auth.controller;
 import com.inq.wishhair.wesharewishhair.auth.controller.dto.request.LoginRequest;
 import com.inq.wishhair.wesharewishhair.auth.controller.utils.LoginRequestUtil;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
-import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -12,6 +11,7 @@ import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilde
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.inq.wishhair.wesharewishhair.fixture.TokenFixture.A;
+import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.AUTH_REQUIRED_LOGIN;
 import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.LOGIN_FAIL;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class AuthControllerTest extends ControllerTest {
 
     private static final String LOGIN_URL = "/api/login";
+    private static final String LOGOUT_URL = "/api/logout";
 
     @Nested
     @DisplayName("로그인 API")
@@ -63,11 +64,28 @@ public class AuthControllerTest extends ControllerTest {
             mockMvc.perform(requestBuilder)
                     .andExpectAll(
                             status().isBadRequest(),
-                            jsonPath("$").exists(),
-                            jsonPath("$.code").exists(),
                             jsonPath("$.code").value(LOGIN_FAIL.getCode()),
-                            jsonPath("$.message").exists(),
                             jsonPath("$.message").value(LOGIN_FAIL.getMessage())
+                    );
+        }
+    }
+
+    @Nested
+    @DisplayName("로그아웃 API")
+    class Logout {
+        @Test
+        @DisplayName("헤더에 토큰을 포합하지 않으면 401 예외를 던진다")
+        void test3() throws Exception {
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .post(LOGOUT_URL);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpectAll(
+                            status().isUnauthorized(),
+                            jsonPath("$.code").value(AUTH_REQUIRED_LOGIN.getCode()),
+                            jsonPath("$.message").value(AUTH_REQUIRED_LOGIN.getMessage())
                     );
         }
     }
