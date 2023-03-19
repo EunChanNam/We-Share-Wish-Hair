@@ -1,12 +1,12 @@
 package com.inq.wishhair.wesharewishhair.auth.utils;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
+import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.setAllowComparingPrivateFields;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("JwtTokenProviderTest")
@@ -64,5 +64,18 @@ public class JwtTokenProviderTest {
 
         //then
         assertThat(result).isEqualTo(1L);
+    }
+
+    @Test
+    @DisplayName("토큰이 유효한지 검사한다")
+    void test4() {
+        //given
+        provider = new JwtTokenProvider(secretKey, failValidity, failValidity);
+        String token = provider.createAccessToken(1L);
+
+        //when, then
+        assertThatThrownBy(() -> provider.isValidToken(token))
+                .isInstanceOf(WishHairException.class)
+                .hasMessageContaining(ErrorCode.AUTH_EXPIRED_TOKEN.getMessage());
     }
 }
