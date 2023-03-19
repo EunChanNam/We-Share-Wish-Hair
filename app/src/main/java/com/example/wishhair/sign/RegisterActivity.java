@@ -33,6 +33,9 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_activity_register);
 
+        Button btn_back = findViewById(R.id.toolbar_btn_back);
+        btn_back.setOnClickListener(View -> finish());
+
         ed_id = findViewById(R.id.sign_register_et_id);
         ed_pw = findViewById(R.id.sign_register_et_password);
         ed_name = findViewById(R.id.register3rdInput);

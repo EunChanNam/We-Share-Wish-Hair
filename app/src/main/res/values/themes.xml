@@ -13,4 +13,8 @@
         <item name="android:statusBarColor">@color/default_blue</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="RatingBar" parent="Theme.AppCompat">
+        <item name="colorControlNormal">@color/signBox_gray</item>
+        <item name="colorControlActivated">@color/unselect_blue</item>
+    </style>
 </resources>

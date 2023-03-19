@@ -41,7 +41,7 @@ public class RecyclerViewAdapterHot extends RecyclerView.Adapter<RecyclerViewAda
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.recycler_item_review_hot, parent, false);
+        View view = inflater.inflate(R.layout.review_recycler_item_hot, parent, false);
 
         return new ViewHolder(view);
     }
