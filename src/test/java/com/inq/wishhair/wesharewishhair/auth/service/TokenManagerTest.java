@@ -102,6 +102,24 @@ public class TokenManagerTest extends ServiceTest {
         assertThat(token.getRefreshToken()).isEqualTo(newRefreshToken);
     }
 
+    @Test
+    @DisplayName("사용자가 보유한 Refresh 토큰인지 확인한다")
+    void test5() {
+        //given
+        String refreshToken = provider.createRefreshToken(user.getId());
+        tokenRepository.save(Token.issue(user, refreshToken));
+
+        //when
+        boolean result1 = tokenManager.existByUserIdAndRefreshToken(user.getId(), refreshToken);
+        boolean result2 = tokenManager.existByUserIdAndRefreshToken(user.getId(), refreshToken + "diff");
+
+        //then
+        assertAll(
+                () -> assertThat(result1).isTrue(),
+                () -> assertThat(result2).isFalse()
+        );
+    }
+
     private void flushPersistence() {
         em.flush();
         em.clear();
