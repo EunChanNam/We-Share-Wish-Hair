@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.auth.service;
 
+import com.inq.wishhair.wesharewishhair.auth.domain.Token;
 import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
@@ -8,6 +9,8 @@ import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -61,5 +64,19 @@ public class AuthServiceTest extends ServiceTest {
                     .isInstanceOf(WishHairException.class)
                     .hasMessageContaining(ErrorCode.LOGIN_FAIL.getMessage());
         }
+    }
+
+    @Test
+    @DisplayName("로그아웃을 한다")
+    void test4() {
+        //given
+        authService.login(user.getLoginId(), user.getPw());
+
+        //when
+        authService.logout(user.getId());
+
+        //then
+        Optional<Token> result = tokenRepository.findByUser(user);
+        assertThat(result).isNotPresent();
     }
 }
