@@ -9,17 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import com.android.volley.NetworkResponse;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.toolbox.Volley;
-import com.example.wishhair.review.detail.ImageSliderAdapter;
-import com.example.wishhair.review.detail.ReviewDetailActivity;
-
-import org.json.JSONException;
-import org.json.JSONObject;
+import com.example.wishhair.review.write.WriteReviewActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -84,6 +75,13 @@ public class LoginActivity extends AppCompatActivity {
         });
 //        TODO 0316 : 비밀번호 찾기 구현 여부
         Button btn_findPassword = findViewById(R.id.btn_findPassword);
+        btn_findPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, WriteReviewActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }
