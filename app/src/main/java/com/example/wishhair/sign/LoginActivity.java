@@ -1,5 +1,9 @@
 package com.example.wishhair.sign;
 
+import com.android.volley.NetworkResponse;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.toolbox.Volley;
 import com.example.wishhair.MainActivity;
 import com.example.wishhair.R;
 
@@ -9,8 +13,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.wishhair.review.write.WriteReviewActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -32,11 +40,10 @@ public class LoginActivity extends AppCompatActivity {
             String pw = login_pw.getText().toString();
 
             //임시 로그인 패스 코드
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            /*Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
-            finish();
+            finish();*/
              //서버 연동 코드
-            /*
             Response.Listener<String> responseListener = response -> {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
@@ -64,8 +71,8 @@ public class LoginActivity extends AppCompatActivity {
             RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
             queue.add(loginRequest);
 
-        */
         });
+//        register
         login_registerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -73,6 +80,8 @@ public class LoginActivity extends AppCompatActivity {
                 LoginActivity.this.startActivity(intent);
             }
         });
+
+//        find passwd
 //        TODO 0316 : 비밀번호 찾기 구현 여부
         Button btn_findPassword = findViewById(R.id.btn_findPassword);
         btn_findPassword.setOnClickListener(new View.OnClickListener() {

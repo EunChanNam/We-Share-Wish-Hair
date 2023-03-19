@@ -38,8 +38,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         ed_id = findViewById(R.id.sign_register_et_id);
         ed_pw = findViewById(R.id.sign_register_et_password);
-        ed_name = findViewById(R.id.register3rdInput);
-        ed_nickname = findViewById(R.id.register4thInput);
+        ed_name = findViewById(R.id.sign_register_et_name);
+        ed_nickname = findViewById(R.id.sign_register_et_nickname);
 
         RadioGroup radioGroup_sex = findViewById(R.id.radioGroupSEX);
         radioButton_man = findViewById(R.id.radio_sex_man);

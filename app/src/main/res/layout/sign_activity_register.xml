@@ -38,8 +38,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
-                android:src="@drawable/sign_id"
+                android:padding="3dp"
+                android:src="@drawable/sign_email"
                 android:background="@drawable/border_sign_image"
                 android:contentDescription="@string/login_hint_id" />
 
@@ -94,20 +94,20 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
-                android:src="@drawable/sign_id"
+                android:padding="7dp"
+                android:src="@drawable/sign_name"
                 android:background="@drawable/border_sign_image"
                 android:contentDescription="@string/login_hint_id" />
             <EditText
-                android:id="@+id/register3rdInput"
+                android:id="@+id/sign_register_et_name"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:paddingStart="5dp"
                 android:layout_weight="4"
                 android:background="@drawable/border_sign_text"
                 android:ems="10"
-                android:hint="3rd"
-                android:inputType="text"
+                android:hint="name"
+                android:inputType="textPersonName"
                 android:importantForAutofill="no"
                 tools:ignore="RtlSymmetry" />
         </LinearLayout>
@@ -121,22 +121,21 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:src="@drawable/sign_id"
+                android:src="@drawable/sign_star_black"
                 android:background="@drawable/border_sign_image"
                 android:contentDescription="@string/login_hint_id" />
 
             <EditText
-                android:id="@+id/register4thInput"
+                android:id="@+id/sign_register_et_nickname"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
                 android:background="@drawable/border_sign_text"
                 android:ems="10"
-                android:hint="4th"
+                android:hint="nickname"
                 android:importantForAutofill="no"
                 android:inputType="text"
                 android:paddingStart="5dp"
-                android:textColorHint="#757575"
                 tools:ignore="RtlSymmetry" />
         </LinearLayout>
         <!--    sex-->
