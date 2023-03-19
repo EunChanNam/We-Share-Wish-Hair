@@ -32,4 +32,21 @@ public class JwtTokenProviderTest {
                 () -> assertThat(provider.isValidToken(accessToken)).isTrue()
         );
     }
+
+    @Test
+    @DisplayName("Refresh 토큰을 생성한다")
+    void test2() {
+        //given
+        provider = new JwtTokenProvider(secretKey, successAccessTokenValidity, successRefreshTokenValidity);
+
+        //when
+        String accessToken = provider.createRefreshToken(1L);
+
+        //then
+        assertAll(
+                () -> assertThat(accessToken).isNotNull(),
+                () -> assertThat(provider.getId(accessToken)).isEqualTo(1L),
+                () -> assertThat(provider.isValidToken(accessToken)).isTrue()
+        );
+    }
 }
