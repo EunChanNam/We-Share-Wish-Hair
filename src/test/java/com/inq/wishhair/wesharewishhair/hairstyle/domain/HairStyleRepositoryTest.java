@@ -11,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
@@ -31,23 +30,23 @@ public class HairStyleRepositoryTest extends RepositoryTest {
     private HairStyle d;
     private HairStyle e;
 
-    @BeforeEach
-    void init() {
-        //given
-        a = A.toEntity();
-        c = C.toEntity();
-        d = D.toEntity();
-        e = E.toEntity();
-        hairStyleRepository.save(a);
-        hairStyleRepository.save(B.toEntity());
-        hairStyleRepository.save(c);
-        hairStyleRepository.save(d);
-        hairStyleRepository.save(e);
-    }
-
     @Nested
     @DisplayName("헤어스타일 추천 쿼리")
     class findByHashTags {
+
+        @BeforeEach
+        void init() {
+            //given
+            a = A.toEntity();
+            c = C.toEntity();
+            d = D.toEntity();
+            e = E.toEntity();
+            hairStyleRepository.save(a);
+            hairStyleRepository.save(B.toEntity());
+            hairStyleRepository.save(c);
+            hairStyleRepository.save(d);
+            hairStyleRepository.save(e);
+        }
         @Test
         @DisplayName("태그와 유저의 성별을 통해서 헤어스타일을 조회한다.")
         void test1() {
@@ -85,8 +84,8 @@ public class HairStyleRepositoryTest extends RepositoryTest {
 
             //then
             assertAll(
-                    () -> assertThat(result.size()).isEqualTo(3),
-                    () -> assertThat(result).contains(a, c, d)
+                    () -> assertThat(result.size()).isEqualTo(4),
+                    () -> assertThat(result).contains(a, c, d, e)
             );
         }
 
