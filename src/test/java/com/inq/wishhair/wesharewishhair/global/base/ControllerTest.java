@@ -17,7 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(value =
-        {UserController.class, HairStyleController.class, JwtTokenProvider.class, AuthController.class})
+        {UserController.class, HairStyleController.class, AuthController.class})
 public abstract class ControllerTest {
 
     @Autowired
@@ -37,4 +37,7 @@ public abstract class ControllerTest {
 
     @MockBean
     protected AuthService authService;
+
+    @MockBean
+    protected JwtTokenProvider provider;
 }

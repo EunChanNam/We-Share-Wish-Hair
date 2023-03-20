@@ -1,7 +1,8 @@
 package com.inq.wishhair.wesharewishhair.auth.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.controller.dto.request.LoginRequest;
-import com.inq.wishhair.wesharewishhair.auth.controller.utils.LoginRequestUtil;
+import com.inq.wishhair.wesharewishhair.auth.controller.utils.LoginRequestUtils;
+import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import static com.inq.wishhair.wesharewishhair.fixture.TokenFixture.A;
+import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.AUTH_REQUIRED_LOGIN;
 import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.LOGIN_FAIL;
 import static org.mockito.BDDMockito.given;
@@ -22,6 +23,7 @@ public class AuthControllerTest extends ControllerTest {
 
     private static final String LOGIN_URL = "/api/login";
     private static final String LOGOUT_URL = "/api/logout";
+    private static final String AUTHORIZATION = "Authorization";
 
     @Nested
     @DisplayName("로그인 API")
@@ -30,9 +32,10 @@ public class AuthControllerTest extends ControllerTest {
         @DisplayName("로그인에 성공하고 응답 토큰을 받는다")
         void test1() throws Exception {
             //given
-            LoginRequest request = LoginRequestUtil.createRequest();
+            LoginRequest request = LoginRequestUtils.createRequest();
+            TokenResponse expectedResponse = toResponse();
             given(authService.login(request.getLoginId(), request.getPw()))
-                    .willReturn(A.toTokenResponse());
+                    .willReturn(expectedResponse);
 
             //when
             MockHttpServletRequestBuilder requestBuilder = buildLoginRequest(request);
@@ -41,11 +44,8 @@ public class AuthControllerTest extends ControllerTest {
             mockMvc.perform(requestBuilder)
                     .andExpectAll(
                             status().isOk(),
-                            jsonPath("$").exists(),
-                            jsonPath("$.accessToken").exists(),
-                            jsonPath("$.accessToken").value(A.getAccessToken()),
-                            jsonPath("$.refreshToken").exists(),
-                            jsonPath("$.refreshToken").value(A.getRefreshToken())
+                            jsonPath("$.accessToken").value(expectedResponse.getAccessToken()),
+                            jsonPath("$.refreshToken").value(expectedResponse.getRefreshToken())
                     );
         }
 
@@ -53,7 +53,7 @@ public class AuthControllerTest extends ControllerTest {
         @DisplayName("로그인에 실패하면 로그인 실패 400 예외를 던진다")
         void test2() throws Exception {
             //given
-            LoginRequest request = LoginRequestUtil.createRequest();
+            LoginRequest request = LoginRequestUtils.createRequest();
             given(authService.login(request.getLoginId(), request.getPw()))
                     .willThrow(new WishHairException(LOGIN_FAIL));
 
@@ -87,6 +87,24 @@ public class AuthControllerTest extends ControllerTest {
                             jsonPath("$.code").value(AUTH_REQUIRED_LOGIN.getCode()),
                             jsonPath("$.message").value(AUTH_REQUIRED_LOGIN.getMessage())
                     );
+        }
+
+        @Test
+        @DisplayName("로그아웃을 성공한다")
+        void test4() throws Exception {
+            //given
+            String accessToken = ACCESS_TOKEN;
+            given(provider.isValidToken(accessToken)).willReturn(true);
+            given(provider.getId(accessToken)).willReturn(1L);
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .post(LOGOUT_URL)
+                    .header(AUTHORIZATION, "Bearer" + accessToken);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isNoContent());
         }
     }
 

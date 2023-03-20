@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.auth.domain;
 
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
+import com.inq.wishhair.wesharewishhair.global.utils.TokenUtils;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import jakarta.persistence.EntityManager;
@@ -13,13 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
+import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("TokenRepositoryTest - DataJpaTest")
 public class TokenRepositoryTest extends RepositoryTest {
 
-    private static final String REFRESH_TOKEN = "refresh_token";
     private User user;
     private Token token;
 
