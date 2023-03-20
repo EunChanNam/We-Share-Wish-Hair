@@ -7,6 +7,8 @@ import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import org.apache.tomcat.util.buf.Utf8Encoder;
+import org.springframework.http.MediaType;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private void validateToken(HttpServletRequest request) {
+    private void validateToken(HttpServletRequest request) throws WishHairException{
         String token = AuthorizationExtractor.extract(request);
 
         if (!provider.isValidToken(token)) {
