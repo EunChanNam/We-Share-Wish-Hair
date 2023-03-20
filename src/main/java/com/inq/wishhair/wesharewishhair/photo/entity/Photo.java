@@ -26,7 +26,7 @@ public class Photo {
     @Column(nullable = false, updatable = false)
     private String originalFilename;
 
-    @Column(nullable = false, updatable = false)
+    @Column(nullable = false, updatable = false, unique = true)
     private String storeFilename;
 
     //==생성 메서드==//
