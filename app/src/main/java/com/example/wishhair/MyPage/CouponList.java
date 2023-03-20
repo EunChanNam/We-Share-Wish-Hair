@@ -2,12 +2,18 @@ package com.example.wishhair.MyPage;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.wishhair.MyPage.adapters.CouponAdapter;
+import com.example.wishhair.MyPage.items.CouponItem;
 import com.example.wishhair.R;
 
 /**
@@ -25,6 +31,10 @@ public class CouponList extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    RecyclerView couponRecyclerView;
+    LinearLayoutManager linearLayoutManager;
+    CouponAdapter couponAdapter;
 
     public CouponList() {
         // Required empty public constructor
@@ -55,6 +65,24 @@ public class CouponList extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        couponRecyclerView = view.findViewById(R.id.couponlist_recyclerview);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        couponRecyclerView.setLayoutManager(layoutManager);
+        couponAdapter = new CouponAdapter();
+
+        couponAdapter.addItem(new CouponItem());
+        couponAdapter.addItem(new CouponItem());
+        couponAdapter.addItem(new CouponItem());
+        couponAdapter.addItem(new CouponItem());
+        couponAdapter.addItem(new CouponItem());
+        couponAdapter.addItem(new CouponItem());
+        couponRecyclerView.setAdapter(couponAdapter);
     }
 
     @Override

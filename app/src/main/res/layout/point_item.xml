@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/point_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="리뷰 작성 포인트 적립"
+            android:textColor="@color/black"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/point_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/point_title"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="15dp"
+            android:text="+200"
+            android:textColor="@color/default_blue"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/point_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/point_title"
+            android:layout_alignBaseline="@id/point_num"
+            android:layout_marginLeft="250dp"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@id/point_num"
+            android:text="yyyy.mm.dd"
+            android:textColor="@color/black" />
+    </RelativeLayout>
+</LinearLayout>

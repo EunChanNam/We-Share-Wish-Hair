@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".MyPage.MyPointList">
 
     <androidx.appcompat.widget.Toolbar
@@ -12,15 +13,49 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
         app:titleTextColor="@color/black">
+
         <TextView
+            android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="포인트"
             android:layout_gravity="center"
-            android:id="@+id/toolbar_title"
+            android:text="포인트"
             android:textSize="20sp">
 
         </TextView>
 
     </androidx.appcompat.widget.Toolbar>
-</FrameLayout>
+
+    <TextView
+        android:id="@+id/mypoint_Ctext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="현재 포인트"
+        android:textColor="@color/black" />
+
+    <TextView
+        android:id="@+id/mypoint_pointsum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:gravity="center"
+        android:text="200,0000 P"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_marginTop="25dp"
+        android:background="@color/unselect_blue" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/pointlist_recyclerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

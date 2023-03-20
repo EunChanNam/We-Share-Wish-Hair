@@ -1,67 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="200dp"
-    android:layout_height="wrap_content"
-    android:background="@color/default_blue"
-    >
+    android:layout_width="300dp"
+    android:layout_height="120dp"
+    android:background="@color/white">
 
-    <TextView
-        android:id="@+id/coupon_title"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="1000원"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_gravity="center"
+        android:background="@color/default_blue">
 
-    <TextView
-        android:id="@+id/coupon_explanation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="포인트 차감 1000원 쿠폰"
-        android:layout_below="@id/coupon_title"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        android:layout_marginLeft="10dp"/>
-
-    <TextView
-        android:id="@+id/coupon_constraint"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="제휴 미용실 전용"
-        android:layout_below="@id/coupon_explanation"
-        android:textColor="@color/black"
-        android:layout_marginLeft="10dp"
-        />
-
-    <TextView
-        android:id="@+id/coupon_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="yyyy.mm.dd hh:mm 까지"
-        android:layout_below="@id/coupon_constraint"
-        android:textColor="@color/black"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
-        />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp">
-
-        <ImageButton
-            android:id="@+id/coupon_detail_button"
+        <TextView
+            android:id="@+id/coupon_title"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:background="@color/default_blue"
-            app:srcCompat="@drawable/go" />
-    </LinearLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:text="1000원"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
 
-</RelativeLayout>
+        <TextView
+            android:id="@+id/coupon_explanation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/coupon_title"
+            android:layout_marginLeft="10dp"
+            android:text="포인트 차감 1000원 쿠폰"
+            android:textColor="@color/black"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/coupon_constraint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/coupon_explanation"
+            android:layout_marginLeft="10dp"
+            android:text="제휴 미용실 전용"
+            android:textColor="@color/black" />
+
+        <TextView
+            android:id="@+id/coupon_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/coupon_constraint"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="yyyy.mm.dd hh:mm 까지"
+            android:textColor="@color/black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/coupon_detail_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:background="@color/default_blue"
+                app:srcCompat="@drawable/go" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</LinearLayout>

@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager2.widget.ViewPager2;
 
@@ -103,18 +104,12 @@ public class MyCouponFragment extends Fragment {
                 mainActivity.ChangeFragment(2);
             }
         });
+        Lifecycle lf = getLifecycle();
 
-//        couponRecyclerView = view.findViewById(R.id.coupon_recyclerview);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
-//        couponRecyclerView.setLayoutManager(layoutManager);
-//        couponAdapter = new CouponAdapter();
-
-//        couponAdapter.addItem(new CouponItem());
-//        couponAdapter.addItem(new CouponItem());
-//        couponRecyclerView.setAdapter(couponAdapter);
 
         viewPager = view.findViewById(R.id.coupon_viewPager);
-        couponPagerAdapter = new CouponPagerAdapter(getActivity());
+        viewPager.setSaveEnabled(false);
+        couponPagerAdapter = new CouponPagerAdapter(getChildFragmentManager(), lf);
         viewPager.setAdapter(couponPagerAdapter);
 
         TabLayout tabLayout = view.findViewById(R.id.coupon_tabLayout);
