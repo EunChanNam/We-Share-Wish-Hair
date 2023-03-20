@@ -4,6 +4,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
+import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponse;
 import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @Getter
 @AllArgsConstructor
@@ -43,6 +45,13 @@ public enum HairStyleFixture {
         List<HashTag> hashTags = tags.stream()
                 .map(HashTag::of).toList();
         return HairStyle.createHairStyle(name, sex, photos, hashTags);
+    }
+
+    public HairStyleResponse toResponse(Long id) {
+        HairStyle hairStyle = toEntity();
+        List<PhotoResponse> photoResponses = hairStyle.getPhotos().stream()
+                .map(PhotoResponse::new).toList();
+        return new HairStyleResponse(id, name, photoResponses);
     }
 
     private String createStoreFilename(String originalFilename) {
