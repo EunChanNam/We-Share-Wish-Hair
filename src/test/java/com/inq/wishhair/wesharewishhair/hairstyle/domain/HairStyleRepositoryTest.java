@@ -7,6 +7,7 @@ import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -25,65 +26,89 @@ public class HairStyleRepositoryTest extends RepositoryTest {
     private HairStyleRepository hairStyleRepository;
 
     private HairStyle a;
-    private HairStyle b;
     private HairStyle c;
     private HairStyle d;
-
+    private HairStyle e;
 
     @BeforeEach
     void init() {
         //given
         a = A.toEntity();
-        b = B.toEntity();
         c = C.toEntity();
         d = D.toEntity();
+        e = E.toEntity();
         hairStyleRepository.save(a);
-        hairStyleRepository.save(b);
+        hairStyleRepository.save(B.toEntity());
         hairStyleRepository.save(c);
         hairStyleRepository.save(d);
+        hairStyleRepository.save(e);
     }
 
-    //todo 이런거 조건 여러개 따지면서 테스트하는 부분은 레포에서 해야되는지 서비스에서 해야되는지
-    @Test
-    @DisplayName("태그와 유저의 성별을 통해서 헤어스타일을 조회한다.")
-    void test1() {
-        //given
-        List<Tag> tags = B.getTags();
-        Sex sex = B.getSex();
-        Pageable pageable = PageRequest.of(0, 4);
+    @Nested
+    @DisplayName("헤어스타일 추천 쿼리")
+    class findByHashTags {
+        @Test
+        @DisplayName("태그와 유저의 성별을 통해서 헤어스타일을 조회한다.")
+        void test1() {
+            //given
+            List<Tag> tags = B.getTags();
+            Sex sex = B.getSex();
+            Pageable pageable = getDefaultPageable();
 
-        //when
-        List<HairStyle> result = hairStyleRepository.findByHashTags(tags, sex, pageable);
+            //when
+            List<HairStyle> result = hairStyleRepository.findByHashTags(tags, sex, pageable);
 
-        //then
-        assertAll(
-                () -> assertThat(result.size()).isEqualTo(1),
-                () -> assertThat(result.get(0).getSex()).isEqualTo(sex),
-                () -> assertThat(result.get(0).getName()).isEqualTo(B.getName()),
-                () -> assertThat(result.get(0).getHashTags().stream()
-                        .map(HashTag::getTag).toList())
-                        .containsAll(tags),
-                () -> assertThat(result.get(0).getPhotos().stream()
-                        .map(Photo::getOriginalFilename).toList())
-                        .containsAll(B.getOriginalFilenames())
-        );
+            //then
+            assertAll(
+                    () -> assertThat(result.size()).isEqualTo(1),
+                    () -> assertThat(result.get(0).getSex()).isEqualTo(sex),
+                    () -> assertThat(result.get(0).getName()).isEqualTo(B.getName()),
+                    () -> assertThat(result.get(0).getHashTags().stream()
+                            .map(HashTag::getTag).toList())
+                            .containsAll(tags),
+                    () -> assertThat(result.get(0).getPhotos().stream()
+                            .map(Photo::getOriginalFilename).toList())
+                            .containsAll(B.getOriginalFilenames())
+            );
+        }
+
+        @Test
+        @DisplayName("성별이 맞고 태그가 하나라도 포함되면 해당 헤어스타일은 조회된다")
+        void test2() {
+            //given
+            List<Tag> tags = new ArrayList<>(List.of(Tag.PERM));
+            Pageable pageable = getDefaultPageable();
+
+            //when
+            List<HairStyle> result = hairStyleRepository.findByHashTags(tags, A.getSex(), pageable);
+
+            //then
+            assertAll(
+                    () -> assertThat(result.size()).isEqualTo(3),
+                    () -> assertThat(result).contains(a, c, d)
+            );
+        }
+
+        @Test
+        @DisplayName("조회된 헤어스타일은 해시태그의 개수와 이름으로 정렬된다")
+        void test3() {
+            //given
+            List<Tag> tags = A.getTags();
+            Pageable pageable = getDefaultPageable();
+
+            //when
+            List<HairStyle> result = hairStyleRepository.findByHashTags(tags, A.getSex(), pageable);
+
+            //then
+            assertAll(
+                    () -> assertThat(result.size()).isEqualTo(4),
+                    () -> assertThat(result).containsExactly(a, c, d, e)
+            );
+        }
     }
 
-    @Test
-    @DisplayName("성별이 맞고 태그가 하나라도 포함되면 해당 헤어스타일은 조회된다")
-    void test2() {
-        //given
-        List<Tag> tags = new ArrayList<>(List.of(Tag.PERM));
-        Sex sex = A.getSex();
-        Pageable pageable = PageRequest.of(0, 4);
-
-        //when
-        List<HairStyle> result = hairStyleRepository.findByHashTags(tags, sex, pageable);
-
-        //then
-        assertAll(
-                () -> assertThat(result.size()).isEqualTo(3),
-                () -> assertThat(result).contains(a, c, d)
-        );
+    private Pageable getDefaultPageable() {
+        return PageRequest.of(0, 4);
     }
+
 }
