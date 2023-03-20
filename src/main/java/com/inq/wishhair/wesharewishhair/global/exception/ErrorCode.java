@@ -12,7 +12,9 @@ public enum ErrorCode {
     EMPTY_FILE_EX("BAD_REQUEST", "빈 파일 입니다.", HttpStatus.BAD_REQUEST),
     AUTH_EXPIRED_TOKEN("AUTH_001", "토큰의 유효기간이 만료되었습니다.", HttpStatus.UNAUTHORIZED),
     AUTH_INVALID_TOKEN("AUTH_002", "토큰이 유효하지 않습니다.", HttpStatus.UNAUTHORIZED),
-    AUTH_REQUIRED_LOGIN("AUTH_003", "로그인이 필요합니다.", HttpStatus.UNAUTHORIZED);
+    AUTH_REQUIRED_LOGIN("AUTH_003", "로그인이 필요합니다.", HttpStatus.UNAUTHORIZED),
+
+    HAIR_STYLE_REQUIRED_TAG("HAIR_STYLE_001", "태그는 필수입니다.", HttpStatus.BAD_REQUEST);
 
     private final String code;
     private final String message;

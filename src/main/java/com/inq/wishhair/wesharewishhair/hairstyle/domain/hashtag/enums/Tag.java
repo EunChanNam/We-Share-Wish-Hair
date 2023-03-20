@@ -13,7 +13,8 @@ public enum Tag {
     COMMON("무난한"), NATURAL("자연스러운"), COOL("시원한"), MANLY("남성적인"),
     CUTE("귀여운"), UPSTAGE("도도한"), VOLUMINOUS("볼륨있는"),LONG_LASTING("오래가는"),
     SOFT("부드러운"), TRENDY("트렌디한"), ROUND("둥근형"), OVAL("타원형"),
-    HEART("하트형"), OBLONG("직사각형"), SQUARE("정사각형"), ALL("전체");
+    HEART("하트형"), OBLONG("직사각형"), SQUARE("정사각형"), ALL("전체"),
+    Error("No-Tag");
 
     private final String description;
 }
