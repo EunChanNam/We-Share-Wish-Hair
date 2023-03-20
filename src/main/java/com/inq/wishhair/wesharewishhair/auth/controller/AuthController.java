@@ -26,7 +26,7 @@ public class AuthController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping
+    @PostMapping("/logout")
     public ResponseEntity<Void> logout(@ExtractPayload Long userId) {
 
         authService.logout(userId);

@@ -8,7 +8,7 @@ build/
 ### private ###
 .DS_Store
 
-### application.yml
+### application.yml ###
 application-dev.yml
 
 ### sql ###
@@ -47,3 +47,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### application.test ###
+application-test.yml

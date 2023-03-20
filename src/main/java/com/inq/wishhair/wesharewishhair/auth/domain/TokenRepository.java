@@ -19,6 +19,7 @@ public interface TokenRepository extends JpaRepository<Token, Long> {
     Optional<Token> findByUserIdAndRefreshToken(@Param("userId") Long userId,
                                                 @Param("refreshToken") String refreshToken);
 
+    @Modifying
     @Query("delete from Token t where t.user.id = :userId")
     void deleteByUserId(@Param("userId") Long userId);
 
