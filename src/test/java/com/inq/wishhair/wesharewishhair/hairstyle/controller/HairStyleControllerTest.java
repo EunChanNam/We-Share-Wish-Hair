@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 
 import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
+import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -67,6 +68,26 @@ public class HairStyleControllerTest extends ControllerTest {
                             jsonPath("$.result.[0].hairStyleId").value(1L),
                             jsonPath("$.result.[0].name").value(A.getName()),
                             jsonPath("$.result.[0].photos.size()").value(4)
+                    );
+        }
+
+        @Test
+        @DisplayName("태그를 입력하지 않으면 400 예외를 던진다")
+        void test2() throws Exception {
+            //given, 태그 X
+            ErrorCode expectedError = ErrorCode.HAIR_STYLE_REQUIRED_TAG;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .get(BASE_URL)
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpectAll(
+                            status().isBadRequest(),
+                            jsonPath("$").exists(),
+                            jsonPath("$.message").value(expectedError.getMessage())
                     );
         }
     }

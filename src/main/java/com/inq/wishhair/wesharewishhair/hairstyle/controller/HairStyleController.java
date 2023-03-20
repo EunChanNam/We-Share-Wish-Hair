@@ -1,6 +1,8 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
+import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleService;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
@@ -23,12 +25,20 @@ public class HairStyleController {
     @GetMapping("/hair_style/recommend")
     public ResponseEntity<PagedHairStyleResponse> respondRecommendedHairStyle(
             @PageableDefault(size = 4) Pageable pageable,
-            @RequestParam List<Tag> tags,
+            @RequestParam(defaultValue = "Error") List<Tag> tags,
             @ExtractPayload Long userId) {
+
+        validateHasTag(tags);
 
         List<HairStyleResponse> result = hairStyleService.findRecommendedHairStyle(tags, userId, pageable);
 
         return ResponseEntity.ok(toPagedResponse(result));
+    }
+
+    private void validateHasTag(List<Tag> tags) {
+        if (tags.get(0).equals(Tag.Error)) {
+            throw new WishHairException(ErrorCode.HAIR_STYLE_REQUIRED_TAG);
+        }
     }
 
     private PagedHairStyleResponse toPagedResponse(List<HairStyleResponse> result) {
