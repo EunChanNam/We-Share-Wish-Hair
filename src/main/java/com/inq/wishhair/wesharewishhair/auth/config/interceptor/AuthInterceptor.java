@@ -23,7 +23,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private void validateToken(HttpServletRequest request) throws WishHairException{
+    private void validateToken(HttpServletRequest request) {
         String token = AuthorizationExtractor.extract(request);
 
         if (!provider.isValidToken(token)) {

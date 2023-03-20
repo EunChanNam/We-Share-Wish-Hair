@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.global.exception;
 
+import com.inq.wishhair.wesharewishhair.auth.controller.TokenReissueController;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorResponse;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice(assignableTypes = {
         UserController.class, AuthController.class, HairStyleController.class,
-        ReviewController.class, WishListController.class, AuthController.class
+        ReviewController.class, WishListController.class, AuthController.class,
+        TokenReissueController.class
 })
 public class ApiExceptionHandler {
 

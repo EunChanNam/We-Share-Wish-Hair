@@ -24,6 +24,7 @@ public class AuthControllerTest extends ControllerTest {
     private static final String LOGIN_URL = "/api/login";
     private static final String LOGOUT_URL = "/api/logout";
     private static final String AUTHORIZATION = "Authorization";
+    private static final String BEARER = "Bearer";
 
     @Nested
     @DisplayName("로그인 API")
@@ -93,14 +94,13 @@ public class AuthControllerTest extends ControllerTest {
         @DisplayName("로그아웃을 성공한다")
         void test4() throws Exception {
             //given
-            String accessToken = ACCESS_TOKEN;
-            given(provider.isValidToken(accessToken)).willReturn(true);
-            given(provider.getId(accessToken)).willReturn(1L);
+            given(provider.isValidToken(ACCESS_TOKEN)).willReturn(true);
+            given(provider.getId(ACCESS_TOKEN)).willReturn(1L);
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                     .post(LOGOUT_URL)
-                    .header(AUTHORIZATION, "Bearer" + accessToken);
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
 
             //then
             mockMvc.perform(requestBuilder)
