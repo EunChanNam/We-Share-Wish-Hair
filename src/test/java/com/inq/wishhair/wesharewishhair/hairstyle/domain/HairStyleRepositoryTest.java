@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.domain;
 
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
+import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
@@ -53,7 +54,7 @@ public class HairStyleRepositoryTest extends RepositoryTest {
             //given
             List<Tag> tags = B.getTags();
             Sex sex = B.getSex();
-            Pageable pageable = getDefaultPageable();
+            Pageable pageable = PageableUtils.getDefaultPageable();
 
             //when
             List<HairStyle> result = hairStyleRepository.findByHashTags(tags, sex, pageable);
@@ -77,7 +78,7 @@ public class HairStyleRepositoryTest extends RepositoryTest {
         void test2() {
             //given
             List<Tag> tags = new ArrayList<>(List.of(Tag.PERM));
-            Pageable pageable = getDefaultPageable();
+            Pageable pageable = PageableUtils.getDefaultPageable();
 
             //when
             List<HairStyle> result = hairStyleRepository.findByHashTags(tags, A.getSex(), pageable);
@@ -94,7 +95,7 @@ public class HairStyleRepositoryTest extends RepositoryTest {
         void test3() {
             //given
             List<Tag> tags = A.getTags();
-            Pageable pageable = getDefaultPageable();
+            Pageable pageable = PageableUtils.getDefaultPageable();
 
             //when
             List<HairStyle> result = hairStyleRepository.findByHashTags(tags, A.getSex(), pageable);
@@ -106,9 +107,4 @@ public class HairStyleRepositoryTest extends RepositoryTest {
             );
         }
     }
-
-    private Pageable getDefaultPageable() {
-        return PageRequest.of(0, 4);
-    }
-
 }
