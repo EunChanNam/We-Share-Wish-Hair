@@ -47,6 +47,7 @@ public class HairStyleRepositoryTest extends RepositoryTest {
             hairStyleRepository.save(d);
             hairStyleRepository.save(e);
         }
+
         @Test
         @DisplayName("태그와 유저의 성별을 통해서 헤어스타일을 조회한다.")
         void test1() {
@@ -104,6 +105,19 @@ public class HairStyleRepositoryTest extends RepositoryTest {
                     () -> assertThat(result.size()).isEqualTo(4),
                     () -> assertThat(result).containsExactly(a, c, d, e)
             );
+        }
+
+        @Test
+        @DisplayName("해시태그가 하나도 포함되지 않으면 조회되지 않는다")
+        void test4() {
+            //given
+            List<Tag> tags = new ArrayList<>();
+            Pageable pageable = PageableUtils.getDefaultPageable();
+
+            //when
+            List<HairStyle> result = hairStyleRepository.findByHashTags(tags, B.getSex(), pageable);
+
+            assertThat(result).isEmpty();
         }
     }
 }

@@ -9,6 +9,7 @@ import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture.*;
@@ -53,6 +54,21 @@ public class HairStyleServiceTest extends ServiceTest {
                             .containsExactly(A.getName(), C.getName(), D.getName(), E.getName())
             );
 
+        }
+
+        @Test
+        @DisplayName("해시태그가 하나도 포함되지 않으면 조회되지 않는다")
+        void test2() {
+            //given
+            List<Tag> tags = new ArrayList<>();
+            Long userId = userRepository.save(UserFixture.B.toEntity()).getId();
+
+            //when
+            List<HairStyleResponse> result =
+                    hairStyleService.findRecommendedHairStyle(tags, userId, getDefaultPageable());
+
+            //then
+            assertThat(result).isEmpty();
         }
     }
 }
