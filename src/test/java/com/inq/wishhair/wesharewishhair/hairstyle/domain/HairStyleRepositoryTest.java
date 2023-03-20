@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.domain;
 
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
+import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
@@ -10,7 +11,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
@@ -30,30 +30,31 @@ public class HairStyleRepositoryTest extends RepositoryTest {
     private HairStyle d;
     private HairStyle e;
 
-    @BeforeEach
-    void init() {
-        //given
-        a = A.toEntity();
-        c = C.toEntity();
-        d = D.toEntity();
-        e = E.toEntity();
-        hairStyleRepository.save(a);
-        hairStyleRepository.save(B.toEntity());
-        hairStyleRepository.save(c);
-        hairStyleRepository.save(d);
-        hairStyleRepository.save(e);
-    }
-
     @Nested
     @DisplayName("헤어스타일 추천 쿼리")
     class findByHashTags {
+
+        @BeforeEach
+        void init() {
+            //given
+            a = A.toEntity();
+            c = C.toEntity();
+            d = D.toEntity();
+            e = E.toEntity();
+            hairStyleRepository.save(a);
+            hairStyleRepository.save(B.toEntity());
+            hairStyleRepository.save(c);
+            hairStyleRepository.save(d);
+            hairStyleRepository.save(e);
+        }
+
         @Test
         @DisplayName("태그와 유저의 성별을 통해서 헤어스타일을 조회한다.")
         void test1() {
             //given
             List<Tag> tags = B.getTags();
             Sex sex = B.getSex();
-            Pageable pageable = getDefaultPageable();
+            Pageable pageable = PageableUtils.getDefaultPageable();
 
             //when
             List<HairStyle> result = hairStyleRepository.findByHashTags(tags, sex, pageable);
@@ -77,15 +78,15 @@ public class HairStyleRepositoryTest extends RepositoryTest {
         void test2() {
             //given
             List<Tag> tags = new ArrayList<>(List.of(Tag.PERM));
-            Pageable pageable = getDefaultPageable();
+            Pageable pageable = PageableUtils.getDefaultPageable();
 
             //when
             List<HairStyle> result = hairStyleRepository.findByHashTags(tags, A.getSex(), pageable);
 
             //then
             assertAll(
-                    () -> assertThat(result.size()).isEqualTo(3),
-                    () -> assertThat(result).contains(a, c, d)
+                    () -> assertThat(result.size()).isEqualTo(4),
+                    () -> assertThat(result).contains(a, c, d, e)
             );
         }
 
@@ -94,7 +95,7 @@ public class HairStyleRepositoryTest extends RepositoryTest {
         void test3() {
             //given
             List<Tag> tags = A.getTags();
-            Pageable pageable = getDefaultPageable();
+            Pageable pageable = PageableUtils.getDefaultPageable();
 
             //when
             List<HairStyle> result = hairStyleRepository.findByHashTags(tags, A.getSex(), pageable);
@@ -105,10 +106,18 @@ public class HairStyleRepositoryTest extends RepositoryTest {
                     () -> assertThat(result).containsExactly(a, c, d, e)
             );
         }
-    }
 
-    private Pageable getDefaultPageable() {
-        return PageRequest.of(0, 4);
-    }
+        @Test
+        @DisplayName("해시태그가 하나도 포함되지 않으면 조회되지 않는다")
+        void test4() {
+            //given
+            List<Tag> tags = new ArrayList<>();
+            Pageable pageable = PageableUtils.getDefaultPageable();
 
+            //when
+            List<HairStyle> result = hairStyleRepository.findByHashTags(tags, B.getSex(), pageable);
+
+            assertThat(result).isEmpty();
+        }
+    }
 }

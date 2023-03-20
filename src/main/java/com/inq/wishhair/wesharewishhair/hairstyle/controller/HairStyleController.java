@@ -22,7 +22,7 @@ public class HairStyleController {
 
     @GetMapping("/hair_style/recommend")
     public ResponseEntity<PagedHairStyleResponse> respondRecommendedHairStyle(
-            @PageableDefault(size = 3) Pageable pageable,
+            @PageableDefault(size = 4) Pageable pageable,
             @RequestParam List<Tag> tags,
             @ExtractPayload Long userId) {
 
