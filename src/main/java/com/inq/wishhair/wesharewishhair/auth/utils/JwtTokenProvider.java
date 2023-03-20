@@ -75,7 +75,7 @@ public class JwtTokenProvider {
             return expiration.after(now);
         } catch (ExpiredJwtException e) {
             throw new WishHairException(ErrorCode.AUTH_EXPIRED_TOKEN);
-        } catch (SecurityException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
+        } catch (SignatureException | SecurityException | MalformedJwtException | UnsupportedJwtException | IllegalArgumentException e) {
             throw new WishHairException(ErrorCode.AUTH_INVALID_TOKEN);
         }
     }

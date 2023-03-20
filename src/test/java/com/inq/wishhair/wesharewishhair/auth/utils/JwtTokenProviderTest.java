@@ -2,9 +2,12 @@ package com.inq.wishhair.wesharewishhair.auth.utils;
 
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.global.utils.TokenUtils;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
+import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.REFRESH_TOKEN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -66,16 +69,54 @@ public class JwtTokenProviderTest {
         assertThat(result).isEqualTo(1L);
     }
 
-    @Test
+    @Nested
     @DisplayName("토큰이 유효한지 검사한다")
-    void test4() {
-        //given
-        provider = new JwtTokenProvider(secretKey, failValidity, failValidity);
-        String token = provider.createAccessToken(1L);
+    class validateToken {
+        @Test
+        @DisplayName("만료된 토큰으로 검증에 실패한다")
+        void test4() {
+            //given
+            provider = new JwtTokenProvider(secretKey, failValidity, failValidity);
+            String token = provider.createAccessToken(1L);
 
-        //when, then
-        assertThatThrownBy(() -> provider.isValidToken(token))
-                .isInstanceOf(WishHairException.class)
-                .hasMessageContaining(ErrorCode.AUTH_EXPIRED_TOKEN.getMessage());
+            //when, then
+            assertThatThrownBy(() -> provider.isValidToken(token))
+                    .isInstanceOf(WishHairException.class)
+                    .hasMessageContaining(ErrorCode.AUTH_EXPIRED_TOKEN.getMessage());
+        }
+
+        @Test
+        @DisplayName("올바르지 못한 토큰으로 검증에 실패한다")
+        void test5() {
+            //given
+            provider = new JwtTokenProvider(secretKey, successAccessTokenValidity, successRefreshTokenValidity);
+            String wrongToken = provider.createRefreshToken(1L) + "fail";
+
+            //when, then
+            assertAll(
+                    //틀린 암호키로 만들어진 토큰
+                    () -> assertThatThrownBy(() -> provider.isValidToken(REFRESH_TOKEN))
+                            .isInstanceOf(WishHairException.class)
+                            .hasMessageContaining(ErrorCode.AUTH_INVALID_TOKEN.getMessage()),
+                    //단순히 틀린 토큰
+                    () -> assertThatThrownBy(() -> provider.isValidToken(wrongToken))
+                            .isInstanceOf(WishHairException.class)
+                            .hasMessageContaining(ErrorCode.AUTH_INVALID_TOKEN.getMessage())
+            );
+        }
+
+        @Test
+        @DisplayName("토큰 검증에 성공한다")
+        void test6() {
+            //given
+            provider = new JwtTokenProvider(secretKey, successAccessTokenValidity, successRefreshTokenValidity);
+            String refreshToken = provider.createRefreshToken(1L);
+
+            //when
+            boolean result = provider.isValidToken(refreshToken);
+
+            //then
+            assertThat(result).isTrue();
+        }
     }
 }
