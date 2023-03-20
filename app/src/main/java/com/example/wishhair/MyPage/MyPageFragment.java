@@ -1,12 +1,14 @@
 package com.example.wishhair.MyPage;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,48 +16,29 @@ import android.widget.Button;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.wishhair.MainActivity;
 import com.example.wishhair.R;
+import com.example.wishhair.sign.UrlConst;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MyPageFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class MyPageFragment extends Fragment {
 
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
     MainActivity mainActivity;
+    private SharedPreferences loginSP;
 
     public MyPageFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Fragment4.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MyPageFragment newInstance(String param1, String param2) {
-        MyPageFragment fragment = new MyPageFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
     }
 
     @Override
@@ -67,10 +50,6 @@ public class MyPageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -117,11 +96,68 @@ public class MyPageFragment extends Fragment {
         toolbar.inflateMenu(R.menu.메뉴.xml);   버튼 추가 시 사용할 것 */
     }
 
+    final static private String url = UrlConst.URL + "/api/logout";
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_mypage, container, false);
+
+        Button btn_logout  = view.findViewById(R.id.mypage_button_logout);
+
+        loginSP = getActivity().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        String accessToken = loginSP.getString("accessToken", "fail acc");
+
+        Log.d("acc", loginSP.getString("accessToken", "fail acc"));
+        Log.d("ref", loginSP.getString("refreshToken", "fail ref"));
+
+        btn_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                logout(accessToken);
+            }
+        });
+
         return view;
+    }
+
+    private void logout(String accessToken) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url , null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                logout_delete_token(loginSP);
+
+//                TODO : 현재 액티비티(프래그먼트)를 끝내고 LoginActivity로 이동
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                logout_delete_token(loginSP);
+
+//                TODO : 현재 액티비티(프래그먼트)를 끝내고 LoginActivity로 이동
+            }
+
+        }) {
+
+            @Override
+            public Map getHeaders() {
+                Map<String, String>  params = new HashMap();
+                params.put("Authorization", "bearer" + accessToken);
+
+                return params;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(requireContext());
+        queue.add(jsonObjectRequest);
+    }
+
+    private void logout_delete_token (SharedPreferences sharedPreferences) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.remove("accessToken");
+        editor.remove("refreshToken");
+        editor.apply();
     }
 
 
