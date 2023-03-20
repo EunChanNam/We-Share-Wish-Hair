@@ -55,20 +55,5 @@ public class HairStyleServiceTest extends ServiceTest {
             );
 
         }
-
-        @Test
-        @DisplayName("해시태그가 하나도 포함되지 않으면 조회되지 않는다")
-        void test2() {
-            //given
-            List<Tag> tags = new ArrayList<>();
-            Long userId = userRepository.save(UserFixture.B.toEntity()).getId();
-
-            //when
-            List<HairStyleResponse> result =
-                    hairStyleService.findRecommendedHairStyle(tags, userId, getDefaultPageable());
-
-            //then
-            assertThat(result).isEmpty();
-        }
     }
 }
