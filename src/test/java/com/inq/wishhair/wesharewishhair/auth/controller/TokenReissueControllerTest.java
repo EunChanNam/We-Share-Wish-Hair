@@ -3,7 +3,6 @@ package com.inq.wishhair.wesharewishhair.auth.controller;
 import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.global.utils.TokenUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -61,6 +60,29 @@ public class TokenReissueControllerTest extends ControllerTest {
                     .andExpectAll(
                             status().isUnauthorized(),
                             jsonPath("$.message").value(AUTH_EXPIRED_TOKEN.getMessage())
+                    );
+        }
+
+        @Test
+        @DisplayName("토큰 재발급에 성공한다")
+        void test3() throws Exception {
+            //given
+            setSuccessService();
+
+            TokenResponse expectedResponse = toResponse();
+            given(tokenReissueService.reissueToken(1L, REFRESH_TOKEN))
+                    .willReturn(expectedResponse);
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = buildReissueRequest();
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpectAll(
+                            status().isOk(),
+                            jsonPath("$").exists(),
+                            jsonPath("$.accessToken").value(expectedResponse.getAccessToken()),
+                            jsonPath("$.refreshToken").value(expectedResponse.getRefreshToken())
                     );
         }
     }
