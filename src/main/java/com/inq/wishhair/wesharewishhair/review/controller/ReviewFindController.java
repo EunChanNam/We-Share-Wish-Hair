@@ -22,10 +22,10 @@ public class ReviewFindController {
     private final ReviewFindService reviewFindService;
 
     @GetMapping("/review")
-    public ResponseEntity<PagedReviewResponse> getReviews(
+    public ResponseEntity<PagedReviewResponse> findPagingReviews(
             @PageableDefault(sort = LIKES) Pageable pageable) {
 
-        Slice<ReviewResponse> result = reviewFindService.getReviews(pageable);
+        Slice<ReviewResponse> result = reviewFindService.findPagingReviews(pageable);
 
         return ResponseEntity.ok(toPagedResponse(result));
     }

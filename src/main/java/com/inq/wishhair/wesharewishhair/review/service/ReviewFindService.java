@@ -9,6 +9,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -16,12 +18,21 @@ public class ReviewFindService {
 
     private final ReviewRepository reviewRepository;
 
-    public Slice<ReviewResponse> getReviews(Pageable pageable) {
+    public Slice<ReviewResponse> findPagingReviews(Pageable pageable) {
         return reviewRepository.findReviewByPaging(pageable)
                 .map(this::toResponse);
     }
 
+    public List<ReviewResponse> findLikingReviews(Long userId, Pageable pageable) {
+        List<Review> findReviews = reviewRepository.findReviewByLike(userId, pageable);
+        return generateResponseList(findReviews);
+    }
+
     private ReviewResponse toResponse(Review review) {
         return new ReviewResponse(review);
+    }
+
+    private List<ReviewResponse> generateResponseList(List<Review> reviews) {
+        return reviews.stream().map(this::toResponse).toList();
     }
 }

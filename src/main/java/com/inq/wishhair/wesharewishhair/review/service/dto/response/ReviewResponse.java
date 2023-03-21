@@ -17,7 +17,7 @@ public class ReviewResponse {
 
     private String userNickName;
 
-    private Score score;
+    private String score;
 
     private List<PhotoResponse> photos;
 
@@ -26,7 +26,7 @@ public class ReviewResponse {
     public ReviewResponse(Review review) {
         this.hairStyleName = review.getHairStyle().getName();
         this.userNickName = review.getUser().getName();
-        this.score = review.getScore();
+        this.score = review.getScore().getValue();
         this.likes = review.getLikes();
         //지연로딩 처리 (batch_fetch_size)
         this.photos =  review.getPhotos().stream()
