@@ -7,7 +7,6 @@ import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,7 +25,7 @@ public class MyPageService {
 
         PointHistory recentPoint = userPointService.getRecentPointHistory(userId);
 
-        List<ReviewResponse> reviewResponses = reviewFindService.getReviews(pageable).getContent();
+        List<ReviewResponse> reviewResponses = reviewFindService.findPagingReviews(pageable).getContent();
 
         User user = userFindService.findByUserId(userId);
 
