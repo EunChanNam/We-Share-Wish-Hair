@@ -46,6 +46,8 @@ public class Review extends BaseEntity {
     @OneToMany(mappedBy = "review")
     private List<LikeReview> likeReviews = new ArrayList<>();
 
+    private int likes = 0;
+
     //==생성 메서드==//
     public static Review createReview(
             User user, String contents, Score score, List<Photo> photos, HairStyle hairStyle) {
