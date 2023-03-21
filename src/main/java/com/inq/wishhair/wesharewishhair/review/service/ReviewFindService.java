@@ -5,10 +5,9 @@ import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -17,15 +16,12 @@ public class ReviewFindService {
 
     private final ReviewRepository reviewRepository;
 
-    public List<ReviewResponse> getReviews(Pageable pageable) {
-        List<Review> reviews = reviewRepository.findReviewByPaging(pageable);
-
-        return toResponse(reviews);
+    public Slice<ReviewResponse> getReviews(Pageable pageable) {
+        return reviewRepository.findReviewByPaging(pageable)
+                .map(this::toResponse);
     }
 
-    private List<ReviewResponse> toResponse(List<Review> reviews) {
-        return reviews.stream()
-                .map(ReviewResponse::new)
-                .toList();
+    private ReviewResponse toResponse(Review review) {
+        return new ReviewResponse(review);
     }
 }

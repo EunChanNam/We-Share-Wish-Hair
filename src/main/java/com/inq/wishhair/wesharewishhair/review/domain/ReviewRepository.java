@@ -1,11 +1,9 @@
 package com.inq.wishhair.wesharewishhair.review.domain;
 
-import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-
-import java.util.List;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
@@ -13,5 +11,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query("select r from Review r " +
             "join fetch r.hairStyle " +
             "join fetch r.user")
-    List<Review> findReviewByPaging(Pageable pageable);
+    Slice<Review> findReviewByPaging(Pageable pageable);
 }

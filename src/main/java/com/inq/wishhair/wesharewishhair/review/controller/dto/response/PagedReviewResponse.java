@@ -1,7 +1,6 @@
 package com.inq.wishhair.wesharewishhair.review.controller.dto.response;
 
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
-import com.inq.wishhair.wesharewishhair.wishlist.controller.dto.response.PagedWishListResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,7 +14,7 @@ public class PagedReviewResponse {
 
     private int contentSize;
 
-    public static PagedReviewResponse of(List<ReviewResponse> result) {
-        return new PagedReviewResponse(result, result.size());
+    public static PagedReviewResponse of(List<ReviewResponse> result, int contentSize) {
+        return new PagedReviewResponse(result, contentSize);
     }
 }
