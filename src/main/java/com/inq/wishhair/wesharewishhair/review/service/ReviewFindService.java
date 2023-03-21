@@ -23,11 +23,16 @@ public class ReviewFindService {
                 .map(this::toResponse);
     }
 
-    public List<Review> findLikingReviews(Long userId) {
-        return reviewRepository.findReviewByLike(userId);
+    public List<ReviewResponse> findLikingReviews(Long userId) {
+        List<Review> findReviews = reviewRepository.findReviewByLike(userId);
+        return generateResponseList(findReviews);
     }
 
     private ReviewResponse toResponse(Review review) {
         return new ReviewResponse(review);
+    }
+
+    private List<ReviewResponse> generateResponseList(List<Review> reviews) {
+        return reviews.stream().map(this::toResponse).toList();
     }
 }
