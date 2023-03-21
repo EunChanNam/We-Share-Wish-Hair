@@ -26,10 +26,9 @@ public class ReviewFindController {
 
     @GetMapping("/review")
     public ResponseEntity<PagedReviewResponse> getReviews(
-            @PageableDefault(sort = LIKES) Pageable pageable,
-            @RequestParam String condition) {
+            @PageableDefault(sort = LIKES) Pageable pageable) {
 
-        List<ReviewResponse> result = reviewFindService.getReviews(pageable, condition);
+        List<ReviewResponse> result = reviewFindService.getReviews(pageable);
 
         return ResponseEntity.ok(toPagedResponse(result));
     }

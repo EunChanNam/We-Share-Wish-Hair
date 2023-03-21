@@ -17,7 +17,7 @@ public class ReviewFindService {
 
     private final ReviewRepository reviewRepository;
 
-    public List<ReviewResponse> getReviews(Pageable pageable, String condition) {
+    public List<ReviewResponse> getReviews(Pageable pageable) {
         List<Review> reviews = reviewRepository.findReviewByPaging(pageable);
 
         return toResponse(reviews);
