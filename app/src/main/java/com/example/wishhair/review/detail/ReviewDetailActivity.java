@@ -15,10 +15,7 @@ import me.relex.circleindicator.CircleIndicator3;
 
 public class ReviewDetailActivity extends AppCompatActivity {
 
-    private ViewPager2 sliderViewPager;
-    private CircleIndicator3 circleIndicator;
-
-    private String[] images = new String[] {
+    private final String[] images = new String[] {
             "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg",
             "https://cdn.pixabay.com/photo/2020/11/04/15/29/coffee-beans-5712780_1280.jpg",
             "https://cdn.pixabay.com/photo/2020/03/08/21/41/landscape-4913841_1280.jpg",
@@ -38,8 +35,8 @@ public class ReviewDetailActivity extends AppCompatActivity {
         btn_back = findViewById(R.id.toolbar_btn_back);
         btn_back.setOnClickListener(view -> finish());
 
-        sliderViewPager = findViewById(R.id.review_detail_viewPager);
-        circleIndicator = findViewById(R.id.review_detail_indicator);
+        ViewPager2 sliderViewPager = findViewById(R.id.review_detail_viewPager);
+        CircleIndicator3 circleIndicator = findViewById(R.id.review_detail_indicator);
 
         sliderViewPager.setOffscreenPageLimit(1);
         sliderViewPager.setAdapter(new ImageSliderAdapter(this, images));

@@ -3,7 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".HomeFragment"
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -43,7 +45,7 @@
                     android:id="@+id/home_title_userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="유저이름"
+                    android:text="@string/xmlDisplay_username"
                     android:textSize="27sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
@@ -108,12 +110,16 @@
             <androidx.viewpager2.widget.ViewPager2
                 android:id="@+id/home_ViewPager_review_hot"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-            <me.relex.circleindicator.CircleIndicator
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:clipChildren="false"/>
+            <me.relex.circleindicator.CircleIndicator3
                 android:id="@+id/home_circleIndicator"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_gravity="center"/>
+                app:ci_drawable_unselected="@drawable/shape_indicator_un_select"
+                app:ci_drawable="@drawable/shape_indicator_select"
+                />
 
         </LinearLayout>
 
@@ -126,7 +132,7 @@
                 android:id="@+id/home_recommend_userName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="사용자이름"
+                android:text="@string/xmlDisplay_username"
                 android:textSize="25sp"
                 android:textColor="@color/black"
                 android:textStyle="bold"/>
