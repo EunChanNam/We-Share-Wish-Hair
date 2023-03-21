@@ -24,9 +24,7 @@ public class MyPageService {
     public MyPageResponse getMyPageInfo(Long userId, Pageable pageable) {
 
         PointHistory recentPoint = userPointService.getRecentPointHistory(userId);
-
-        List<ReviewResponse> reviewResponses = reviewFindService.findPagingReviews(pageable).getContent();
-
+        List<ReviewResponse> reviewResponses = reviewFindService.findLikingReviews(userId, pageable);
         User user = userFindService.findByUserId(userId);
 
         return new MyPageResponse(user, recentPoint, reviewResponses);

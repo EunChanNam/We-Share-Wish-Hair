@@ -23,8 +23,8 @@ public class ReviewFindService {
                 .map(this::toResponse);
     }
 
-    public List<ReviewResponse> findLikingReviews(Long userId) {
-        List<Review> findReviews = reviewRepository.findReviewByLike(userId);
+    public List<ReviewResponse> findLikingReviews(Long userId, Pageable pageable) {
+        List<Review> findReviews = reviewRepository.findReviewByLike(userId, pageable);
         return generateResponseList(findReviews);
     }
 
