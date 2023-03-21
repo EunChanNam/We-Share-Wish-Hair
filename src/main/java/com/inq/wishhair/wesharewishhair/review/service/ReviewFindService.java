@@ -23,10 +23,6 @@ public class ReviewFindService {
 
     public List<ReviewResponse> getReviews(Pageable pageable, String condition) {
         List<Review> reviews = reviewRepository.findReviewByPaging(pageable);
-        // Query 에서 정렬이 안돼서 Service 에서 정렬
-        if (condition.equals(Condition.LIKES)) {
-            reviews.sort((a, b) -> Integer.compare(b.getLikes(), a.getLikes()));
-        }
 
         return toResponse(reviews);
     }
