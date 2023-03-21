@@ -1,26 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeFragment">
-
     <LinearLayout
-        android:id="@+id/review_linearLayout_hot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="40dp"
         android:orientation="vertical">
-        <TextView
+
+<!--    top -->
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+            <ImageButton
+                android:layout_gravity="center_vertical|end"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/bell"
+                android:scaleType="fitCenter"
+                android:background="@color/white"
+                android:contentDescription="@string/home_icon_notification" />
+        </FrameLayout>
+
+<!--    title -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_message_1"
+                    android:textSize="27sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:id="@+id/home_title_userName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="유저이름"
+                    android:textSize="27sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home_message_2"
+                    android:textSize="27sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_message_3"
+                android:textSize="27sp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/home_message_4"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/home_btn_go"
+                android:layout_width="78dp"
+                android:layout_height="78dp"
+                android:layout_margin="7dp"
+                android:background="@drawable/home_shape_circle_button"
+                android:text="@string/home_message_5"
+                android:textSize="27sp"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+<!--    ad banner -->
+<!--        #TODO 광고 배너 구현 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/signBox_gray" />
+
+<!--    review hot-->
+        <LinearLayout
+            android:id="@+id/home_linearLayout_review_hot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="@string/home_message_6"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/home_ViewPager_review_hot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <me.relex.circleindicator.CircleIndicator
+                android:id="@+id/home_circleIndicator"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_gravity="center"/>
+
+        </LinearLayout>
+
+<!--        recommend -->
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:text="핫게"/>
-
+            android:layout_marginStart="20dp">
+            <TextView
+                android:id="@+id/home_recommend_userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="사용자이름"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/home_message_7"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+        </LinearLayout>
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/review_recyclerView_hot"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:id="@+id/home_recommend_recyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"/>
+
     </LinearLayout>
-</FrameLayout>
+</ScrollView>
