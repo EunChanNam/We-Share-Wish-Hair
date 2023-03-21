@@ -28,9 +28,6 @@ public class Review extends BaseEntity {
     private User user;
 
     @Column(nullable = false)
-    private String title;
-
-    @Column(nullable = false)
     private String contents;
 
     @Column(nullable = false)
@@ -51,10 +48,9 @@ public class Review extends BaseEntity {
 
     //==생성 메서드==//
     public static Review createReview(
-            User user, String title, String contents, Score score, List<Photo> photos, HairStyle hairStyle) {
+            User user, String contents, Score score, List<Photo> photos, HairStyle hairStyle) {
         Review review = new Review();
         review.user = user;
-        review.title = title;
         review.contents = contents;
         review.score = score;
         photos.forEach(photo -> {
