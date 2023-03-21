@@ -29,9 +29,13 @@ public class LikeReviewService {
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
 
         likeReviewRepository.findByUserAndReview(user, review)
-                .ifPresentOrElse(likeReviewRepository::delete, () -> {
+                .ifPresentOrElse((likeReview) -> {
+                    likeReviewRepository.delete(likeReview);
+                    review.cancelLike();
+                }, () -> {
                     LikeReview likeReview = LikeReview.createLikeReview(user, review);
                     likeReviewRepository.save(likeReview);
+                    review.addLike();
                 });
     }
 }
