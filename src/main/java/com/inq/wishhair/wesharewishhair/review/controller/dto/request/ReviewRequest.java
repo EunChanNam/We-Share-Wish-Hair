@@ -13,8 +13,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ReviewRequest {
 
-    private String title;
-
     private String contents;
 
     private Score score;
@@ -27,7 +25,6 @@ public class ReviewRequest {
         return new ReviewCreateDto(
                 userId,
                 this.hairStyleId,
-                this.title,
                 this.contents,
                 this.score,
                 this.files

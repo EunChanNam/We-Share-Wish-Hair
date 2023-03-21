@@ -15,8 +15,6 @@ public class ReviewCreateDto {
 
     private Long hairStyleId;
 
-    private String title;
-
     private String contents;
 
     private Score score;
