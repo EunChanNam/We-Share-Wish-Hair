@@ -1,13 +1,18 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
+import com.inq.wishhair.wesharewishhair.review.common.ReviewSortCondition;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse;
 import com.inq.wishhair.wesharewishhair.user.service.MyPageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import static com.inq.wishhair.wesharewishhair.review.common.ReviewSortCondition.*;
 
 @RestController
 @RequestMapping("/api")
@@ -18,9 +23,10 @@ public class MyPageController {
 
     @GetMapping("/my_page")
     public ResponseEntity<MyPageResponse> getMyPageInfo(
-            @ExtractPayload Long userId) {
+            @ExtractPayload Long userId,
+            @PageableDefault(size = 3, sort = NEW) Pageable pageable) {
 
-        MyPageResponse response = myPageService.getMyPageInfo(userId);
+        MyPageResponse response = myPageService.getMyPageInfo(userId, pageable);
 
         return ResponseEntity.ok(response);
     }
