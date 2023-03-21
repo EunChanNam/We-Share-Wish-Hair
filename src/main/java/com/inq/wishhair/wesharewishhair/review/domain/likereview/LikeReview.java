@@ -29,7 +29,6 @@ public class LikeReview {
         LikeReview likeReview = new LikeReview();
         likeReview.user = user;
         likeReview.review = review;
-        review.getLikeReviews().add(likeReview);
         return likeReview;
     }
 }
