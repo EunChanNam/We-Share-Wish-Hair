@@ -1,12 +1,8 @@
 package com.inq.wishhair.wesharewishhair.review.service;
 
-import com.inq.wishhair.wesharewishhair.global.consts.Condition;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
-import com.inq.wishhair.wesharewishhair.photo.PhotoStore;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
-import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
