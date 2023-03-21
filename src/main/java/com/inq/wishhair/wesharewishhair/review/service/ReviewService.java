@@ -31,10 +31,8 @@ public class ReviewService {
     public Long createReview(ReviewCreateDto dto) {
 
         List<Photo> photos = photoStore.storePhotos(dto.getFiles());
-        User user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
-        HairStyle hairStyle = hairStyleRepository.findById(dto.getHairStyleId())
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+        User user = findUserById(dto);
+        HairStyle hairStyle = findHairStyleById(dto);
 
         Review review = Review.createReview(
                 user,
@@ -44,5 +42,15 @@ public class ReviewService {
                 hairStyle
         );
         return reviewRepository.save(review).getId();
+    }
+
+    private HairStyle findHairStyleById(ReviewCreateDto dto) {
+        return hairStyleRepository.findById(dto.getHairStyleId())
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+    }
+
+    private User findUserById(ReviewCreateDto dto) {
+        return userRepository.findById(dto.getUserId())
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 }
