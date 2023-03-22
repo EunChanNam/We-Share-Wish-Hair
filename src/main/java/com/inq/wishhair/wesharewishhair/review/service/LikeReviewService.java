@@ -19,7 +19,6 @@ public class LikeReviewService {
 
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
-    private final LikeReviewRepository likeReviewRepository;
 
     @Transactional
     public void LikeReview(Long reviewId, Long userId) {

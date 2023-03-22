@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 @Embeddable
 public class LikeReviews {
 
-    private int likes;
+    private int likes = 0;
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<LikeReview> likeReviews = new ArrayList<>();
