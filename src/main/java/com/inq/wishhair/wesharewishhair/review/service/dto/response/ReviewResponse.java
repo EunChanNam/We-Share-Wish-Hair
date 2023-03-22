@@ -23,6 +23,8 @@ public class ReviewResponse {
 
     private int likes;
 
+
+
     public ReviewResponse(Review review) {
         this.hairStyleName = review.getHairStyle().getName();
         this.userNickName = review.getUser().getName();
