@@ -3,7 +3,8 @@ package com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import static com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.TagType., NORMAL;
+import static com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.TagType.*;
+
 
 @Getter
 @AllArgsConstructor

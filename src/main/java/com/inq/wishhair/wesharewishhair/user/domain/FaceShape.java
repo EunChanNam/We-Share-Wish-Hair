@@ -18,12 +18,13 @@ public class FaceShape {
     private Tag tag;
 
     public FaceShape(Tag tag) {
+        validateTagType();
         this.tag = tag;
     }
 
     private void validateTagType() {
         if (!tag.isFaceShapeType()) {
-            throw new WishHairException(ErrorCode.USER_INCONSISTENT_FACE_SHAPE);
+            throw new WishHairException(ErrorCode.USER_TAG_MISMATCH);
         }
     }
 }

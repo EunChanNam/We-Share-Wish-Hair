@@ -45,4 +45,13 @@ public class User {
         this.nickname = nickname;
         this.sex = sex;
     }
+
+    public Tag getFaceShape() {
+        return faceShape.getTag();
+    }
+
+    public boolean existFaceShape() {
+        return faceShape != null;
+    }
+
 }
