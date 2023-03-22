@@ -27,13 +27,13 @@ public class Email {
         this.value = email;
     }
 
-    private void validateEmailPattern(String email) {
+    public static void validateEmailPattern(String email) {
         if (isNotValidPattern(email)) {
             throw new WishHairException(ErrorCode.USER_INVALID_EMAIL);
         }
     }
 
-    private boolean isNotValidPattern(String email) {
+    private static boolean isNotValidPattern(String email) {
         return !EMAIL_MATCHER.matcher(email).matches();
     }
 }

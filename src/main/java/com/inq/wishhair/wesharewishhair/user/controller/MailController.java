@@ -5,7 +5,7 @@ import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.AuthKeyRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.MailRequest;
 import com.inq.wishhair.wesharewishhair.user.domain.Email;
-import com.inq.wishhair.wesharewishhair.user.service.MailService;
+import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
 import com.inq.wishhair.wesharewishhair.user.service.dto.MailDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -26,19 +26,19 @@ public class MailController {
     private static final String MAIL_TITLE = "We-Share-Wish-Hair 이메일 인증";
     private static final String AUTH_KEY = "KEY";
 
-    private final MailService mailService;
+    private final MailSendService mailSendService;
 
     @PostMapping("/send")
     public ResponseEntity<Void> sendAuthorizationMail(@ModelAttribute MailRequest mailRequest,
                                                       HttpServletRequest request) {
 
         //이메일 형식 검증
-        Email email = new Email(mailRequest.getEmail());
+        Email.validateEmailPattern(mailRequest.getEmail());
 
         String authKey = registerAuthKey(request);
-        MailDto mailDto = MailDto.of(email.getValue(), MAIL_TITLE, authKey);
+        MailDto mailDto = MailDto.of(mailRequest.getEmail(), MAIL_TITLE, authKey);
 
-        mailService.sendAuthorizationMail(mailDto);
+        mailSendService.sendAuthorizationMail(mailDto);
 
         return ResponseEntity.noContent().build();
     }
