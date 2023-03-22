@@ -63,11 +63,11 @@ public class Review extends BaseEntity {
     }
 
     //편의 메서드
-    public void addLike() {
-        likes++;
+    public void addLike(LikeReview likeReview) {
+        likeReviews.addLike(likeReview);
     }
 
-    public void cancelLike() {
-        likes--;
+    public void cancelLike(Long userId) {
+        likeReviews.cancelLike(userId);
     }
 }
