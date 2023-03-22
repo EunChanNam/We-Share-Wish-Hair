@@ -12,7 +12,7 @@ public class MailService {
 
     private final JavaMailSender mailSender;
 
-    public void sendValidationMail(MailDto dto) {
+    public void sendAuthorizationMail(MailDto dto) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("namhm23@kyonggi.ac.kr");
         message.setTo(dto.getAddress());
