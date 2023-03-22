@@ -31,10 +31,9 @@ public class HomeFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
 
+//        HotReview
         hotReviewItems = new ArrayList<>();
-
         //===============================dummy data===============================
-
         for (int i = 0; i < 4; i++) {
             HomeItems newHotItems = new HomeItems("현정", "바니바니바니바니 당근당근 바니바니바니바니 당근당긴 바니바니바니바니 당근 당근바니바니바니바니 당근 당근바니바니바니바니 당근 당근");
             hotReviewItems.add(newHotItems);
@@ -47,6 +46,9 @@ public class HomeFragment extends Fragment {
         hotReviewPager.setAdapter(new HomeHotReviewAdapter(getContext(), hotReviewItems));
 
         hotIndicator.setViewPager(hotReviewPager);
+
+//        recommend
+
 
 
         return v;

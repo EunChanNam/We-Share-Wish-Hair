@@ -43,6 +43,7 @@ public class WriteReviewAdapter extends RecyclerView.Adapter<WriteReviewAdapter.
         viewHolder.btn_del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int position = viewHolder.getAdapterPosition();
                 deleteItems(position);
             }
         });
