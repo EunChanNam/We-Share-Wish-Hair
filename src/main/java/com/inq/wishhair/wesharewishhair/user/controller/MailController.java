@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MailController {
 
     private static final String MAIL_TITLE = "We-Share-Wish-Hair 이메일 인증";
-    private static final String KEY = "KEY";
+    private static final String AUTH_KEY = "KEY";
 
     private final MailService mailService;
 
@@ -30,24 +30,24 @@ public class MailController {
         //이메일 형식 검증
         Email email = new Email(mailRequest.getEmail());
 
-        String key = registerAuthKey(email, request);
-        MailDto mailDto = MailDto.of(email.getValue(), MAIL_TITLE, key);
+        String authKey = registerAuthKey(email, request);
+        MailDto mailDto = MailDto.of(email.getValue(), MAIL_TITLE, authKey);
 
         mailService.sendValidationMail(mailDto);
 
         return ResponseEntity.noContent().build();
     }
 
-    public String registerAuthKey(Email email, HttpServletRequest request) {
-        String key = createValidationKey();
+    private String registerAuthKey(Email email, HttpServletRequest request) {
+        String authKet = createAuthKey();
 
         HttpSession session = request.getSession();
-        session.setAttribute(KEY, key);
+        session.setAttribute(AUTH_KEY, authKet);
 
-        return key;
+        return authKet;
     }
 
-    private String createValidationKey() {
+    private String createAuthKey() {
         return String.valueOf((int) (Math.random() * 8999 + 1000));
     }
 }
