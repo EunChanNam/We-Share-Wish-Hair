@@ -19,9 +19,11 @@ repositories {
 }
 
 dependencies {
-	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.8.1") //P6Spy
+	//P6Spy
+	implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0")
 
-	implementation 'javax.annotation:javax.annotation-api:1.3.2' //javax.annotation import 버그 해결
+	//javax.annotation import 버그 해결
+	implementation 'javax.annotation:javax.annotation-api:1.3.2'
 
 	//jwt
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
@@ -37,6 +39,10 @@ dependencies {
 
 	//spring
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	//mail
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	compileOnly 'com.sun.mail:javax.mail'
 
 	//lombok
 	compileOnly 'org.projectlombok:lombok'
