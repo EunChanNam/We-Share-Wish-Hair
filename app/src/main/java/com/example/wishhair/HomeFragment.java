@@ -10,6 +10,8 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
 import java.util.ArrayList;
 
@@ -30,6 +32,14 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_home, container, false);
+
+//        notification
+        ImageButton btn_notification;
+        btn_notification = v.findViewById(R.id.home_btn_notification);
+
+//        go analyze
+        Button btn_go = v.findViewById(R.id.home_btn_go);
+
 
 //        HotReview
         ArrayList<HomeItems> hotReviewItems = new ArrayList<>();
