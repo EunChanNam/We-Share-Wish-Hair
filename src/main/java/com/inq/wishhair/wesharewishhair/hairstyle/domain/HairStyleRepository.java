@@ -12,7 +12,7 @@ import java.util.List;
 public interface HairStyleRepository extends JpaRepository<HairStyle, Long> {
 
     @Query("select h from HairStyle h " +
-            "join HashTag t on h.id = t.hairStyle.id " +
+            "join fetch HashTag t on h.id = t.hairStyle.id " +
             "where t.tag in :tags " +
             "and h.sex = :sex " +
             "group by h.id " +

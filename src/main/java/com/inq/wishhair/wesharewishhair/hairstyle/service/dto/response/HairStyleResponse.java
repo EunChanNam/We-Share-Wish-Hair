@@ -17,6 +17,8 @@ public class HairStyleResponse {
 
     private List<PhotoResponse> photos;
 
+    private List<HashTagResponse> hashTags;
+
     public HairStyleResponse(HairStyle hairStyle) {
         this.hairStyleId = hairStyle.getId();
         this.name = hairStyle.getName();
@@ -24,5 +26,6 @@ public class HairStyleResponse {
         this.photos = hairStyle.getPhotos()
                 .stream().map(PhotoResponse::new)
                 .toList();
+
     }
 }
