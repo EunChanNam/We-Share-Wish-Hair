@@ -4,6 +4,7 @@ import com.inq.wishhair.wesharewishhair.auditing.BaseEntity;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
 import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
+import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviews;
 import com.inq.wishhair.wesharewishhair.review.enums.Score;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import jakarta.persistence.*;
@@ -43,7 +44,8 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "hair_style_id")
     private HairStyle hairStyle;
 
-    private int likes = 0;
+    @Embedded
+    private LikeReviews likeReviews;
 
     //==생성 메서드==//
     public static Review createReview(
