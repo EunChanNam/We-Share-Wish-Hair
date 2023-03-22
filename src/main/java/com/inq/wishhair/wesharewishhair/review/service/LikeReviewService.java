@@ -4,8 +4,6 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
-import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
-import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +27,7 @@ public class LikeReviewService {
     }
 
     private Review findReview(Long reviewId) {
-        return reviewRepository.findById(reviewId)
+        return reviewRepository.findDistinctById(reviewId)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 
