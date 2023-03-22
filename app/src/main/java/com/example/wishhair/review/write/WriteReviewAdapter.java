@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class WriteReviewAdapter extends RecyclerView.Adapter<WriteReviewAdapter.WriteViewHolder> {
 
     private ArrayList<Uri> items = new ArrayList<>();
-    private Context context;
+    private final Context context;
 
     public WriteReviewAdapter(ArrayList<Uri> items, Context context) {
         this.items = items;
@@ -43,6 +43,7 @@ public class WriteReviewAdapter extends RecyclerView.Adapter<WriteReviewAdapter.
         viewHolder.btn_del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int position = viewHolder.getAdapterPosition();
                 deleteItems(position);
             }
         });

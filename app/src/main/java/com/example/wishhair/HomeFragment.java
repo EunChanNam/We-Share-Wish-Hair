@@ -3,62 +3,76 @@ package com.example.wishhair;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
+import me.relex.circleindicator.CircleIndicator3;
+
 public class HomeFragment extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public HomeFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment FragmentHome.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static HomeFragment newInstance(String param1, String param2) {
-        HomeFragment fragment = new HomeFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.home_fragment, container, false);
+
+//        notification
+        ImageButton btn_notification;
+        btn_notification = v.findViewById(R.id.home_btn_notification);
+
+//        go analyze
+        Button btn_go = v.findViewById(R.id.home_btn_go);
+
+
+//        HotReview
+        ArrayList<HomeItems> hotReviewItems = new ArrayList<>();
+        //===============================dummy data===============================
+        for (int i = 0; i < 4; i++) {
+            HomeItems newHotItems = new HomeItems("현정", "바니바니바니바니 당근당근 바니바니바니바니 당근당긴 바니바니바니바니 당근 당근바니바니바니바니 당근 당근바니바니바니바니 당근 당근");
+            hotReviewItems.add(newHotItems);
+        }
+
+        ViewPager2 hotReviewPager = v.findViewById(R.id.home_ViewPager_review_hot);
+        CircleIndicator3 hotIndicator = v.findViewById(R.id.home_circleIndicator);
+
+        hotReviewPager.setOffscreenPageLimit(1);
+        hotReviewPager.setAdapter(new HomeHotReviewAdapter(hotReviewItems));
+
+        hotIndicator.setViewPager(hotReviewPager);
+
+//        recommend
+        ArrayList<HomeItems> recommendItems = new ArrayList<>();
+        //===============================dummy data===============================
+        String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
+        for (int i = 0; i < 5; i++) {
+            HomeItems newRecItems = new HomeItems(imageSample, "hairStyle", "876");
+            recommendItems.add(newRecItems);
+        }
+
+        RecyclerView recommendRecyclerView = v.findViewById(R.id.home_recommend_recyclerView);
+        HomeRecommendAdapter homeRecommendAdapter = new HomeRecommendAdapter(recommendItems, getContext());
+
+        recommendRecyclerView.setAdapter(homeRecommendAdapter);
+        recommendRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
+
+
+        return v;
     }
 }
