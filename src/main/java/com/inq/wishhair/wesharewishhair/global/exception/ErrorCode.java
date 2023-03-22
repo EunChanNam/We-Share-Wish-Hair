@@ -18,7 +18,10 @@ public enum ErrorCode {
     HAIR_STYLE_NO_FACE_SHAPE_TAG("HAIR_STYLE_002", "얼굴형 태그가 없습니다.", HttpStatus.NOT_FOUND),
 
     USER_TAG_MISMATCH("USER_001", "얼굴형 태그가 아닙니다.", HttpStatus.BAD_REQUEST),
-    USER_INVALID_EMAIL("USER_002", "이메일 형식이 맞지 않습니다.", HttpStatus.BAD_REQUEST);
+    USER_INVALID_EMAIL("USER_002", "이메일 형식이 맞지 않습니다.", HttpStatus.BAD_REQUEST),
+
+    MAIL_EXPIRED_KEY("MAIL_001", "인증키가 만료되었습니다.", HttpStatus.UNAUTHORIZED),
+    MAIL_INVALID_KEY("MAIL_002", "인증키가 틀립니다.", HttpStatus.UNAUTHORIZED);
 
     private final String code;
     private final String message;
