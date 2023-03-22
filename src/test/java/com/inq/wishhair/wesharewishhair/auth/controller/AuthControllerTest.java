@@ -111,7 +111,7 @@ public class AuthControllerTest extends ControllerTest {
     private MockHttpServletRequestBuilder buildLoginRequest(LoginRequest request) {
         return MockMvcRequestBuilders
                 .post(LOGIN_URL)
-                .param("loginId", request.getEmail())
+                .param("email", request.getEmail())
                 .param("pw", request.getPw());
     }
 }
