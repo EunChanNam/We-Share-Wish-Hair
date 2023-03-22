@@ -19,20 +19,20 @@ public class ReviewFindService {
     private final ReviewRepository reviewRepository;
 
     public Slice<ReviewResponse> findPagingReviews(Pageable pageable) {
-        return reviewRepository.findReviewByPaging(pageable)
-                .map(this::toResponse);
+        Slice<Review> sliceResult = reviewRepository.findReviewByPaging(pageable);
+        return transferContentToResponse(sliceResult);
     }
 
     public List<ReviewResponse> findLikingReviews(Long userId, Pageable pageable) {
         List<Review> findReviews = reviewRepository.findReviewByLike(userId, pageable);
-        return generateResponseList(findReviews);
+        return generateResponses(findReviews);
     }
 
-    private ReviewResponse toResponse(Review review) {
-        return new ReviewResponse(review);
+    private List<ReviewResponse> generateResponses(List<Review> reviews) {
+        return reviews.stream().map(ReviewResponse::new).toList();
     }
 
-    private List<ReviewResponse> generateResponseList(List<Review> reviews) {
-        return reviews.stream().map(this::toResponse).toList();
+    private Slice<ReviewResponse> transferContentToResponse(Slice<Review> slice) {
+        return slice.map(ReviewResponse::new);
     }
 }
