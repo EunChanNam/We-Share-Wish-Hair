@@ -4,6 +4,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
 import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponse;
 import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
@@ -49,9 +50,19 @@ public enum HairStyleFixture {
 
     public HairStyleResponse toResponse(Long id) {
         HairStyle hairStyle = toEntity();
-        List<PhotoResponse> photoResponses = hairStyle.getPhotos().stream()
+        List<PhotoResponse> photoResponses = generatePhotoResponses(hairStyle);
+        List<HashTagResponse> hashTagResponses = generateHashTagResponses(hairStyle);
+        return new HairStyleResponse(id, name, photoResponses, hashTagResponses);
+    }
+
+    private List<HashTagResponse> generateHashTagResponses(HairStyle hairStyle) {
+        return hairStyle.getHashTags().stream()
+                .map(HashTagResponse::new).toList();
+    }
+
+    private List<PhotoResponse> generatePhotoResponses(HairStyle hairStyle) {
+        return hairStyle.getPhotos().stream()
                 .map(PhotoResponse::new).toList();
-        return new HairStyleResponse(id, name, photoResponses);
     }
 
     private String createStoreFilename(String originalFilename) {

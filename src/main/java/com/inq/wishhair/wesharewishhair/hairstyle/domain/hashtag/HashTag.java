@@ -36,4 +36,8 @@ public class HashTag {
     public void registerHairStyle(HairStyle hairStyle) {
         this.hairStyle = hairStyle;
     }
+
+    public String getDescription() {
+        return tag.getDescription();
+    }
 }

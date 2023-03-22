@@ -32,10 +32,10 @@ public class HairStyleService {
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
         List<HairStyle> hairStyles = hairStyleRepository.findByHashTags(tags, user.getSex(), pageable);
 
-        return toHairResponse(hairStyles);
+        return generateHairStyleResponses(hairStyles);
     }
 
-    private List<HairStyleResponse> toHairResponse(List<HairStyle> hairStyles) {
+    private List<HairStyleResponse> generateHairStyleResponses(List<HairStyle> hairStyles) {
         return hairStyles.stream()
                 .map(HairStyleResponse::new)
                 .toList();
