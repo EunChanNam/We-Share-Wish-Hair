@@ -20,4 +20,8 @@ public enum Tag {
 
     private final String description;
     private final TagType tagType;
+
+    public boolean isFaceShapeType() {
+        return tagType.equals(FACE_SHAPE);
+    }
 }

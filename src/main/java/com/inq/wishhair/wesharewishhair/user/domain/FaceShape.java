@@ -1,5 +1,7 @@
 package com.inq.wishhair.wesharewishhair.user.domain;
 
+import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
@@ -17,5 +19,11 @@ public class FaceShape {
 
     public FaceShape(Tag tag) {
         this.tag = tag;
+    }
+
+    private void validateTagType() {
+        if (!tag.isFaceShapeType()) {
+            throw new WishHairException(ErrorCode.USER_INCONSISTENT_FACE_SHAPE);
+        }
     }
 }
