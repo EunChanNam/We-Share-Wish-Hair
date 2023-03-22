@@ -1,6 +1,5 @@
 package com.example.wishhair;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class HomeHotReviewAdapter extends RecyclerView.Adapter<HomeHotReviewAdapter.HotViewHolder> {
-    private final Context context;
-    private ArrayList<HomeItems> items;
+    private final ArrayList<HomeItems> items;
 
-    public HomeHotReviewAdapter(Context context, ArrayList<HomeItems> items) {
-        this.context = context;
+    public HomeHotReviewAdapter( ArrayList<HomeItems> items) {
         this.items = items;
     }
 
@@ -40,7 +37,7 @@ public class HomeHotReviewAdapter extends RecyclerView.Adapter<HomeHotReviewAdap
         return items.size();
     }
 
-    public class HotViewHolder extends RecyclerView.ViewHolder {
+    public static class HotViewHolder extends RecyclerView.ViewHolder {
         TextView userName, context_review;
         public HotViewHolder(@NonNull View itemView) {
             super(itemView);
