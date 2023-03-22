@@ -21,11 +21,11 @@ public class FaceShape {
     private Tag tag;
 
     public FaceShape(Tag tag) {
-        validateTagType();
+        validateTagType(tag);
         this.tag = tag;
     }
 
-    private void validateTagType() {
+    private void validateTagType(Tag tag) {
         if (!tag.isFaceShapeType()) {
             throw new WishHairException(ErrorCode.USER_TAG_MISMATCH);
         }
