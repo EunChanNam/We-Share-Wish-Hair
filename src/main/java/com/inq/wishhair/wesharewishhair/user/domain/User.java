@@ -33,7 +33,8 @@ public class User {
     @Column(nullable = false)
     private Sex sex;
 
-    private Tag tag = null;
+    @Embedded
+    private FaceShape faceShape;
 
     //=생성 메서드=//
     @Builder
