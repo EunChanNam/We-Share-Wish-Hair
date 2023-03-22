@@ -47,6 +47,10 @@ public class User {
         this.sex = sex;
     }
 
+    public String getEmail() {
+        return email.getValue();
+    }
+
     public Tag getFaceShape() {
         return faceShape.getTag();
     }

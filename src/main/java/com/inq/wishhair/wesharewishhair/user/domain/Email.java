@@ -18,20 +18,20 @@ public class Email {
     private static final String EMAIL_PATTERN = "^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$";
     private static final Pattern EMAIL_MATCHER = Pattern.compile(EMAIL_PATTERN);
 
-    private String email;
+    private String value;
 
     public Email(String email) {
         validateEmailPattern(email);
-        this.email = email;
+        this.value = email;
     }
 
-    private static void validateEmailPattern(String value) {
-        if (isNotValidPattern(value)) {
+    private void validateEmailPattern(String email) {
+        if (isNotValidPattern(email)) {
             throw new WishHairException(ErrorCode.USER_INVALID_EMAIL);
         }
     }
 
-    private static boolean isNotValidPattern(String email) {
+    private boolean isNotValidPattern(String email) {
         return !EMAIL_MATCHER.matcher(email).matches();
     }
 }
