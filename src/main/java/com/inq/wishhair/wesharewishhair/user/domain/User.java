@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.domain;
 
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -31,6 +32,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Sex sex;
+
+    private Tag tag = null;
 
     //=생성 메서드=//
     @Builder
