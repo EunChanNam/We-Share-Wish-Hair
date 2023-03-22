@@ -1,18 +1,16 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.util.List;
-
 @Getter
+@AllArgsConstructor
 public class HashTagResponse {
 
-    private final List<String> tags;
+    private final String tag;
 
-    public HashTagResponse(List<HashTag> hashTags) {
-        tags = hashTags.stream()
-                .map(hashTag -> hashTag.getTag().getDescription())
-                .toList();
+    public HashTagResponse(HashTag hashTag) {
+        tag = hashTag.getDescription();
     }
 }
