@@ -20,7 +20,7 @@
                 android:layout_gravity="center_vertical|end"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
-                android:src="@drawable/bell"
+                android:src="@drawable/home_bell"
                 android:scaleType="fitCenter"
                 android:background="@color/white"
                 android:contentDescription="@string/home_icon_notification" />

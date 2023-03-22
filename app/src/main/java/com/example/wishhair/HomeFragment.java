@@ -31,7 +31,7 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_home, container, false);
+        View v = inflater.inflate(R.layout.home_fragment, container, false);
 
 //        notification
         ImageButton btn_notification;
@@ -60,9 +60,9 @@ public class HomeFragment extends Fragment {
 //        recommend
         ArrayList<HomeItems> recommendItems = new ArrayList<>();
         //===============================dummy data===============================
-        String image = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
+        String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
         for (int i = 0; i < 5; i++) {
-            HomeItems newRecItems = new HomeItems(image, "hairStyle", "876");
+            HomeItems newRecItems = new HomeItems(imageSample, "hairStyle", "876");
             recommendItems.add(newRecItems);
         }
 
