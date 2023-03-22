@@ -12,8 +12,8 @@ import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {
 
-    //photos 는 batch_fetch_size 로 해결
-    @Query("select r from Review r " +
+    @Query("select distinct r from Review r " +
+            "join fetch r.photos " +
             "join fetch r.hairStyle " +
             "join fetch r.user")
     Slice<Review> findReviewByPaging(Pageable pageable);
