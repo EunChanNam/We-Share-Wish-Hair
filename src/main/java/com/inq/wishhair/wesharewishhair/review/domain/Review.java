@@ -66,4 +66,12 @@ public class Review extends BaseEntity {
     public void executeLike(User user) {
         likeReviews.executeLike(user, this);
     }
+
+    public int getLikes() {
+        return likeReviews.getLikes();
+    }
+
+    public List<LikeReview> getLikeReviews() {
+        return likeReviews.getLikeReviews();
+    }
 }
