@@ -24,9 +24,8 @@ public class LikeReviews {
 
     public void executeLike(User user, Review review) {
         Long userId = user.getId();
-        Long reviewId = review.getId();
         likeReviews.stream()
-                .filter(likeReview -> likeReview.isSameLikeReview(userId, reviewId))
+                .filter(likeReview -> likeReview.isSameUser(userId))
                 .findAny()
                 .ifPresentOrElse(this::cancelLike, () -> {
                     LikeReview likeReview = createLikeReview(user, review);

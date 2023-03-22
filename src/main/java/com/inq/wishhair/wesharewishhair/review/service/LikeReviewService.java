@@ -23,7 +23,7 @@ public class LikeReviewService {
         User user = findUser(userId);
         Review review = findReview(reviewId);
 
-        executeLike(user, review);
+        review.executeLike(user);
     }
 
     private Review findReview(Long reviewId) {
@@ -34,9 +34,5 @@ public class LikeReviewService {
     private User findUser(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
-    }
-
-    private void executeLike(User user, Review review) {
-        review.executeLike(user);
     }
 }
