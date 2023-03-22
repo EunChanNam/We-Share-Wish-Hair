@@ -23,19 +23,23 @@ public class LikeReviewService {
 
     @Transactional
     public void LikeReview(Long reviewId, Long userId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
-        Review review = reviewRepository.findById(reviewId)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+        User user = findUser(userId);
+        Review review = findReview(reviewId);
 
-        likeReviewRepository.findByUserAndReview(user, review)
-                .ifPresentOrElse((likeReview) -> {
-                    likeReviewRepository.delete(likeReview);
-                    review.cancelLike();
-                }, () -> {
-                    LikeReview likeReview = LikeReview.createLikeReview(user, review);
-                    likeReviewRepository.save(likeReview);
-                    review.addLike();
-                });
+        executeLike(user, review);
+    }
+
+    private Review findReview(Long reviewId) {
+        return reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+    }
+
+    private User findUser(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+    }
+
+    private void executeLike(User user, Review review) {
+        review.getLikeReviews().executeLike(user, review);
     }
 }
