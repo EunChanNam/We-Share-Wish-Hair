@@ -5,11 +5,6 @@ public class HomeItems {
     String username;
     String context_review;
 
-//    TODO: set recommend item
-//    recommend
-    String hairImage;
-    String hairStyle;
-
     public HomeItems(String username, String context_review) {
         this.username = username;
         this.context_review = context_review;
@@ -29,5 +24,41 @@ public class HomeItems {
 
     public void setContext_review(String context_review) {
         this.context_review = context_review;
+    }
+
+    //    TODO: set recommend item
+//    recommend
+    String hairImage;
+    String hairStyle;
+    String heartCount;
+
+    public HomeItems(String hairImage, String hairStyle, String heartCount) {
+        this.hairImage = hairImage;
+        this.hairStyle = hairStyle;
+        this.heartCount = heartCount;
+    }
+
+    public String getHairImage() {
+        return hairImage;
+    }
+
+    public void setHairImage(String hairImage) {
+        this.hairImage = hairImage;
+    }
+
+    public String getHairStyle() {
+        return hairStyle;
+    }
+
+    public void setHairStyle(String hairStyle) {
+        this.hairStyle = hairStyle;
+    }
+
+    public String getHeartCount() {
+        return heartCount;
+    }
+
+    public void setHeartCount(String heartCount) {
+        this.heartCount = heartCount;
     }
 }
