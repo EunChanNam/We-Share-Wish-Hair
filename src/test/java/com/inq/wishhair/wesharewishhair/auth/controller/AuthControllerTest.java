@@ -35,7 +35,7 @@ public class AuthControllerTest extends ControllerTest {
             //given
             LoginRequest request = LoginRequestUtils.createRequest();
             TokenResponse expectedResponse = toResponse();
-            given(authService.login(request.getLoginId(), request.getPw()))
+            given(authService.login(request.getEmail(), request.getPw()))
                     .willReturn(expectedResponse);
 
             //when
@@ -55,7 +55,7 @@ public class AuthControllerTest extends ControllerTest {
         void test2() throws Exception {
             //given
             LoginRequest request = LoginRequestUtils.createRequest();
-            given(authService.login(request.getLoginId(), request.getPw()))
+            given(authService.login(request.getEmail(), request.getPw()))
                     .willThrow(new WishHairException(LOGIN_FAIL));
 
             //when
@@ -111,7 +111,7 @@ public class AuthControllerTest extends ControllerTest {
     private MockHttpServletRequestBuilder buildLoginRequest(LoginRequest request) {
         return MockMvcRequestBuilders
                 .post(LOGIN_URL)
-                .param("loginId", request.getLoginId())
+                .param("loginId", request.getEmail())
                 .param("pw", request.getPw());
     }
 }
