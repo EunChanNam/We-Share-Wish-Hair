@@ -63,7 +63,7 @@ public class Review extends BaseEntity {
     }
 
     //편의 메서드
-    public void executeLike(User user, Review review) {
-        likeReviews.executeLike(user, review);
+    public void executeLike(User user) {
+        likeReviews.executeLike(user, this);
     }
 }

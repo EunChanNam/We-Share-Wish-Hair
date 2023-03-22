@@ -37,6 +37,6 @@ public class LikeReviewService {
     }
 
     private void executeLike(User user, Review review) {
-        review.getLikeReviews().executeLike(user, review);
+        review.executeLike(user);
     }
 }
