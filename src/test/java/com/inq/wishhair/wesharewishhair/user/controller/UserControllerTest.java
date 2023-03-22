@@ -25,7 +25,7 @@ public class UserControllerTest extends ControllerTest {
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post(JOIN_URL)
-                .param("loginId", request.getLoginId())
+                .param("email", request.getEmail())
                 .param("pw", request.getPw())
                 .param("name", request.getName())
                 .param("nickName", request.getNickname())

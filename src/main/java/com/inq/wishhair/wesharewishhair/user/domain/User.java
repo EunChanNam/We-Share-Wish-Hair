@@ -47,7 +47,7 @@ public class User {
         this.sex = sex;
     }
 
-    public String getEmail() {
+    public String getEmailValue() {
         return email.getValue();
     }
 

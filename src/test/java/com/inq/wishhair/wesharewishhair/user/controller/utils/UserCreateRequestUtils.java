@@ -8,7 +8,7 @@ public abstract class UserCreateRequestUtils {
 
     public static UserCreateRequest createRequest() {
         return new UserCreateRequest(
-                a.getLoginId(),
+                a.getEmail(),
                 a.getPw(),
                 a.getName(),
                 a.getNickname(),

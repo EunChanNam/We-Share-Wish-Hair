@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.auth.service;
 
 import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
 import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
+import com.inq.wishhair.wesharewishhair.user.domain.Email;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -20,8 +21,8 @@ public class AuthService {
     private final JwtTokenProvider provider;
 
     @Transactional
-    public TokenResponse login(String loginId, String pw) {
-        User user = userRepository.findByLoginId(loginId)
+    public TokenResponse login(String email, String pw) {
+        User user = userRepository.findByEmail(new Email(email))
                 .filter(findUser -> findUser.getPw().equals(pw))
                 .orElseThrow(() -> new WishHairException(ErrorCode.LOGIN_FAIL));
 
