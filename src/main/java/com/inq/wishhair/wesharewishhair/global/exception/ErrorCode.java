@@ -16,7 +16,8 @@ public enum ErrorCode {
 
     HAIR_STYLE_REQUIRED_TAG("HAIR_STYLE_001", "태그는 필수입니다.", HttpStatus.BAD_REQUEST),
 
-    USER_TAG_MISMATCH("USER_001", "얼굴형 태그가 아닙니다.", HttpStatus.BAD_REQUEST);
+    USER_TAG_MISMATCH("USER_001", "얼굴형 태그가 아닙니다.", HttpStatus.BAD_REQUEST),
+    USER_INVALID_EMAIL("USER_002", "이메일 형식이 맞지 않습니다.", HttpStatus.BAD_REQUEST);
 
     private final String code;
     private final String message;
