@@ -47,9 +47,9 @@ class UserRepositoryTest extends RepositoryTest {
     @Test
     @DisplayName("로그인 아이디로 회원 조회 테스트")
     void findByLoginIdTest() {
-        User findUserA = userRepository.findByLoginId(this.userA.getLoginId()).get();
-        User findUserB = userRepository.findByLoginId(this.userB.getLoginId()).get();
-        User findUserC = userRepository.findByLoginId(this.userC.getLoginId()).get();
+        User findUserA = userRepository.findByEmail(this.userA.getEmail()).get();
+        User findUserB = userRepository.findByEmail(this.userB.getEmail()).get();
+        User findUserC = userRepository.findByEmail(this.userC.getEmail()).get();
 
         assertAll(
                 () -> assertThat(findUserA.getPw()).isEqualTo(findUserA.getPw()),

@@ -1,7 +1,10 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.domain;
 
 
+import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import jakarta.persistence.*;
@@ -50,5 +53,14 @@ public class HairStyle {
     public static HairStyle createHairStyle(
             String name, Sex sex, List<Photo> photos, List<HashTag> hashTags) {
         return new HairStyle(name, sex, photos, hashTags);
+    }
+
+    //==편의 메서드--//
+    public Tag findFaceShapeTag() {
+        return hashTags.stream()
+                .map(HashTag::getTag)
+                .filter(Tag::isFaceShapeType)
+                .findAny()
+                .orElseThrow(() -> new WishHairException(ErrorCode.HAIR_STYLE_NO_FACE_SHAPE_TAG));
     }
 }

@@ -4,6 +4,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
+import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -25,14 +26,28 @@ public class HairStyleService {
     private final HairStyleRepository hairStyleRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     public List<HairStyleResponse> findRecommendedHairStyle(
             List<Tag> tags, Long userId, Pageable pageable) {
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+        User user = findUser(userId);
         List<HairStyle> hairStyles = hairStyleRepository.findByHashTags(tags, user.getSex(), pageable);
+        updateFaceShape(user, hairStyles);
 
         return generateHairStyleResponses(hairStyles);
+    }
+
+    private User findUser(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+    }
+
+    private void updateFaceShape(User user, List<HairStyle> hairStyles) {
+        if (!hairStyles.isEmpty()) {
+            HairStyle firstHairStyle = hairStyles.get(0);
+            Tag faceShapeTag = firstHairStyle.findFaceShapeTag();
+            user.updateFaceShape(new FaceShape(faceShapeTag));
+        }
     }
 
     private List<HairStyleResponse> generateHairStyleResponses(List<HairStyle> hairStyles) {

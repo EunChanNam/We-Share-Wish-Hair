@@ -14,7 +14,11 @@ public enum ErrorCode {
     AUTH_INVALID_TOKEN("AUTH_002", "토큰이 유효하지 않습니다.", HttpStatus.UNAUTHORIZED),
     AUTH_REQUIRED_LOGIN("AUTH_003", "로그인이 필요합니다.", HttpStatus.UNAUTHORIZED),
 
-    HAIR_STYLE_REQUIRED_TAG("HAIR_STYLE_001", "태그는 필수입니다.", HttpStatus.BAD_REQUEST);
+    HAIR_STYLE_REQUIRED_TAG("HAIR_STYLE_001", "태그는 필수입니다.", HttpStatus.BAD_REQUEST),
+    HAIR_STYLE_NO_FACE_SHAPE_TAG("HAIR_STYLE_002", "얼굴형 태그가 없습니다.", HttpStatus.NOT_FOUND),
+
+    USER_TAG_MISMATCH("USER_001", "얼굴형 태그가 아닙니다.", HttpStatus.BAD_REQUEST),
+    USER_INVALID_EMAIL("USER_002", "이메일 형식이 맞지 않습니다.", HttpStatus.BAD_REQUEST);
 
     private final String code;
     private final String message;

@@ -16,7 +16,7 @@ public class UserTest {
         UserFixture A = UserFixture.A;
 
         User user = User.builder()
-                .loginId(A.getLoginId())
+                .email(new Email(A.getEmail()))
                 .pw(A.getPw())
                 .name(A.getName())
                 .nickname(A.getNickname())
@@ -24,7 +24,7 @@ public class UserTest {
                 .build();
 
         assertAll(
-                () -> assertThat(user.getLoginId()).isEqualTo(A.getLoginId()),
+                () -> assertThat(user.getEmailValue()).isEqualTo(A.getEmail()),
                 () -> assertThat(user.getPw()).isEqualTo(A.getPw()),
                 () -> assertThat(user.getName()).isEqualTo(A.getName()),
                 () -> assertThat(user.getNickname()).isEqualTo(A.getNickname()),
