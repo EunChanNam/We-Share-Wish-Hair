@@ -35,7 +35,7 @@ public class MailController {
         //이메일 형식 검증
         Email email = new Email(mailRequest.getEmail());
 
-        String authKey = registerAuthKey(email, request);
+        String authKey = registerAuthKey(request);
         MailDto mailDto = MailDto.of(email.getValue(), MAIL_TITLE, authKey);
 
         mailService.sendAuthorizationMail(mailDto);
@@ -64,7 +64,7 @@ public class MailController {
         }
     }
 
-    private String registerAuthKey(Email email, HttpServletRequest request) {
+    private String registerAuthKey(HttpServletRequest request) {
         String authKey = createAuthKey();
 
         HttpSession session = request.getSession();
