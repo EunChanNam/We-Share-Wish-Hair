@@ -54,4 +54,7 @@ public class User {
         return faceShape != null;
     }
 
+    public void updateFaceShape(FaceShape faceShape) {
+        this.faceShape = faceShape;
+    }
 }
