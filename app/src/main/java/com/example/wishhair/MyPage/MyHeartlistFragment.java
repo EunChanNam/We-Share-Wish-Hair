@@ -89,6 +89,6 @@ public class MyHeartlistFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_selectionlist, container, false);
+        return inflater.inflate(R.layout.my_selectionlist_fragment, container, false);
     }
 }

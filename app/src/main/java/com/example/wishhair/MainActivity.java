@@ -2,7 +2,6 @@ package com.example.wishhair;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -11,12 +10,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.example.wishhair.MyPage.InformationModifyFragment;
 import com.example.wishhair.MyPage.MyCouponFragment;
 import com.example.wishhair.MyPage.MyInformationFragment;
@@ -25,13 +18,11 @@ import com.example.wishhair.MyPage.MyPointList;
 import com.example.wishhair.MyPage.MyHeartlistFragment;
 import com.example.wishhair.MyPage.MyStyleFragment;
 
+import com.example.wishhair.home.HomeFragment;
 import com.example.wishhair.review.ReviewFragment;
 import com.example.wishhair.sign.UrlConst;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class MainActivity extends AppCompatActivity {
 
