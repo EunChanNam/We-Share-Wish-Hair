@@ -1,10 +1,15 @@
 package com.example.wishhair;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -45,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView BottomNavigation = findViewById(R.id.BottomNavigation);
         BottomNavigation.setOnItemSelectedListener(new BottomNavigationItemSelectedListener());
+        
 
     }
 
@@ -101,5 +107,40 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
 
+    }
+
+    public void setOnClickShowAlert(ImageButton btn) {
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                OnClickShowAlert();
+            }
+        });
+    }
+
+    public void OnClickShowAlert() {
+        AlertDialog.Builder myAlertBuilder =
+                new AlertDialog.Builder(this);
+        // alert의 title과 Messege 세팅
+//        myAlertBuilder.setTitle("Alert");
+        myAlertBuilder.setMessage("test"+"P를 차감하여\n쿠폰을 구입하시겠습니까?");
+        // 버튼 추가 (Ok 버튼과 Cancle 버튼 )
+        myAlertBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog,int which){
+                // OK 버튼을 눌렸을 경우
+                Toast.makeText(getApplicationContext(),"구입 완료",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        myAlertBuilder.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Cancle 버튼을 눌렸을 경우
+                Toast.makeText(getApplicationContext(),"",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+        // Alert를 생성해주고 보여주는 메소드(show를 선언해야 Alert가 생성됨)
+        myAlertBuilder.show();
     }
 }

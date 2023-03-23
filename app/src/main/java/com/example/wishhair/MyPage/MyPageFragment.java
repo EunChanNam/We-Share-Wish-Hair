@@ -42,6 +42,7 @@ public class MyPageFragment extends Fragment {
     RecyclerView HeartlistRecyclerView;
     MyPageRecyclerViewAdapter adapter;
     RecyclerDecoration recyclerDecoration;
+//    private final String URL = "https://afa5-182-222-186-10.jp.ngrok.io";
 
 
     public MyPageFragment() {

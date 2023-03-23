@@ -1,18 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="300dp"
-    android:layout_height="120dp"
-    android:background="@color/white">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="130dp"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_width="350dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="center|center_vertical"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:background="@color/unselect_blue">
 
         <TextView
-            android:id="@+id/coupon_title"
+            android:id="@+id/coupon_receive_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
@@ -22,32 +27,23 @@
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/coupon_explanation"
+            android:id="@+id/coupon_receive_explanation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/coupon_title"
+            android:layout_below="@id/coupon_receive_title"
             android:layout_marginLeft="10dp"
             android:text="포인트 차감 1000원 쿠폰"
             android:textColor="@color/black"
             android:textStyle="bold" />
 
         <TextView
-            android:id="@+id/coupon_constraint"
+            android:id="@+id/coupon_receive_constraint"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/coupon_explanation"
-            android:layout_marginLeft="10dp"
-            android:text="제휴 미용실 전용"
-            android:textColor="@color/black" />
-
-        <TextView
-            android:id="@+id/coupon_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/coupon_constraint"
+            android:layout_below="@id/coupon_receive_explanation"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
-            android:text="yyyy.mm.dd hh:mm 까지"
+            android:text="제휴 미용실 전용"
             android:textColor="@color/black" />
 
         <LinearLayout
@@ -59,12 +55,12 @@
             android:orientation="horizontal">
 
             <ImageButton
-                android:id="@+id/coupon_detail_button"
+                android:id="@+id/coupon_receive_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:background="@color/unselect_blue"
-                app:srcCompat="@drawable/go" />
+                app:srcCompat="@drawable/get" />
         </LinearLayout>
 
     </RelativeLayout>

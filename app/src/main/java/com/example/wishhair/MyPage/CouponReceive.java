@@ -1,14 +1,30 @@
 package com.example.wishhair.MyPage;
 
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.Toast;
 
+import com.example.wishhair.MainActivity;
+import com.example.wishhair.MyPage.adapters.CouponReceiveAdapter;
+import com.example.wishhair.MyPage.items.CouponReceiveItem;
 import com.example.wishhair.R;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -25,6 +41,13 @@ public class CouponReceive extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    RecyclerView recyclerView;
+    CouponReceiveAdapter adapter;
+    LinearLayoutManager layoutManager;
+    MainActivity mainActivity;
+    Context context;
+    ArrayList<CouponReceiveItem> arrayList;
 
     public CouponReceive() {
         // Required empty public constructor
@@ -58,9 +81,39 @@ public class CouponReceive extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mainActivity = (MainActivity) getActivity();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        context = getContext();
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_coupon_recieve, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        arrayList = new ArrayList<>();
+
+        recyclerView = view.findViewById(R.id.coupon_receive_recyclerview);
+        adapter = new CouponReceiveAdapter();
+        adapter.addItem(new CouponReceiveItem());
+        adapter.addItem(new CouponReceiveItem());
+        adapter.addItem(new CouponReceiveItem());
+        layoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.setAdapter(adapter);
+
+
+
+    }
+
+
+
 }
