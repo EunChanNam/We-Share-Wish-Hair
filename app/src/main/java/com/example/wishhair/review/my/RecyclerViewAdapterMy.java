@@ -38,7 +38,7 @@ public class RecyclerViewAdapterMy extends RecyclerView.Adapter<RecyclerViewAdap
         Context context = parent.getContext();
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.recycler_item_review_my, parent, false);
+        View view = inflater.inflate(R.layout.review_recycler_item_my, parent, false);
 
         return new ViewHolder(view);
     }

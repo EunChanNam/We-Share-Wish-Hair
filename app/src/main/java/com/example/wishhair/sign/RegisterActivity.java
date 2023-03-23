@@ -33,10 +33,13 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_activity_register);
 
+        Button btn_back = findViewById(R.id.toolbar_btn_back);
+        btn_back.setOnClickListener(View -> finish());
+
         ed_id = findViewById(R.id.sign_register_et_id);
         ed_pw = findViewById(R.id.sign_register_et_password);
-        ed_name = findViewById(R.id.register3rdInput);
-        ed_nickname = findViewById(R.id.register4thInput);
+        ed_name = findViewById(R.id.sign_register_et_name);
+        ed_nickname = findViewById(R.id.sign_register_et_nickname);
 
         RadioGroup radioGroup_sex = findViewById(R.id.radioGroupSEX);
         radioButton_man = findViewById(R.id.radio_sex_man);

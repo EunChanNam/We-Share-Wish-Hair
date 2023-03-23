@@ -28,4 +28,13 @@
     <string name="write_review_massage_2">시술에 대한 별점을 매겨주세요</string>
     <string name="write_review_massage_3">최소 15자 이상 작성해주세요</string>
     <string name="write_review_submit">등록하기</string>
+    <string name="home_icon_notification">home_icon_notification</string>
+    <string name="home_message_1">안녕하세요,</string>
+    <string name="home_message_2">님!</string>
+    <string name="home_message_3">얼굴형 분석에 참여해보세요.</string>
+    <string name="home_message_4">AI 얼굴형 분석하러</string>
+    <string name="home_message_5">GO!</string>
+    <string name="home_message_6">이달의 추천 리뷰</string>
+    <string name="home_message_7">님 만을 위한 추천</string>
+    <string name="xmlDisplay_username">userName</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.example.wishhair.sign;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Response;
 import com.android.volley.toolbox.StringRequest;
 

@@ -36,7 +36,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:padding="5dp"
-            android:src="@drawable/sign_id"
+            android:src="@drawable/sign_name"
             android:background="@drawable/border_sign_image"
             android:contentDescription="@string/login_hint_id" />
 

@@ -153,7 +153,7 @@
                 android:scrollbars="horizontal" />
 
             <Button
-                android:id="@+id/button3"
+                android:id="@+id/mypage_button_logout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal|center_vertical"
