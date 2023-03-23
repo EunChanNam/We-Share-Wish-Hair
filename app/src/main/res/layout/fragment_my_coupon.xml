@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     tools:context=".MyPage.MyPointList">
 
     <androidx.appcompat.widget.Toolbar
@@ -12,15 +13,28 @@
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
         app:titleTextColor="@color/black">
+
         <TextView
+            android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="쿠폰"
             android:layout_gravity="center"
-            android:id="@+id/toolbar_title"
+            android:text="쿠폰"
             android:textSize="20sp">
 
         </TextView>
-
     </androidx.appcompat.widget.Toolbar>
-</FrameLayout>
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/coupon_tabLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/coupon_viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.viewpager2.widget.ViewPager2>
+
+</LinearLayout>

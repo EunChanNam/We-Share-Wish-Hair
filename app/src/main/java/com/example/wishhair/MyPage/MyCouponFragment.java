@@ -3,17 +3,25 @@ package com.example.wishhair.MyPage;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Lifecycle;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.viewpager2.widget.ViewPager2;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wishhair.MainActivity;
+import com.example.wishhair.MyPage.adapters.CouponAdapter;
+import com.example.wishhair.MyPage.adapters.CouponPagerAdapter;
 import com.example.wishhair.R;
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,6 +40,12 @@ public class MyCouponFragment extends Fragment {
     private String mParam2;
 
     MainActivity mainActivity;
+    RecyclerView couponRecyclerView;
+    CouponAdapter couponAdapter;
+    ViewPager2 viewPager;
+    CouponPagerAdapter couponPagerAdapter;
+    String[] tabs = {"내 쿠폰", "쿠폰 받기"};
+    private OnBackPressedCallback callback;
 
     public MyCouponFragment() {
         // Required empty public constructor
@@ -59,6 +73,14 @@ public class MyCouponFragment extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mainActivity = (MainActivity) getActivity();
+        callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                mainActivity.ChangeFragment(2);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 
     @Override
@@ -82,6 +104,18 @@ public class MyCouponFragment extends Fragment {
                 mainActivity.ChangeFragment(2);
             }
         });
+        Lifecycle lf = getLifecycle();
+
+
+        viewPager = view.findViewById(R.id.coupon_viewPager);
+        viewPager.setSaveEnabled(false);
+        couponPagerAdapter = new CouponPagerAdapter(getChildFragmentManager(), lf);
+        viewPager.setAdapter(couponPagerAdapter);
+
+        TabLayout tabLayout = view.findViewById(R.id.coupon_tabLayout);
+        new TabLayoutMediator(tabLayout, viewPager,
+                (tab, position) -> tab.setText(tabs[position])
+        ).attach();
     }
 
     @Override

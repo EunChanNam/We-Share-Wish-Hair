@@ -5,29 +5,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MyPage.MyPointList">
+    tools:context=".MyPage.CouponReceive" >
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+    <View
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@color/white"
-        app:titleTextColor="@color/black">
-
-        <TextView
-            android:id="@+id/toolbar_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text="포인트"
-            android:textSize="20sp">
-
-        </TextView>
-
-    </androidx.appcompat.widget.Toolbar>
+        android:layout_height="3dp"
+        android:background="@color/signBox_gray"
+         />
 
     <TextView
-        android:id="@+id/mypoint_Ctext"
+        android:id="@+id/coupon_receive_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -37,7 +24,7 @@
         android:textColor="@color/black" />
 
     <TextView
-        android:id="@+id/mypoint_pointsum"
+        android:id="@+id/coupon_receive_pointsum"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -50,12 +37,16 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:layout_marginTop="25dp"
-        android:background="@color/unselect_blue" />
+        android:layout_height="3dp"
+        android:background="@color/signBox_gray"
+        android:layout_marginTop="15dp" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/pointlist_recyclerview"
+        android:id="@+id/coupon_receive_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp" />
 </LinearLayout>

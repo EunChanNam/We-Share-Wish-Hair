@@ -3,16 +3,22 @@ package com.example.wishhair.MyPage;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wishhair.MainActivity;
+import com.example.wishhair.MyPage.adapters.PointAdapter;
+import com.example.wishhair.MyPage.items.PointItem;
 import com.example.wishhair.R;
 
 /**
@@ -32,6 +38,12 @@ public class MyPointList extends Fragment {
     private String mParam2;
 
     MainActivity mainActivity;
+    private OnBackPressedCallback callback;
+
+    PointAdapter adapter;
+    RecyclerView recyclerView;
+    LinearLayoutManager layoutManager;
+    DividerItemDecoration dividerItemDecoration;
 
     public MyPointList() {
         // Required empty public constructor
@@ -59,6 +71,14 @@ public class MyPointList extends Fragment {
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         mainActivity = (MainActivity) getActivity();
+        callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                mainActivity.ChangeFragment(2);
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+
     }
 
     @Override
@@ -82,6 +102,22 @@ public class MyPointList extends Fragment {
                 mainActivity.ChangeFragment(2);
             }
         });
+
+        recyclerView = view.findViewById(R.id.pointlist_recyclerview);
+        adapter = new PointAdapter();
+        layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        recyclerView.setLayoutManager(layoutManager);
+        dividerItemDecoration = new DividerItemDecoration(getContext(), 1);
+        dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.point_recyclerview_divider));
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
+        adapter.addItem(new PointItem());
+        adapter.addItem(new PointItem());
+        adapter.addItem(new PointItem());
+        adapter.addItem(new PointItem());
+        adapter.addItem(new PointItem());
+        adapter.addItem(new PointItem());
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
