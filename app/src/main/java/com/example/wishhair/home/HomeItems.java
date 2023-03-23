@@ -1,4 +1,4 @@
-package com.example.wishhair;
+package com.example.wishhair.home;
 
 public class HomeItems {
 //    hot review

@@ -89,6 +89,6 @@ public class MyStyleFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_style, container, false);
+        return inflater.inflate(R.layout.my_style_fragment, container, false);
     }
 }

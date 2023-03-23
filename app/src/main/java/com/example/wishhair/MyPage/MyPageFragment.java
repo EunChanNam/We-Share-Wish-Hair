@@ -145,7 +145,7 @@ public class MyPageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_mypage, container, false);
+        View view = inflater.inflate(R.layout.mypage_fragment, container, false);
         return view;
     }
 

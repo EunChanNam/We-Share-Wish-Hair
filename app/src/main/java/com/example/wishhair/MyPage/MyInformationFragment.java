@@ -1,7 +1,6 @@
 package com.example.wishhair.MyPage;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -134,6 +133,6 @@ public class MyInformationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_information, container, false);
+        return inflater.inflate(R.layout.my_information_fragment, container, false);
     }
 }

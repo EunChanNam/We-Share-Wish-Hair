@@ -1,4 +1,4 @@
-package com.example.wishhair;
+package com.example.wishhair.home;
 
 import android.os.Bundle;
 
@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
+
+import com.example.wishhair.R;
 
 import java.util.ArrayList;
 
