@@ -19,7 +19,7 @@ import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture.*;
 import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.getDefaultPageable;
-import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.ACCESS_TOKEN;
+import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -28,8 +28,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class HairStyleControllerTest extends ControllerTest {
 
     private static final String BASE_URL = "/api/hair_style/recommend";
-    private static final String AUTHORIZATION = "Authorization";
-    private static final String BEARER = "Bearer";
 
     @BeforeEach
     void setUp() {
