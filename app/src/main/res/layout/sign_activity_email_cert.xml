@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".sign.EmailCertActivity"
+    android:orientation="vertical">
+
+<!--    topBar -->
+    <include layout="@layout/top_bar_title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이메일을 인증해주세요!"/>
+
+<!--    input email -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="이메일을 입력해주세요"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:weightSum="5">
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:padding="3dp"
+                android:src="@drawable/sign_email"
+                android:background="@drawable/border_sign_image"
+                android:contentDescription="@string/login_hint_id" />
+
+            <EditText
+                android:id="@+id/sign_register_et_id"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:paddingStart="5dp"
+                android:layout_weight="4"
+                android:background="@drawable/border_sign_text"
+                android:ems="10"
+                android:hint="@string/register_hint_id"
+                android:inputType="text"
+                android:importantForAutofill="no"
+                tools:ignore="RtlSymmetry" />
+        </LinearLayout>
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증번호 전송"/>
+
+<!--        input code -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="남은 시간"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="인증번호를 입력해주세요"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="인증번호 제출"/>
+
+    </LinearLayout>
+
+
+</LinearLayout>
