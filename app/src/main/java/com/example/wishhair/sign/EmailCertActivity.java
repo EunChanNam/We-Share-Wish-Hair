@@ -4,19 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.wishhair.CustomRetryPolicy;
 import com.example.wishhair.MainActivity;
 import com.example.wishhair.R;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -24,7 +30,7 @@ import java.util.Map;
 
 public class EmailCertActivity extends AppCompatActivity {
 
-    final static private String URL = UrlConst.URL + "/api/";
+    final static private String URL = UrlConst.URL + "/api/email/send";
     private EditText ed_email, ed_code;
     private Button btn_back, btn_send, btn_submit, btn_intent;
 
@@ -39,33 +45,18 @@ public class EmailCertActivity extends AppCompatActivity {
         TextView pageTitle = findViewById(R.id.toolbar_textView_title);
         pageTitle.setText("");
 
-//        input email
-        ed_email = findViewById(R.id.sign_cert_et_email);
-        String inputEmail = String.valueOf(ed_email.getText());
 //        send request
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> params = new HashMap<>();
-                params.put("", inputEmail);
-                return super.getHeaders();
-            }
-        };
-
+        ed_email = findViewById(R.id.sign_cert_et_email);
         btn_send = findViewById(R.id.sign_cert_btn_requestSend);
+        btn_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String inputEmail = String.valueOf(ed_email.getText());
+                emailSendRequest(inputEmail);
+            }
+        });
 
 //        confirmCode request
-
         btn_submit = findViewById(R.id.sign_cert_btn_confirmCode);
 
 //        intent Page
@@ -75,5 +66,56 @@ public class EmailCertActivity extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
+    }
+
+    private void emailSendRequest(String inputEmail) {
+        final JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("email", inputEmail);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, jsonObject, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    Log.d("response: sudddddd", response.getString("success"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("send Error response", "onErrorResponse: ");
+                NetworkResponse networkResponse = error.networkResponse;
+                if (networkResponse != null && networkResponse.data != null) {
+                    String jsonError = new String(networkResponse.data);
+                    try {
+                        JSONObject jsonObject = new JSONObject(jsonError);
+                        String message = jsonObject.getString("message");
+                        Toast.makeText( getApplicationContext(), message, Toast.LENGTH_SHORT ).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Accept", "application/json");
+                return params;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+
+        CustomRetryPolicy retryPolicy = new CustomRetryPolicy();
+        jsonObjectRequest.setRetryPolicy(retryPolicy);
+
+        queue.add(jsonObjectRequest);
     }
 }

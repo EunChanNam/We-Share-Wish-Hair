@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 //        register
         Button login_registerBtn = findViewById(R.id.btn_register);
         login_registerBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            Intent intent = new Intent(LoginActivity.this, EmailCertActivity.class);
             LoginActivity.this.startActivity(intent);
         });
 
@@ -70,11 +70,11 @@ public class LoginActivity extends AppCompatActivity {
 
         loginSP = getSharedPreferences("UserInfo", MODE_PRIVATE);
         //임시 로그인 패스 코드
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            /*Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
-            finish();
+            finish();*/
         //서버 연동 코드
-        /*Response.Listener<String> responseListener = new Response.Listener<String>() {
+        Response.Listener<String> responseListener = new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
 //                token
@@ -120,8 +120,8 @@ public class LoginActivity extends AppCompatActivity {
         RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
         queue.add(loginRequest);
 
-        Log.i("login Request", loginRequest.toString());
-        Log.i("login Request", queue.toString());*/
+//        Log.i("login Request", loginRequest.toString());
+//        Log.i("login Request", queue.toString());
 
     }
 
