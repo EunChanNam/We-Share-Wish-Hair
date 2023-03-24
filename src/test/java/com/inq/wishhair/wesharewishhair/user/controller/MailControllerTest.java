@@ -2,10 +2,13 @@ package com.inq.wishhair.wesharewishhair.user.controller;
 
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.AuthKeyRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.MailRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -15,7 +18,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MailControllerTest extends ControllerTest {
     private static final String WRONG_EMAIL = "email@navercom";
     private static final String EMAIL = "email@naver.com";
+    private static final String AUTH_KEY = "KEY";
+
     private static final String SEND_URL = "/api/email/send";
+    private static final String VALIDATE_URL = "/api/email/validate";
 
     @Nested
     @DisplayName("메일 전송 API")
@@ -52,11 +58,39 @@ public class MailControllerTest extends ControllerTest {
             mockMvc.perform(requestBuilder)
                     .andExpect(status().isNoContent());
         }
+
+        private MockHttpServletRequestBuilder generateMailSendRequest(MailRequest request) {
+            return MockMvcRequestBuilders
+                    .post(SEND_URL)
+                    .param("email", request.getEmail());
+        }
     }
 
-    private MockHttpServletRequestBuilder generateMailSendRequest(MailRequest request) {
-        return MockMvcRequestBuilders
-                .post(SEND_URL)
-                .param("email", request.getEmail());
+    @Nested
+    @DisplayName("메일 검증 API")
+    class authorizeKey {
+        @Test
+        @DisplayName("잘못된 인증 키로 검증에 실패한다")
+        void test3() throws Exception {
+            //given
+            AuthKeyRequest request = new AuthKeyRequest("1111");
+            MockHttpSession session = new MockHttpSession();
+            session.setAttribute(AUTH_KEY, "2222");
+            BDDMockito.given(httpServletRequest.getSession()).willReturn(session);
+
+            ErrorCode expectedError = ErrorCode.MAIL_INVALID_KEY;
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .post(VALIDATE_URL)
+                    .param("authKey", request.getAuthKey());
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpectAll(
+                            status().isUnauthorized(),
+                            jsonPath("$").exists(),
+                            jsonPath("$.message").value(expectedError.getMessage())
+                    );
+        }
     }
 }
