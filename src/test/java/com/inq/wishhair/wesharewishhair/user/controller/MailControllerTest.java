@@ -113,5 +113,24 @@ public class MailControllerTest extends ControllerTest {
                             jsonPath("$.message").value(expectedError.getMessage())
                     );
         }
+
+        @Test
+        @DisplayName("올바른 인증키로 검증에 성공한다")
+        void test5() throws Exception {
+            //given
+            AuthKeyRequest request = new AuthKeyRequest("1111");
+            MockHttpSession session = new MockHttpSession();
+            session.setAttribute(AUTH_KEY, "1111");
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .post(VALIDATE_URL)
+                    .param("authKey", request.getAuthKey())
+                    .session(session);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isNoContent());
+        }
     }
 }
