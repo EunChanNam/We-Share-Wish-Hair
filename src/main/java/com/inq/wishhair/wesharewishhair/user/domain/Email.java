@@ -27,7 +27,7 @@ public class Email {
         this.value = email;
     }
 
-    public static void validateEmailPattern(String email) {
+    private static void validateEmailPattern(String email) {
         if (isNotValidPattern(email)) {
             throw new WishHairException(ErrorCode.USER_INVALID_EMAIL);
         }

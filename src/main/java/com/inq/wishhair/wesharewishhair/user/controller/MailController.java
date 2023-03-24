@@ -6,7 +6,6 @@ import com.inq.wishhair.wesharewishhair.user.controller.dto.request.AuthKeyReque
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.MailRequest;
 import com.inq.wishhair.wesharewishhair.user.domain.Email;
 import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
-import com.inq.wishhair.wesharewishhair.user.service.dto.MailDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -31,9 +30,6 @@ public class MailController {
     @PostMapping("/send")
     public ResponseEntity<Void> sendAuthorizationMail(@ModelAttribute MailRequest mailRequest,
                                                       HttpServletRequest request) {
-
-        //이메일 형식 검증
-        Email.validateEmailPattern(mailRequest.getEmail());
 
         String authKey = registerAuthKey(request);
 
