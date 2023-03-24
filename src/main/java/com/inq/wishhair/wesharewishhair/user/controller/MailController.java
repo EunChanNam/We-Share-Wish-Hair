@@ -55,6 +55,7 @@ public class MailController {
         }
         String authKey = (String) session.getAttribute(AUTH_KEY);
         if (!inputKey.equals(authKey)) {
+            session.invalidate();
             throw new WishHairException(MAIL_INVALID_KEY);
         }
     }
