@@ -28,9 +28,7 @@ public class MailControllerTest extends ControllerTest {
             ErrorCode expectedError = ErrorCode.USER_INVALID_EMAIL;
 
             //when
-            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .post(SEND_URL)
-                    .param("email", request.getEmail());
+            MockHttpServletRequestBuilder requestBuilder = generateMailSendRequest(request);
 
             //then
             mockMvc.perform(requestBuilder)
@@ -40,5 +38,25 @@ public class MailControllerTest extends ControllerTest {
                             jsonPath("$.message").value(expectedError.getMessage())
                     );
         }
+
+        @Test
+        @DisplayName("성공적으로 메일을 전송한다")
+        void test2() throws Exception {
+            //given
+            MailRequest request = new MailRequest(EMAIL);
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = generateMailSendRequest(request);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isNoContent());
+        }
+    }
+
+    private MockHttpServletRequestBuilder generateMailSendRequest(MailRequest request) {
+        return MockMvcRequestBuilders
+                .post(SEND_URL)
+                .param("email", request.getEmail());
     }
 }
