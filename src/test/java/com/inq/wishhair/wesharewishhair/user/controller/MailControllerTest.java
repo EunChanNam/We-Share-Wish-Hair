@@ -7,7 +7,6 @@ import com.inq.wishhair.wesharewishhair.user.controller.dto.request.MailRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -76,9 +75,31 @@ public class MailControllerTest extends ControllerTest {
             AuthKeyRequest request = new AuthKeyRequest("1111");
             MockHttpSession session = new MockHttpSession();
             session.setAttribute(AUTH_KEY, "2222");
-            BDDMockito.given(httpServletRequest.getSession()).willReturn(session);
 
             ErrorCode expectedError = ErrorCode.MAIL_INVALID_KEY;
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .post(VALIDATE_URL)
+                    .param("authKey", request.getAuthKey())
+                    .session(session);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpectAll(
+                            status().isUnauthorized(),
+                            jsonPath("$").exists(),
+                            jsonPath("$.message").value(expectedError.getMessage())
+                    );
+        }
+
+        @Test
+        @DisplayName("인증키가 만료되어 검증에 실패한다")
+        void test4() throws Exception {
+            //given
+            AuthKeyRequest request = new AuthKeyRequest("1111");
+
+            ErrorCode expectedError = ErrorCode.MAIL_EXPIRED_KEY;
+
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                     .post(VALIDATE_URL)

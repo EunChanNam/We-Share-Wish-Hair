@@ -43,8 +43,10 @@ public class MailController {
                                              HttpServletRequest request) {
 
         String inputKey = authKeyRequest.getAuthKey();
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         validateKey(session, inputKey);
+
+        session.invalidate();
 
         return ResponseEntity.noContent().build();
     }
@@ -53,9 +55,9 @@ public class MailController {
         if (session == null) {
             throw new WishHairException(ErrorCode.MAIL_EXPIRED_KEY);
         }
+
         String authKey = (String) session.getAttribute(AUTH_KEY);
         if (!inputKey.equals(authKey)) {
-            session.invalidate();
             throw new WishHairException(MAIL_INVALID_KEY);
         }
     }
