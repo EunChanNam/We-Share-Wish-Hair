@@ -28,7 +28,6 @@ public class ReviewFragment extends Fragment {
 
     TabLayout tabLayout;
     private ViewPager2 viewPager;
-    private ReviewPagerAdapter reviewPagerAdapter;
 
     final String[] tabs = new String[] {"리뷰 목록", "나의 리뷰"};
 

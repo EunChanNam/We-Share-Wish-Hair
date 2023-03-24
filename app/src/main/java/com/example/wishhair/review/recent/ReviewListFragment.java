@@ -7,11 +7,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.wishhair.R;
 import com.example.wishhair.review.ReviewItem;
@@ -28,9 +33,14 @@ public class ReviewListFragment extends Fragment {
         // Required empty public constructor
         }
 
-    ArrayList<ReviewItem> recentReviewItems;
-    RadioGroup filter;
-    RadioButton filter_whole, filter_man, filter_woman;
+    private ArrayList<ReviewItem> recentReviewItems;
+    private RadioGroup filter;
+    private RadioButton filter_whole, filter_man, filter_woman;
+
+//    sort
+    private static String sort_selected = null;
+    private static final String[] sortItems = {"최신 순", "오래된 순", "좋아요 순"};
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -62,6 +72,25 @@ public class ReviewListFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+//        sort
+//        TODO 정렬 기준으로 받아오기
+        Spinner spinner_sort = v.findViewById(R.id.review_fragment_spinner_sort);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, sortItems);
+        spinner_sort.setAdapter(spinnerAdapter);
+
+        spinner_sort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                sort_selected = sortItems[position];
+                Log.d("sort_selected", sort_selected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+
         return v;
     }
+
 }
