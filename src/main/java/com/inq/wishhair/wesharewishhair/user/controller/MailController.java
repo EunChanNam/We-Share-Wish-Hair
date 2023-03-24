@@ -36,9 +36,8 @@ public class MailController {
         Email.validateEmailPattern(mailRequest.getEmail());
 
         String authKey = registerAuthKey(request);
-        MailDto mailDto = MailDto.of(mailRequest.getEmail(), MAIL_TITLE, authKey);
 
-        mailSendService.sendAuthorizationMail(mailDto);
+        mailSendService.sendAuthorizationMail(mailRequest.toMailDto(MAIL_TITLE, authKey));
 
         return ResponseEntity.noContent().build();
     }
