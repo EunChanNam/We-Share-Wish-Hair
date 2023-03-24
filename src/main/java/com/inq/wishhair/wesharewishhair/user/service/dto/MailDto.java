@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.service.dto;
 
+import com.inq.wishhair.wesharewishhair.user.domain.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -7,11 +8,11 @@ import lombok.Getter;
 @AllArgsConstructor
 public class MailDto {
 
-    private String address;
+    private Email email;
     private String title;
     private String content;
 
     public static MailDto of(String address, String title, String content) {
-        return new MailDto(address, title, content);
+        return new MailDto(new Email(address), title, content);
     }
 }

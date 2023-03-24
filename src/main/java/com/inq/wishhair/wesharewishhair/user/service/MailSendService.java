@@ -15,7 +15,7 @@ public class MailSendService {
     public void sendAuthorizationMail(MailDto dto) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("namhm23@kyonggi.ac.kr");
-        message.setTo(dto.getAddress());
+        message.setTo(dto.getEmail().getValue());
         message.setSubject(dto.getTitle());
         message.setText(dto.getContent());
 

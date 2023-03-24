@@ -9,10 +9,14 @@ import com.inq.wishhair.wesharewishhair.auth.service.AuthService;
 import com.inq.wishhair.wesharewishhair.auth.service.TokenReissueService;
 import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleService;
+import com.inq.wishhair.wesharewishhair.user.controller.MailController;
+import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
 import com.inq.wishhair.wesharewishhair.user.service.UserPointService;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleController;
 import com.inq.wishhair.wesharewishhair.user.controller.UserController;
+import jakarta.servlet.http.HttpServletRequest;
+import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -21,7 +25,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @WebMvcTest(value =
         {UserController.class, HairStyleController.class, AuthController.class, TokenReissueController.class,
-        HairStyleController.class})
+        HairStyleController.class, MailController.class})
 public abstract class ControllerTest {
 
     @Autowired
@@ -47,4 +51,10 @@ public abstract class ControllerTest {
 
     @MockBean
     protected TokenReissueService tokenReissueService;
+
+    @MockBean
+    protected MailSendService mailSendService;
+
+    @MockBean
+    protected HttpServletRequest httpServletRequest;
 }

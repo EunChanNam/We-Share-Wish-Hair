@@ -6,7 +6,6 @@ import com.inq.wishhair.wesharewishhair.user.controller.dto.request.AuthKeyReque
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.MailRequest;
 import com.inq.wishhair.wesharewishhair.user.domain.Email;
 import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
-import com.inq.wishhair.wesharewishhair.user.service.dto.MailDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -32,13 +31,9 @@ public class MailController {
     public ResponseEntity<Void> sendAuthorizationMail(@ModelAttribute MailRequest mailRequest,
                                                       HttpServletRequest request) {
 
-        //이메일 형식 검증
-        Email.validateEmailPattern(mailRequest.getEmail());
-
         String authKey = registerAuthKey(request);
-        MailDto mailDto = MailDto.of(mailRequest.getEmail(), MAIL_TITLE, authKey);
 
-        mailSendService.sendAuthorizationMail(mailDto);
+        mailSendService.sendAuthorizationMail(mailRequest.toMailDto(MAIL_TITLE, authKey));
 
         return ResponseEntity.noContent().build();
     }
@@ -48,8 +43,10 @@ public class MailController {
                                              HttpServletRequest request) {
 
         String inputKey = authKeyRequest.getAuthKey();
-        HttpSession session = request.getSession();
+        HttpSession session = request.getSession(false);
         validateKey(session, inputKey);
+
+        session.invalidate();
 
         return ResponseEntity.noContent().build();
     }
@@ -58,6 +55,7 @@ public class MailController {
         if (session == null) {
             throw new WishHairException(ErrorCode.MAIL_EXPIRED_KEY);
         }
+
         String authKey = (String) session.getAttribute(AUTH_KEY);
         if (!inputKey.equals(authKey)) {
             throw new WishHairException(MAIL_INVALID_KEY);

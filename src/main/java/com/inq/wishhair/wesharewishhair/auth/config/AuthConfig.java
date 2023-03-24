@@ -22,7 +22,7 @@ public class AuthConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AuthInterceptor(provider))
                 .addPathPatterns("/api/**")
-                .excludePathPatterns("/api/login", "/api/user");
+                .excludePathPatterns("/api/login", "/api/user", "/api/email/*");
     }
 
     @Override
