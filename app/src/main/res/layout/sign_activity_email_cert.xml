@@ -39,7 +39,7 @@
                 android:contentDescription="@string/login_hint_id" />
 
             <EditText
-                android:id="@+id/sign_register_et_id"
+                android:id="@+id/sign_cert_et_email"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:paddingStart="5dp"
@@ -47,32 +47,42 @@
                 android:background="@drawable/border_sign_text"
                 android:ems="10"
                 android:hint="@string/register_hint_id"
-                android:inputType="text"
+                android:inputType="textEmailAddress"
                 android:importantForAutofill="no"
                 tools:ignore="RtlSymmetry" />
         </LinearLayout>
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/sign_cert_btn_requestSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="인증번호 전송"/>
 
 <!--        input code -->
         <TextView
+            android:id="@+id/sign_cert_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="남은 시간"/>
 
         <EditText
+            android:id="@+id/sign_cert_et_code"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="인증번호를 입력해주세요"/>
 
         <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/sign_cert_btn_confirmCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="인증번호 제출"/>
 
-    </LinearLayout>
+<!--        확인 -->
+        <Button
+            android:id="@+id/sign_cert_btn_intent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="확인"/>
 
+    </LinearLayout>
 
 </LinearLayout>
