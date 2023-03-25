@@ -18,7 +18,7 @@ public class ReviewController {
 
     @PostMapping("/review")
     public ResponseEntity<Void> createReview(
-            @ModelAttribute ReviewRequest reviewRequest,
+            @RequestBody ReviewRequest reviewRequest,
             @ExtractPayload Long userId) {
 
         Long reviewId = reviewService.createReview(reviewRequest.toReviewCreateDto(userId));

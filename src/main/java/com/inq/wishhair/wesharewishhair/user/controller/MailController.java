@@ -4,16 +4,12 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.AuthKeyRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.MailRequest;
-import com.inq.wishhair.wesharewishhair.user.domain.Email;
 import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.MAIL_INVALID_KEY;
 
@@ -28,7 +24,7 @@ public class MailController {
     private final MailSendService mailSendService;
 
     @PostMapping("/send")
-    public ResponseEntity<Void> sendAuthorizationMail(@ModelAttribute MailRequest mailRequest,
+    public ResponseEntity<Void> sendAuthorizationMail(@RequestBody MailRequest mailRequest,
                                                       HttpServletRequest request) {
 
         String authKey = registerAuthKey(request);
@@ -39,7 +35,7 @@ public class MailController {
     }
 
     @PostMapping("/validate")
-    public ResponseEntity<Void> authorizeKey(@ModelAttribute AuthKeyRequest authKeyRequest,
+    public ResponseEntity<Void> authorizeKey(@RequestBody AuthKeyRequest authKeyRequest,
                                              HttpServletRequest request) {
 
         String inputKey = authKeyRequest.getAuthKey();

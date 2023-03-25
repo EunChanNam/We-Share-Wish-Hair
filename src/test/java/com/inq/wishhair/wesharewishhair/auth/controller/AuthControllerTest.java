@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.auth.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.inq.wishhair.wesharewishhair.auth.controller.dto.request.LoginRequest;
 import com.inq.wishhair.wesharewishhair.auth.controller.utils.LoginRequestUtils;
 import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
@@ -8,6 +9,7 @@ import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -108,10 +110,10 @@ public class AuthControllerTest extends ControllerTest {
         }
     }
 
-    private MockHttpServletRequestBuilder buildLoginRequest(LoginRequest request) {
+    private MockHttpServletRequestBuilder buildLoginRequest(LoginRequest request) throws JsonProcessingException {
         return MockMvcRequestBuilders
                 .post(LOGIN_URL)
-                .param("email", request.getEmail())
-                .param("pw", request.getPw());
+                .content(toJson(request))
+                .contentType(MediaType.APPLICATION_JSON);
     }
 }

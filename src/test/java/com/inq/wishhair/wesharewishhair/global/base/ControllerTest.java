@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.global.base;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inq.wishhair.wesharewishhair.auth.config.AuthConfig;
 import com.inq.wishhair.wesharewishhair.auth.config.interceptor.AuthInterceptor;
@@ -57,4 +58,8 @@ public abstract class ControllerTest {
 
     @MockBean
     protected HttpServletRequest httpServletRequest;
+
+    public String toJson(Object object) throws JsonProcessingException {
+        return objectMapper.writeValueAsString(object);
+    }
 }

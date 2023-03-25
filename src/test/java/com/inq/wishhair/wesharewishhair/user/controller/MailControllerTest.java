@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.AuthKeyRequest;
@@ -7,6 +8,7 @@ import com.inq.wishhair.wesharewishhair.user.controller.dto.request.MailRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -58,10 +60,11 @@ public class MailControllerTest extends ControllerTest {
                     .andExpect(status().isNoContent());
         }
 
-        private MockHttpServletRequestBuilder generateMailSendRequest(MailRequest request) {
+        private MockHttpServletRequestBuilder generateMailSendRequest(MailRequest request) throws JsonProcessingException {
             return MockMvcRequestBuilders
                     .post(SEND_URL)
-                    .param("email", request.getEmail());
+                    .content(toJson(request))
+                    .contentType(MediaType.APPLICATION_JSON);
         }
     }
 
@@ -80,7 +83,8 @@ public class MailControllerTest extends ControllerTest {
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                     .post(VALIDATE_URL)
-                    .param("authKey", request.getAuthKey())
+                    .content(toJson(request))
+                    .contentType(MediaType.APPLICATION_JSON)
                     .session(session);
 
             //then
@@ -103,7 +107,8 @@ public class MailControllerTest extends ControllerTest {
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                     .post(VALIDATE_URL)
-                    .param("authKey", request.getAuthKey());
+                    .content(toJson(request))
+                    .contentType(MediaType.APPLICATION_JSON);
 
             //then
             mockMvc.perform(requestBuilder)
@@ -125,7 +130,8 @@ public class MailControllerTest extends ControllerTest {
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                     .post(VALIDATE_URL)
-                    .param("authKey", request.getAuthKey())
+                    .content(toJson(request))
+                    .contentType(MediaType.APPLICATION_JSON)
                     .session(session);
 
             //then

@@ -30,7 +30,7 @@ public class TokenReissueControllerTest extends ControllerTest {
         @DisplayName("잘못된 Refresh 토큰으로 재발급에 실패해 유효하지 않은 토큰 예외를 던진다")
         void test1() throws Exception {
             //given
-            setSuccessService();
+            setUpSuccessToken();
             given(tokenReissueService.reissueToken(1L, REFRESH_TOKEN))
                     .willThrow(new WishHairException(AUTH_INVALID_TOKEN));
 
@@ -67,7 +67,7 @@ public class TokenReissueControllerTest extends ControllerTest {
         @DisplayName("토큰 재발급에 성공한다")
         void test3() throws Exception {
             //given
-            setSuccessService();
+            setUpSuccessToken();
 
             TokenResponse expectedResponse = toResponse();
             given(tokenReissueService.reissueToken(1L, REFRESH_TOKEN))
@@ -93,7 +93,7 @@ public class TokenReissueControllerTest extends ControllerTest {
                 .header(AUTHORIZATION, BEARER + REFRESH_TOKEN);
     }
 
-    private void setSuccessService() {
+    private void setUpSuccessToken() {
         given(provider.isValidToken(REFRESH_TOKEN)).willReturn(true);
         given(provider.getId(REFRESH_TOKEN)).willReturn(1L);
     }
