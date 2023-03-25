@@ -1,6 +1,5 @@
 package com.inq.wishhair.wesharewishhair.user.domain.point;
 
-import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import jakarta.persistence.CascadeType;
@@ -14,29 +13,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.*;
-import static com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory.createPointHistory;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Embeddable
-public class PointHistories {
+public class AvailablePoint {
 
-    private int availablePoint = 0;
+    private int value = 0;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
-    private List<PointHistory> pointHistories = new ArrayList<>();
-
-    public void insertPointHistory(User user, PointType pointType, int dealAmount) {
+    public void updateAvailablePoint(User user, PointType pointType, int dealAmount) {
         if (pointType.isCharge()) {
             validateChargeAmount(dealAmount);
-            PointHistory chargePointHistory = createPointHistory(user, pointType, dealAmount, availablePoint + dealAmount);
-            pointHistories.add(chargePointHistory);
-            availablePoint += dealAmount;
+            value += dealAmount;
         } else if (pointType.isUSE()) {
             validateUseAmount(dealAmount);
-            PointHistory usePointHistory = createPointHistory(user, pointType, dealAmount, availablePoint - dealAmount);
-            pointHistories.add(usePointHistory);
-            availablePoint -= dealAmount;
+            value -= dealAmount;
         }
     }
 
@@ -47,7 +38,7 @@ public class PointHistories {
     }
 
     private void validateUseAmount(int useAmount) {
-        if (availablePoint - useAmount < 0) {
+        if (value - useAmount < 0) {
             throw new WishHairException(POINT_NOT_ENOUGH);
         }
     }

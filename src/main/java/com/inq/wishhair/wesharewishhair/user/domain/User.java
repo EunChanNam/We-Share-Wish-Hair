@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.user.domain;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
-import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistories;
+import com.inq.wishhair.wesharewishhair.user.domain.point.AvailablePoint;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import jakarta.persistence.*;
@@ -42,7 +42,7 @@ public class User {
     private FaceShape faceShape;
 
     @Embedded
-    private PointHistories pointHistories;
+    private AvailablePoint availablePoint;
 
     //=생성 메서드=//
     @Builder
@@ -52,7 +52,7 @@ public class User {
         this.name = name;
         this.nickname = nickname;
         this.sex = sex;
-        this.pointHistories = new PointHistories();
+        this.availablePoint = new AvailablePoint();
     }
 
     public String getEmailValue() {
@@ -72,10 +72,6 @@ public class User {
     }
 
     public int getAvailablePoint() {
-        return pointHistories.getAvailablePoint();
-    }
-
-    public List<PointHistory> getPointHistories() {
-        return pointHistories.getPointHistories();
+        return availablePoint.getValue();
     }
 }
