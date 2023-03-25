@@ -6,11 +6,13 @@ import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointRepository;
+import com.inq.wishhair.wesharewishhair.user.domain.point.PointType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import static com.inq.wishhair.wesharewishhair.user.domain.point.PointType.CHARGE;
+import static com.inq.wishhair.wesharewishhair.user.domain.point.PointType.USE;
 
 @Service
 @RequiredArgsConstructor
@@ -21,18 +23,23 @@ public class PointService {
     private final UserRepository userRepository;
 
     @Transactional
-    public void chargePoint(int dealAmount, Long userId) {
-
+    public void insertPointHistory(PointType pointType, int dealAmount, Long userId) {
         User user = findUser(userId);
 
-        user.updateAvailablePoint(CHARGE, dealAmount);
-        PointHistory pointHistory = generateChargePointHistory(dealAmount, user);
+        user.updateAvailablePoint(pointType, dealAmount);
+        PointHistory pointHistory = generatePointHistory(pointType, dealAmount, user);
 
         pointRepository.save(pointHistory);
     }
 
-    private static PointHistory generateChargePointHistory(int dealAmount, User user) {
-        return PointHistory.createPointHistory(user, CHARGE, dealAmount, user.getAvailablePoint() + dealAmount);
+    private PointHistory generatePointHistory(PointType pointType, int dealAmount, User user) {
+        int point;
+        if (pointType.isCharge()) {
+            point = dealAmount + user.getAvailablePoint();
+        } else {
+            point = user.getAvailablePoint() - dealAmount;
+        }
+        return PointHistory.createPointHistory(user, pointType, dealAmount, point);
     }
 
     private User findUser(Long userId) {
