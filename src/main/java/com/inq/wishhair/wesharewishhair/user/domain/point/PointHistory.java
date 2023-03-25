@@ -28,14 +28,4 @@ public class PointHistory extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private User user;
-
-    //==생성 메서드==//
-    public static PointHistory createJoinPointHistory(User user) {
-        PointHistory pointHistory = new PointHistory();
-        pointHistory.pointType = PointType.JOIN;
-        pointHistory.dealAmount = 0L;
-        pointHistory.point = 0L;
-        pointHistory.user = user;
-        return pointHistory;
-    }
 }

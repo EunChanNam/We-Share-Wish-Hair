@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.user.domain;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistories;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -36,6 +37,9 @@ public class User {
 
     @Embedded
     private FaceShape faceShape;
+
+    @Embedded
+    private PointHistories pointHistories;
 
     //=생성 메서드=//
     @Builder
