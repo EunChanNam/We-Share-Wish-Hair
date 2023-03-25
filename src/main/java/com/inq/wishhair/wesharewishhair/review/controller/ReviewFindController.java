@@ -6,6 +6,7 @@ import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewRespon
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,7 @@ public class ReviewFindController {
 
     @GetMapping("/review")
     public ResponseEntity<PagedReviewResponse> findPagingReviews(
-            @PageableDefault(sort = LIKES) Pageable pageable) {
+            @PageableDefault(sort = LIKES, direction = Sort.Direction.DESC) Pageable pageable) {
 
         Slice<ReviewResponse> result = reviewFindService.findPagingReviews(pageable);
 
