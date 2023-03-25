@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.user.domain;
 
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -14,6 +15,7 @@ import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.*;
 @Embeddable
 public class AvailablePoint {
 
+    @Column(name = "available_point")
     private int value = 0;
 
     public void updateAvailablePoint(User user, PointType pointType, int dealAmount) {
