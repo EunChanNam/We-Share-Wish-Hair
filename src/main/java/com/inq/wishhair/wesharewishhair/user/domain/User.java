@@ -37,6 +37,9 @@ public class User {
     @Embedded
     private FaceShape faceShape;
 
+    @Embedded
+    private AvailablePoint availablePoint;
+
     //=생성 메서드=//
     @Builder
     public User(Email email, String pw, String name, String nickname, Sex sex) {
@@ -45,6 +48,7 @@ public class User {
         this.name = name;
         this.nickname = nickname;
         this.sex = sex;
+        this.availablePoint = new AvailablePoint();
     }
 
     public String getEmailValue() {
@@ -61,5 +65,9 @@ public class User {
 
     public void updateFaceShape(FaceShape faceShape) {
         this.faceShape = faceShape;
+    }
+
+    public int getAvailablePoint() {
+        return availablePoint.getValue();
     }
 }

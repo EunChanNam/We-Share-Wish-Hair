@@ -13,11 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Embeddable
 public class LikeReviews {
 
-    private int likes = 0;
+    private int likes;
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<LikeReview> likeReviews = new ArrayList<>();

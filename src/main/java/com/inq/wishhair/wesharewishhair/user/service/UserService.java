@@ -16,13 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final PointRepository pointHistoryRepository;
 
     @Transactional
     public Long createUser(User user) {
         User saveUser = userRepository.save(user);
-        PointHistory joinPointHistory = PointHistory.createJoinPointHistory(saveUser);
-        pointHistoryRepository.save(joinPointHistory);
 
         return saveUser.getId();
     }

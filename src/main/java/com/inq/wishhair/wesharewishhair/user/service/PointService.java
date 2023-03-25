@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class UserPointService {
+public class PointService {
 
     private final PointRepository pointRepository;
 
