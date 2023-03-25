@@ -1,7 +1,7 @@
-package com.inq.wishhair.wesharewishhair.user.domain.point;
+package com.inq.wishhair.wesharewishhair.user.domain;
 
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.user.domain.User;
+import com.inq.wishhair.wesharewishhair.user.domain.point.PointType;
 import jakarta.persistence.Embeddable;
 import lombok.AccessLevel;
 import lombok.Getter;

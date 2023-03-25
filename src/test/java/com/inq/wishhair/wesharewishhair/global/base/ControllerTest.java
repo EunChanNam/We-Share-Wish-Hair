@@ -10,7 +10,7 @@ import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleService;
 import com.inq.wishhair.wesharewishhair.user.controller.MailController;
 import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
-import com.inq.wishhair.wesharewishhair.user.service.PointFindService;
+import com.inq.wishhair.wesharewishhair.user.service.PointService;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleController;
 import com.inq.wishhair.wesharewishhair.user.controller.UserController;
@@ -38,7 +38,7 @@ public abstract class ControllerTest {
     protected HairStyleService hairStyleService;
 
     @MockBean
-    protected PointFindService pointService;
+    protected PointService pointService;
 
     @MockBean
     protected AuthService authService;
