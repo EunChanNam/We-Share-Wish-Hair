@@ -1,8 +1,11 @@
 package com.example.wishhair.sign;
 
 import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wishhair.MainActivity;
 import com.example.wishhair.R;
@@ -28,6 +31,7 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
+    final static private String URL = UrlConst.URL + "/api/login";
 
     private EditText login_id, login_pw;
 
@@ -68,37 +72,35 @@ public class LoginActivity extends AppCompatActivity {
         String id = login_id.getText().toString();
         String pw = login_pw.getText().toString();
 
+        JSONObject userJsonObject = new JSONObject();
+        try {
+            userJsonObject.put("email", id);
+            userJsonObject.put("pw", pw);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
         loginSP = getSharedPreferences("UserInfo", MODE_PRIVATE);
         //임시 로그인 패스 코드
             /*Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
             finish();*/
         //서버 연동 코드
-        Response.Listener<String> responseListener = new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-//                token
-                Log.d("token", response);
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String accessToken = jsonObject.getString("accessToken");
-                    String refreshToken = jsonObject.getString("refreshToken");
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, userJsonObject, response -> {
+            Log.d("token", response.toString());
+            try {
+                String accessToken = response.getString("accessToken");
+                String refreshToken = response.getString("refreshToken");
 
-                    SharedPreferences.Editor editor = loginSP.edit();
-                    editor.putString("accessToken", accessToken);
-                    editor.putString("refreshToken", refreshToken);
-                    editor.apply();
+                SharedPreferences.Editor editor = loginSP.edit();
+                editor.putString("accessToken", accessToken);
+                editor.putString("refreshToken", refreshToken);
+                editor.apply();
 
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                LoginActivity.this.startActivity(intent);
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        };
-
-        Response.ErrorListener errorResponse = error -> {
+        }, error -> {
             NetworkResponse networkResponse = error.networkResponse;
             if (networkResponse != null && networkResponse.data != null) {
                 String jsonError = new String(networkResponse.data);
@@ -111,16 +113,10 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 login_pw.setText("");
             }
-        };
-
-        LoginRequest loginRequest = new LoginRequest(id, pw, responseListener, errorResponse);
-        loginRequest.setShouldCache(false);
+        });
 
         RequestQueue queue = Volley.newRequestQueue(LoginActivity.this);
-        queue.add(loginRequest);
-
-//        Log.i("login Request", loginRequest.toString());
-//        Log.i("login Request", queue.toString());
+        queue.add(jsonObjectRequest);
 
     }
 

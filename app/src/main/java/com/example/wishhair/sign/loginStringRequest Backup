@@ -1,0 +1,37 @@
+//================================================
+        Response.Listener<String> responseListener = response -> {
+//                token
+            Log.d("token", response);
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                String accessToken = jsonObject.getString("accessToken");
+                String refreshToken = jsonObject.getString("refreshToken");
+
+                SharedPreferences.Editor editor = loginSP.edit();
+                editor.putString("accessToken", accessToken);
+                editor.putString("refreshToken", refreshToken);
+                editor.apply();
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            LoginActivity.this.startActivity(intent);
+        };
+
+        Response.ErrorListener errorResponse = error -> {
+            NetworkResponse networkResponse = error.networkResponse;
+            if (networkResponse != null && networkResponse.data != null) {
+                String jsonError = new String(networkResponse.data);
+                try {
+                    JSONObject jsonObject = new JSONObject(jsonError);
+                    String message = jsonObject.getString("message");
+                    Toast.makeText( getApplicationContext(), message, Toast.LENGTH_SHORT ).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                login_pw.setText("");
+            }
+        };
+        //================================================
