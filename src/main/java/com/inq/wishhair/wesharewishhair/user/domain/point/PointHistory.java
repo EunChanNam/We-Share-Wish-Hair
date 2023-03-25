@@ -20,12 +20,24 @@ public class PointHistory extends BaseEntity {
     private PointType pointType;
 
     @Column(nullable = false, updatable = false)
-    private Long dealAmount;
+    private int dealAmount;
 
     @Column(nullable = false, updatable = false)
-    private Long point;
+    private int point;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, updatable = false)
     private User user;
+
+    //==생성 메서드==//
+    private PointHistory(User user, PointType pointType, int dealAmount, int point) {
+        this.pointType = pointType;
+        this.dealAmount = dealAmount;
+        this.point = point;
+        this.user = user;
+    }
+
+    public static PointHistory createPointHistory(User user, PointType pointType, int dealAmount, int point) {
+        return new PointHistory(user, pointType, dealAmount, point);
+    }
 }

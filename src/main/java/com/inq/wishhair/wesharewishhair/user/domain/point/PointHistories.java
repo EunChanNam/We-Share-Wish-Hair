@@ -19,4 +19,6 @@ public class PointHistories {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private List<PointHistory> pointHistories = new ArrayList<>();
+
+
 }
