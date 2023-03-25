@@ -2,12 +2,15 @@ package com.inq.wishhair.wesharewishhair.user.domain;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistories;
+import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -49,6 +52,7 @@ public class User {
         this.name = name;
         this.nickname = nickname;
         this.sex = sex;
+        this.pointHistories = new PointHistories();
     }
 
     public String getEmailValue() {
@@ -65,5 +69,13 @@ public class User {
 
     public void updateFaceShape(FaceShape faceShape) {
         this.faceShape = faceShape;
+    }
+
+    public int getAvailablePoint() {
+        return pointHistories.getAvailablePoint();
+    }
+
+    public List<PointHistory> getPointHistories() {
+        return pointHistories.getPointHistories();
     }
 }

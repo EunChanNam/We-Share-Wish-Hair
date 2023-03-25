@@ -17,14 +17,14 @@ public class MyPageResponse {
 
     private Sex sex;
 
-    private Long point;
+    private int point;
 
     private List<ReviewResponse> reviews;
 
     public MyPageResponse(User user, PointHistory pointHistory, List<ReviewResponse> reviewResponses) {
         this.nickname = user.getNickname();
         this.sex = user.getSex();
-        this.point = pointHistory.getPoint();
+        this.point = user.getAvailablePoint();
         this.reviews = reviewResponses;
     }
 }

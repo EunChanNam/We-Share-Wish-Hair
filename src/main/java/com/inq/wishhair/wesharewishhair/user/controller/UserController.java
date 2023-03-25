@@ -1,6 +1,5 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
-import com.inq.wishhair.wesharewishhair.user.service.UserPointService;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserCreateRequest;
 import lombok.RequiredArgsConstructor;

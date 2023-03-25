@@ -17,11 +17,11 @@ import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.*;
 import static com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory.createPointHistory;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Embeddable
 public class PointHistories {
 
-    private int availablePoint;
+    private int availablePoint = 0;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private List<PointHistory> pointHistories = new ArrayList<>();
