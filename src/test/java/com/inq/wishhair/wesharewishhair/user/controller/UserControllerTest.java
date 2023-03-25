@@ -5,6 +5,7 @@ import com.inq.wishhair.wesharewishhair.user.controller.utils.UserCreateRequestU
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserCreateRequest;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -25,11 +26,8 @@ public class UserControllerTest extends ControllerTest {
 
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                 .post(JOIN_URL)
-                .param("email", request.getEmail())
-                .param("pw", request.getPw())
-                .param("name", request.getName())
-                .param("nickName", request.getNickname())
-                .param("sex", request.getSex().toString());
+                .content(toJson(request))
+                .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(requestBuilder)
                 .andExpect(status().isCreated())
