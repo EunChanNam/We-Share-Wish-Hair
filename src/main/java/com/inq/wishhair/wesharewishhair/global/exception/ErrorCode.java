@@ -21,7 +21,10 @@ public enum ErrorCode {
     USER_INVALID_EMAIL("USER_002", "이메일 형식이 맞지 않습니다.", HttpStatus.BAD_REQUEST),
 
     MAIL_EXPIRED_KEY("MAIL_001", "인증키가 만료되었습니다.", HttpStatus.UNAUTHORIZED),
-    MAIL_INVALID_KEY("MAIL_002", "인증키가 틀립니다.", HttpStatus.UNAUTHORIZED);
+    MAIL_INVALID_KEY("MAIL_002", "인증키가 틀립니다.", HttpStatus.UNAUTHORIZED),
+
+    POINT_INVALID_POINT_RANGE("POINT_001", "포인트는 반드시 0 보다 커야합니다.", HttpStatus.BAD_REQUEST),
+    POINT_NOT_ENOUGH("POINT_002", "포인트가 부족합니다.", HttpStatus.BAD_REQUEST);
 
     private final String code;
     private final String message;
