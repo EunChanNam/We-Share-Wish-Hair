@@ -1,16 +1,16 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
-import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
-import com.inq.wishhair.wesharewishhair.user.domain.point.PointRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
+import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
+import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
+import com.inq.wishhair.wesharewishhair.user.domain.point.PointRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import static com.inq.wishhair.wesharewishhair.user.domain.point.PointType.CHARGE;
 
 @Service
 @RequiredArgsConstructor
@@ -18,14 +18,26 @@ import java.util.List;
 public class PointService {
 
     private final PointRepository pointRepository;
+    private final UserRepository userRepository;
 
-    public PointHistory getRecentPointHistory(Long userId) {
+    @Transactional
+    public void chargePoint(int dealAmount, Long userId) {
 
-        Pageable pageable = PageRequest.of(0, 1); // limit 1 의 역할
+        User user = findUser(userId);
 
-        // Optional 로 처리하려면 User 에 대한 쿼리가 추가적으로 필요해서 List 로 처리
-        List<PointHistory> pointHistories = pointRepository.findRecentPointByUserId(userId, pageable);
-        if (pointHistories.isEmpty()) throw new WishHairException(ErrorCode.NOT_EXIST_KEY);
-        return pointHistories.get(0);
+        user.updateAvailablePoint(CHARGE, dealAmount);
+        PointHistory pointHistory = generateChargePointHistory(dealAmount, user);
+
+        pointRepository.save(pointHistory);
+    }
+
+    private static PointHistory generateChargePointHistory(int dealAmount, User user) {
+        return PointHistory.createPointHistory(user, CHARGE, dealAmount, user.getAvailablePoint() + dealAmount);
+    }
+
+    private User findUser(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 }
+

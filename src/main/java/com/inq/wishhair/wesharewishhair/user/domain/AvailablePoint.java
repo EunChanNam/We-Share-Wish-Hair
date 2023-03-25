@@ -18,7 +18,7 @@ public class AvailablePoint {
     @Column(name = "available_point")
     private int value = 0;
 
-    public void updateAvailablePoint(User user, PointType pointType, int dealAmount) {
+    public void updateAvailablePoint(PointType pointType, int dealAmount) {
         if (pointType.isCharge()) {
             validateChargeAmount(dealAmount);
             value += dealAmount;
