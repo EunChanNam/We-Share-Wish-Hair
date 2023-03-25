@@ -17,16 +17,15 @@ import java.util.List;
 @Transactional(readOnly = true)
 public class MyPageService {
 
-    private final UserPointService userPointService;
+    private final PointFindService userPointService;
     private final UserFindService userFindService;
     private final ReviewFindService reviewFindService;
 
     public MyPageResponse getMyPageInfo(Long userId, Pageable pageable) {
 
-        PointHistory recentPoint = userPointService.getRecentPointHistory(userId);
         List<ReviewResponse> reviewResponses = reviewFindService.findLikingReviews(userId, pageable);
         User user = userFindService.findByUserId(userId);
 
-        return new MyPageResponse(user, recentPoint, reviewResponses);
+        return new MyPageResponse(user, reviewResponses);
     }
 }

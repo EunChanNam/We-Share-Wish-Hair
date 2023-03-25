@@ -21,7 +21,7 @@ public class MyPageResponse {
 
     private List<ReviewResponse> reviews;
 
-    public MyPageResponse(User user, PointHistory pointHistory, List<ReviewResponse> reviewResponses) {
+    public MyPageResponse(User user, List<ReviewResponse> reviewResponses) {
         this.nickname = user.getNickname();
         this.sex = user.getSex();
         this.point = user.getAvailablePoint();
