@@ -109,7 +109,6 @@ public class LoginActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                login_id.setText("");
                 login_pw.setText("");
             }
         };

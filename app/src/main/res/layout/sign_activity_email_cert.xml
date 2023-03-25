@@ -66,8 +66,10 @@
 
         <EditText
             android:id="@+id/sign_cert_et_code"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:maxLength="6"
+            android:inputType="number"
             android:hint="인증번호를 입력해주세요"/>
 
         <androidx.appcompat.widget.AppCompatButton

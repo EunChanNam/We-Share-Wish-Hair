@@ -27,7 +27,7 @@ public class CustomRetryPolicy implements RetryPolicy {
     public void retry(VolleyError error) throws VolleyError {
         if (++retryCount <= MAX_RETRY_COUNT) {
             // 재시도 대기 시간 조절
-            timeoutMs = 20000; // 20초
+            timeoutMs = 30000; // 20초
 
             Log.d(TAG, "Retry #" + retryCount + " with timeout " + timeoutMs + "ms");
         } else {
