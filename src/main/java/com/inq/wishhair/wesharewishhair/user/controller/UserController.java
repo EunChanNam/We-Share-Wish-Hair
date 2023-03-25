@@ -17,7 +17,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/user")
-    public ResponseEntity<Void> createUser(@ModelAttribute UserCreateRequest createRequest) {
+    public ResponseEntity<Void> createUser(@RequestBody UserCreateRequest createRequest) {
         Long userId = userService.createUser(createRequest.toEntity());
 
         return ResponseEntity

@@ -28,7 +28,7 @@ public class MailController {
     private final MailSendService mailSendService;
 
     @PostMapping("/send")
-    public ResponseEntity<Void> sendAuthorizationMail(@ModelAttribute MailRequest mailRequest,
+    public ResponseEntity<Void> sendAuthorizationMail(@RequestBody MailRequest mailRequest,
                                                       HttpServletRequest request) {
 
         String authKey = registerAuthKey(request);
@@ -39,7 +39,7 @@ public class MailController {
     }
 
     @PostMapping("/validate")
-    public ResponseEntity<Void> authorizeKey(@ModelAttribute AuthKeyRequest authKeyRequest,
+    public ResponseEntity<Void> authorizeKey(@RequestBody AuthKeyRequest authKeyRequest,
                                              HttpServletRequest request) {
 
         String inputKey = authKeyRequest.getAuthKey();
