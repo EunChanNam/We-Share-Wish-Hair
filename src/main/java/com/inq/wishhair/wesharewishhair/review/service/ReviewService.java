@@ -11,6 +11,8 @@ import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.user.domain.point.PointType;
+import com.inq.wishhair.wesharewishhair.user.service.PointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,22 +28,29 @@ public class ReviewService {
     private final UserRepository userRepository;
     private final HairStyleRepository hairStyleRepository;
     private final PhotoStore photoStore;
+    private final PointService pointService;
 
     @Transactional
     public Long createReview(ReviewCreateDto dto) {
 
         List<Photo> photos = photoStore.storePhotos(dto.getFiles());
-        User user = findUserById(dto);
+        User user = findUserById(dto.getUserId());
         HairStyle hairStyle = findHairStyleById(dto);
 
-        Review review = Review.createReview(
+        Review review = generateReview(dto, photos, user, hairStyle);
+        pointService.insertPointHistory(PointType.CHARGE, 100, user);
+
+        return reviewRepository.save(review).getId();
+    }
+
+    private Review generateReview(ReviewCreateDto dto, List<Photo> photos, User user, HairStyle hairStyle) {
+        return Review.createReview(
                 user,
                 dto.getContents(),
                 dto.getScore(),
                 photos,
                 hairStyle
         );
-        return reviewRepository.save(review).getId();
     }
 
     private HairStyle findHairStyleById(ReviewCreateDto dto) {
@@ -49,8 +58,8 @@ public class ReviewService {
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 
-    private User findUserById(ReviewCreateDto dto) {
-        return userRepository.findById(dto.getUserId())
+    private User findUserById(Long userId) {
+        return userRepository.findById(userId)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 }
