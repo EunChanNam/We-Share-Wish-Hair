@@ -59,6 +59,7 @@ public class Review extends BaseEntity {
             review.photos.add(photo);
         });
         review.hairStyle = hairStyle;
+        review.likeReviews = new LikeReviews();
         return review;
     }
 

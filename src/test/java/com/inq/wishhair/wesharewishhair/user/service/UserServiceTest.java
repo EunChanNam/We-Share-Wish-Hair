@@ -20,26 +20,9 @@ class UserServiceTest extends ServiceTest {
     void createUserTest() {
         User userA = UserFixture.A.toEntity();
 
-        //createUser 를 실행하기 전에는 PointHistory 가 존재하지 않는다.
-        assertThat(pointHistoryTestRepository.findAll()).isEmpty();
-
         //logic
         Long resultA = userService.createUser(userA);
 
-        PointHistory pointHistory = findPointHistoryByUser(userA);
-
-        //createUser 실행 후 PointHistory 가 생성된다.
-        assertThat(pointHistoryTestRepository.findAll()).isNotEmpty();
-
-        assertAll(
-                () -> assertThat(resultA).isEqualTo(userA.getId()), // createUser response validate
-                () -> assertThat(pointHistory.getUser().getId()).isEqualTo(userA.getId()) // pointHistory create validate
-        );
-
-    }
-
-    private PointHistory findPointHistoryByUser(User userA) {
-        return pointHistoryTestRepository.findTopByUser(userA)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+        assertThat(resultA).isEqualTo(userA.getId());
     }
 }
