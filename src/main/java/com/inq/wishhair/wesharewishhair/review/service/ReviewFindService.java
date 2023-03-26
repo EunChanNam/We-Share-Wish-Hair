@@ -3,6 +3,8 @@ package com.inq.wishhair.wesharewishhair.review.service;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewFindRepository;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
+import com.inq.wishhair.wesharewishhair.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewFindService {
 
     private final ReviewFindRepository reviewFindRepository;
+    private final UserFindService userFindService;
 
     public Slice<ReviewResponse> findPagingReviews(Pageable pageable) {
         Slice<Review> sliceResult = reviewFindRepository.findReviewByPaging(pageable);
@@ -23,6 +26,13 @@ public class ReviewFindService {
 
     public Slice<ReviewResponse> findLikingReviews(Long userId, Pageable pageable) {
         Slice<Review> sliceResult = reviewFindRepository.findReviewByLike(userId, pageable);
+        return transferContentToResponse(sliceResult);
+    }
+
+    public Slice<ReviewResponse> findMyReviews(Long userId, Pageable pageable) {
+        User user = userFindService.findByUserId(userId);
+        Slice<Review> sliceResult = reviewFindRepository.findDistinctByUser(user, pageable);
+
         return transferContentToResponse(sliceResult);
     }
 

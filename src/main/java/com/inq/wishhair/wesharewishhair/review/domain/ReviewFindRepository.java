@@ -28,5 +28,5 @@ public interface ReviewFindRepository extends JpaRepository<Review, Long> {
     Optional<Review> findDistinctById(Long id);
 
     @EntityGraph(attributePaths = "likeReviews")
-    Slice<Review> findDistinctByUser(User user);
+    Slice<Review> findDistinctByUser(User user, Pageable pageable);
 }
