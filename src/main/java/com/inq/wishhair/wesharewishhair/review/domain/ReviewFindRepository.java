@@ -1,6 +1,5 @@
 package com.inq.wishhair.wesharewishhair.review.domain;
 
-import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -21,12 +20,18 @@ public interface ReviewFindRepository extends JpaRepository<Review, Long> {
     @Query("select r from Review r " +
             "join LikeReview l " +
             "on r.id = l.review.id " +
+            "join fetch r.user " +
+            "join fetch r.hairStyle " +
             "where l.user.id = :userId")
     Slice<Review> findReviewByLike(@Param("userId") Long userId, Pageable pageable);
 
     @EntityGraph(attributePaths = "likeReviews")
     Optional<Review> findDistinctById(Long id);
 
-    @EntityGraph(attributePaths = "likeReviews")
-    Slice<Review> findDistinctByUser(User user, Pageable pageable);
+    @Query("select distinct r from Review r " +
+            "join fetch r.photos " +
+            "join fetch r.hairStyle " +
+            "join fetch r.user " +
+            "where r.user.id = :userId ")
+    Slice<Review> findReviewByUser(@Param("userId") Long userId, Pageable pageable);
 }
