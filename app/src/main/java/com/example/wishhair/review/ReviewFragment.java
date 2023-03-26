@@ -26,7 +26,7 @@ public class ReviewFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    TabLayout tabLayout;
+    private TabLayout tabLayout;
     private ViewPager2 viewPager;
 
     final String[] tabs = new String[] {"리뷰 목록", "나의 리뷰"};

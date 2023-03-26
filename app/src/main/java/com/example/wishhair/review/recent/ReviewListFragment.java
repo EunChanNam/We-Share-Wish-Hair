@@ -16,13 +16,24 @@ import android.widget.ArrayAdapter;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
-import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.wishhair.CustomTokenHandler;
 import com.example.wishhair.R;
 import com.example.wishhair.review.ReviewItem;
 import com.example.wishhair.review.detail.ReviewDetailActivity;
+import com.example.wishhair.sign.UrlConst;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReviewListFragment extends Fragment {
 // recyclerView 내용 업데이트 및 갱신
@@ -45,6 +56,11 @@ public class ReviewListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.review_fragment_list, container, false);
+
+        CustomTokenHandler customTokenHandler = new CustomTokenHandler(requireActivity());
+        String accessToken = customTokenHandler.getAccessToken();
+//       request List data
+        ReviewListRequest(accessToken);
 
         filter = v.findViewById(R.id.review_fragment_filter_radioGroup);
         filter_whole = v.findViewById(R.id.review_fragment_filter_whole);
@@ -74,8 +90,41 @@ public class ReviewListFragment extends Fragment {
         });
 
 //        sort
-//        TODO 정렬 기준으로 받아오기
         Spinner spinner_sort = v.findViewById(R.id.review_fragment_spinner_sort);
+        sort_select(spinner_sort);
+//        TODO 정렬 기준으로 받아오기
+
+
+        return v;
+    }
+
+    private void ReviewListRequest(String accessToken) {
+        final String URL_REVIEWLIST = UrlConst.URL + "/api/review";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL_REVIEWLIST, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("reviewListRequest", response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("reviewList error", error.toString());
+            }
+        }) { @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String>  params = new HashMap();
+                params.put("Authorization", "bearer" + accessToken);
+
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    private void sort_select(Spinner spinner_sort) {
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, sortItems);
         spinner_sort.setAdapter(spinnerAdapter);
 
@@ -89,8 +138,6 @@ public class ReviewListFragment extends Fragment {
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
-
-        return v;
     }
 
 }

@@ -35,6 +35,7 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class MyPageFragment extends Fragment {
 
@@ -124,7 +125,6 @@ public class MyPageFragment extends Fragment {
 
 //        LOGOUT
         Button btn_logout  = view.findViewById(R.id.mypage_button_logout);
-
         loginSP = getActivity().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         String accessToken = loginSP.getString("accessToken", "fail acc");
 
