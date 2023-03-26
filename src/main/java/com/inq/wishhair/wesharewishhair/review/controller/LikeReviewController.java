@@ -22,7 +22,7 @@ public class LikeReviewController {
             @PathVariable Long reviewId,
             @ExtractPayload Long userId) {
 
-        likeReviewService.LikeReview(reviewId, userId);
+        likeReviewService.likeReview(reviewId, userId);
         return ResponseEntity.ok(new Success());
     }
 }
