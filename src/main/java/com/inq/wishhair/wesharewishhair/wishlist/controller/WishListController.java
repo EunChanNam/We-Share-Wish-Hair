@@ -27,9 +27,7 @@ public class WishListController {
             @PathVariable Long hairStyleId,
             @ExtractPayload Long userId) {
 
-        WishList wishList = WishList.builder()
-                .build();
-        Long wishListId = wishListService.createWishList(wishList, hairStyleId, userId);
+        Long wishListId = wishListService.createWishList(hairStyleId, userId);
 
         return ResponseEntity
                 .created(URI.create("/api/wish_list/" + wishListId))

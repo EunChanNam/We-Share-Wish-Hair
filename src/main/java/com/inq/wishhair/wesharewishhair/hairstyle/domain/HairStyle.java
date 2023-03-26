@@ -40,6 +40,9 @@ public class HairStyle {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
+    @Embedded
+    private WishListCount wishListCount;
+
     //==생성 메서드==//
     private HairStyle(String name, Sex sex, List<Photo> photos, List<HashTag> hashTags) {
         this.name = name;
@@ -48,6 +51,7 @@ public class HairStyle {
         hashTags.forEach(hashTag -> hashTag.registerHairStyle(this));
         this.photos.addAll(photos);
         this.hashTags.addAll(hashTags);
+        wishListCount = new WishListCount();
     }
 
     public static HairStyle createHairStyle(
@@ -62,5 +66,13 @@ public class HairStyle {
                 .filter(Tag::isFaceShapeType)
                 .findAny()
                 .orElseThrow(() -> new WishHairException(ErrorCode.HAIR_STYLE_NO_FACE_SHAPE_TAG));
+    }
+
+    public void plusWishListCount() {
+        wishListCount.plusWishListCount();
+    }
+
+    public void minusWishListCount() {
+        wishListCount.minusWishListCount();
     }
 }

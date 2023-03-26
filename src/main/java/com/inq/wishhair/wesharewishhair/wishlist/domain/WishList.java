@@ -4,11 +4,14 @@ import com.inq.wishhair.wesharewishhair.auditing.BaseEntity;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class WishList extends BaseEntity {
 
     @Id
@@ -24,16 +27,10 @@ public class WishList extends BaseEntity {
     private User user;
 
     //==생성 메서드==//
-    @Builder
-    public WishList() {
-    }
-
-    //==편의 메서드==//
-    public void registerHairStyle(HairStyle hairStyle) {
-        this.hairStyle = hairStyle;
-    }
-
-    public void registerUser(User user) {
-        this.user = user;
+    public static WishList createWishList(User user, HairStyle hairStyle) {
+        WishList wishList = new WishList();
+        wishList.hairStyle = hairStyle;
+        wishList.user = user;
+        return wishList;
     }
 }
