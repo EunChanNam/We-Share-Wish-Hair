@@ -64,6 +64,7 @@ public class EmailCertActivity extends AppCompatActivity {
         btn_intent = findViewById(R.id.sign_cert_btn_intent);
         btn_intent.setOnClickListener(view -> {
             Intent intent = new Intent(EmailCertActivity.this, RegisterActivity.class);
+            intent.putExtra("inputEmail", ed_email.getText().toString());
             startActivity(intent);
             finish();
         });
