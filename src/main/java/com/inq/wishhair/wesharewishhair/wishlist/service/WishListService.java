@@ -11,10 +11,9 @@ import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.wishlist.service.dto.response.WishListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -44,14 +43,12 @@ public class WishListService {
         wishListRepository.deleteById(wishListId);
     }
 
-    public List<WishListResponse> getWishList(Long userId, Pageable pageable) {
-        List<WishList> wishLists = wishListRepository.findByUser(userId, pageable);
-        return toResponse(wishLists);
+    public Slice<WishListResponse> getWishList(Long userId, Pageable pageable) {
+        Slice<WishList> wishLists = wishListRepository.findByUser(userId, pageable);
+        return transferContentToResponse(wishLists);
     }
 
-    private List<WishListResponse> toResponse(List<WishList> wishLists) {
-        return wishLists.stream()
-                .map(wishList -> new WishListResponse(wishList.getHairStyle()))
-                .toList();
+    private Slice<WishListResponse> transferContentToResponse(Slice<WishList> wishLists) {
+        return wishLists.map(wishList -> new WishListResponse(wishList.getHairStyle()));
     }
 }

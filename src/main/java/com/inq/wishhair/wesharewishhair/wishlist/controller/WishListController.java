@@ -7,12 +7,12 @@ import com.inq.wishhair.wesharewishhair.wishlist.service.WishListService;
 import com.inq.wishhair.wesharewishhair.wishlist.service.dto.response.WishListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -47,8 +47,8 @@ public class WishListController {
             @PageableDefault(size = 4) Pageable pageable,
             @ExtractPayload Long userId) {
 
-        List<WishListResponse> result = wishListService.getWishList(userId, pageable);
+        Slice<WishListResponse> result = wishListService.getWishList(userId, pageable);
 
-        return ResponseEntity.ok(PagedWishListResponse.of(result));
+        return ResponseEntity.ok(new PagedWishListResponse(result));
     }
 }

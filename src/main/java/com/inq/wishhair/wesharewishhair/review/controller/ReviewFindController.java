@@ -32,6 +32,6 @@ public class ReviewFindController {
     }
 
     private PagedReviewResponse toPagedResponse(Slice<ReviewResponse> result) {
-        return PagedReviewResponse.of(result.getContent(), result.getSize());
+        return new PagedReviewResponse(result);
     }
 }

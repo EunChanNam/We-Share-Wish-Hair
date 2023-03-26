@@ -1,8 +1,10 @@
 package com.inq.wishhair.wesharewishhair.wishlist.controller.dto.response;
 
+import com.inq.wishhair.wesharewishhair.global.dto.response.Paging;
 import com.inq.wishhair.wesharewishhair.wishlist.service.dto.response.WishListResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 
@@ -12,9 +14,10 @@ public class PagedWishListResponse {
 
     private List<WishListResponse> result;
 
-    private int contentSize;
+    private Paging paging;
 
-    public static PagedWishListResponse of(List<WishListResponse> result) {
-        return new PagedWishListResponse(result, result.size());
+    public PagedWishListResponse(Slice<WishListResponse> slice) {
+        this.result = slice.getContent();
+        this.paging = new Paging(slice.getSize(), slice.getNumber(), slice.hasNext());
     }
 }
