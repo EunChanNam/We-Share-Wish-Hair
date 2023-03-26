@@ -8,6 +8,9 @@ import com.inq.wishhair.wesharewishhair.user.controller.dto.request.MailRequest;
 import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,14 +28,15 @@ public class MailController {
     private final MailSendService mailSendService;
 
     @PostMapping("/send")
-    public ResponseEntity<Success> sendAuthorizationMail(@RequestBody MailRequest mailRequest,
+    public ResponseEntity<SessionIdResponse> sendAuthorizationMail(@RequestBody MailRequest mailRequest,
                                                          HttpServletRequest request) {
 
-        String authKey = registerAuthKey(request);
+        String authKey = createAuthKey();
+        String sessionId = registerAuthKey(request, authKey);
 
         mailSendService.sendAuthorizationMail(mailRequest.toMailDto(MAIL_TITLE, authKey));
 
-        return ResponseEntity.ok(new Success());
+        return ResponseEntity.ok(new SessionIdResponse(sessionId));
     }
 
     @PostMapping("/validate")
@@ -59,16 +63,21 @@ public class MailController {
         }
     }
 
-    private String registerAuthKey(HttpServletRequest request) {
-        String authKey = createAuthKey();
-
+    private String registerAuthKey(HttpServletRequest request, String authKey) {
         HttpSession session = request.getSession();
         session.setAttribute(AUTH_KEY, authKey);
 
-        return authKey;
+        return session.getId();
     }
 
     private String createAuthKey() {
         return String.valueOf((int) (Math.random() * 8999 + 1000));
     }
+
+    @Data
+    @AllArgsConstructor
+    static class SessionIdResponse {
+        private String sessionId;
+    }
+
 }
