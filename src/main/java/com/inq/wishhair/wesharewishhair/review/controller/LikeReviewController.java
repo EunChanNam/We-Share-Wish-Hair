@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.review.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
+import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
 import com.inq.wishhair.wesharewishhair.review.service.LikeReviewService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,11 +18,11 @@ public class LikeReviewController {
     private final LikeReviewService likeReviewService;
 
     @PostMapping("/review/like/{reviewId}")
-    public ResponseEntity<Void> likeReview(
+    public ResponseEntity<Success> likeReview(
             @PathVariable Long reviewId,
             @ExtractPayload Long userId) {
 
         likeReviewService.LikeReview(reviewId, userId);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(new Success());
     }
 }

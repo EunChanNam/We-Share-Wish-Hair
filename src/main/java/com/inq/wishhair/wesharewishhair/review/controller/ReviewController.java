@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.review.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
+import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewRequest;
 import lombok.RequiredArgsConstructor;
@@ -17,13 +18,14 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @PostMapping("/review")
-    public ResponseEntity<Void> createReview(
+    public ResponseEntity<Success> createReview(
             @RequestBody ReviewRequest reviewRequest,
             @ExtractPayload Long userId) {
 
         Long reviewId = reviewService.createReview(reviewRequest.toReviewCreateDto(userId));
         return ResponseEntity
                 .created(URI.create("/api/review/" + reviewId))
-                .build();
+                .body(new Success());
     }
+
 }
