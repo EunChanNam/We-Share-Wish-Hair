@@ -39,12 +39,20 @@ public class WishListService {
 
     @Transactional
     public void deleteWishList(Long wishListId) {
+        WishList wishList = findWishList(wishListId);
+        wishList.getHairStyle().getWishListCount().minusWishListCount();
+
         wishListRepository.deleteById(wishListId);
     }
 
     public Slice<WishListResponse> getWishList(Long userId, Pageable pageable) {
         Slice<WishList> wishLists = wishListRepository.findByUser(userId, pageable);
         return transferContentToResponse(wishLists);
+    }
+
+    private WishList findWishList(Long wishListId) {
+        return wishListRepository.findById(wishListId)
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 
     private Slice<WishListResponse> transferContentToResponse(Slice<WishList> wishLists) {
