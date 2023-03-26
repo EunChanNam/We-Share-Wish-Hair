@@ -57,7 +57,11 @@ public class MailControllerTest extends ControllerTest {
 
             //then
             mockMvc.perform(requestBuilder)
-                    .andExpect(status().isNoContent());
+                    .andExpectAll(
+                            status().isOk(),
+                            jsonPath("$").exists(),
+                            jsonPath("$.success").value(true)
+                    );
         }
 
         private MockHttpServletRequestBuilder generateMailSendRequest(MailRequest request) throws JsonProcessingException {
@@ -136,7 +140,11 @@ public class MailControllerTest extends ControllerTest {
 
             //then
             mockMvc.perform(requestBuilder)
-                    .andExpect(status().isNoContent());
+                    .andExpectAll(
+                            status().isOk(),
+                            jsonPath("$").exists(),
+                            jsonPath("$.success").value(true)
+                    );
         }
     }
 }
