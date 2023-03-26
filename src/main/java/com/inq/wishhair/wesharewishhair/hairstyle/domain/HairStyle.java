@@ -41,7 +41,7 @@ public class HairStyle {
     private Sex sex;
 
     @Embedded
-    private final WishListCount wishListCount = new WishListCount();
+    private WishListCount wishListCount;
 
     //==생성 메서드==//
     private HairStyle(String name, Sex sex, List<Photo> photos, List<HashTag> hashTags) {
@@ -51,6 +51,7 @@ public class HairStyle {
         hashTags.forEach(hashTag -> hashTag.registerHairStyle(this));
         this.photos.addAll(photos);
         this.hashTags.addAll(hashTags);
+        wishListCount = new WishListCount();
     }
 
     public static HairStyle createHairStyle(

@@ -49,6 +49,7 @@ public class User {
         this.name = name;
         this.nickname = nickname;
         this.sex = sex;
+        this.faceShape = new FaceShape();
         this.availablePoint = new AvailablePoint();
     }
 
@@ -61,7 +62,7 @@ public class User {
     }
 
     public boolean existFaceShape() {
-        return faceShape != null;
+        return faceShape.getTag() != null;
     }
 
     public void updateFaceShape(FaceShape faceShape) {
