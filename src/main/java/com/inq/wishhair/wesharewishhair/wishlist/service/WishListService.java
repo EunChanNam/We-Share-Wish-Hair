@@ -25,14 +25,12 @@ public class WishListService {
     private final UserRepository userRepository;
 
     @Transactional
-    public Long createWishList(WishList wishList, Long hairStyleId, Long userId) {
+    public Long createWishList(Long hairStyleId, Long userId) {
 
-        HairStyle hairStyle = hairStyleRepository.findById(hairStyleId)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
-        wishList.registerHairStyle(hairStyle);
-        wishList.registerUser(user);
+        HairStyle hairStyle = findHairStyle(hairStyleId);
+        User user = findUser(userId);
+
+        WishList wishList = WishList.createWishList(user, hairStyle);
 
         return wishListRepository.save(wishList).getId();
     }
@@ -50,5 +48,15 @@ public class WishListService {
 
     private Slice<WishListResponse> transferContentToResponse(Slice<WishList> wishLists) {
         return wishLists.map(wishList -> new WishListResponse(wishList.getHairStyle()));
+    }
+
+    private User findUser(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+    }
+
+    private HairStyle findHairStyle(Long hairStyleId) {
+        return hairStyleRepository.findById(hairStyleId)
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 }
