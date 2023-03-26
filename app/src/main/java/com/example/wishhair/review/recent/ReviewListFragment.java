@@ -7,17 +7,35 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.example.wishhair.CustomTokenHandler;
 import com.example.wishhair.R;
 import com.example.wishhair.review.ReviewItem;
 import com.example.wishhair.review.detail.ReviewDetailActivity;
+import com.example.wishhair.review.write.WriteReviewActivity;
+import com.example.wishhair.sign.UrlConst;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ReviewListFragment extends Fragment {
 // recyclerView 내용 업데이트 및 갱신
@@ -28,13 +46,35 @@ public class ReviewListFragment extends Fragment {
         // Required empty public constructor
         }
 
-    ArrayList<ReviewItem> recentReviewItems;
-    RadioGroup filter;
-    RadioButton filter_whole, filter_man, filter_woman;
+    private ArrayList<ReviewItem> recentReviewItems;
+    private RadioGroup filter;
+    private RadioButton filter_whole, filter_man, filter_woman;
+    private Button btn_temp_write;
+
+//    sort
+    private static String sort_selected = null;
+    private static final String[] sortItems = {"최신 순", "오래된 순", "좋아요 순"};
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.review_fragment_list, container, false);
+
+        CustomTokenHandler customTokenHandler = new CustomTokenHandler(requireActivity());
+        String accessToken = customTokenHandler.getAccessToken();
+//       request List data
+        ReviewListRequest(accessToken);
+//        temp write button
+//        TODO 임시 글쓰기 버튼, 나중에 삭제해야댐
+        btn_temp_write = v.findViewById(R.id.temp_write_btn);
+        btn_temp_write.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), WriteReviewActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         filter = v.findViewById(R.id.review_fragment_filter_radioGroup);
         filter_whole = v.findViewById(R.id.review_fragment_filter_whole);
@@ -62,6 +102,56 @@ public class ReviewListFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+//        sort
+        Spinner spinner_sort = v.findViewById(R.id.review_fragment_spinner_sort);
+        sort_select(spinner_sort);
+//        TODO 정렬 기준으로 받아오기
+
+
         return v;
     }
+
+    private void ReviewListRequest(String accessToken) {
+        final String URL_REVIEWLIST = UrlConst.URL + "/api/review";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL_REVIEWLIST, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d("reviewListRequest", response.toString());
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.e("reviewList error", error.toString());
+            }
+        }) { @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String>  params = new HashMap();
+                params.put("Authorization", "bearer" + accessToken);
+
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    private void sort_select(Spinner spinner_sort) {
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, sortItems);
+        spinner_sort.setAdapter(spinnerAdapter);
+
+        spinner_sort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+                sort_selected = sortItems[position];
+                Log.d("sort_selected", sort_selected);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {}
+        });
+    }
+
 }
