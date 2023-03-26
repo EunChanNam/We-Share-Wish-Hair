@@ -40,6 +40,9 @@ public class HairStyle {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
+    @Embedded
+    private final WishListCount wishListCount = new WishListCount();
+
     //==생성 메서드==//
     private HairStyle(String name, Sex sex, List<Photo> photos, List<HashTag> hashTags) {
         this.name = name;
