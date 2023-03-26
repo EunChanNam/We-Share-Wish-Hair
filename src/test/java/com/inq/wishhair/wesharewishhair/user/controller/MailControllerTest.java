@@ -60,7 +60,7 @@ public class MailControllerTest extends ControllerTest {
                     .andExpectAll(
                             status().isOk(),
                             jsonPath("$").exists(),
-                            jsonPath("$.success").value(true)
+                            jsonPath("$.sessionId").exists()
                     );
         }
 
