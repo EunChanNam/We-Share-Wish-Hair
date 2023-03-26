@@ -23,13 +23,9 @@ public class ReviewFindService {
         return transferContentToResponse(sliceResult);
     }
 
-    public List<ReviewResponse> findLikingReviews(Long userId, Pageable pageable) {
-        List<Review> findReviews = reviewRepository.findReviewByLike(userId, pageable);
-        return generateResponses(findReviews);
-    }
-
-    private List<ReviewResponse> generateResponses(List<Review> reviews) {
-        return reviews.stream().map(ReviewResponse::new).toList();
+    public Slice<ReviewResponse> findLikingReviews(Long userId, Pageable pageable) {
+        Slice<Review> sliceResult = reviewRepository.findReviewByLike(userId, pageable);
+        return transferContentToResponse(sliceResult);
     }
 
     private Slice<ReviewResponse> transferContentToResponse(Slice<Review> slice) {
