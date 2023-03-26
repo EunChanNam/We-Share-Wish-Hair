@@ -67,4 +67,12 @@ public class HairStyle {
                 .findAny()
                 .orElseThrow(() -> new WishHairException(ErrorCode.HAIR_STYLE_NO_FACE_SHAPE_TAG));
     }
+
+    public void plusWishListCount() {
+        wishListCount.plusWishListCount();
+    }
+
+    public void minusWishListCount() {
+        wishListCount.minusWishListCount();
+    }
 }

@@ -32,7 +32,7 @@ public class WishListService {
 
         WishList wishList = WishList.createWishList(user, hairStyle);
 
-        hairStyle.getWishListCount().plusWishListCount();
+        hairStyle.plusWishListCount();
 
         return wishListRepository.save(wishList).getId();
     }
@@ -40,7 +40,7 @@ public class WishListService {
     @Transactional
     public void deleteWishList(Long wishListId) {
         WishList wishList = findWishList(wishListId);
-        wishList.getHairStyle().getWishListCount().minusWishListCount();
+        wishList.getHairStyle().minusWishListCount();
 
         wishListRepository.deleteById(wishListId);
     }
