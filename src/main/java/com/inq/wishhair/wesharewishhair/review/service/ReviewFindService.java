@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReviewFindService {
 
     private final ReviewFindRepository reviewFindRepository;
-    private final UserFindService userFindService;
 
     public Slice<ReviewResponse> findPagingReviews(Pageable pageable) {
         Slice<Review> sliceResult = reviewFindRepository.findReviewByPaging(pageable);
@@ -30,8 +29,7 @@ public class ReviewFindService {
     }
 
     public Slice<ReviewResponse> findMyReviews(Long userId, Pageable pageable) {
-        User user = userFindService.findByUserId(userId);
-        Slice<Review> sliceResult = reviewFindRepository.findDistinctByUser(user, pageable);
+        Slice<Review> sliceResult = reviewFindRepository.findReviewByUser(userId, pageable);
 
         return transferContentToResponse(sliceResult);
     }
