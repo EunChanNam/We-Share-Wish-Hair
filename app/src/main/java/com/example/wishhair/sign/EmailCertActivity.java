@@ -3,13 +3,17 @@ package com.example.wishhair.sign;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -31,7 +35,7 @@ public class EmailCertActivity extends AppCompatActivity {
     final static private String URL_VALIDATE = UrlConst.URL + "/api/email/validate";
 
     private EditText ed_email, ed_code;
-    private Button btn_back, btn_send, btn_submit, btn_intent;
+    private Button btn_intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,14 +43,14 @@ public class EmailCertActivity extends AppCompatActivity {
         setContentView(R.layout.sign_activity_email_cert);
 
 //        topBar
-        btn_back = findViewById(R.id.toolbar_btn_back);
+        Button btn_back = findViewById(R.id.toolbar_btn_back);
         btn_back.setOnClickListener(view -> finish());
         TextView pageTitle = findViewById(R.id.toolbar_textView_title);
         pageTitle.setText("");
 
 //        send request
         ed_email = findViewById(R.id.sign_cert_et_email);
-        btn_send = findViewById(R.id.sign_cert_btn_requestSend);
+        Button btn_send = findViewById(R.id.sign_cert_btn_requestSend);
         btn_send.setOnClickListener(view -> {
             String inputEmail = String.valueOf(ed_email.getText());
             emailSendRequest(inputEmail);
@@ -54,7 +58,7 @@ public class EmailCertActivity extends AppCompatActivity {
 
 //        confirmCode request
         ed_code = findViewById(R.id.sign_cert_et_code);
-        btn_submit = findViewById(R.id.sign_cert_btn_confirmCode);
+        Button btn_submit = findViewById(R.id.sign_cert_btn_confirmCode);
         btn_submit.setOnClickListener(view -> {
             String inputCode = String.valueOf(ed_code.getText());
             emailValidateRequest(inputCode);
@@ -80,7 +84,9 @@ public class EmailCertActivity extends AppCompatActivity {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL_SEND, jsonObject, response -> {
             try {
-                Log.d("send request response", response.getString("success"));
+                String sessionId = response.getString("sessionId");
+                saveSessionId(sessionId);
+                Log.d("send request response", sessionId);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -105,6 +111,18 @@ public class EmailCertActivity extends AppCompatActivity {
         queue.add(jsonObjectRequest);
     }
 
+    private void saveSessionId(String sessionId) {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("sessionId", sessionId);
+        editor.apply();
+    }
+
+    private String getSessionId() {
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        return prefs.getString("sessionId", null);
+    }
+
     private void emailValidateRequest(String inputCode){
         JSONObject jsonObject = new JSONObject();
         try {
@@ -115,10 +133,19 @@ public class EmailCertActivity extends AppCompatActivity {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL_VALIDATE, jsonObject, response -> {
             Log.d("validate response", response.toString());
+            btn_intent.setVisibility(View.VISIBLE);
         }, error -> {
             String message = getErrorMessage(error);
             Log.e("validate error message", message);
-        });
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        }) {
+            @Override
+            public Map<String, String> getHeaders(){
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Cookie", "JSESSIONID=" + getSessionId()); // 세션 ID를 쿠키에 추가합니다.
+                return headers;
+            }
+        };
 
         RequestQueue queue = Volley.newRequestQueue(this);
 
