@@ -30,7 +30,10 @@ public class UserControllerTest extends ControllerTest {
                 .contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(requestBuilder)
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("$").doesNotExist());
+                .andExpectAll(
+                        status().isCreated(),
+                        jsonPath("$").exists(),
+                        jsonPath("$.success").value(true)
+                );
     }
 }

@@ -106,7 +106,11 @@ public class AuthControllerTest extends ControllerTest {
 
             //then
             mockMvc.perform(requestBuilder)
-                    .andExpect(status().isNoContent());
+                    .andExpectAll(
+                            status().isOk(),
+                            jsonPath("$").exists(),
+                            jsonPath("$.success").value(true)
+                    );
         }
     }
 

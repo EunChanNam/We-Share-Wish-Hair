@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
+import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.AuthKeyRequest;
@@ -24,18 +25,18 @@ public class MailController {
     private final MailSendService mailSendService;
 
     @PostMapping("/send")
-    public ResponseEntity<Void> sendAuthorizationMail(@RequestBody MailRequest mailRequest,
-                                                      HttpServletRequest request) {
+    public ResponseEntity<Success> sendAuthorizationMail(@RequestBody MailRequest mailRequest,
+                                                         HttpServletRequest request) {
 
         String authKey = registerAuthKey(request);
 
         mailSendService.sendAuthorizationMail(mailRequest.toMailDto(MAIL_TITLE, authKey));
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(new Success());
     }
 
     @PostMapping("/validate")
-    public ResponseEntity<Void> authorizeKey(@RequestBody AuthKeyRequest authKeyRequest,
+    public ResponseEntity<Success> authorizeKey(@RequestBody AuthKeyRequest authKeyRequest,
                                              HttpServletRequest request) {
 
         String inputKey = authKeyRequest.getAuthKey();
@@ -44,7 +45,7 @@ public class MailController {
 
         session.invalidate();
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(new Success());
     }
 
     private void validateKey(HttpSession session, String inputKey) {

@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.wishlist.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
+import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
 import com.inq.wishhair.wesharewishhair.wishlist.controller.dto.response.PagedWishListResponse;
 import com.inq.wishhair.wesharewishhair.wishlist.domain.WishList;
 import com.inq.wishhair.wesharewishhair.wishlist.service.WishListService;
@@ -22,7 +23,7 @@ public class WishListController {
     private final WishListService wishListService;
 
     @PostMapping("/wish_list/{hairStyleId}")
-    public ResponseEntity<Void> createWishList(
+    public ResponseEntity<Success> createWishList(
             @PathVariable Long hairStyleId,
             @ExtractPayload Long userId) {
 
@@ -32,14 +33,14 @@ public class WishListController {
 
         return ResponseEntity
                 .created(URI.create("/api/wish_list/" + wishListId))
-                .build();
+                .body(new Success());
     }
 
     @DeleteMapping("/wish_list/{id}")
-    public ResponseEntity<Void> deleteWishList(@PathVariable Long id) {
+    public ResponseEntity<Success> deleteWishList(@PathVariable Long id) {
 
         wishListService.deleteWishList(id);
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(new Success());
     }
 
     @GetMapping("/wish_list")
