@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
@@ -27,6 +28,7 @@ import com.example.wishhair.CustomTokenHandler;
 import com.example.wishhair.R;
 import com.example.wishhair.review.ReviewItem;
 import com.example.wishhair.review.detail.ReviewDetailActivity;
+import com.example.wishhair.review.write.WriteReviewActivity;
 import com.example.wishhair.sign.UrlConst;
 
 import org.json.JSONObject;
@@ -47,6 +49,7 @@ public class ReviewListFragment extends Fragment {
     private ArrayList<ReviewItem> recentReviewItems;
     private RadioGroup filter;
     private RadioButton filter_whole, filter_man, filter_woman;
+    private Button btn_temp_write;
 
 //    sort
     private static String sort_selected = null;
@@ -61,6 +64,17 @@ public class ReviewListFragment extends Fragment {
         String accessToken = customTokenHandler.getAccessToken();
 //       request List data
         ReviewListRequest(accessToken);
+//        temp write button
+//        TODO 임시 글쓰기 버튼, 나중에 삭제해야댐
+        btn_temp_write = v.findViewById(R.id.temp_write_btn);
+        btn_temp_write.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), WriteReviewActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         filter = v.findViewById(R.id.review_fragment_filter_radioGroup);
         filter_whole = v.findViewById(R.id.review_fragment_filter_whole);

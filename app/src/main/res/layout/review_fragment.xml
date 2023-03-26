@@ -7,12 +7,6 @@
     tools:context=".review.ReviewFragment"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="@drawable/border_topbar"
-        app:title="사용자 후기" />
-
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/review_tabLayout"
         android:layout_width="match_parent"
