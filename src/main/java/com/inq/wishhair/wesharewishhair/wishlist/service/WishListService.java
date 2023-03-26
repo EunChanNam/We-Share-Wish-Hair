@@ -32,12 +32,13 @@ public class WishListService {
 
         WishList wishList = WishList.createWishList(user, hairStyle);
 
+        hairStyle.getWishListCount().plusWishListCount();
+
         return wishListRepository.save(wishList).getId();
     }
 
     @Transactional
     public void deleteWishList(Long wishListId) {
-
         wishListRepository.deleteById(wishListId);
     }
 
