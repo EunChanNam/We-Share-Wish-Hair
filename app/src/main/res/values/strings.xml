@@ -16,8 +16,13 @@
     <string name="sign_button_findPassword"><![CDATA[비밀번호 찾기 >]]></string>
     <!--    register -->
     <string name="register_hint_id">InQInQ@email.com</string>
-    <string name="register_message_2">서비스 약관에 동의해주세요</string>
+    <string name="register_hint_name">name</string>
+    <string name="register_hint_nickname">nickname</string>
+    <string name="register_message_sex">성별 :</string>
+    <string name="register_text_sex_man">남</string>
+    <string name="register_text_sex_woman">여</string>
     <string name="register_message_1">회원정보를 입력해 주세요</string>
+    <string name="register_message_2">서비스 약관에 동의해주세요</string>
     <string name="register_term_1">[필수] 만 14세 이상입니다.</string>
     <string name="register_term_2">[필수] 이용약관 동의</string>
     <string name="register_term_3">[필수] 개인정보 수집 및 이용 동의</string>
@@ -36,5 +41,6 @@
     <string name="home_message_5">GO!</string>
     <string name="home_message_6">이달의 추천 리뷰</string>
     <string name="home_message_7">님 만을 위한 추천</string>
+
     <string name="xmlDisplay_username">userName</string>
 </resources>

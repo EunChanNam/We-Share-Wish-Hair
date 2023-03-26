@@ -35,8 +35,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="5dp"
-            android:src="@drawable/sign_name"
+            android:padding="2dp"
+            android:src="@drawable/sign_email"
             android:background="@drawable/border_sign_image"
             android:contentDescription="@string/login_hint_id" />
 
@@ -64,7 +64,6 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:padding="5dp"
             android:src="@drawable/sign_pw"
             android:background="@drawable/border_sign_image"
             android:contentDescription="@string/login_hint_pw" />
