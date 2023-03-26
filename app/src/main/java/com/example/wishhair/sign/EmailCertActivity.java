@@ -132,7 +132,8 @@ public class EmailCertActivity extends AppCompatActivity {
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL_VALIDATE, jsonObject, response -> {
-            Log.d("validate response", response.toString());
+            Log.d("validate success", response.toString());
+            Toast.makeText(this, "인증에 성공했습니다.", Toast.LENGTH_SHORT).show();
             btn_intent.setVisibility(View.VISIBLE);
         }, error -> {
             String message = getErrorMessage(error);

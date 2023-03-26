@@ -88,8 +88,8 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL, userJsonObject, response -> {
-            Log.e("register success", response.toString());
-            Toast.makeText(getApplicationContext(), "register success", Toast.LENGTH_SHORT).show();
+            Log.d("register success", response.toString());
+            Toast.makeText(getApplicationContext(), "회원가입에 성공했습니다.", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
             startActivity(intent);
         }, error -> {

@@ -100,6 +100,10 @@ public class LoginActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            startActivity(intent);
+            finish();
         }, error -> {
             NetworkResponse networkResponse = error.networkResponse;
             if (networkResponse != null && networkResponse.data != null) {
