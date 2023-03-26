@@ -18,6 +18,6 @@ public class PagedReviewResponse {
 
     public PagedReviewResponse(Slice<ReviewResponse> slice) {
         this.result = slice.getContent();
-        this.paging = new Paging(slice.getSize(), slice.getNumber(), slice.hasNext());
+        this.paging = new Paging(slice.getContent().size(), slice.getNumber(), slice.hasNext());
     }
 }
