@@ -1,15 +1,18 @@
 package com.example.wishhair.review.write;
 
 public class WriteRequestData {
+    String hairStyleId;
     String rating;
     String content;
 
-    public WriteRequestData() {
+    public WriteRequestData() {}
+
+    public String getHairStyleId() {
+        return hairStyleId;
     }
 
-    public WriteRequestData(String rating, String content) {
-        this.rating = rating;
-        this.content = content;
+    public void setHairStyleId(String hairStyleId) {
+        this.hairStyleId = hairStyleId;
     }
 
     public String getRating() {

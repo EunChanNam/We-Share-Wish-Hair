@@ -7,9 +7,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ClipData;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.OpenableColumns;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -18,15 +23,23 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.wishhair.CustomTokenHandler;
 import com.example.wishhair.R;
 import com.example.wishhair.sign.UrlConst;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -34,7 +47,7 @@ import java.util.Map;
 public class WriteReviewActivity extends AppCompatActivity {
     private static final String TAG = "WriteReviewActivity";
 
-    private Button btn_del, btn_addPicture, btn_back, btn_submit;
+    private Button btn_addPicture, btn_back, btn_submit;
     private EditText editText_content;
 
     private RecyclerView recyclerView;
@@ -50,12 +63,18 @@ public class WriteReviewActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_activity_write);
+//        accessToken
+        CustomTokenHandler customTokenHandler = new CustomTokenHandler(this);
+        String accessToken = customTokenHandler.getAccessToken();
+//         hair Style info
+//        #TODO hair style info 받아오기
+        writeRequestData.setHairStyleId("10");
+
 //        back
         btn_back = findViewById(R.id.toolbar_btn_back);
         btn_back.setOnClickListener(view -> finish());
 
         recyclerView = findViewById(R.id.write_review_picture_recyclerView);
-        btn_del = findViewById(R.id.review_item_write_btn_delete);
 
 //        RatingBar
         ratingBar = findViewById(R.id.write_review_ratingBar);
@@ -78,18 +97,16 @@ public class WriteReviewActivity extends AppCompatActivity {
             startActivityForResult(intent, 2222);
         });
 
-        btn_del = findViewById(R.id.review_item_write_btn_delete);
-
 //        content
         editText_content = findViewById(R.id.write_review_content);
 
 //        submit
         btn_submit = findViewById(R.id.write_review_submit);
-        btn_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                writeRequest(items);
-            }
+        btn_submit.setOnClickListener(view -> {
+            Retrofit2MultipartUploader uploader = new Retrofit2MultipartUploader(getApplicationContext());
+            String contents = String.valueOf(editText_content.getText());
+            writeRequestData.setContent(contents);
+            uploader.uploadFiles(writeRequestData.getHairStyleId(), "S3", writeRequestData.getContent(), items, accessToken);
         });
 
     }
@@ -131,12 +148,4 @@ public class WriteReviewActivity extends AppCompatActivity {
         }
     }
 
-//    private JSONObject writeContent() {    }
-
-    private void writeRequest(ArrayList<Uri> imageUris) {
-        String URL_WRITE = UrlConst.URL + "/api/review";
-        RequestQueue queue = Volley.newRequestQueue(this);
-
-
-    }
 }

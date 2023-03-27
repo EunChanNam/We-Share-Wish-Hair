@@ -129,7 +129,6 @@ public class ReviewListFragment extends Fragment {
             public Map<String, String> getHeaders() {
                 Map<String, String>  params = new HashMap();
                 params.put("Authorization", "bearer" + accessToken);
-
                 return params;
             }
         };
