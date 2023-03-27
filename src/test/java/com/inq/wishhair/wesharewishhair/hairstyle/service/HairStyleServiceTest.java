@@ -2,8 +2,13 @@ package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
+import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -12,6 +17,7 @@ import java.util.List;
 import static com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture.*;
 import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.getDefaultPageable;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("HairStyleServiceTest - SpringBootTest")
@@ -45,7 +51,47 @@ public class HairStyleServiceTest extends ServiceTest {
                     hairStyleService.findRecommendedHairStyle(tags, userId, getDefaultPageable());
 
             //then
-            assertThat(result).hasSize(1);
+            assertAll(
+                    () -> assertThat(result).hasSize(1),
+                    () -> {
+                        HairStyleResponse response = result.get(0);
+                        assertThat(response.getName()).isEqualTo(A.getName());
+                        assertThat(response.getHashTags().stream().map(HashTagResponse::getTag).toList())
+                                .containsAll(A.getTags().stream().map(Tag::getDescription).toList());
+                    }
+            );
+        }
+
+        @Test
+        @DisplayName("입력된 태그에 얼굴형 태그가 포함되지 않으면 400 예외를 던진다")
+        void test2() {
+            //given
+            List<Tag> tags = List.of(Tag.PERM);
+            Long userId = userRepository.save(UserFixture.B.toEntity()).getId();
+            ErrorCode expectedError = ErrorCode.RUN_NO_FACE_SHAPE_TAG;
+
+            //when, then
+            assertThatThrownBy(() -> hairStyleService.findRecommendedHairStyle(tags, userId, getDefaultPageable()))
+                    .isInstanceOf(WishHairException.class)
+                    .hasMessageContaining(expectedError.getMessage());
+        }
+
+        @Test
+        @DisplayName("조회된 헤어스타일은 일치하는 해시태그 수, 찜수, 이름으로 정렬된다")
+        void test3() {
+            //given
+            List<Tag> tags = E.getTags();
+            Long userId = userRepository.save(UserFixture.B.toEntity()).getId();
+
+            //when
+            List<HairStyleResponse> result = hairStyleService.findRecommendedHairStyle(tags, userId, getDefaultPageable());
+
+            //then
+            assertAll(
+                    () -> assertThat(result).hasSize(3),
+                    () -> assertThat(result.stream().map(HairStyleResponse::getName).toList())
+                            .containsExactly(E.getName(), C.getName(), D.getName())
+            );
         }
     }
 }
