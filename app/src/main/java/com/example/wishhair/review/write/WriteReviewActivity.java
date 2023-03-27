@@ -11,19 +11,31 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.wishhair.R;
+import com.example.wishhair.sign.UrlConst;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class WriteReviewActivity extends AppCompatActivity {
     private static final String TAG = "WriteReviewActivity";
 
     private Button btn_del, btn_addPicture, btn_back, btn_submit;
+    private EditText editText_content;
 
     private RecyclerView recyclerView;
     private WriteReviewAdapter writeReviewAdapter;
@@ -32,7 +44,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
     private RatingBar ratingBar;
 
-    EditText editText_content;
+    private final WriteRequestData writeRequestData = new WriteRequestData();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +59,13 @@ public class WriteReviewActivity extends AppCompatActivity {
 
 //        RatingBar
         ratingBar = findViewById(R.id.write_review_ratingBar);
-        ratingBar.setOnRatingBarChangeListener((ratingBar, v, b) -> ratingBar.setRating(v));
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float choice, boolean fromUser) {
+                writeRequestData.setRating(choice);
+                Log.d("setRating", writeRequestData.getRating());
+            }
+        });
 
 //        addPicture
         btn_addPicture = findViewById(R.id.write_review_addPicture);
@@ -67,6 +85,12 @@ public class WriteReviewActivity extends AppCompatActivity {
 
 //        submit
         btn_submit = findViewById(R.id.write_review_submit);
+        btn_submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                writeRequest(items);
+            }
+        });
 
     }
 
@@ -105,6 +129,14 @@ public class WriteReviewActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+//    private JSONObject writeContent() {    }
+
+    private void writeRequest(ArrayList<Uri> imageUris) {
+        String URL_WRITE = UrlConst.URL + "/api/review";
+        RequestQueue queue = Volley.newRequestQueue(this);
+
 
     }
 }

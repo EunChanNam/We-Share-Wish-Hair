@@ -9,7 +9,7 @@
     <include layout="@layout/top_bar_title" />
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_gravity="center">
         <TextView
@@ -43,18 +43,15 @@
                 android:background="@drawable/border_sign_image"
                 android:contentDescription="@string/login_hint_id" />
 
-            <EditText
-                android:id="@+id/sign_register_et_id"
+            <TextView
+                android:id="@+id/sign_register_tv_id"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:paddingStart="5dp"
                 android:layout_weight="4"
-                android:background="@drawable/border_sign_text"
-                android:ems="10"
-                android:hint="@string/register_hint_id"
-                android:inputType="text"
-                android:importantForAutofill="no"
-                tools:ignore="RtlSymmetry" />
+                android:textColor="#FFA3A3A3"
+                android:autoSizeTextType="uniform"
+                android:padding="6dp"
+                android:background="@drawable/border_sign_text" />
         </LinearLayout>
         <!--    pw-->
         <LinearLayout
@@ -66,11 +63,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="5dp"
                 android:src="@drawable/sign_pw"
                 android:background="@drawable/border_sign_image"
                 android:contentDescription="@string/login_hint_id" />
-
             <EditText
                 android:id="@+id/sign_register_et_password"
                 android:layout_width="0dp"
@@ -94,7 +89,6 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:padding="7dp"
                 android:src="@drawable/sign_name"
                 android:background="@drawable/border_sign_image"
                 android:contentDescription="@string/login_hint_id" />
@@ -106,7 +100,7 @@
                 android:layout_weight="4"
                 android:background="@drawable/border_sign_text"
                 android:ems="10"
-                android:hint="name"
+                android:hint="@string/register_hint_name"
                 android:inputType="textPersonName"
                 android:importantForAutofill="no"
                 tools:ignore="RtlSymmetry" />
@@ -121,10 +115,9 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="5dp"
-                android:src="@drawable/sign_star_black"
+                android:src="@drawable/sign_star"
                 android:background="@drawable/border_sign_image"
                 android:contentDescription="@string/login_hint_id" />
-
             <EditText
                 android:id="@+id/sign_register_et_nickname"
                 android:layout_width="0dp"
@@ -132,7 +125,7 @@
                 android:layout_weight="4"
                 android:background="@drawable/border_sign_text"
                 android:ems="10"
-                android:hint="nickname"
+                android:hint="@string/register_hint_nickname"
                 android:importantForAutofill="no"
                 android:inputType="text"
                 android:paddingStart="5dp"
@@ -149,7 +142,7 @@
                 android:id="@+id/textViewSEX"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="성별 : "
+                android:text="@string/register_message_sex"
                 android:textSize="20sp"
                 android:textColor="@color/black"
                 android:layout_gravity="center_vertical"/>
@@ -162,14 +155,14 @@
                     android:id="@+id/radio_sex_man"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="남"
+                    android:text="@string/register_text_sex_man"
                     android:tag="MAN"
                     android:textSize="17sp" />
                 <RadioButton
                     android:id="@+id/radio_sex_woman"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="여"
+                    android:text="@string/register_text_sex_woman"
                     android:tag="WOMAN"
                     android:textSize="17sp" />
             </RadioGroup>
@@ -179,7 +172,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="20dp"
             android:orientation="vertical">
             <TextView
                 android:layout_width="wrap_content"
@@ -190,31 +183,36 @@
 
             <CheckBox
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:text="@string/register_term_1" />
             <CheckBox
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:text="@string/register_term_2" />
             <CheckBox
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:text="@string/register_term_3" />
             <CheckBox
                 android:layout_width="wrap_content"
-                android:layout_height="40dp"
+                android:layout_height="30dp"
                 android:text="@string/register_term_4" />
         </LinearLayout>
         <!--    submit-->
+        <!-- View : 버튼을 부모의 최하단에 위치시키기 위해 중간 공간을 만든 것임 -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
         <Button
             android:id="@+id/btn_join"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="0"
             android:background="@drawable/border_sign_button"
             android:text="@string/register_button_submit" />
     </LinearLayout>
-
 
 <!--    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_id_dup_check"
