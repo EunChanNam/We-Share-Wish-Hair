@@ -47,7 +47,7 @@ import java.util.Map;
 public class WriteReviewActivity extends AppCompatActivity {
     private static final String TAG = "WriteReviewActivity";
 
-    private Button btn_del, btn_addPicture, btn_back, btn_submit;
+    private Button btn_addPicture, btn_back, btn_submit;
     private EditText editText_content;
 
     private RecyclerView recyclerView;
@@ -66,13 +66,15 @@ public class WriteReviewActivity extends AppCompatActivity {
 //        accessToken
         CustomTokenHandler customTokenHandler = new CustomTokenHandler(this);
         String accessToken = customTokenHandler.getAccessToken();
+//         hair Style info
+//        #TODO hair style info 받아오기
+        writeRequestData.setHairStyleId("10");
 
 //        back
         btn_back = findViewById(R.id.toolbar_btn_back);
         btn_back.setOnClickListener(view -> finish());
 
         recyclerView = findViewById(R.id.write_review_picture_recyclerView);
-        btn_del = findViewById(R.id.review_item_write_btn_delete);
 
 //        RatingBar
         ratingBar = findViewById(R.id.write_review_ratingBar);
@@ -95,17 +97,16 @@ public class WriteReviewActivity extends AppCompatActivity {
             startActivityForResult(intent, 2222);
         });
 
-//        delete
-        btn_del = findViewById(R.id.review_item_write_btn_delete);
-
 //        content
+        editText_content = findViewById(R.id.write_review_content);
+
 //        submit
         btn_submit = findViewById(R.id.write_review_submit);
         btn_submit.setOnClickListener(view -> {
-            editText_content = findViewById(R.id.write_review_content);
-            String contents = String.valueOf(editText_content.getText());
             Retrofit2MultipartUploader uploader = new Retrofit2MultipartUploader(getApplicationContext());
-            uploader.uploadFiles("10", "S3", contents, items, accessToken);
+            String contents = String.valueOf(editText_content.getText());
+            writeRequestData.setContent(contents);
+            uploader.uploadFiles(writeRequestData.getHairStyleId(), "S3", writeRequestData.getContent(), items, accessToken);
         });
 
     }

@@ -40,12 +40,9 @@ public class WriteReviewAdapter extends RecyclerView.Adapter<WriteReviewAdapter.
 
         Glide.with(context).load(imageURI).into(viewHolder.imageView);
 
-        viewHolder.btn_del.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int position = viewHolder.getAdapterPosition();
-                deleteItems(position);
-            }
+        viewHolder.btn_del.setOnClickListener(view -> {
+            int position1 = viewHolder.getAdapterPosition();
+            deleteItems(position1);
         });
     }
 
@@ -70,20 +67,4 @@ public class WriteReviewAdapter extends RecyclerView.Adapter<WriteReviewAdapter.
         notifyItemRemoved(position);
         notifyItemRangeRemoved(position, items.size());
     }
-
-    /*public static class WriteReviewItem {
-        private String imageURL;
-
-        public WriteReviewItem(String imageURL) {
-            this.imageURL = imageURL;
-        }
-
-        public String getImageURL() {
-            return imageURL;
-        }
-
-        public void setImageURL(String imageURL) {
-            this.imageURL = imageURL;
-        }
-    }*/
 }
