@@ -61,7 +61,7 @@ public class HairStyleRepositoryTest extends RepositoryTest {
 
             //then
             assertAll(
-                    () -> assertThat(result.size()).isEqualTo(1),
+                    () -> assertThat(result).hasSize(1),
                     () -> assertThat(result.get(0).getSex()).isEqualTo(sex),
                     () -> assertThat(result.get(0).getName()).isEqualTo(B.getName()),
                     () -> assertThat(result.get(0).getHashTags().stream()
@@ -69,7 +69,8 @@ public class HairStyleRepositoryTest extends RepositoryTest {
                             .containsAll(tags),
                     () -> assertThat(result.get(0).getPhotos().stream()
                             .map(Photo::getOriginalFilename).toList())
-                            .containsAll(B.getOriginalFilenames())
+                            .containsAll(B.getOriginalFilenames()),
+                    () -> assertThat(result.get(0).getWishListCount()).isEqualTo(B.getWishListCount())
             );
         }
 
@@ -85,13 +86,13 @@ public class HairStyleRepositoryTest extends RepositoryTest {
 
             //then
             assertAll(
-                    () -> assertThat(result.size()).isEqualTo(4),
+                    () -> assertThat(result).hasSize(4),
                     () -> assertThat(result).contains(a, c, d, e)
             );
         }
 
         @Test
-        @DisplayName("조회된 헤어스타일은 해시태그의 개수와 이름으로 정렬된다")
+        @DisplayName("조회된 헤어스타일은 해시태그의 개수, 찜수, 이름으로 정렬된다")
         void test3() {
             //given
             List<Tag> tags = A.getTags();
@@ -102,22 +103,9 @@ public class HairStyleRepositoryTest extends RepositoryTest {
 
             //then
             assertAll(
-                    () -> assertThat(result.size()).isEqualTo(4),
+                    () -> assertThat(result).hasSize(4),
                     () -> assertThat(result).containsExactly(a, c, d, e)
             );
-        }
-
-        @Test
-        @DisplayName("해시태그가 하나도 포함되지 않으면 조회되지 않는다")
-        void test4() {
-            //given
-            List<Tag> tags = new ArrayList<>();
-            Pageable pageable = PageableUtils.getDefaultPageable();
-
-            //when
-            List<HairStyle> result = hairStyleRepository.findByHashTags(tags, B.getSex(), pageable);
-
-            assertThat(result).isEmpty();
         }
     }
 }

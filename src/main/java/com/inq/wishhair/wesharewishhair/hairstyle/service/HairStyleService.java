@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
@@ -32,9 +33,27 @@ public class HairStyleService {
 
         User user = findUser(userId);
         List<HairStyle> hairStyles = hairStyleRepository.findByHashTags(tags, user.getSex(), pageable);
+
+        Tag faceShapeTag = extractFaceShapeTag(tags);
+        filterHasFaceShapeTag(hairStyles, faceShapeTag);
+
         updateFaceShape(user, hairStyles);
 
         return generateHairStyleResponses(hairStyles);
+    }
+
+    private void filterHasFaceShapeTag(List<HairStyle> hairStyles, Tag faceShapeTag) {
+        hairStyles.removeIf(hairStyle -> !hairStyle.getHashTags().stream()
+                .map(HashTag::getTag)
+                .toList()
+                .contains(faceShapeTag));
+    }
+
+    private Tag extractFaceShapeTag(List<Tag> tags) {
+        return tags.stream()
+                .filter(Tag::isFaceShapeType)
+                .findAny().
+                orElseThrow(() -> new WishHairException(ErrorCode.RUN_NO_FACE_SHAPE_TAG));
     }
 
     private User findUser(Long userId) {

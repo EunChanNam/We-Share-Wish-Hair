@@ -73,7 +73,7 @@ public class HairStyleControllerTest extends ControllerTest {
         @DisplayName("태그를 입력하지 않으면 400 예외를 던진다")
         void test2() throws Exception {
             //given, 태그 X
-            ErrorCode expectedError = ErrorCode.HAIR_STYLE_REQUIRED_TAG;
+            ErrorCode expectedError = ErrorCode.RUN_NOT_ENOUGH_TAG;
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders

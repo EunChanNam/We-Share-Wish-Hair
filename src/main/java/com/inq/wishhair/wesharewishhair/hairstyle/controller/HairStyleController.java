@@ -25,7 +25,7 @@ public class HairStyleController {
     @GetMapping("/hair_style/recommend")
     public ResponseEntity<PagedHairStyleResponse> respondRecommendedHairStyle(
             @PageableDefault(size = 4) Pageable pageable,
-            @RequestParam(defaultValue = "Error") List<Tag> tags,
+            @RequestParam(defaultValue = "ERROR") List<Tag> tags,
             @ExtractPayload Long userId) {
 
         validateHasTag(tags);
@@ -36,8 +36,8 @@ public class HairStyleController {
     }
 
     private void validateHasTag(List<Tag> tags) {
-        if (tags.get(0).equals(Tag.Error)) {
-            throw new WishHairException(ErrorCode.HAIR_STYLE_REQUIRED_TAG);
+        if (tags.get(0).equals(Tag.ERROR)) {
+            throw new WishHairException(ErrorCode.RUN_NOT_ENOUGH_TAG);
         }
     }
 
