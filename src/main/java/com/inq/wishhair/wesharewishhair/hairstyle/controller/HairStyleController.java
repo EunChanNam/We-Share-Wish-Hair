@@ -37,7 +37,7 @@ public class HairStyleController {
 
     private void validateHasTag(List<Tag> tags) {
         if (tags.get(0).equals(Tag.Error)) {
-            throw new WishHairException(ErrorCode.HAIR_STYLE_REQUIRED_TAG);
+            throw new WishHairException(ErrorCode.RUN_NOT_ENOUGH_TAG);
         }
     }
 
