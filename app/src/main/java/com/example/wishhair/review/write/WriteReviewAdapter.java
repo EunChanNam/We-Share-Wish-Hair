@@ -63,7 +63,6 @@ public class WriteReviewAdapter extends RecyclerView.Adapter<WriteReviewAdapter.
             imageView = itemView.findViewById(R.id.review_item_write_imageview);
             btn_del = itemView.findViewById(R.id.review_item_write_btn_delete);
         }
-
     }
 
     public void deleteItems(int position) {
