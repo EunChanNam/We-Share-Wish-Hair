@@ -1,19 +1,27 @@
 package com.example.wishhair.MyPage;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -54,6 +62,7 @@ public class MyPageFragment extends Fragment {
 
     static String testName = null;
     TextView tv;
+    ImageButton userpicture;
 
     public MyPageFragment() {
         // Required empty public constructor
@@ -113,6 +122,15 @@ public class MyPageFragment extends Fragment {
             }
         });
 
+        userpicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                intent.setAction(Intent.ACTION_PICK);
+                activityResultLauncher.launch(intent);
+            }
+        });
 
 /*      HomeFragment로 이동하는 버튼 <불필요 시 삭제>
         toolbar.setNavigationIcon(R.drawable.back);
@@ -151,6 +169,7 @@ public class MyPageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mypage_fragment, container, false);
         tv = view.findViewById(R.id.mypage_nickname);
+        userpicture = view.findViewById(R.id.mypage_user_picture);
         return view;
     }
 
@@ -230,5 +249,19 @@ public class MyPageFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(jsonObjectRequest);
     }
+
+    public ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if(result.getResultCode() == Activity.RESULT_OK) {
+                        Intent intent = result.getData();
+                        Uri uri = intent.getData();
+                        userpicture.setImageURI(uri);
+                    }
+                }
+            }
+    );
 
 }
