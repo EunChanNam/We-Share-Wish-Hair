@@ -99,15 +99,13 @@ public class WriteReviewActivity extends AppCompatActivity {
         btn_del = findViewById(R.id.review_item_write_btn_delete);
 
 //        content
-        editText_content = findViewById(R.id.write_review_content);
-
 //        submit
         btn_submit = findViewById(R.id.write_review_submit);
-        btn_submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                volleyer(accessToken);
-            }
+        btn_submit.setOnClickListener(view -> {
+            editText_content = findViewById(R.id.write_review_content);
+            String contents = String.valueOf(editText_content.getText());
+            Retrofit2MultipartUploader uploader = new Retrofit2MultipartUploader(getApplicationContext());
+            uploader.uploadFiles("10", "S3", contents, items, accessToken);
         });
 
     }
@@ -147,177 +145,6 @@ public class WriteReviewActivity extends AppCompatActivity {
                 }
             }
         }
-    }
-
-//    private JSONObject writeContent() {    }
-
-    private void writeRequest(ArrayList<Uri> imageUris, String accessToken) {
-        String URL_WRITE = UrlConst.URL + "/api/review";
-
-        VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.POST, URL_WRITE, new Response.Listener<NetworkResponse>() {
-            @Override
-            public void onResponse(NetworkResponse response) {
-                Log.d("upload ", response.toString());
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("upload error", "뚜뚜뚜뚜뚜뚜뚜뚜뚜뚜");
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String>  params = new HashMap();
-                params.put("Authorization", "bearer" + accessToken);
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("hairStyleId", "11");
-                params.put("score", "S3");
-                params.put("contents", "당근");
-                return params;
-            }
-
-            @Override
-            public Map<String, DataPart> getByteData() {
-                Map<String, DataPart> files = new HashMap<>();
-                // file name could found file base or direct access from real path
-                // for now just get bitmap data from ImageView
-                Log.d("items size", String.valueOf(items.size()));
-                for (int i = 0; i < items.size(); i++) {
-                    InputStream inputStream = null;
-                    Drawable drawable = null;
-                    try {
-                        inputStream = getContentResolver().openInputStream(items.get(i));
-                        drawable = Drawable.createFromStream(inputStream, items.get(i).toString());
-                        Log.d("send drawable", drawable.toString());
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    } finally {
-                        if (inputStream != null) {
-                            try {
-                                inputStream.close();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                    files.put("files", new DataPart("images" + i, AppHelper.getFileDataFromDrawable(getBaseContext(), drawable), "image/jpeg"));
-                }
-
-                Log.d("files size", String.valueOf(files.size()));
-
-                return files;
-            }
-        };
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(volleyMultipartRequest);
-    }
-
-    private void volleyer(String accessToken) {
-
-        String URL_WRITE = UrlConst.URL + "/api/review";
-        String boundary = "apiclient-" + System.currentTimeMillis(); // boundary 값 생성
-
-        VolleyMultipartRequest multipartRequest = new VolleyMultipartRequest(Request.Method.POST, URL_WRITE, new Response.Listener<NetworkResponse>() {
-            @Override
-            public void onResponse(NetworkResponse response) {
-                // 파일 업로드 성공 처리
-                String resultResponse = new String(response.data);
-                try {
-                    JSONObject result = new JSONObject(resultResponse);
-                    String message = result.getString("message");
-                    Log.d("volleyer suc", message);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "onErrorResponse: volleyer fail");
-                error.printStackTrace();
-            }
-        }) {
-            @Override
-            public Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("hairStyleId", "11");
-                params.put("score", "S3");
-                params.put("contents", "당근");
-                return params;
-            }
-
-            @Override
-            protected Map<String, DataPart> getByteData() {
-                Map<String, DataPart> params = new HashMap<>();
-                for (int i = 0; i < items.size(); i++) {
-                    Uri fileUri = items.get(i); // 갤러리에서 선택한 이미지 Uri
-                    String fileName = getFileName(fileUri); // 선택한 이미지 파일 이름
-
-                    try {
-                        InputStream iStream = getContentResolver().openInputStream(fileUri);
-                        byte[] inputData = getBytes(iStream);
-                        params.put("files", new DataPart(fileName, inputData));
-                        Log.d("input files", params.toString());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-                return params;
-            }
-
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "bearer" + accessToken);
-                headers.put("Content-Type", "multipart/form-data;boundary=" + boundary);
-                return headers;
-            }
-        };
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(multipartRequest);
-    }
-
-    private String getFileName(Uri uri) {
-        String result = null;
-        if (uri.getScheme().equals("content")) {
-            Cursor cursor = getContentResolver().query(uri, null, null, null, null);
-            if (cursor != null && cursor.moveToFirst()) {
-                int index = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME);
-                if (index != -1) {
-                    result = cursor.getString(index);
-                } else {
-                    throw new RuntimeException("Column not found");
-                }
-            }
-        }
-        if (result == null) {
-            result = uri.getPath();
-            int cut = result.lastIndexOf('/');
-            if (cut != -1) {
-                result = result.substring(cut + 1);
-            }
-        }
-        return result;
-    }
-
-    /*private byte[] getBytes(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        return stream.toByteArray();
-    }*/
-
-    public byte[] getBytes(InputStream inputStream) {
-        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
-        return byteArrayOutputStream.toByteArray();
     }
 
 }

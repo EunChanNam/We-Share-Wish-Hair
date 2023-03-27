@@ -1,4 +1,4 @@
-package com.example.wishhair.review.my;
+package com.example.wishhair.review.recent.my;
 
 import android.content.Context;
 import android.view.LayoutInflater;
