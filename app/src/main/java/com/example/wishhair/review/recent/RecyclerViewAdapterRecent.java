@@ -51,8 +51,14 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
         ReviewItem item = reviewItems.get(position);
 
         holder.profileImage.setImageResource(item.getProfileImage());
-        holder.bindSliderImage1(item.getContentImage1());
-        holder.bindSliderImage2(item.getContentImage2());
+//        holder.bindSliderImage1(item.getContentImage1());
+//        holder.bindSliderImage2(item.getContentImage2());
+        if (item.getContentImage1() != null) {
+            holder.contentImage1.setImageURI(item.getContentImage1());
+        }
+        if (item.getContentImage2() != null) {
+            holder.contentImage2.setImageURI(item.getContentImage2());
+        }
         holder.nickname.setText(item.getNickname());
         holder.authorAvgGrade.setText(item.getAuthorAvgGrade());
         holder.authorReviewCount.setText(item.getAuthorReviewCount());

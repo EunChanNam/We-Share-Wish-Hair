@@ -1,6 +1,9 @@
 package com.example.wishhair.review.recent;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -37,6 +40,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,10 +64,13 @@ public class ReviewListFragment extends Fragment {
     private RadioButton filter_whole, filter_man, filter_woman;
     private Button btn_temp_write;
 
-//    sort
+//    img
+    private static final String IMG_PATH = "C:\\Users\\hath8\\IdeaProjects\\backend\\We-Share-Wish-Hair\\src\\main\\resources\\static\\images\\";
+    private Bitmap bitmap;
+
+    //    sort
     private static String sort_selected = null;
     private static final String[] sortItems = {"최신 순", "오래된 순", "좋아요 순"};
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -151,14 +162,33 @@ public class ReviewListFragment extends Fragment {
                         receivedData.setUserNickName(userNickName);
                         receivedData.setScore(score);
                         receivedData.setLikes(likes);
+
                         JSONArray photosArray = resultObject.getJSONArray("photos");
                         List<String> fileNames = new ArrayList<>();
                         for (int j = 0; j < photosArray.length(); j++) {
                             JSONObject photoObject = photosArray.getJSONObject(j);
                             String storeFilename = photoObject.getString("storeFilename");
-                            fileNames.add(storeFilename);
-                            receivedData.setPhotos(fileNames);
+                            fileNames.add(IMG_PATH + storeFilename);
                         }
+                        receivedData.setPhotos(fileNames);
+
+//                       set review data
+//                       TODO remove sampleImage
+                        List<String> photos = receivedData.getPhotos();
+                        Log.d("received photos", photos.toString());
+                        String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
+                        if (photos.size() == 1) {
+                            ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
+                                    photos.get(0), "carrot",
+                                    receivedData.getScore(), true, receivedData.getLikes(), "22.03.01");
+                            recentReviewItems.add(item);
+                        } else {
+                            ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
+                                    photos.get(0), photos.get(1), "carrot",
+                                    receivedData.getScore(), true, receivedData.getLikes(), "22.03.01");
+                            recentReviewItems.add(item);
+                        }
+
                         /*JSONArray hasTagsArray = resultObject.getJSONArray("hasTags");
                         for (int k = 0; k < hasTagsArray.length(); k++) {
                             JSONObject hasTagObject = hasTagsArray.getJSONObject(k);
@@ -175,16 +205,7 @@ public class ReviewListFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-//                set review data
-//                TODO remove sampleImage
-                List<String> photos = receivedData.getPhotos();
-                Log.d("received photos", photos.toString());
-                String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
-                ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
-                        imageSample, imageSample,
-//                        photos.get(0), photos.get(1),
-                        "carrot", receivedData.getScore(), true, receivedData.getLikes(), "22.03.01");
-                recentReviewItems.add(item);
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -202,6 +223,44 @@ public class ReviewListFragment extends Fragment {
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         requestQueue.add(jsonObjectRequest);
     }
+
+//    private void setImage(URL url) {
+//        Thread uThread = new Thread() {
+//            @Override
+//            public void run(){
+//                try{
+//                    // 이미지 URL 경로
+//                    // web에서 이미지를 가져와 ImageView에 저장할 Bitmap을 만든다.
+//                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+//                    conn.setDoInput(true); // 서버로부터 응답 수신
+//                    conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
+//
+//                    InputStream is = conn.getInputStream(); //inputStream 값 가져오기
+//                    bitmap = BitmapFactory.decodeStream(is); // Bitmap으로 변환
+//
+//                }catch (MalformedURLException e){
+//                    e.printStackTrace();
+//                }catch (IOException e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        };
+//
+//        uThread.start(); // 작업 Thread 실행
+//
+//        try{
+//            //메인 Thread는 별도의 작업 Thread가 작업을 완료할 때까지 대기해야 한다.
+//            //join() 호출하여 별도의 작업 Thread가 종료될 때까지 메인 Thread가 기다리도록 한다.
+//            //join() 메서드는 InterruptedException을 발생시킨다.
+//            uThread.join();
+//
+//            //작업 Thread에서 이미지를 불러오는 작업을 완료한 뒤
+//            //UI 작업을 할 수 있는 메인 Thread에서 ImageView에 이미지 지정
+//            imageView.setImageBitmap(bitmap);
+//        }catch (InterruptedException e){
+//            e.printStackTrace();
+//        }
+//    }
 
     private void sort_select(Spinner spinner_sort) {
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, sortItems);

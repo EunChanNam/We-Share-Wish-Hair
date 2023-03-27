@@ -1,5 +1,9 @@
 package com.example.wishhair.review;
 
+import android.net.Uri;
+
+import androidx.annotation.NonNull;
+
 public class ReviewItem {
 
     // common
@@ -18,6 +22,21 @@ public class ReviewItem {
     private String contentImage1;
     private String contentImage2;
 
+    //사진이 1장일 때
+    public ReviewItem(int profileImage, String nickname, String authorReviewCount, String authorAvgGrade, String contentImage, String content, String grade, boolean isHeart, int heartCount, String date) {
+        this.profileImage = profileImage;
+        this.nickname = nickname;
+        this.authorReviewCount = authorReviewCount;
+        this.authorAvgGrade = authorAvgGrade;
+        this.contentImage1 = contentImage;
+        this.content = content;
+        this.grade = grade;
+        this.isHeart = isHeart;
+        this.heartCount = heartCount;
+        this.date = date;
+    }
+
+    //사진이 2장 이상일 때
     public ReviewItem(int profileImage, String nickname, String authorReviewCount, String authorAvgGrade, String contentImage1, String contentImage2, String content, String grade, boolean isHeart, int heartCount, String date) {
         this.profileImage = profileImage;
         this.nickname = nickname;
@@ -81,17 +100,25 @@ public class ReviewItem {
         this.authorAvgGrade = authorAvgGrade;
     }
 
-    public String getContentImage1() {
+    /*public String getContentImage1() {
         return contentImage1;
+    }*/
+    public Uri getContentImage1() {
+        if(contentImage1 == null) return null;
+        return Uri.parse(contentImage1);
+    }
+    public Uri getContentImage2() {
+        if(contentImage2 == null) return null;
+        return Uri.parse(contentImage2);
     }
 
     public void setContentImage1(String contentImage1) {
         this.contentImage1 = contentImage1;
     }
 
-    public String getContentImage2() {
-        return contentImage2;
-    }
+//    public String getContentImage2() {
+//        return contentImage2;
+//    }
 
     public void setContentImage2(String contentImage2) {
         this.contentImage2 = contentImage2;
