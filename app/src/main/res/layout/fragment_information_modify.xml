@@ -14,7 +14,16 @@
         android:background="@color/white"
         app:title="내 정보 수정"
         app:titleTextColor="#666666"
-        app:menu="@menu/toolbar_commit_menu">
+        >
+
+        <ImageButton
+            android:id="@+id/modify_commit_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="10dp"
+            android:background="@color/white"
+            android:src="@drawable/check" />
 
     </androidx.appcompat.widget.Toolbar>
 

@@ -1,6 +1,7 @@
 package com.example.wishhair.MyPage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -29,6 +30,8 @@ import com.example.wishhair.MainActivity;
 import com.example.wishhair.MyPage.adapters.MyPageRecyclerViewAdapter;
 import com.example.wishhair.MyPage.items.HeartlistItem;
 import com.example.wishhair.R;
+import com.example.wishhair.review.write.WriteReviewActivity;
+import com.example.wishhair.sign.LoginActivity;
 import com.example.wishhair.sign.UrlConst;
 
 import org.json.JSONException;
@@ -84,10 +87,6 @@ public class MyPageFragment extends Fragment {
 //        HeartlistRecyclerView.addItemDecoration(recyclerDecoration);
 
         adapter = new MyPageRecyclerViewAdapter();
-        adapter.addItem(new HeartlistItem());
-        adapter.addItem(new HeartlistItem());
-        adapter.addItem(new HeartlistItem());
-        adapter.addItem(new HeartlistItem());
         adapter.addItem(new HeartlistItem());
         adapter.addItem(new HeartlistItem());
         adapter.addItem(new HeartlistItem());
@@ -160,16 +159,19 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 logout_delete_token(loginSP);
+                Intent intent = new Intent(mainActivity, LoginActivity.class);
+                startActivity(intent);
+                mainActivity.finish();
 
-//                TODO : 현재 액티비티(프래그먼트)를 끝내고 LoginActivity로 이동
             }
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 logout_delete_token(loginSP);
-
-//                TODO : 현재 액티비티(프래그먼트)를 끝내고 LoginActivity로 이동
+                Intent intent = new Intent(mainActivity, LoginActivity.class);
+                startActivity(intent);
+                mainActivity.finish();
             }
 
         }) {
