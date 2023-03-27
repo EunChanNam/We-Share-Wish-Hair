@@ -12,7 +12,7 @@ import java.util.List;
 public interface HairStyleRepository extends JpaRepository<HairStyle, Long> {
 
     @Query("select h from HairStyle h " +
-            "join fetch h.hashTags t on h.id = t.hairStyle.id " +
+            "join h.hashTags t " +
             "where t.tag in :tags " +
             "and h.sex = :sex " +
             "group by h.id " +
@@ -22,7 +22,7 @@ public interface HairStyleRepository extends JpaRepository<HairStyle, Long> {
                                    Pageable pageable);
 
     @Query("select h from HairStyle h " +
-            "join fetch h.hashTags t on h.id = t.hairStyle.id " +
+            "join h.hashTags t " +
             "where t.tag = :tag " +
             "and h.sex = :sex " +
             "order by h.wishListCount.value desc, h.name")
@@ -31,7 +31,6 @@ public interface HairStyleRepository extends JpaRepository<HairStyle, Long> {
                                        Pageable pageable);
 
     @Query("select h from HairStyle h " +
-            "join fetch h.hashTags t on h.id = t.hairStyle.id " +
             "where h.sex = :sex " +
             "order by h.wishListCount.value desc, h.name")
     List<HairStyle> findByNoFaceShapeTag(@Param("sex") Sex sex,
