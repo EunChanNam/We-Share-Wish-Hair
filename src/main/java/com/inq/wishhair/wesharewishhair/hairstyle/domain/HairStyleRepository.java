@@ -16,7 +16,7 @@ public interface HairStyleRepository extends JpaRepository<HairStyle, Long> {
             "where t.tag in :tags " +
             "and h.sex = :sex " +
             "group by h.id " +
-            "order by count(h.id) desc, h.wishListCount.value, h.name")
+            "order by count(h.id) desc, h.wishListCount.value desc, h.name")
     List<HairStyle> findByHashTags(@Param("tags") List<Tag> tags,
                                    @Param("sex") Sex sex,
                                    Pageable pageable);

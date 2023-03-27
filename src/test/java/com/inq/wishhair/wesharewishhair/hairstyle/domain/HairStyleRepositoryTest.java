@@ -104,7 +104,7 @@ public class HairStyleRepositoryTest extends RepositoryTest {
             //then
             assertAll(
                     () -> assertThat(result).hasSize(4),
-                    () -> assertThat(result).containsExactly(a, c, e, d)
+                    () -> assertThat(result).containsExactly(a, c, d, e)
             );
         }
     }
