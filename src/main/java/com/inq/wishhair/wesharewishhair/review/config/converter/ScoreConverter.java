@@ -2,10 +2,10 @@ package com.inq.wishhair.wesharewishhair.review.config.converter;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
-import com.fasterxml.jackson.databind.util.Converter;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.review.enums.Score;
+import org.springframework.core.convert.converter.Converter;
 
 public class ScoreConverter implements Converter<String, Score> {
 
@@ -47,15 +47,5 @@ public class ScoreConverter implements Converter<String, Score> {
             }
         }
         throw new WishHairException(ErrorCode.SCORE_MISMATCH);
-    }
-
-    @Override
-    public JavaType getInputType(TypeFactory typeFactory) {
-        return null;
-    }
-
-    @Override
-    public JavaType getOutputType(TypeFactory typeFactory) {
-        return null;
     }
 }
