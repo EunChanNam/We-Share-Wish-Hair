@@ -9,6 +9,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -93,7 +94,26 @@ public class HairStyleServiceTest extends ServiceTest {
                             .containsExactly(E.getName(), C.getName(), D.getName())
             );
         }
+
+        @Test
+        @DisplayName("헤어스타일을 추천 후 첫번째 헤어스타일의 얼굴형 태그로 사용자의 faceShapeTag 를 업데이트 한다")
+        void test4() {
+            //given
+            List<Tag> tags = E.getTags();
+            User user = UserFixture.B.toEntity();
+            userRepository.save(user);
+
+            //before
+            assertThat(user.existFaceShape()).isFalse();
+
+            //when
+            hairStyleService.findRecommendedHairStyle(tags, user.getId(), getDefaultPageable());
+
+            //then
+            assertAll(
+                    () -> assertThat(user.existFaceShape()).isTrue(),
+                    () -> assertThat(user.getFaceShape()).isEqualTo(Tag.OBLONG) // <- E 헤어스타일의 얼굴형 태그
+            );
+        }
     }
 }
-//() -> assertThat(result.stream().map(HairStyleResponse::getName))
-//        .containsExactly(A.getName(), C.getName(), D.getName(), E.getName())
