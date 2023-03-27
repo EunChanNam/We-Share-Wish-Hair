@@ -17,12 +17,12 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/hair_style")
 public class HairStyleController {
 
     private final HairStyleService hairStyleService;
 
-    @GetMapping("/hair_style/recommend")
+    @GetMapping("/recommend")
     public ResponseEntity<PagedHairStyleResponse> respondRecommendedHairStyle(
             @PageableDefault(size = 4) Pageable pageable,
             @RequestParam(defaultValue = "ERROR") List<Tag> tags,
@@ -35,6 +35,16 @@ public class HairStyleController {
         return ResponseEntity.ok(toPagedResponse(result));
     }
 
+    @GetMapping("/home")
+    public ResponseEntity<PagedHairStyleResponse> findHairStyleByFaceShape(
+            @PageableDefault(size = 4) Pageable pageable,
+            @ExtractPayload Long userId) {
+
+        List<HairStyleResponse> result = hairStyleService.findHairStyleByFaceShape(userId, pageable);
+
+        return ResponseEntity.ok(toPagedResponse(result));
+    }
+
     private void validateHasTag(List<Tag> tags) {
         if (tags.get(0).equals(Tag.ERROR)) {
             throw new WishHairException(ErrorCode.RUN_NOT_ENOUGH_TAG);
@@ -42,6 +52,6 @@ public class HairStyleController {
     }
 
     private PagedHairStyleResponse toPagedResponse(List<HairStyleResponse> result) {
-        return PagedHairStyleResponse.of(result);
+        return new PagedHairStyleResponse(result);
     }
 }

@@ -42,6 +42,18 @@ public class HairStyleService {
         return generateHairStyleResponses(hairStyles);
     }
 
+    public List<HairStyleResponse> findHairStyleByFaceShape(Long userId, Pageable pageable) {
+        User user = findUser(userId);
+
+        if (user.existFaceShape()) {
+            List<HairStyle> hairStyles = hairStyleRepository.findByFaceShapeTag(user.getFaceShape(), user.getSex(), pageable);
+            return generateHairStyleResponses(hairStyles);
+        } else {
+            List<HairStyle> hairStyles = hairStyleRepository.findByNoFaceShapeTag(user.getSex(), pageable);
+            return generateHairStyleResponses(hairStyles);
+        }
+    }
+
     private void filterHasFaceShapeTag(List<HairStyle> hairStyles, Tag faceShapeTag) {
         hairStyles.removeIf(hairStyle -> !hairStyle.getHashTags().stream()
                 .map(HashTag::getTag)

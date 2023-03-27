@@ -14,7 +14,8 @@ public class PagedHairStyleResponse {
 
     private int contentSize;
 
-    public static PagedHairStyleResponse of(List<HairStyleResponse> result) {
-        return new PagedHairStyleResponse(result, result.size());
+    public PagedHairStyleResponse(List<HairStyleResponse> result) {
+        this.result = result;
+        this.contentSize = result.size();
     }
 }
