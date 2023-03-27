@@ -1,4 +1,4 @@
-package com.example.wishhair.review.recent.my;
+package com.example.wishhair.review.my;
 
 import android.os.Bundle;
 

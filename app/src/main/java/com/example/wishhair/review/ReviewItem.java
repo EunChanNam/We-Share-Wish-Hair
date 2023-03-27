@@ -15,16 +15,10 @@ public class ReviewItem {
     private String authorReviewCount;
     private String authorAvgGrade;
     private boolean isHeart;
-    private int contentImage1;
-    private int contentImage2;
+    private String contentImage1;
+    private String contentImage2;
 
-    // my
-    private int hairImage;
-    private String hairStyle;
-    private String tags;
-    private boolean isPoint;
-
-    public ReviewItem(int profileImage, String nickname, String authorReviewCount, String authorAvgGrade, int contentImage1, int contentImage2, String content, String grade, boolean isHeart, int heartCount, String date) {
+    public ReviewItem(int profileImage, String nickname, String authorReviewCount, String authorAvgGrade, String contentImage1, String contentImage2, String content, String grade, boolean isHeart, int heartCount, String date) {
         this.profileImage = profileImage;
         this.nickname = nickname;
         this.authorReviewCount = authorReviewCount;
@@ -37,6 +31,12 @@ public class ReviewItem {
         this.heartCount = heartCount;
         this.date = date;
     }
+
+    // my
+    private int hairImage;
+    private String hairStyle;
+    private String tags;
+    private boolean isPoint;
 
     public ReviewItem(int hairImage, String hairStyle, String tags, String content, String grade, int heartCount, String date, boolean isPoint) {
         this.hairImage = hairImage;
@@ -81,19 +81,19 @@ public class ReviewItem {
         this.authorAvgGrade = authorAvgGrade;
     }
 
-    public int getContentImage1() {
+    public String getContentImage1() {
         return contentImage1;
     }
 
-    public void setContentImage1(int contentImage1) {
+    public void setContentImage1(String contentImage1) {
         this.contentImage1 = contentImage1;
     }
 
-    public int getContentImage2() {
+    public String getContentImage2() {
         return contentImage2;
     }
 
-    public void setContentImage2(int contentImage2) {
+    public void setContentImage2(String contentImage2) {
         this.contentImage2 = contentImage2;
     }
 

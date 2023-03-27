@@ -6,7 +6,9 @@ import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,10 +33,13 @@ import com.example.wishhair.review.detail.ReviewDetailActivity;
 import com.example.wishhair.review.write.WriteReviewActivity;
 import com.example.wishhair.sign.UrlConst;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ReviewListFragment extends Fragment {
@@ -54,6 +59,7 @@ public class ReviewListFragment extends Fragment {
 //    sort
     private static String sort_selected = null;
     private static final String[] sortItems = {"최신 순", "오래된 순", "좋아요 순"};
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -75,7 +81,6 @@ public class ReviewListFragment extends Fragment {
             }
         });
 
-
         filter = v.findViewById(R.id.review_fragment_filter_radioGroup);
         filter_whole = v.findViewById(R.id.review_fragment_filter_whole);
         filter_man = v.findViewById(R.id.review_fragment_filter_man);
@@ -85,14 +90,26 @@ public class ReviewListFragment extends Fragment {
         recentReviewItems = new ArrayList<>();
 
         //===============================dummy data===============================
-        for (int i=0;i<5;i++){
-            ReviewItem newItem = new ReviewItem(R.drawable.user_sample, "현정" + " 님", "3" + " 개", "3.03", R.drawable.star_fill, R.drawable.heart_fill, " is a root vegetable, typically orange in color, though purple, black, red, white, and yellow cultivars exist,[2][3][4] all of which are domesticated forms of the wild carrot, Daucus carota, native to Europe and Southwestern Asia. The plant probably originated in Persia and was originally cultivated for its leaves and seeds. The most commonly eaten part of the plant is the taproot, although the stems and leaves are also eaten. The domestic carrot has been selectively bred for its enlarged, more palatable, less woody-textured taproot.", "3.8", false, 314+i, "22.05.13");
-            recentReviewItems.add(newItem);
-        }
+        String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
+        ReviewItem newItem = new ReviewItem(R.drawable.user_sample, "현정" + " 님", "3" + " 개", "3.03",
+                imageSample, imageSample,
+                " is a root vegetable, typically orange in color, though purple, black, red, white, and yellow cultivars exist,[2][3][4] all of which are domesticated forms of the wild carrot, Daucus carota, native to Europe and Southwestern Asia. The plant probably originated in Persia and was originally cultivated for its leaves and seeds. The most commonly eaten part of the plant is the taproot, although the stems and leaves are also eaten. The domestic carrot has been selectively bred for its enlarged, more palatable, less woody-textured taproot.",
+                "3.8", false, 314, "22.05.13");
+        recentReviewItems.add(newItem);
 
-        RecyclerViewAdapterRecent recentRecyclerViewAdapter = new RecyclerViewAdapterRecent(recentReviewItems);
+
+        RecyclerViewAdapterRecent recentRecyclerViewAdapter = new RecyclerViewAdapterRecent(recentReviewItems, getContext());
         recentRecyclerView.setAdapter(recentRecyclerViewAdapter);
         recentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+
+        //        swipeRefreshLayout
+//        TODO 새로고침 제대로 구현
+        SwipeRefreshLayout swipeRefreshLayout = v.findViewById(R.id.review_recent_swipeRefLayout);
+        swipeRefreshLayout.setOnRefreshListener(() -> {
+            recentRecyclerViewAdapter.notifyDataSetChanged();
+            final Handler handler = new Handler();
+            handler.postDelayed(() -> swipeRefreshLayout.setRefreshing(false), 500);
+        });
 
         // TODO: 2023-03-12  나중에 아이템 클릭시 해당 게시글 이동 리스너로 활용
         recentRecyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapterRecent.OnItemClickListener() {
@@ -114,11 +131,55 @@ public class ReviewListFragment extends Fragment {
 
     private void ReviewListRequest(String accessToken) {
         final String URL_REVIEWLIST = UrlConst.URL + "/api/review";
+        RecentReceivedData receivedData = new RecentReceivedData();
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL_REVIEWLIST, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 Log.d("reviewListRequest", response.toString());
+//                parse received data
+                String stringResponse = String.valueOf(response);
+                try {
+                    JSONObject jsonObject = new JSONObject(stringResponse);
+                    JSONArray resultArray = jsonObject.getJSONArray("result");
+                    for (int i = 0; i < resultArray.length(); i++) {
+                        JSONObject resultObject = resultArray.getJSONObject(i);
+
+                        String userNickName = resultObject.getString("userNickName");
+                        String score = resultObject.getString("score");
+                        int likes = resultObject.getInt("likes");
+                        receivedData.setUserNickName(userNickName);
+                        receivedData.setScore(score);
+                        receivedData.setLikes(likes);
+                        JSONArray photosArray = resultObject.getJSONArray("photos");
+                        List<String> fileNames = new ArrayList<>();
+                        for (int j = 0; j < photosArray.length(); j++) {
+                            JSONObject photoObject = photosArray.getJSONObject(j);
+                            String storeFilename = photoObject.getString("storeFilename");
+                            fileNames.add(storeFilename);
+                            receivedData.setPhotos(fileNames);
+                        }
+                        /*JSONArray hasTagsArray = resultObject.getJSONArray("hasTags");
+                        for (int k = 0; k < hasTagsArray.length(); k++) {
+                            JSONObject hasTagObject = hasTagsArray.getJSONObject(k);
+                            String tag = hasTagObject.getString("tag");
+                            System.out.println("Tag " + (k + 1) + ": " + tag);
+                        }*/
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+//                set review data
+//                TODO remove sampleImage
+                List<String> photos = receivedData.getPhotos();
+                Log.d("received photos", photos.toString());
+                String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
+                ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
+                        imageSample, imageSample,
+//                        photos.get(0), photos.get(1),
+                        "carrot", receivedData.getScore(), true, receivedData.getLikes(), "22.03.01");
+                recentReviewItems.add(item);
             }
         }, new Response.ErrorListener() {
             @Override

@@ -79,7 +79,6 @@
                 android:importantForAutofill="no"
                 tools:ignore="RtlSymmetry"/>
         </LinearLayout>
-        <!-- #TODO define register info-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -132,7 +131,6 @@
                 tools:ignore="RtlSymmetry" />
         </LinearLayout>
         <!--    sex-->
-        <!--        #TODO  DESIGN-->
         <LinearLayout
             android:id="@+id/linearLayoutSEX"
             android:layout_width="match_parent"

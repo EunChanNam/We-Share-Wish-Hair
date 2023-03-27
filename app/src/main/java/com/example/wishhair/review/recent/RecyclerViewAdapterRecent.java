@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.wishhair.R;
 import com.example.wishhair.review.ReviewItem;
 
@@ -19,9 +20,11 @@ import java.util.ArrayList;
 public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerViewAdapterRecent.ViewHolder> {
 
     private final ArrayList<ReviewItem> reviewItems;
+    private final Context context;
 
-    public RecyclerViewAdapterRecent(ArrayList<ReviewItem> reviewItems) {
+    public RecyclerViewAdapterRecent(ArrayList<ReviewItem> reviewItems, Context context) {
         this.reviewItems = reviewItems;
+        this.context = context;
     }
 
     public interface OnItemClickListener {
@@ -48,8 +51,8 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
         ReviewItem item = reviewItems.get(position);
 
         holder.profileImage.setImageResource(item.getProfileImage());
-        holder.contentImage1.setImageResource(item.getContentImage1());
-        holder.contentImage2.setImageResource(item.getContentImage2());
+        holder.bindSliderImage1(item.getContentImage1());
+        holder.bindSliderImage2(item.getContentImage2());
         holder.nickname.setText(item.getNickname());
         holder.authorAvgGrade.setText(item.getAuthorAvgGrade());
         holder.authorReviewCount.setText(item.getAuthorReviewCount());
@@ -75,7 +78,7 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
         });
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView profileImage, contentImage1, contentImage2, isHeart;
         TextView nickname, authorReviewCount, authorAvgGrade, content, grade, date, heartCount;
         Button viewContent;
@@ -95,6 +98,13 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
             this.date = itemView.findViewById(R.id.review_recent_tv_date);
             this.viewContent = itemView.findViewById(R.id.review_recent_Button_viewContent);
         }
+        public void bindSliderImage1(String imageURL) {
+            Glide.with(context).load(imageURL).into(contentImage1);
+        }
+        public void bindSliderImage2(String imageURL) {
+            Glide.with(context).load(imageURL).into(contentImage2);
+        }
+
     }
 
     @Override
