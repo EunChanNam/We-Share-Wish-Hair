@@ -30,8 +30,8 @@ public class HairStyleTest {
                         .containsAll(B.getOriginalFilenames()),
                 () -> assertThat(hairStyle.getHashTags().stream()
                         .map(HashTag::getTag).toList())
-                        .containsAll(B.getTags())
+                        .containsAll(B.getTags()),
+                () -> assertThat(hairStyle.getWishListCount()).isEqualTo(B.getWishListCount())
         );
-
     }
 }

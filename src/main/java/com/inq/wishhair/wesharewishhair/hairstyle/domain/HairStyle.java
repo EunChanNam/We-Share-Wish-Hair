@@ -75,4 +75,8 @@ public class HairStyle {
     public void minusWishListCount() {
         wishListCount.minusWishListCount();
     }
+
+    public int getWishListCount() {
+        return wishListCount.getValue();
+    }
 }
