@@ -17,7 +17,7 @@ public enum Tag {
     CUTE("귀여운", NORMAL), UPSTAGE("도도한", NORMAL), VOLUMINOUS("볼륨있는", NORMAL),LONG_LASTING("오래가는", NORMAL),
     SOFT("부드러운", NORMAL), TRENDY("트렌디한", NORMAL), ROUND("둥근형", FACE_SHAPE), OVAL("타원형", FACE_SHAPE),
     HEART("하트형", FACE_SHAPE), OBLONG("직사각형", FACE_SHAPE), SQUARE("정사각형", FACE_SHAPE), ALL("전체", NORMAL),
-    Error("No-Tag", NORMAL);
+    ERROR("No-Tag", NORMAL);
 
     private final String description;
     private final TagType tagType;

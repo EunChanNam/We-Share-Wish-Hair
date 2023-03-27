@@ -20,15 +20,15 @@ import java.util.UUID;
 public enum HairStyleFixture {
 
     A("hairStyleA", new ArrayList<>(List.of("test1.png", "test2.png", "test3.png", "test4.png")),
-            new ArrayList<>(List.of(Tag.PERM, Tag.LONG, Tag.SQUARE, Tag.UPSTAGE)), Sex.WOMAN),
+            new ArrayList<>(List.of(Tag.PERM, Tag.LONG, Tag.SQUARE, Tag.UPSTAGE)), Sex.WOMAN, 3),
     B("hairStyleB", new ArrayList<>(List.of("test5.png", "test6.png", "test7.png", "test8.png")),
-            new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.NEAT, Tag.OVAL)), Sex.MAN),
+            new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.NEAT, Tag.OVAL)), Sex.MAN, 2),
     C("hairStyleC", new ArrayList<>(List.of("test9.png", "test10.png", "test11.png", "test12.png")),
-            new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.UPSTAGE, Tag.CUTE, Tag.OBLONG)), Sex.WOMAN),
+            new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.UPSTAGE, Tag.CUTE, Tag.OBLONG)), Sex.WOMAN, 4),
     D("hairStyleD", new ArrayList<>(List.of("test13.png", "test14.png", "test15.png", "test16.png")),
-            new ArrayList<>(List.of(Tag.PERM, Tag.LONG, Tag.HARD, Tag.FORMAL, Tag.OBLONG)), Sex.WOMAN),
+            new ArrayList<>(List.of(Tag.PERM, Tag.LONG, Tag.HARD, Tag.FORMAL, Tag.OBLONG)), Sex.WOMAN, 2),
     E("hairStyleE", new ArrayList<>(List.of("test13.png", "test14.png", "test15.png", "test16.png")),
-            new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.LIGHT, Tag.FORMAL, Tag.OBLONG)), Sex.WOMAN);
+            new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.LIGHT, Tag.FORMAL, Tag.OBLONG)), Sex.WOMAN, 3);
 
     private final String name;
 
@@ -38,13 +38,19 @@ public enum HairStyleFixture {
 
     private final Sex sex;
 
+    private final int wishListCount;
+
     public HairStyle toEntity() {
         List<Photo> photos = originalFilenames.stream()
                 .map((originalFilename) -> Photo.of(originalFilename, createStoreFilename(originalFilename)))
                 .toList();
         List<HashTag> hashTags = tags.stream()
                 .map(HashTag::of).toList();
-        return HairStyle.createHairStyle(name, sex, photos, hashTags);
+        HairStyle hairStyle = HairStyle.createHairStyle(name, sex, photos, hashTags);
+        for (int i = 0; i < wishListCount; i++) {
+            hairStyle.plusWishListCount();
+        }
+        return hairStyle;
     }
 
     public HairStyleResponse toResponse(Long id) {
