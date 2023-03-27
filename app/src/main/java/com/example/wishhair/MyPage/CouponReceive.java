@@ -1,6 +1,7 @@
 package com.example.wishhair.MyPage;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,16 +10,29 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.wishhair.MainActivity;
 import com.example.wishhair.MyPage.adapters.CouponReceiveAdapter;
 import com.example.wishhair.MyPage.items.CouponReceiveItem;
 import com.example.wishhair.R;
+import com.example.wishhair.sign.UrlConst;
+
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,6 +56,10 @@ public class CouponReceive extends Fragment {
     MainActivity mainActivity;
     Context context;
     ArrayList<CouponReceiveItem> arrayList;
+    private SharedPreferences loginSP;
+    final static private String url = UrlConst.URL + "/api/my_page";
+    static private String accessToken;
+    TextView CouponReceivepointview;
 
     public CouponReceive() {
         // Required empty public constructor
@@ -83,15 +101,19 @@ public class CouponReceive extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        context = getContext();
+        View view = inflater.inflate(R.layout.coupon_recieve_fragment,container,false);
+        loginSP = getActivity().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        String accessToken = loginSP.getString("accessToken", "fail acc");
+        CouponReceivepointview = view.findViewById(R.id.coupon_receive_pointsum);
+        CouponReceiveRequest(accessToken);
 
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.coupon_recieve_fragment, container, false);
+        return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         arrayList = new ArrayList<>();
 
         recyclerView = view.findViewById(R.id.coupon_receive_recyclerview);
@@ -104,10 +126,36 @@ public class CouponReceive extends Fragment {
 
         recyclerView.setAdapter(adapter);
 
-
-
     }
 
+    public void CouponReceiveRequest(String accessToken) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url , null, new Response.Listener<JSONObject>() {
 
+            @Override
+            public void onResponse(JSONObject response) {
+                String mypoint = Integer.toString(response.optInt("availablePoint"));
+                Log.i("coupon receive response", mypoint);
+                CouponReceivepointview.setText(mypoint+" P");
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap();
+                params.put("Authorization", "bearer" + accessToken);
+
+                return params;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(jsonObjectRequest);
+    }
 
 }

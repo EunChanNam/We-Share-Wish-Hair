@@ -1,6 +1,7 @@
 package com.example.wishhair.MyPage;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.activity.OnBackPressedCallback;
@@ -12,14 +13,29 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.wishhair.MainActivity;
 import com.example.wishhair.MyPage.adapters.PointAdapter;
 import com.example.wishhair.MyPage.items.PointItem;
 import com.example.wishhair.R;
+import com.example.wishhair.sign.UrlConst;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -44,7 +60,10 @@ public class MyPointList extends Fragment {
     RecyclerView recyclerView;
     LinearLayoutManager layoutManager;
     DividerItemDecoration dividerItemDecoration;
-
+    private SharedPreferences loginSP;
+    final static private String url = UrlConst.URL + "/api/my_page";
+    static private String accessToken;
+    TextView mypointview;
     public MyPointList() {
         // Required empty public constructor
     }
@@ -94,6 +113,9 @@ public class MyPointList extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         Toolbar toolbar = getView().findViewById(R.id.toolbar);
+        loginSP = getActivity().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        String accessToken = loginSP.getString("accessToken", "fail acc");
+
 
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -118,12 +140,48 @@ public class MyPointList extends Fragment {
         adapter.addItem(new PointItem());
         adapter.addItem(new PointItem());
         recyclerView.setAdapter(adapter);
+
+        PointListRequest(accessToken);
+
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.my_point_list_fragment, container, false);
+        View view = inflater.inflate(R.layout.my_point_list_fragment, container, false);
+        mypointview = view.findViewById(R.id.mypoint_pointsum);
+        return view;
+    }
+
+    public void PointListRequest(String accessToken) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url , null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                String mypoint = Integer.toString(response.optInt("availablePoint"));
+                Log.i("pointlist response ", mypoint);
+                mypointview.setText(mypoint+" P");
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap();
+                params.put("Authorization", "bearer" + accessToken);
+
+                return params;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(jsonObjectRequest);
     }
 }

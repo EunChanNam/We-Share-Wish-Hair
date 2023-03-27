@@ -74,6 +74,7 @@ public class MyPageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
         Button toMyInformationButton = view.findViewById(R.id.toMyInformation);
