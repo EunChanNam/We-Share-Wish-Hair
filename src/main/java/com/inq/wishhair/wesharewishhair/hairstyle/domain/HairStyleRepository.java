@@ -1,8 +1,6 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.domain;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
-import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
-import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
