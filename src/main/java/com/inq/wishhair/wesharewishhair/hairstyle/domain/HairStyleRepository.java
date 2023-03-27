@@ -12,7 +12,7 @@ import java.util.List;
 public interface HairStyleRepository extends JpaRepository<HairStyle, Long> {
 
     @Query("select h from HairStyle h " +
-            "join fetch HashTag t on h.id = t.hairStyle.id " +
+            "join fetch h.hashTags t on h.id = t.hairStyle.id " +
             "where t.tag in :tags " +
             "and h.sex = :sex " +
             "group by h.id " +
@@ -20,4 +20,13 @@ public interface HairStyleRepository extends JpaRepository<HairStyle, Long> {
     List<HairStyle> findByHashTags(@Param("tags") List<Tag> tags,
                                    @Param("sex") Sex sex,
                                    Pageable pageable);
+
+    @Query("select h from HairStyle h " +
+            "join fetch h.hashTags t on h.id = t.hairStyle.id " +
+            "where t.tag = :tag " +
+            "and h.sex = :sex " +
+            "order by h.wishListCount.value desc, h.name")
+    List<HairStyle> findByFaceShapeTag(@Param("tag") Tag tag,
+                                       @Param("sex") Sex sex,
+                                       Pageable pageable);
 }
