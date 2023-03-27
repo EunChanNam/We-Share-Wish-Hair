@@ -166,6 +166,11 @@ public class ReviewListFragment extends Fragment {
                             System.out.println("Tag " + (k + 1) + ": " + tag);
                         }*/
                     }
+                    JSONObject pagingObject = jsonObject.getJSONObject("paging");
+                    String contentSize = pagingObject.getString("contentSize");
+                    String page = pagingObject.getString("page");
+                    String hasNext = pagingObject.getString("hasNext");
+                    Log.d("paging", contentSize + " " + page + " " + hasNext);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
