@@ -34,10 +34,10 @@ public class HairStyleServiceTest extends ServiceTest {
     @DisplayName("헤어스타일 추천 로직")
     class findRecommendedHairStyle {
         @Test
-        @DisplayName("성별이 다른 헤어스타일은 조회되지 않으며 해시태그 개수와 이름으로 정렬돼 조회된다")
+        @DisplayName("입력된 태그의 얼굴형 태그가 포함되지 않은 헤어스타일은 조회되지 않는다")
         void test1() {
             //given
-            List<Tag> tags = List.of(Tag.PERM);
+            List<Tag> tags = A.getTags();
             Long userId = userRepository.save(UserFixture.B.toEntity()).getId();
 
             //when
@@ -45,12 +45,9 @@ public class HairStyleServiceTest extends ServiceTest {
                     hairStyleService.findRecommendedHairStyle(tags, userId, getDefaultPageable());
 
             //then
-            assertAll(
-                    () -> assertThat(result.size()).isEqualTo(4),
-                    () -> assertThat(result.stream().map(HairStyleResponse::getName))
-                            .containsExactly(A.getName(), C.getName(), D.getName(), E.getName())
-            );
-
+            assertThat(result).hasSize(1);
         }
     }
 }
+//() -> assertThat(result.stream().map(HairStyleResponse::getName))
+//        .containsExactly(A.getName(), C.getName(), D.getName(), E.getName())
