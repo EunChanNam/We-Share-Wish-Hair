@@ -25,7 +25,7 @@ public class HairStyleController {
     @GetMapping("/hair_style/recommend")
     public ResponseEntity<PagedHairStyleResponse> respondRecommendedHairStyle(
             @PageableDefault(size = 4) Pageable pageable,
-            @RequestParam(defaultValue = "Error") List<Tag> tags,
+            @RequestParam(defaultValue = "ERROR") List<Tag> tags,
             @ExtractPayload Long userId) {
 
         validateHasTag(tags);
