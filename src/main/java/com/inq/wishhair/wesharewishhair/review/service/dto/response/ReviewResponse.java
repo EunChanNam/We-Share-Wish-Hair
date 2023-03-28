@@ -5,6 +5,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagRe
 import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponse;
+import jakarta.persistence.Persistence;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -26,12 +27,17 @@ public class ReviewResponse {
 
     private List<HashTagResponse> hasTags;
 
-    public ReviewResponse(Review review) {
+    public ReviewResponse(Review review, boolean isPhotoLoaded) {
         this.hairStyleName = review.getHairStyle().getName();
         this.userNickName = review.getUser().getName();
         this.score = review.getScore().getValue();
         this.likes = review.getLikes();
-        this.photos = generatePhotoResponses(review.getPhotos()); //지연로딩
+        //fetch join 을 통해 미리 당겨온 경우엔 사진이 없을때 추가 쿼리를 방지
+        if (isPhotoLoaded) {
+            if (Persistence.getPersistenceUtil().isLoaded(photos)) {
+                this.photos = generatePhotoResponses(review.getPhotos());
+            }
+        } else this.photos = generatePhotoResponses(review.getPhotos());
         this.hasTags = generateHashTagResponses(review.getHairStyle().getHashTags());
     }
 
