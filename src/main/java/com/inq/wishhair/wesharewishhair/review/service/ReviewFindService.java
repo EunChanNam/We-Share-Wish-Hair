@@ -27,18 +27,18 @@ public class ReviewFindService {
 
     public Slice<ReviewResponse> findPagingReviews(Pageable pageable) {
         Slice<Review> sliceResult = reviewFindRepository.findReviewByPaging(pageable);
-        return transferContentToResponse(sliceResult);
+        return transferContentToResponse(sliceResult, true);
     }
 
     public Slice<ReviewResponse> findLikingReviews(Long userId, Pageable pageable) {
         Slice<Review> sliceResult = reviewFindRepository.findReviewByLike(userId, pageable);
-        return transferContentToResponse(sliceResult);
+        return transferContentToResponse(sliceResult, false);
     }
 
     public Slice<ReviewResponse> findMyReviews(Long userId, Pageable pageable) {
         Slice<Review> sliceResult = reviewFindRepository.findReviewByUser(userId, pageable);
 
-        return transferContentToResponse(sliceResult);
+        return transferContentToResponse(sliceResult, true);
     }
 
     public List<ReviewSimpleResponse> findReviewOfMonth() {
@@ -50,8 +50,8 @@ public class ReviewFindService {
         return toSimpleResponse(result);
     }
 
-    private Slice<ReviewResponse> transferContentToResponse(Slice<Review> slice) {
-        return slice.map(ReviewResponse::new);
+    private Slice<ReviewResponse> transferContentToResponse(Slice<Review> slice, boolean isPhotoLoaded) {
+        return slice.map(review -> new ReviewResponse(review, isPhotoLoaded));
     }
 
     private List<ReviewSimpleResponse> toSimpleResponse(List<Review> reviews) {
