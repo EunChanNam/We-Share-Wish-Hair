@@ -4,6 +4,7 @@ import com.example.wishhair.sign.UrlConst;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import java.util.ArrayList;
@@ -62,8 +63,7 @@ public class Retrofit2MultipartUploader {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.d(TAG, "onResponse: suc");
-                ((Activity)context).finish();
+                Log.d(TAG, "response");
             }
 
             @Override

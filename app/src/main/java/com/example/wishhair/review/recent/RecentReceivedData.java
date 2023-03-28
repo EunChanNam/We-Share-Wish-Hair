@@ -26,21 +26,6 @@ public class RecentReceivedData {
         this.photos = photos;
     }
 
-    private String parseDate(String inputDate) {
-        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
-        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault());
-
-        try {
-            Date date = inputFormat.parse(inputDate);
-            return outputFormat.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return "failParseDate";
-    }
-
-
-
     public String getUserNickName() {
         return userNickName;
     }
@@ -88,5 +73,18 @@ public class RecentReceivedData {
     public void setCreateDate(String createDate) {
 
         this.createDate = parseDate(createDate);
+    }
+
+    private String parseDate(String inputDate) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault());
+
+        try {
+            Date date = inputFormat.parse(inputDate);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "failParseDate";
     }
 }

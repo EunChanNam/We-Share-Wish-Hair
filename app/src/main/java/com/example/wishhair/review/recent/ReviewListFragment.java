@@ -160,7 +160,7 @@ public class ReviewListFragment extends Fragment {
 //                        RecentReceivedData receivedData = getDate(resultArray);
                         RecentReceivedData receivedData = new RecentReceivedData();
                         JSONObject resultObject = resultArray.getJSONObject(i);
-                        Log.d("resultObject", resultObject.toString());
+//                        Log.d("resultObject", resultObject.toString());
                         String userNickName = resultObject.getString("userNickName");
                         String score = resultObject.getString("score");
                         int likes = resultObject.getInt("likes");
@@ -246,13 +246,11 @@ public class ReviewListFragment extends Fragment {
     private void setReceivedData(RecentReceivedData receivedData) {
         //                       TODO remove sampleImage
         List<String> photos = receivedData.getPhotos();
-        Log.d("received photos", photos.toString() + " size: " + photos.size());
         String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
 
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
         String date = receivedData.getCreateDate();
-        Log.d("Date", date);
 
         if (photos.size() == 0) {
             ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
