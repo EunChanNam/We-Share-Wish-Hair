@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 public interface ReviewFindRepository extends JpaRepository<Review, Long> {
@@ -27,15 +29,23 @@ public interface ReviewFindRepository extends JpaRepository<Review, Long> {
             "where l.user.id = :userId")
     Slice<Review> findReviewByLike(@Param("userId") Long userId, Pageable pageable);
 
-    //likeReview Service
-    @EntityGraph(attributePaths = "likeReviews")
-    Optional<Review> findDistinctById(Long id);
-
-    //review find Service
+    //review find service
     @Query("select distinct r from Review r " +
             "join fetch r.photos " +
             "join fetch r.hairStyle " +
             "join fetch r.user " +
             "where r.user.id = :userId ")
     Slice<Review> findReviewByUser(@Param("userId") Long userId, Pageable pageable);
+
+    //review find service
+    @Query("select r from Review r " +
+            "join fetch r.hairStyle " +
+            "join fetch r.user " +
+            "order by r.likeReviews.likes")
+    List<Review> findReviewByCreatedDate(@Param("front") LocalDateTime front,
+                                         @Param("end") LocalDateTime end);
+
+    //likeReview Service
+    @EntityGraph(attributePaths = "likeReviews")
+    Optional<Review> findDistinctById(Long id);
 }
