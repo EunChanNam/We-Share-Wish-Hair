@@ -1,54 +1,58 @@
 package com.example.wishhair.review;
 
-import android.net.Uri;
-
-import androidx.annotation.NonNull;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
 
 public class ReviewItem {
 
     // common
-    private String content;
-    private String date;
-    private int heartCount;
-    private String grade;
-
+    private String contents;
+    private String createdDate;
+    private int likes;
+    private String score;
+    private List<String> photos;
 
     // recent
     private int profileImage;
-    private String nickname;
+    private String userNickName;
     private String authorReviewCount;
     private String authorAvgGrade;
     private boolean isHeart;
     private String contentImage1;
     private String contentImage2;
 
+    public ReviewItem() {}
+
     //사진이 1장일 때
-    public ReviewItem(int profileImage, String nickname, String authorReviewCount, String authorAvgGrade, String contentImage, String content, String grade, boolean isHeart, int heartCount, String date) {
+    public ReviewItem(int profileImage, String nickname, String authorReviewCount, String authorAvgGrade, String contentImage, String contents, String score, boolean isHeart, int likes, String createdDate) {
         this.profileImage = profileImage;
-        this.nickname = nickname;
+        this.userNickName = nickname;
         this.authorReviewCount = authorReviewCount;
         this.authorAvgGrade = authorAvgGrade;
         this.contentImage1 = contentImage;
-        this.content = content;
-        this.grade = grade;
+        this.contents = contents;
+        this.score = score;
         this.isHeart = isHeart;
-        this.heartCount = heartCount;
-        this.date = date;
+        this.likes = likes;
+        this.createdDate = createdDate;
     }
 
     //사진이 2장 이상일 때
-    public ReviewItem(int profileImage, String nickname, String authorReviewCount, String authorAvgGrade, String contentImage1, String contentImage2, String content, String grade, boolean isHeart, int heartCount, String date) {
+    public ReviewItem(int profileImage, String nickname, String authorReviewCount, String authorAvgGrade, String contentImage1, String contentImage2, String contents, String score, boolean isHeart, int likes, String createdDate) {
         this.profileImage = profileImage;
-        this.nickname = nickname;
+        this.userNickName = nickname;
         this.authorReviewCount = authorReviewCount;
         this.authorAvgGrade = authorAvgGrade;
         this.contentImage1 = contentImage1;
         this.contentImage2 = contentImage2;
-        this.content = content;
-        this.grade = grade;
+        this.contents = contents;
+        this.score = score;
         this.isHeart = isHeart;
-        this.heartCount = heartCount;
-        this.date = date;
+        this.likes = likes;
+        this.createdDate = createdDate;
     }
 
     // my
@@ -57,14 +61,14 @@ public class ReviewItem {
     private String tags;
     private boolean isPoint;
 
-    public ReviewItem(int hairImage, String hairStyle, String tags, String content, String grade, int heartCount, String date, boolean isPoint) {
+    public ReviewItem(int hairImage, String hairStyle, String tags, String contents, String score, int likes, String createdDate, boolean isPoint) {
         this.hairImage = hairImage;
         this.hairStyle = hairStyle;
         this.tags = tags;
-        this.grade = grade;
-        this.heartCount = heartCount;
-        this.content = content;
-        this.date = date;
+        this.score = score;
+        this.likes = likes;
+        this.contents = contents;
+        this.createdDate = createdDate;
         this.isPoint = isPoint;
     }
 
@@ -76,12 +80,12 @@ public class ReviewItem {
         this.profileImage = profileImage;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getUserNickName() {
+        return userNickName;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
     }
 
     public String getAuthorReviewCount() {
@@ -100,44 +104,44 @@ public class ReviewItem {
         this.authorAvgGrade = authorAvgGrade;
     }
 
-    /*public String getContentImage1() {
+    public String getContentImage1() {
         return contentImage1;
-    }*/
-    public Uri getContentImage1() {
-        if(contentImage1 == null) return null;
-        return Uri.parse(contentImage1);
-    }
-    public Uri getContentImage2() {
-        if(contentImage2 == null) return null;
-        return Uri.parse(contentImage2);
     }
 
     public void setContentImage1(String contentImage1) {
         this.contentImage1 = contentImage1;
     }
 
-//    public String getContentImage2() {
-//        return contentImage2;
-//    }
+    public String getContentImage2() {
+        return contentImage2;
+    }
 
     public void setContentImage2(String contentImage2) {
         this.contentImage2 = contentImage2;
     }
 
-    public String getContent() {
-        return content;
+    public String getContents() {
+        return contents;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setContents(String contents) {
+        this.contents = contents;
     }
 
-    public String getGrade() {
-        return grade;
+    public String getScore() {
+        return score;
     }
 
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public List<String> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<String> photos) {
+        this.photos = photos;
     }
 
     public boolean getIsHeart() {
@@ -148,20 +152,33 @@ public class ReviewItem {
         this.isHeart = isHeart;
     }
 
-    public int getHeartCount() {
-        return heartCount;
+    public int getLikes() {
+        return likes;
     }
 
-    public void setHeartCount(int heartCount) {
-        this.heartCount = heartCount;
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 
-    public String getDate() {
-        return date;
+    public String getCreatedDate() {
+        return createdDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = parseDate(createdDate);
+    }
+
+    private String parseDate(String inputDate) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault());
+
+        try {
+            Date date = inputFormat.parse(inputDate);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "failParseDate";
     }
 
     public int getHairImage() {

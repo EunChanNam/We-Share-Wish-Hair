@@ -158,7 +158,7 @@ public class ReviewListFragment extends Fragment {
                     JSONArray resultArray = jsonObject.getJSONArray("result");
                     for (int i = 0; i < resultArray.length(); i++) {
 //                        RecentReceivedData receivedData = getDate(resultArray);
-                        RecentReceivedData receivedData = new RecentReceivedData();
+                        ReviewItem receivedData = new ReviewItem();
                         JSONObject resultObject = resultArray.getJSONObject(i);
 //                        Log.d("resultObject", resultObject.toString());
                         String userNickName = resultObject.getString("userNickName");
@@ -171,7 +171,7 @@ public class ReviewListFragment extends Fragment {
                         receivedData.setScore(score);
                         receivedData.setLikes(likes);
                         receivedData.setContents(content);
-                        receivedData.setCreateDate(createDate);
+                        receivedData.setCreatedDate(createDate);
 
                         JSONArray photosArray = resultObject.getJSONArray("photos");
                         List<String> fileNames = new ArrayList<>();
@@ -243,14 +243,14 @@ public class ReviewListFragment extends Fragment {
 //        return receivedData;
 //    }
 
-    private void setReceivedData(RecentReceivedData receivedData) {
+    private void setReceivedData(ReviewItem receivedData) {
         //                       TODO remove sampleImage
         List<String> photos = receivedData.getPhotos();
         String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
 
         @SuppressLint("SimpleDateFormat")
         SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
-        String date = receivedData.getCreateDate();
+        String date = receivedData.getCreatedDate();
 
         if (photos.size() == 0) {
             ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
@@ -318,12 +318,10 @@ public class ReviewListFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 sort_selected = sortItems[position];
-                Log.d("sort_selected", sort_selected);
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {}
         });
     }
-
 }

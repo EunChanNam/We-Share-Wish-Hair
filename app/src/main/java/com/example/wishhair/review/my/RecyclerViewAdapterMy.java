@@ -50,10 +50,10 @@ public class RecyclerViewAdapterMy extends RecyclerView.Adapter<RecyclerViewAdap
         holder.hairImage.setImageResource(item.getHairImage());
         holder.hairStyle.setText(item.getHairStyle());
         holder.tags.setText(item.getTags());
-        holder.grade.setText(item.getGrade());
-        holder.heartCount.setText(String.valueOf(item.getHeartCount()));
-        holder.content.setText(item.getContent());
-        holder.date.setText(item.getDate());
+        holder.grade.setText(item.getScore());
+        holder.heartCount.setText(String.valueOf(item.getLikes()));
+        holder.content.setText(item.getContents());
+        holder.date.setText(item.getCreatedDate());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

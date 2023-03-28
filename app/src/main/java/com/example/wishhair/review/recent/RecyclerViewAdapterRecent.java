@@ -51,26 +51,20 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
         ReviewItem item = reviewItems.get(position);
 
         holder.profileImage.setImageResource(item.getProfileImage());
-        holder.bindSliderImage1(item.getContentImage1().toString());
-//        holder.bindSliderImage2(item.getContentImage2());
-//        if (item.getContentImage1() != null) {
-//            holder.contentImage1.setImageURI(item.getContentImage1());
-//        }
-        if (item.getContentImage2() != null) {
-            holder.contentImage2.setImageURI(item.getContentImage2());
-        }
-        holder.nickname.setText(item.getNickname());
+        holder.bindSliderImage1(item.getContentImage1());
+        holder.bindSliderImage2(item.getContentImage2());
+        holder.nickname.setText(item.getUserNickName());
         holder.authorAvgGrade.setText(item.getAuthorAvgGrade());
         holder.authorReviewCount.setText(item.getAuthorReviewCount());
-        holder.content.setText(item.getContent());
-        holder.grade.setText(item.getGrade());
-        holder.date.setText(item.getDate());
+        holder.content.setText(item.getContents());
+        holder.grade.setText(item.getScore());
+        holder.date.setText(item.getCreatedDate());
         if (item.getIsHeart()){
             holder.isHeart.setImageResource(R.drawable.heart_fill);
         } else {
             holder.isHeart.setImageResource(R.drawable.heart_empty);
         }
-        holder.heartCount.setText(String.valueOf(item.getHeartCount()));
+        holder.heartCount.setText(String.valueOf(item.getLikes()));
         holder.viewContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
