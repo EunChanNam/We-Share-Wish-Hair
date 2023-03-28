@@ -11,12 +11,14 @@ import java.util.Optional;
 
 public interface ReviewFindRepository extends JpaRepository<Review, Long> {
 
+    //review find service
     @Query("select distinct r from Review r " +
             "join fetch r.photos " +
             "join fetch r.hairStyle " +
             "join fetch r.user")
     Slice<Review> findReviewByPaging(Pageable pageable);
 
+    //review find service
     @Query("select r from Review r " +
             "join LikeReview l " +
             "on r.id = l.review.id " +
@@ -25,9 +27,11 @@ public interface ReviewFindRepository extends JpaRepository<Review, Long> {
             "where l.user.id = :userId")
     Slice<Review> findReviewByLike(@Param("userId") Long userId, Pageable pageable);
 
+    //likeReview Service
     @EntityGraph(attributePaths = "likeReviews")
     Optional<Review> findDistinctById(Long id);
 
+    //review find Service
     @Query("select distinct r from Review r " +
             "join fetch r.photos " +
             "join fetch r.hairStyle " +
