@@ -46,13 +46,16 @@ public class ReviewFindService {
         Pageable pageable =  PageRequest.of(0, 5); //5개 고정
 
         List<Review> result = reviewFindRepository.findReviewByCreatedDate(startDate, endDate, pageable);
+        return toSimpleResponse(result);
     }
 
     private Slice<ReviewResponse> transferContentToResponse(Slice<Review> slice) {
         return slice.map(ReviewResponse::new);
     }
 
-    private List<ReviewSimpleResponse>
+    private List<ReviewSimpleResponse> toSimpleResponse(List<Review> reviews) {
+        return reviews.stream().map(ReviewSimpleResponse::new).toList();
+    }
 
     private LocalDate generateStartDate() {
         LocalDateTime start = LocalDateTime.now().minusMonths(1);
