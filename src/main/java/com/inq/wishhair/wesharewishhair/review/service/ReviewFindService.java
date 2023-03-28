@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.review.service;
 
+import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewFindRepository;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
@@ -43,7 +44,7 @@ public class ReviewFindService {
     public List<ReviewSimpleResponse> findReviewOfMonth() {
         LocalDate startDate = generateStartDate();
         LocalDate endDate = generateEndDate();
-        Pageable pageable =  PageRequest.of(0, 5); //5개 고정
+        Pageable pageable = PageableUtils.generateSimplePageable(5);
 
         List<Review> result = reviewFindRepository.findReviewByCreatedDate(startDate, endDate, pageable);
         return toSimpleResponse(result);
