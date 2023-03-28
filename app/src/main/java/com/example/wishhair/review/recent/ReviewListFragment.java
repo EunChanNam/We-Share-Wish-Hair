@@ -1,5 +1,6 @@
 package com.example.wishhair.review.recent;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -45,7 +46,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -72,6 +75,7 @@ public class ReviewListFragment extends Fragment {
     private static String sort_selected = null;
     private static final String[] sortItems = {"최신 순", "오래된 순", "좋아요 순"};
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -117,6 +121,7 @@ public class ReviewListFragment extends Fragment {
 //        TODO 새로고침 제대로 구현
         SwipeRefreshLayout swipeRefreshLayout = v.findViewById(R.id.review_recent_swipeRefLayout);
         swipeRefreshLayout.setOnRefreshListener(() -> {
+            ReviewListRequest(accessToken);
             recentRecyclerViewAdapter.notifyDataSetChanged();
             final Handler handler = new Handler();
             handler.postDelayed(() -> swipeRefreshLayout.setRefreshing(false), 500);
@@ -142,8 +147,6 @@ public class ReviewListFragment extends Fragment {
 
     private void ReviewListRequest(String accessToken) {
         final String URL_REVIEWLIST = UrlConst.URL + "/api/review";
-        RecentReceivedData receivedData = new RecentReceivedData();
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL_REVIEWLIST, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -154,14 +157,21 @@ public class ReviewListFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(stringResponse);
                     JSONArray resultArray = jsonObject.getJSONArray("result");
                     for (int i = 0; i < resultArray.length(); i++) {
+//                        RecentReceivedData receivedData = getDate(resultArray);
+                        RecentReceivedData receivedData = new RecentReceivedData();
                         JSONObject resultObject = resultArray.getJSONObject(i);
-
+                        Log.d("resultObject", resultObject.toString());
                         String userNickName = resultObject.getString("userNickName");
                         String score = resultObject.getString("score");
                         int likes = resultObject.getInt("likes");
+                        String content = resultObject.getString("contents");
+                        String createDate = resultObject.getString("createdDate");
+
                         receivedData.setUserNickName(userNickName);
                         receivedData.setScore(score);
                         receivedData.setLikes(likes);
+                        receivedData.setContents(content);
+                        receivedData.setCreateDate(createDate);
 
                         JSONArray photosArray = resultObject.getJSONArray("photos");
                         List<String> fileNames = new ArrayList<>();
@@ -171,23 +181,8 @@ public class ReviewListFragment extends Fragment {
                             fileNames.add(IMG_PATH + storeFilename);
                         }
                         receivedData.setPhotos(fileNames);
-
 //                       set review data
-//                       TODO remove sampleImage
-                        List<String> photos = receivedData.getPhotos();
-                        Log.d("received photos", photos.toString());
-                        String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
-                        if (photos.size() == 1) {
-                            ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
-                                    photos.get(0), "carrot",
-                                    receivedData.getScore(), true, receivedData.getLikes(), "22.03.01");
-                            recentReviewItems.add(item);
-                        } else {
-                            ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
-                                    photos.get(0), photos.get(1), "carrot",
-                                    receivedData.getScore(), true, receivedData.getLikes(), "22.03.01");
-                            recentReviewItems.add(item);
-                        }
+                        setReceivedData(receivedData);
 
                         /*JSONArray hasTagsArray = resultObject.getJSONArray("hasTags");
                         for (int k = 0; k < hasTagsArray.length(); k++) {
@@ -222,6 +217,61 @@ public class ReviewListFragment extends Fragment {
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         requestQueue.add(jsonObjectRequest);
+    }
+
+//    private RecentReceivedData getDate(JSONArray resultArray, int i) throws JSONException {
+//        RecentReceivedData receivedData = new RecentReceivedData();
+//
+//        JSONObject resultObject = resultArray.getJSONObject(i);
+//        Log.d("resultObject", resultObject.toString());
+//        String userNickName = resultObject.getString("userNickName");
+//        String score = resultObject.getString("score");
+//        int likes = resultObject.getInt("likes");
+//        receivedData.setUserNickName(userNickName);
+//        receivedData.setScore(score);
+//        receivedData.setLikes(likes);
+//
+//        JSONArray photosArray = resultObject.getJSONArray("photos");
+//        List<String> fileNames = new ArrayList<>();
+//        for (int j = 0; j < photosArray.length(); j++) {
+//            JSONObject photoObject = photosArray.getJSONObject(j);
+//            String storeFilename = photoObject.getString("storeFilename");
+//            fileNames.add(IMG_PATH + storeFilename);
+//        }
+//        receivedData.setPhotos(fileNames);
+//
+//        return receivedData;
+//    }
+
+    private void setReceivedData(RecentReceivedData receivedData) {
+        //                       TODO remove sampleImage
+        List<String> photos = receivedData.getPhotos();
+        Log.d("received photos", photos.toString() + " size: " + photos.size());
+        String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
+
+        @SuppressLint("SimpleDateFormat")
+        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
+        String date = receivedData.getCreateDate();
+        Log.d("Date", date);
+
+        if (photos.size() == 0) {
+            ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
+                    imageSample, receivedData.getContents(),
+                    receivedData.getScore(), true, receivedData.getLikes(), date);
+            recentReviewItems.add(item);
+        }
+        else if (photos.size() == 1) {
+            ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
+                    photos.get(0), receivedData.getContents(),
+                    receivedData.getScore(), true, receivedData.getLikes(), date);
+            recentReviewItems.add(item);
+        } else {
+            ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
+                    photos.get(0), photos.get(1), receivedData.getContents(),
+                    receivedData.getScore(), true, receivedData.getLikes(), date);
+            recentReviewItems.add(item);
+        }
+
     }
 
 //    private void setImage(URL url) {

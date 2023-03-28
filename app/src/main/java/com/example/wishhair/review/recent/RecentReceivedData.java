@@ -1,12 +1,18 @@
 package com.example.wishhair.review.recent;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class RecentReceivedData {
     String userNickName;
     String score;
     int likes;
     List<String> photos;
+    String contents;
+    String createDate;
 
     String hairStyleName;
     List<String> tags;
@@ -19,6 +25,21 @@ public class RecentReceivedData {
         this.likes = likes;
         this.photos = photos;
     }
+
+    private String parseDate(String inputDate) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault());
+
+        try {
+            Date date = inputFormat.parse(inputDate);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "failParseDate";
+    }
+
+
 
     public String getUserNickName() {
         return userNickName;
@@ -50,5 +71,22 @@ public class RecentReceivedData {
 
     public void setPhotos(List<String> photos) {
         this.photos = photos;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+
+        this.createDate = parseDate(createDate);
     }
 }

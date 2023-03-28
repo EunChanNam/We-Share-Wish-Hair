@@ -2,6 +2,7 @@ package com.example.wishhair.review.write;
 
 import com.example.wishhair.sign.UrlConst;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
@@ -21,12 +22,14 @@ public class Retrofit2MultipartUploader {
 
     private static final String TAG = "Uploader";
     private final MyApi api;
+    private final Context context;
 
     public Retrofit2MultipartUploader(Context context) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(UrlConst.URL)
                 .build();
         api = retrofit.create(MyApi.class);
+        this.context = context;
     }
 
     public void uploadFiles(String hairStyleId, String score, String contents, ArrayList<Uri> fileUri, String accessToken) {
@@ -60,6 +63,7 @@ public class Retrofit2MultipartUploader {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 Log.d(TAG, "onResponse: suc");
+                ((Activity)context).finish();
             }
 
             @Override

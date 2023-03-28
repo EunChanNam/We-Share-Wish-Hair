@@ -82,13 +82,11 @@
             android:id="@+id/review_recent_contentImage1"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/user_sample"
             android:layout_marginEnd="10dp" />
         <ImageView
             android:id="@+id/review_recent_contentImage2"
             android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/user_sample" />
+            android:layout_height="100dp" />
     </LinearLayout>
 <!--    grade, heart -->
     <RelativeLayout

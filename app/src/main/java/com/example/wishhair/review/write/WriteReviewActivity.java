@@ -101,12 +101,13 @@ public class WriteReviewActivity extends AppCompatActivity {
         editText_content = findViewById(R.id.write_review_content);
 
 //        submit
+        Retrofit2MultipartUploader uploader = new Retrofit2MultipartUploader(this);
         btn_submit = findViewById(R.id.write_review_submit);
         btn_submit.setOnClickListener(view -> {
-            Retrofit2MultipartUploader uploader = new Retrofit2MultipartUploader(getApplicationContext());
+
             String contents = String.valueOf(editText_content.getText());
             writeRequestData.setContent(contents);
-            uploader.uploadFiles(writeRequestData.getHairStyleId(), "S3", writeRequestData.getContent(), items, accessToken);
+            uploader.uploadFiles(writeRequestData.getHairStyleId(), writeRequestData.getRating(), writeRequestData.getContent(), items, accessToken);
         });
 
     }
