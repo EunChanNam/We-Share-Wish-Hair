@@ -19,7 +19,7 @@ public class ReviewController {
 
     @PostMapping("/review")
     public ResponseEntity<Success> createReview(
-            @RequestBody ReviewRequest reviewRequest,
+            @ModelAttribute ReviewRequest reviewRequest,
             @ExtractPayload Long userId) {
 
         Long reviewId = reviewService.createReview(reviewRequest.toReviewCreateDto(userId));
