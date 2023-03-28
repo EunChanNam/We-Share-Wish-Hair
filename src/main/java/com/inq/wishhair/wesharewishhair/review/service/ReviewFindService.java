@@ -3,13 +3,19 @@ package com.inq.wishhair.wesharewishhair.review.service;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewFindRepository;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewSimpleResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -34,7 +40,33 @@ public class ReviewFindService {
         return transferContentToResponse(sliceResult);
     }
 
+    public List<ReviewSimpleResponse> findReviewOfMonth() {
+        LocalDate startDate = generateStartDate();
+        LocalDate endDate = generateEndDate();
+        Pageable pageable =  PageRequest.of(0, 5); //5개 고정
+
+        List<Review> result = reviewFindRepository.findReviewByCreatedDate(startDate, endDate, pageable);
+    }
+
     private Slice<ReviewResponse> transferContentToResponse(Slice<Review> slice) {
         return slice.map(ReviewResponse::new);
+    }
+
+    private List<ReviewSimpleResponse>
+
+    private LocalDate generateStartDate() {
+        LocalDateTime start = LocalDateTime.now().minusMonths(1);
+        int startYear = start.getYear();
+        int startMonth = start.getMonthValue();
+
+        return LocalDate.of(startYear, startMonth, 1);
+    }
+
+    private LocalDate generateEndDate() {
+        LocalDateTime end = LocalDateTime.now();
+        int endYear = end.getYear();
+        int endMonth = end.getMonthValue();
+
+        return LocalDate.of(endYear, endMonth, 1).minusDays(1);
     }
 }
