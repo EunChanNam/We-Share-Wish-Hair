@@ -30,24 +30,23 @@ public class HairStyleRepositoryTest extends RepositoryTest {
     private HairStyle d;
     private HairStyle e;
 
+    @BeforeEach
+    void init() {
+        //given
+        a = A.toEntity();
+        c = C.toEntity();
+        d = D.toEntity();
+        e = E.toEntity();
+        hairStyleRepository.save(a);
+        hairStyleRepository.save(B.toEntity());
+        hairStyleRepository.save(c);
+        hairStyleRepository.save(d);
+        hairStyleRepository.save(e);
+    }
+
     @Nested
     @DisplayName("헤어스타일 추천 쿼리")
     class findByHashTags {
-
-        @BeforeEach
-        void init() {
-            //given
-            a = A.toEntity();
-            c = C.toEntity();
-            d = D.toEntity();
-            e = E.toEntity();
-            hairStyleRepository.save(a);
-            hairStyleRepository.save(B.toEntity());
-            hairStyleRepository.save(c);
-            hairStyleRepository.save(d);
-            hairStyleRepository.save(e);
-        }
-
         @Test
         @DisplayName("태그와 유저의 성별을 통해서 헤어스타일을 조회한다.")
         void test1() {
@@ -105,6 +104,43 @@ public class HairStyleRepositoryTest extends RepositoryTest {
             assertAll(
                     () -> assertThat(result).hasSize(4),
                     () -> assertThat(result).containsExactly(a, c, d, e)
+            );
+        }
+    }
+
+    @Nested
+    @DisplayName("사용자 얼굴형 기반 맞춤 헤어 추천 쿼리")
+    class findByFaceShapeTag {
+        @Test
+        @DisplayName("얼굴형 태그로 헤어를 검색하고, 찜 수와 이름으로 정렬한다")
+        void test4() {
+            //given
+            Tag faceShapeTag = Tag.OBLONG;
+            Pageable pageable = PageableUtils.getDefaultPageable();
+
+            //when
+            List<HairStyle> result = hairStyleRepository.findByFaceShapeTag(faceShapeTag, A.getSex(), pageable);
+
+            //then
+            assertAll(
+                    () -> assertThat(result).hasSize(3),
+                    () -> assertThat(result).containsExactly(c, e, d)
+            );
+        }
+
+        @Test
+        @DisplayName("얼굴형 태그 없이 검색 후 찜 수와 이름으로 정렬한다")
+        void test5() {
+            //given
+            Pageable pageable = PageableUtils.getDefaultPageable();
+
+            //when
+            List<HairStyle> result = hairStyleRepository.findByNoFaceShapeTag(A.getSex(), pageable);
+
+            //then
+            assertAll(
+                    () -> assertThat(result).hasSize(4),
+                    () -> assertThat(result).containsExactly(c, a, e, d)
             );
         }
     }

@@ -4,14 +4,18 @@ import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
+import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -113,6 +117,51 @@ public class HairStyleServiceTest extends ServiceTest {
             assertAll(
                     () -> assertThat(user.existFaceShape()).isTrue(),
                     () -> assertThat(user.getFaceShape()).isEqualTo(Tag.OBLONG) // <- E 헤어스타일의 얼굴형 태그
+            );
+        }
+    }
+
+    @Nested
+    @DisplayName("사용자 얼굴형 기반 헤어추천 서비스 로직")
+    class findHairStyleByFaceShape {
+        @Test
+        @DisplayName("얼굴형 태그가 저장돼 있는 유저라면 얼굴형 태그 기반으로 헤어가 찜수, 이름으로 정렬되어 조회된다")
+        void test5() {
+            //given
+            User user = UserFixture.B.toEntity();
+            userRepository.save(user);
+            user.updateFaceShape(new FaceShape(Tag.OBLONG));
+
+            Pageable pageable = PageableUtils.getDefaultPageable();
+
+            //when
+            List<HairStyleResponse> result = hairStyleService.findHairStyleByFaceShape(user.getId(), pageable);
+
+            //then
+            assertAll(
+                    () -> assertThat(result).hasSize(3),
+                    () -> assertThat(result.stream().map(HairStyleResponse::getName).toList())
+                            .containsExactly(C.getName(), E.getName(), D.getName())
+            );
+        }
+
+        @Test
+        @DisplayName("얼굴형 태그가 저장돼 있지 않은 유저라면 태그 없이 헤어가 찜수, 이름으로 정렬되어 조회된다")
+        void test6() {
+            //given
+            User user = UserFixture.B.toEntity();
+            userRepository.save(user);
+
+            Pageable pageable = PageableUtils.getDefaultPageable();
+
+            //when
+            List<HairStyleResponse> result = hairStyleService.findHairStyleByFaceShape(user.getId(), pageable);
+
+            //then
+            assertAll(
+                    () -> assertThat(result).hasSize(4),
+                    () -> assertThat(result.stream().map(HairStyleResponse::getName).toList())
+                            .containsExactly(C.getName(), A.getName(), E.getName(), D.getName())
             );
         }
     }
