@@ -1,6 +1,7 @@
 package com.example.wishhair.review.recent;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -99,6 +100,7 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
             this.viewContent = itemView.findViewById(R.id.review_recent_Button_viewContent);
         }
         public void bindSliderImage1(String imageURL) {
+            Log.i("bind Image URL", imageURL);
             Glide.with(context).load(imageURL).into(contentImage1);
         }
         public void bindSliderImage2(String imageURL) {

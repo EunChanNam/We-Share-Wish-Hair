@@ -1,5 +1,7 @@
 package com.example.wishhair.review;
 
+import android.util.Log;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -118,6 +120,14 @@ public class ReviewItem {
 
     public void setContentImage2(String contentImage2) {
         this.contentImage2 = contentImage2;
+    }
+
+    public void setContentImage1_1() {
+        this.contentImage1 = photos.get(0);
+    }
+
+    public void setContentImage1_2() {
+        this.contentImage1 = photos.get(1);
     }
 
     public String getContents() {
