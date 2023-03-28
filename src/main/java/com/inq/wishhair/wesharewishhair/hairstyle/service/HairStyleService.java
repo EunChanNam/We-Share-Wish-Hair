@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
+import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
@@ -42,8 +43,9 @@ public class HairStyleService {
         return generateHairStyleResponses(hairStyles);
     }
 
-    public List<HairStyleResponse> findHairStyleByFaceShape(Long userId, Pageable pageable) {
+    public List<HairStyleResponse> findHairStyleByFaceShape(Long userId) {
         User user = findUser(userId);
+        Pageable pageable = PageableUtils.generateSimplePageable(4);
 
         if (user.existFaceShape()) {
             List<HairStyle> hairStyles = hairStyleRepository.findByFaceShapeTag(user.getFaceShape(), user.getSex(), pageable);

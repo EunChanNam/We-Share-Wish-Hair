@@ -37,10 +37,9 @@ public class HairStyleController {
 
     @GetMapping("/home")
     public ResponseEntity<PagedHairStyleResponse> findHairStyleByFaceShape(
-            @PageableDefault(size = 4) Pageable pageable,
             @ExtractPayload Long userId) {
 
-        List<HairStyleResponse> result = hairStyleService.findHairStyleByFaceShape(userId, pageable);
+        List<HairStyleResponse> result = hairStyleService.findHairStyleByFaceShape(userId);
 
         return ResponseEntity.ok(toPagedResponse(result));
     }

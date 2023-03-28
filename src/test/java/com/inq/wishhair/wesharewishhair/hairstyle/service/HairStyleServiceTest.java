@@ -5,8 +5,6 @@ import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
@@ -14,7 +12,6 @@ import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -132,10 +129,8 @@ public class HairStyleServiceTest extends ServiceTest {
             userRepository.save(user);
             user.updateFaceShape(new FaceShape(Tag.OBLONG));
 
-            Pageable pageable = PageableUtils.getDefaultPageable();
-
             //when
-            List<HairStyleResponse> result = hairStyleService.findHairStyleByFaceShape(user.getId(), pageable);
+            List<HairStyleResponse> result = hairStyleService.findHairStyleByFaceShape(user.getId());
 
             //then
             assertAll(
@@ -152,10 +147,8 @@ public class HairStyleServiceTest extends ServiceTest {
             User user = UserFixture.B.toEntity();
             userRepository.save(user);
 
-            Pageable pageable = PageableUtils.getDefaultPageable();
-
             //when
-            List<HairStyleResponse> result = hairStyleService.findHairStyleByFaceShape(user.getId(), pageable);
+            List<HairStyleResponse> result = hairStyleService.findHairStyleByFaceShape(user.getId());
 
             //then
             assertAll(

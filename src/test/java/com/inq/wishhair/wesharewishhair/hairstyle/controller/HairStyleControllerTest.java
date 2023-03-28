@@ -95,11 +95,11 @@ public class HairStyleControllerTest extends ControllerTest {
     @DisplayName("사용자 얼굴형 맞춤 헤어 추천 API")
     class findHairStyleByFaceShape {
         @Test
-        @DisplayName("얼굴형 태그가 저장돼 있는 사용자의 아이디를 통해 사용자 맞춤 헤어스타일 응답을 받는다")
+        @DisplayName("사용자 얼굴형 기반 헤어추천 서비스 로직의 결과를 헤어스타일 응답으로 변환해 응답한다")
         void test3() throws Exception {
             //given
 
-            given(hairStyleService.findHairStyleByFaceShape(1L, getDefaultPageable()))
+            given(hairStyleService.findHairStyleByFaceShape(1L))
                     .willReturn(generateExpectedResponse(List.of(C, E, D)));
 
             //when
