@@ -1,6 +1,9 @@
 package com.example.wishhair.MyPage.adapters;
 
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,15 +15,30 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.wishhair.MyPage.CouponReceive;
 import com.example.wishhair.MyPage.items.CouponItem;
 import com.example.wishhair.MyPage.items.CouponReceiveItem;
 import com.example.wishhair.R;
+import com.example.wishhair.sign.UrlConst;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CouponReceiveAdapter extends RecyclerView.Adapter<CouponReceiveAdapter.ViewHolder>{
     private ArrayList<CouponReceiveItem> couponreceiveItems = new ArrayList<CouponReceiveItem>();
+    private SharedPreferences loginSP;
+    final static private String url = UrlConst.URL + "/api/point";
+    private Context context;
 
     public CouponReceiveAdapter(ArrayList<CouponReceiveItem> arrayList) {
     }
@@ -80,6 +98,7 @@ public class CouponReceiveAdapter extends RecyclerView.Adapter<CouponReceiveAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CouponReceiveItem item = couponreceiveItems.get(position);
+        context = holder.itemView.getContext();
     }
 
     @Override
@@ -89,5 +108,36 @@ public class CouponReceiveAdapter extends RecyclerView.Adapter<CouponReceiveAdap
 
     public void addItem(CouponReceiveItem e) {
         couponreceiveItems.add(e);
+    }
+
+    public void CouponReceiveRequest(String accessToken) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url , null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("send", "send -1000p");
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                Log.i("send", "failed");
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap();
+                params.put("Authorization", "bearer" + accessToken);
+                params.put("pointType", "CHARGE");
+                params.put("dealAmount" , "1000");
+
+                return params;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        queue.add(jsonObjectRequest);
     }
 }

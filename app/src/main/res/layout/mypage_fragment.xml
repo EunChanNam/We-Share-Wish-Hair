@@ -50,39 +50,43 @@
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
-                    <ImageButton
+                    <ImageView
                         android:id="@+id/mypage_user_picture"
-                        android:layout_width="171dp"
-                        android:layout_height="150dp"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginTop="20dp"
+                        android:background="@color/white"
                         android:cropToPadding="false"
-                        android:src="@drawable/check"
-                        android:background="@color/white"/>
+                        android:src="@drawable/check" />
 
-                    <LinearLayout
-                        android:layout_width="211dp"
+                    <RelativeLayout
+                        android:layout_width="242dp"
                         android:layout_height="129dp"
-                        android:layout_marginTop="20dp"
-                        android:orientation="vertical">
+                        android:layout_marginTop="20dp">
 
                         <TextView
                             android:id="@+id/mypage_nickname"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="30dp"
                             android:textSize="13pt" />
 
                         <TextView
                             android:id="@+id/textView3"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="안녕하세요!" />
+                            android:layout_below="@+id/mypage_nickname"
+                            android:text="안녕하세요!"
+                            android:textSize="9pt" />
 
                         <Button
-                            android:id="@+id/toMyInformation"
+                            android:id="@+id/toConfig"
                             android:layout_width="wrap_content"
-                            android:layout_height="31dp"
+                            android:layout_height="28dp"
                             android:layout_marginTop="5dp"
+                            android:layout_marginLeft="50dp"
+                            android:layout_toEndOf="@+id/textView3"
                             android:background="@color/white"
                             android:includeFontPadding="false"
                             android:paddingLeft="4dp"
@@ -91,16 +95,17 @@
                             android:paddingBottom="0dp"
                             android:text="회원정보 수정"
                             android:textColor="#161616"
-                            android:textSize="5pt" />
+                            android:textSize="5pt"
+                            android:layout_marginVertical="45dp"/>
 
-                    </LinearLayout>
+                    </RelativeLayout>
                 </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="113dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="20dp"
                 android:orientation="horizontal">
 
                 <Button

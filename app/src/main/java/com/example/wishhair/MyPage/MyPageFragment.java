@@ -21,7 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
@@ -38,7 +38,6 @@ import com.example.wishhair.MainActivity;
 import com.example.wishhair.MyPage.adapters.MyPageRecyclerViewAdapter;
 import com.example.wishhair.MyPage.items.HeartlistItem;
 import com.example.wishhair.R;
-import com.example.wishhair.review.write.WriteReviewActivity;
 import com.example.wishhair.sign.LoginActivity;
 import com.example.wishhair.sign.UrlConst;
 
@@ -47,7 +46,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class MyPageFragment extends Fragment {
 
@@ -59,10 +57,11 @@ public class MyPageFragment extends Fragment {
     private SharedPreferences loginSP;
     final static private String url = UrlConst.URL + "/api/logout";
     final static private String url2 = UrlConst.URL + "/api/my_page";
+    final static private String url_wishlist = UrlConst.URL + "/api/wish_list";
 
     static String testName = null;
     TextView tv;
-    ImageButton userpicture;
+    ImageView userpicture;
 
     public MyPageFragment() {
         // Required empty public constructor
@@ -86,7 +85,7 @@ public class MyPageFragment extends Fragment {
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
-        Button toMyInformationButton = view.findViewById(R.id.toMyInformation);
+        Button toMyInformationButton = view.findViewById(R.id.toConfig);
         Button toMyPointList = view.findViewById(R.id.toMyPointList);
         Button toMyCoupon = view.findViewById(R.id.toMyCoupon);
 
@@ -106,7 +105,7 @@ public class MyPageFragment extends Fragment {
         toMyInformationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.ChangeFragment(5);
+                mainActivity.ChangeFragment(8);
             }
         });
         toMyPointList.setOnClickListener(new View.OnClickListener() {
@@ -160,7 +159,6 @@ public class MyPageFragment extends Fragment {
             }
         });
         myPageRequest(accessToken);
-
 
     }
 
@@ -249,6 +247,7 @@ public class MyPageFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(jsonObjectRequest);
     }
+
 
     public ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),

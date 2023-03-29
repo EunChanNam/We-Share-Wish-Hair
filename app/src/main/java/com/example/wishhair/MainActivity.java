@@ -2,6 +2,7 @@ package com.example.wishhair;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -10,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 
+import com.example.wishhair.MyPage.ConfigFragment;
 import com.example.wishhair.MyPage.InformationModifyFragment;
 import com.example.wishhair.MyPage.MyCouponFragment;
 import com.example.wishhair.MyPage.MyInformationFragment;
@@ -27,6 +29,7 @@ import com.google.android.material.navigation.NavigationBarView;
 public class MainActivity extends AppCompatActivity {
 
     private final FragmentManager fragmentManager = getSupportFragmentManager();
+    private static FragmentTransaction fragmentTransaction;
     private final HomeFragment homeFragment = new HomeFragment();
     private final RecommendFragment recommendFragment = new RecommendFragment();
     private final ReviewFragment reviewFragment = new ReviewFragment();
@@ -36,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private final InformationModifyFragment informationModifyFragment = new InformationModifyFragment();
     private final MyCouponFragment myCouponFragment = new MyCouponFragment();
     private final MyPointList myPointList = new MyPointList();
-
     private final MyInformationFragment myInformationFragment = new MyInformationFragment();
+    private final ConfigFragment configFragment = new ConfigFragment();
 
 
     final static private String url = UrlConst.URL + "/api/my_page";
@@ -46,8 +49,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.MainLayout, homeFragment).commitAllowingStateLoss();
+        getSupportFragmentManager().executePendingTransactions();
+
 
         BottomNavigationView BottomNavigation = findViewById(R.id.BottomNavigation);
         BottomNavigation.setOnItemSelectedListener(new BottomNavigationItemSelectedListener());
@@ -60,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
         @SuppressLint("NonConstantResourceId")
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
             switch(item.getItemId())
             {
@@ -75,7 +80,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
                 case R.id.bot_nav_myPage:
                     transaction.replace(R.id.MainLayout, myPageFragment).commitAllowingStateLoss();
-
                     break;
             }
             return true;
@@ -107,6 +111,8 @@ public class MainActivity extends AppCompatActivity {
             case 7:
                 transaction.replace(R.id.MainLayout, myPointList).commitAllowingStateLoss();
                 break;
+            case 8:
+                transaction.replace(R.id.MainLayout, configFragment).commitAllowingStateLoss();
         }
 
     }
