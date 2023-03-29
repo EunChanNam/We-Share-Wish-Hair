@@ -8,6 +8,7 @@
     android:orientation="vertical">
 
 <!--    image-->
+<!--    TODO: 바뀐 디자인 적용-->
     <FrameLayout
         android:layout_weight="1"
         android:layout_width="match_parent"

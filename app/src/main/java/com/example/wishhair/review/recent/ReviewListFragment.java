@@ -219,29 +219,6 @@ public class ReviewListFragment extends Fragment {
         requestQueue.add(jsonObjectRequest);
     }
 
-//    private RecentReceivedData getDate(JSONArray resultArray, int i) throws JSONException {
-//        RecentReceivedData receivedData = new RecentReceivedData();
-//
-//        JSONObject resultObject = resultArray.getJSONObject(i);
-//        Log.d("resultObject", resultObject.toString());
-//        String userNickName = resultObject.getString("userNickName");
-//        String score = resultObject.getString("score");
-//        int likes = resultObject.getInt("likes");
-//        receivedData.setUserNickName(userNickName);
-//        receivedData.setScore(score);
-//        receivedData.setLikes(likes);
-//
-//        JSONArray photosArray = resultObject.getJSONArray("photos");
-//        List<String> fileNames = new ArrayList<>();
-//        for (int j = 0; j < photosArray.length(); j++) {
-//            JSONObject photoObject = photosArray.getJSONObject(j);
-//            String storeFilename = photoObject.getString("storeFilename");
-//            fileNames.add(IMG_PATH + storeFilename);
-//        }
-//        receivedData.setPhotos(fileNames);
-//
-//        return receivedData;
-//    }
 
     private void setReceivedData(ReviewItem receivedData) {
         //                       TODO remove sampleImage
@@ -256,6 +233,7 @@ public class ReviewListFragment extends Fragment {
 //        그러면 이제 bind 할 때 사진 갯수를 파악해서 처리해야하나
 //        아니면 아래에 새로 만들 때 저렇게 처리해도 되나
 //        >> 이건 나중에 테스트 하보고
+//        >>>> 그냥 log에 warring으로만 뜨고 종료되진 않는구나
 //      지금 bind할때 log찍게 해놨으니까 받아지는 url 어떤식으로 받아지나 보고
 //      이거 서버 안되는것도 잘 모르겠네
 //      집노트북에서는 review 데이터가 안받아와
