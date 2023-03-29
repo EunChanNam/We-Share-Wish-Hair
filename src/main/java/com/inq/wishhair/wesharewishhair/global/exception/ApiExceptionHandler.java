@@ -25,11 +25,14 @@ public class ApiExceptionHandler {
 
     @ExceptionHandler(WishHairException.class)
     public ResponseEntity<ErrorResponse> handleException(WishHairException e) {
-
-        ErrorCode errorCode = e.getErrorCode();
-
-        return ResponseEntity
-                .status(errorCode.getHttpStatus())
-                .body(new ErrorResponse(errorCode));
+        return convert(e.getErrorCode());
     }
+
+
+
+    private ResponseEntity<ErrorResponse> convert(ErrorCode errorCode) {
+        return ResponseEntity.status(errorCode.getHttpStatus()).body(new ErrorResponse(errorCode));
+    }
+
+
 }
