@@ -31,7 +31,7 @@ public class ApiExceptionHandler {
         return convert(e.getErrorCode());
     }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ExceptionHandler({MethodArgumentNotValidException.class, MethodArgumentTypeMismatchException.class})
     public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException() {
         return convert(ErrorCode.GLOBAL_VALIDATION_ERROR);
     }
@@ -41,7 +41,7 @@ public class ApiExceptionHandler {
         return convert(ErrorCode.GLOBAL_NOT_SUPPORTED_URI);
     }
 
-
+    @ExceptionHandler(NoHandlerFoundException.class)
 
     private ResponseEntity<ErrorResponse> convert(ErrorCode errorCode) {
         return ResponseEntity.status(errorCode.getHttpStatus()).body(new ErrorResponse(errorCode));
