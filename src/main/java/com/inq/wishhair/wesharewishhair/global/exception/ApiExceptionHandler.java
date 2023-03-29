@@ -12,6 +12,7 @@ import com.inq.wishhair.wesharewishhair.user.controller.PointFindController;
 import com.inq.wishhair.wesharewishhair.user.controller.UserController;
 import com.inq.wishhair.wesharewishhair.wishlist.controller.WishListController;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -37,11 +38,16 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    public ResponseEntity<ErrorResponse> notSupportedUriException() {
+    public ResponseEntity<ErrorResponse> handelNotSupportedUriException() {
         return convert(ErrorCode.GLOBAL_NOT_SUPPORTED_URI);
     }
 
-    @ExceptionHandler(NoHandlerFoundException.class)
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ErrorResponse> handlerHttpRequestMethodNotSupportedException() {
+        return convert(ErrorCode.GLOBAL_NOT_SUPPORTED_METHOD);
+    }
+
+
 
     private ResponseEntity<ErrorResponse> convert(ErrorCode errorCode) {
         return ResponseEntity.status(errorCode.getHttpStatus()).body(new ErrorResponse(errorCode));
