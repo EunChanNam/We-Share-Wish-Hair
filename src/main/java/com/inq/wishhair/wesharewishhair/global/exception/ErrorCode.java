@@ -26,7 +26,13 @@ public enum ErrorCode {
     POINT_NOT_ENOUGH("POINT_002", "포인트가 부족합니다.", HttpStatus.BAD_REQUEST),
 
     RUN_NOT_ENOUGH_TAG("RUN_001", "태그는 필수입니다.", HttpStatus.BAD_REQUEST),
-    RUN_NO_FACE_SHAPE_TAG("RUN_002", "얼굴형 분석을 다시 시도하세요.", HttpStatus.BAD_REQUEST);
+    RUN_NO_FACE_SHAPE_TAG("RUN_002", "얼굴형 분석을 다시 시도하세요.", HttpStatus.BAD_REQUEST),
+
+    GLOBAL_VALIDATION_ERROR("GLOBAL_001", "잘못된 요청입니다.", HttpStatus.BAD_REQUEST),
+    GLOBAL_NOT_SUPPORTED_URI("GLOBAL_002", "지원하지 않는 URI 요청입니다.", HttpStatus.NOT_FOUND),
+    GLOBAL_NOT_SUPPORTED_METHOD("GLOBAL_003", "지원하지 않는 Method 요청입니다.", HttpStatus.METHOD_NOT_ALLOWED),
+    GLOBAL_INTERNAL_SERVER_ERROR("GLOBAL_004", "서버 내부 오류입니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+    ;
 
     private final String code;
     private final String message;
