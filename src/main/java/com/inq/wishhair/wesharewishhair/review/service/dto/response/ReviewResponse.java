@@ -9,6 +9,7 @@ import jakarta.persistence.Persistence;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
@@ -21,6 +22,10 @@ public class ReviewResponse {
 
     private String score;
 
+    private String contents;
+
+    private LocalDateTime createdDate;
+
     private List<PhotoResponse> photos;
 
     private int likes;
@@ -31,6 +36,8 @@ public class ReviewResponse {
         this.hairStyleName = review.getHairStyle().getName();
         this.userNickName = review.getUser().getName();
         this.score = review.getScore().getValue();
+        this.contents = review.getContents();
+        this.createdDate = review.getCreatedDate();
         this.likes = review.getLikes();
         //fetch join 을 통해 미리 당겨온 경우엔 사진이 없을때 추가 쿼리를 방지
         if (isPhotoLoaded) {
