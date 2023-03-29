@@ -27,7 +27,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("HairStyleControllerTest - WebMvcTest")
 public class HairStyleControllerTest extends ControllerTest {
 
-    private static final String BASE_URL = "/api/hair_style/recommend";
+    private static final String RECOMMEND_URL = "/api/hair_style/recommend";
+    private static final String FACE_RECOMMEND_URL = "/api/hair_style/home";
 
     @BeforeEach
     void setUp() {
@@ -52,7 +53,7 @@ public class HairStyleControllerTest extends ControllerTest {
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .get(BASE_URL)
+                    .get(RECOMMEND_URL)
                     .header(AUTHORIZATION, BEARER +  ACCESS_TOKEN)
                     .queryParams(params);
 
@@ -77,7 +78,7 @@ public class HairStyleControllerTest extends ControllerTest {
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .get(BASE_URL)
+                    .get(RECOMMEND_URL)
                     .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
 
             //then
@@ -86,6 +87,36 @@ public class HairStyleControllerTest extends ControllerTest {
                             status().isBadRequest(),
                             jsonPath("$").exists(),
                             jsonPath("$.message").value(expectedError.getMessage())
+                    );
+        }
+    }
+
+    @Nested
+    @DisplayName("사용자 얼굴형 맞춤 헤어 추천 API")
+    class findHairStyleByFaceShape {
+        @Test
+        @DisplayName("사용자 얼굴형 기반 헤어추천 서비스 로직의 결과를 헤어스타일 응답으로 변환해 응답한다")
+        void test3() throws Exception {
+            //given
+
+            given(hairStyleService.findHairStyleByFaceShape(1L))
+                    .willReturn(generateExpectedResponse(List.of(C, E, D)));
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .get(FACE_RECOMMEND_URL)
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpectAll(
+                            status().isOk(),
+                            jsonPath("$").exists(),
+                            jsonPath("$.contentSize").value(3),
+                            jsonPath("$.result.size()").value(3),
+                            jsonPath("$.result.[0].hairStyleId").value(1L),
+                            jsonPath("$.result.[0].name").value(C.getName()),
+                            jsonPath("$.result.[0].photos.size()").value(4)
                     );
         }
     }
