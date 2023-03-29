@@ -26,7 +26,9 @@ public enum ErrorCode {
     POINT_NOT_ENOUGH("POINT_002", "포인트가 부족합니다.", HttpStatus.BAD_REQUEST),
 
     RUN_NOT_ENOUGH_TAG("RUN_001", "태그는 필수입니다.", HttpStatus.BAD_REQUEST),
-    RUN_NO_FACE_SHAPE_TAG("RUN_002", "얼굴형 분석을 다시 시도하세요.", HttpStatus.BAD_REQUEST);
+    RUN_NO_FACE_SHAPE_TAG("RUN_002", "얼굴형 분석을 다시 시도하세요.", HttpStatus.BAD_REQUEST),
+
+    GLOBAL_VALIDATION_ERROR("GLOBAL_001", "잘못된 요청입니다.", HttpStatus.BAD_REQUEST);
 
     private final String code;
     private final String message;

@@ -12,6 +12,7 @@ import com.inq.wishhair.wesharewishhair.user.controller.PointFindController;
 import com.inq.wishhair.wesharewishhair.user.controller.UserController;
 import com.inq.wishhair.wesharewishhair.wishlist.controller.WishListController;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -24,11 +25,14 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class ApiExceptionHandler {
 
     @ExceptionHandler(WishHairException.class)
-    public ResponseEntity<ErrorResponse> handleException(WishHairException e) {
+    public ResponseEntity<ErrorResponse> handleWishHairException(WishHairException e) {
         return convert(e.getErrorCode());
     }
 
-
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException() {
+        return convert(ErrorCode.GLOBAL_VALIDATION_ERROR);
+    }
 
     private ResponseEntity<ErrorResponse> convert(ErrorCode errorCode) {
         return ResponseEntity.status(errorCode.getHttpStatus()).body(new ErrorResponse(errorCode));
