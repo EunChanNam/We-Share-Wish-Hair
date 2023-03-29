@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.review.controller.dto.request;
 
 import com.inq.wishhair.wesharewishhair.review.enums.Score;
 import com.inq.wishhair.wesharewishhair.review.service.dto.ReviewCreateDto;
+import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,12 +17,15 @@ import java.util.List;
 @AllArgsConstructor
 public class ReviewRequest {
 
+    @NotNull
     private String contents;
 
+    @NotNull
     private Score score;
 
     private List<MultipartFile> files = new ArrayList<>();
 
+    @NotNull
     private Long hairStyleId;
 
     public ReviewCreateDto toReviewCreateDto(Long userId) {
