@@ -13,11 +13,14 @@ import static org.junit.jupiter.api.Assertions.*;
 class UserRepositoryTest extends RepositoryTest {
 
     @Autowired
-    protected UserRepository userRepository;
+    private UserRepository userRepository;
 
-    protected User userA;
-    protected User userB;
-    protected User userC;
+    @Autowired
+    private UserFindRepository userFindRepository;
+
+    private User userA;
+    private User userB;
+    private User userC;
 
     @BeforeEach
     void saveUsers() {
@@ -47,9 +50,9 @@ class UserRepositoryTest extends RepositoryTest {
     @Test
     @DisplayName("로그인 아이디로 회원 조회 테스트")
     void findByLoginIdTest() {
-        User findUserA = userRepository.findByEmail(this.userA.getEmail()).get();
-        User findUserB = userRepository.findByEmail(this.userB.getEmail()).get();
-        User findUserC = userRepository.findByEmail(this.userC.getEmail()).get();
+        User findUserA = userFindRepository.findByEmail(this.userA.getEmail()).get();
+        User findUserB = userFindRepository.findByEmail(this.userB.getEmail()).get();
+        User findUserC = userFindRepository.findByEmail(this.userC.getEmail()).get();
 
         assertAll(
                 () -> assertThat(findUserA.getPw()).isEqualTo(findUserA.getPw()),
