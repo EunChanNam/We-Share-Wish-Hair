@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
+import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserCreateRequest;
@@ -11,17 +12,24 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class UserController {
 
     private final UserService userService;
 
-    @PostMapping("/user")
+    @PostMapping
     public ResponseEntity<Success> createUser(@RequestBody UserCreateRequest createRequest) {
         Long userId = userService.createUser(createRequest.toEntity());
 
         return ResponseEntity
                 .created(URI.create("/api/user/" + userId))
                 .body(new Success());
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Success> deleteUser(@ExtractPayload Long userId) {
+        userService.deleteUser(userId);
+
+        return ResponseEntity.ok(new Success());
     }
 }

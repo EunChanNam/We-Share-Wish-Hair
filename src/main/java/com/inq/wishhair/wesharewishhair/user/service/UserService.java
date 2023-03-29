@@ -23,4 +23,9 @@ public class UserService {
 
         return saveUser.getId();
     }
+
+    @Transactional
+    public void deleteUser(Long userId) {
+        userRepository.deleteById(userId);
+    }
 }
