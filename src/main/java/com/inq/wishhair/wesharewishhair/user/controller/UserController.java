@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.user.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserCreateRequest;
 import lombok.RequiredArgsConstructor;
@@ -29,6 +30,15 @@ public class UserController {
     @DeleteMapping
     public ResponseEntity<Success> deleteUser(@ExtractPayload Long userId) {
         userService.deleteUser(userId);
+
+        return ResponseEntity.ok(new Success());
+    }
+
+    @PatchMapping
+    public ResponseEntity<Success> updateUser(@RequestBody UserUpdateRequest request,
+                                              @ExtractPayload Long userId) {
+
+        userService.updateUser(userId, request.updateDto());
 
         return ResponseEntity.ok(new Success());
     }
