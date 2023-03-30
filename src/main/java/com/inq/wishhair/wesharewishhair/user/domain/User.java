@@ -27,8 +27,8 @@ public class User {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
-    private String nickname;
+    @Embedded
+    private Nickname nickname;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
@@ -42,7 +42,7 @@ public class User {
 
     //=생성 메서드=//
     @Builder
-    public User(Email email, Password password, String name, String nickname, Sex sex) {
+    public User(Email email, Password password, String name, Nickname nickname, Sex sex) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -74,5 +74,13 @@ public class User {
 
     public void updateAvailablePoint(PointType pointType, int dealAmount) {
         availablePoint.updateAvailablePoint(pointType, dealAmount);
+    }
+
+    public String getPasswordValue() {
+        return password.getValue();
+    }
+
+    public String getNicknameValue() {
+        return nickname.getValue();
     }
 }

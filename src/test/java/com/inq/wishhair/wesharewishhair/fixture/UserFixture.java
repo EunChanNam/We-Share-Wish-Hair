@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.fixture;
 
 import com.inq.wishhair.wesharewishhair.user.domain.Email;
+import com.inq.wishhair.wesharewishhair.user.domain.Nickname;
 import com.inq.wishhair.wesharewishhair.user.domain.Password;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
@@ -30,7 +31,7 @@ public enum UserFixture {
                 .email(new Email(email))
                 .password(new Password(password))
                 .name(getName())
-                .nickname(getNickname())
+                .nickname(new Nickname(nickname))
                 .sex(getSex())
                 .build();
     }
