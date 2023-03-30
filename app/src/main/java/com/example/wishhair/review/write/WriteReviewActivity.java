@@ -78,13 +78,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
 //        RatingBar
         ratingBar = findViewById(R.id.write_review_ratingBar);
-        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
-            @Override
-            public void onRatingChanged(RatingBar ratingBar, float choice, boolean fromUser) {
-                writeRequestData.setRating(choice);
-                Log.d("setRating", writeRequestData.getRating());
-            }
-        });
+        ratingBar.setOnRatingBarChangeListener((ratingBar, choice, fromUser) -> writeRequestData.setRating(choice));
 
 //        addPicture
         btn_addPicture = findViewById(R.id.write_review_addPicture);

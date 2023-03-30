@@ -4,7 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -48,7 +48,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,14 +65,28 @@ public class ReviewListFragment extends Fragment {
     private RadioGroup filter;
     private RadioButton filter_whole, filter_man, filter_woman;
     private Button btn_temp_write;
+    private RecyclerView recentRecyclerView;
+    RecyclerViewAdapterRecent listAdapter;
 
-//    img
+    //    img
     private static final String IMG_PATH = "C:\\Users\\hath8\\IdeaProjects\\backend\\We-Share-Wish-Hair\\src\\main\\resources\\static\\images\\";
     private Bitmap bitmap;
 
     //    sort
     private static String sort_selected = null;
     private static final String[] sortItems = {"최신 순", "오래된 순", "좋아요 순"};
+
+    String accessToken;
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        //       request List data
+        ReviewListRequest(accessToken);
+
+        recentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        recentRecyclerView.setAdapter(listAdapter);
+    }
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
@@ -82,9 +95,8 @@ public class ReviewListFragment extends Fragment {
         View v = inflater.inflate(R.layout.review_fragment_list, container, false);
 
         CustomTokenHandler customTokenHandler = new CustomTokenHandler(requireActivity());
-        String accessToken = customTokenHandler.getAccessToken();
-//       request List data
-        ReviewListRequest(accessToken);
+        accessToken = customTokenHandler.getAccessToken();
+
 //        temp write button
 //        TODO 임시 글쓰기 버튼, 나중에 삭제해야댐
         btn_temp_write = v.findViewById(R.id.temp_write_btn);
@@ -101,34 +113,29 @@ public class ReviewListFragment extends Fragment {
         filter_man = v.findViewById(R.id.review_fragment_filter_man);
         filter_woman = v.findViewById(R.id.review_fragment_filter_woman);
 
-        RecyclerView recentRecyclerView = v.findViewById(R.id.review_recent_recyclerView);
+        recentRecyclerView = v.findViewById(R.id.review_recent_recyclerView);
         recentReviewItems = new ArrayList<>();
-
-        //===============================dummy data===============================
+        listAdapter = new RecyclerViewAdapterRecent(recentReviewItems, getContext());
+        /*//===============================dummy data===============================
         String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
         ReviewItem newItem = new ReviewItem(R.drawable.user_sample, "현정" + " 님", "3" + " 개", "3.03",
                 imageSample, imageSample,
                 " is a root vegetable, typically orange in color, though purple, black, red, white, and yellow cultivars exist,[2][3][4] all of which are domesticated forms of the wild carrot, Daucus carota, native to Europe and Southwestern Asia. The plant probably originated in Persia and was originally cultivated for its leaves and seeds. The most commonly eaten part of the plant is the taproot, although the stems and leaves are also eaten. The domestic carrot has been selectively bred for its enlarged, more palatable, less woody-textured taproot.",
                 "3.8", false, 314, "22.05.13");
-        recentReviewItems.add(newItem);
-
-
-        RecyclerViewAdapterRecent recentRecyclerViewAdapter = new RecyclerViewAdapterRecent(recentReviewItems, getContext());
-        recentRecyclerView.setAdapter(recentRecyclerViewAdapter);
-        recentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+        recentReviewItems.add(newItem);*/
 
         //        swipeRefreshLayout
-//        TODO 새로고침 제대로 구현
+//        TODO 새로고침 제대로 구현 >>>> 지금 새로고침할때마다 똑같은거 다시 들어감
         SwipeRefreshLayout swipeRefreshLayout = v.findViewById(R.id.review_recent_swipeRefLayout);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             ReviewListRequest(accessToken);
-            recentRecyclerViewAdapter.notifyDataSetChanged();
+            listAdapter.notifyDataSetChanged();
             final Handler handler = new Handler();
             handler.postDelayed(() -> swipeRefreshLayout.setRefreshing(false), 500);
         });
 
         // TODO: 2023-03-12  나중에 아이템 클릭시 해당 게시글 이동 리스너로 활용
-        recentRecyclerViewAdapter.setOnItemClickListener(new RecyclerViewAdapterRecent.OnItemClickListener() {
+        listAdapter.setOnItemClickListener(new RecyclerViewAdapterRecent.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(v.getContext(), ReviewDetailActivity.class);
@@ -145,6 +152,7 @@ public class ReviewListFragment extends Fragment {
         return v;
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private void ReviewListRequest(String accessToken) {
         final String URL_REVIEWLIST = UrlConst.URL + "/api/review";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL_REVIEWLIST, null, new Response.Listener<JSONObject>() {
@@ -178,7 +186,10 @@ public class ReviewListFragment extends Fragment {
                         for (int j = 0; j < photosArray.length(); j++) {
                             JSONObject photoObject = photosArray.getJSONObject(j);
                             String storeFilename = photoObject.getString("storeFilename");
-                            fileNames.add(IMG_PATH + storeFilename);
+
+//                            String bitmapUrl = setImage(storeFilename);
+//                            Log.d("bitmap URL", bitmapUrl);
+                            fileNames.add(storeFilename);
                         }
                         receivedData.setPhotos(fileNames);
 //                       set review data
@@ -200,7 +211,6 @@ public class ReviewListFragment extends Fragment {
                     e.printStackTrace();
                 }
 
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -217,6 +227,9 @@ public class ReviewListFragment extends Fragment {
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         requestQueue.add(jsonObjectRequest);
+
+        recentRecyclerView.setAdapter(listAdapter);
+        listAdapter.notifyDataSetChanged();
     }
 
 
@@ -244,7 +257,6 @@ public class ReviewListFragment extends Fragment {
 //        저건 필요없고 bind할때 알아서 잘 받아오면 되나
 
 
-        Log.i("received photo url", photos.toString());
         String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
 
         @SuppressLint("SimpleDateFormat")
@@ -252,12 +264,14 @@ public class ReviewListFragment extends Fragment {
         String date = receivedData.getCreatedDate();
 
         if (photos.size() == 0) {
-            ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
-                    imageSample, receivedData.getContents(),
-                    receivedData.getScore(), true, receivedData.getLikes(), date);
-            recentReviewItems.add(item);
+//              테스트 할때 이미지 없는거 거슬리니까 일단 넣지 마!
+//            ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
+//                    imageSample, receivedData.getContents(),
+//                    receivedData.getScore(), true, receivedData.getLikes(), date);
+//            recentReviewItems.add(item);
         }
         else if (photos.size() == 1) {
+            Log.i("received photo url", photos.toString());
             ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
                     photos.get(0), receivedData.getContents(),
                     receivedData.getScore(), true, receivedData.getLikes(), date);
@@ -270,44 +284,6 @@ public class ReviewListFragment extends Fragment {
         }
 
     }
-
-//    private void setImage(URL url) {
-//        Thread uThread = new Thread() {
-//            @Override
-//            public void run(){
-//                try{
-//                    // 이미지 URL 경로
-//                    // web에서 이미지를 가져와 ImageView에 저장할 Bitmap을 만든다.
-//                    HttpURLConnection conn = (HttpURLConnection)url.openConnection();
-//                    conn.setDoInput(true); // 서버로부터 응답 수신
-//                    conn.connect(); //연결된 곳에 접속할 때 (connect() 호출해야 실제 통신 가능함)
-//
-//                    InputStream is = conn.getInputStream(); //inputStream 값 가져오기
-//                    bitmap = BitmapFactory.decodeStream(is); // Bitmap으로 변환
-//
-//                }catch (MalformedURLException e){
-//                    e.printStackTrace();
-//                }catch (IOException e){
-//                    e.printStackTrace();
-//                }
-//            }
-//        };
-//
-//        uThread.start(); // 작업 Thread 실행
-//
-//        try{
-//            //메인 Thread는 별도의 작업 Thread가 작업을 완료할 때까지 대기해야 한다.
-//            //join() 호출하여 별도의 작업 Thread가 종료될 때까지 메인 Thread가 기다리도록 한다.
-//            //join() 메서드는 InterruptedException을 발생시킨다.
-//            uThread.join();
-//
-//            //작업 Thread에서 이미지를 불러오는 작업을 완료한 뒤
-//            //UI 작업을 할 수 있는 메인 Thread에서 ImageView에 이미지 지정
-//            imageView.setImageBitmap(bitmap);
-//        }catch (InterruptedException e){
-//            e.printStackTrace();
-//        }
-//    }
 
     private void sort_select(Spinner spinner_sort) {
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, sortItems);
