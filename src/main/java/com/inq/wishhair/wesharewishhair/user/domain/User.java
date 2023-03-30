@@ -76,6 +76,18 @@ public class User {
         availablePoint.updateAvailablePoint(pointType, dealAmount);
     }
 
+    public void updatePassword(Password password) {
+        this.password = password;
+    }
+
+    public void updateNickname(Nickname nickname) {
+        this.nickname = nickname;
+    }
+
+    public void updateSex(Sex sex) {
+        this.sex = sex;
+    }
+
     public String getPasswordValue() {
         return password.getValue();
     }
