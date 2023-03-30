@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.user.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserCreateRequest;
@@ -39,6 +40,15 @@ public class UserController {
                                               @ExtractPayload Long userId) {
 
         userService.updateUser(userId, request.updateDto());
+
+        return ResponseEntity.ok(new Success());
+    }
+
+    @PatchMapping
+    public ResponseEntity<Success> updatePassword(@RequestBody PasswordUpdateRequest request,
+                                                  @ExtractPayload Long userId) {
+
+        userService.updatePassword(userId, request.toPasswordUpdateRequest());
 
         return ResponseEntity.ok(new Success());
     }
