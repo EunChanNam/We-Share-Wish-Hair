@@ -25,7 +25,7 @@ public class UserTest {
 
         assertAll(
                 () -> assertThat(user.getEmailValue()).isEqualTo(A.getEmail()),
-                () -> assertThat(user.getPw()).isEqualTo(A.getPw()),
+                () -> assertThat(user.getPassword()).isEqualTo(A.getPw()),
                 () -> assertThat(user.getName()).isEqualTo(A.getName()),
                 () -> assertThat(user.getNickname()).isEqualTo(A.getNickname()),
                 () -> assertThat(user.getSex()).isEqualTo(A.getSex())

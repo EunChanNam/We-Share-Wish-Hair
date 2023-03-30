@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.fixture;
 
 import com.inq.wishhair.wesharewishhair.user.domain.Email;
+import com.inq.wishhair.wesharewishhair.user.domain.Password;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import lombok.AllArgsConstructor;
@@ -16,7 +17,7 @@ public enum UserFixture {
 
     private final String email;
 
-    private final String pw;
+    private final String password;
 
     private final String name;
 
@@ -27,7 +28,7 @@ public enum UserFixture {
     public User toEntity() {
         return User.builder()
                 .email(new Email(email))
-                .pw(getPw())
+                .password(new Password(password))
                 .name(getName())
                 .nickname(getNickname())
                 .sex(getSex())
