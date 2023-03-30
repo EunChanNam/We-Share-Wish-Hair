@@ -88,6 +88,10 @@ public class User {
         this.sex = sex;
     }
 
+    public boolean isNotSameSex(Sex sex) {
+        return this.sex != sex;
+    }
+
     public String getPasswordValue() {
         return password.getValue();
     }

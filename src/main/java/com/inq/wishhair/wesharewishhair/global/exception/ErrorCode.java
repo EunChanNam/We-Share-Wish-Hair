@@ -20,6 +20,7 @@ public enum ErrorCode {
     USER_INVALID_EMAIL("USER_002", "이메일 형식이 맞지 않습니다.", HttpStatus.BAD_REQUEST),
     USER_INVALID_PASSWORD("USER_003", "비밀번호 형식이 맞지 않습니다.", HttpStatus.BAD_REQUEST),
     USER_INVALID_NICKNAME("USER_004", "닉네임 형식이 맞지 않습니다.", HttpStatus.BAD_REQUEST),
+    USER_DUPLICATED_NICKNAME("USER_005", "이미 존재하는 닉네임 입니다.", HttpStatus.BAD_REQUEST),
 
     MAIL_EXPIRED_KEY("MAIL_001", "인증키가 만료되었습니다.", HttpStatus.UNAUTHORIZED),
     MAIL_INVALID_KEY("MAIL_002", "인증키가 틀립니다.", HttpStatus.UNAUTHORIZED),
