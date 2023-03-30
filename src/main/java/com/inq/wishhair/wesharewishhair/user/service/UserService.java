@@ -2,10 +2,7 @@ package com.inq.wishhair.wesharewishhair.user.service;
 
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.user.domain.Nickname;
-import com.inq.wishhair.wesharewishhair.user.domain.User;
-import com.inq.wishhair.wesharewishhair.user.domain.UserFindRepository;
-import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
+import com.inq.wishhair.wesharewishhair.user.domain.*;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import com.inq.wishhair.wesharewishhair.user.service.dto.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +40,13 @@ public class UserService {
         if (user.isNotSameSex(dto.getSex())) {
             user.updateSex(dto.getSex());
         }
+    }
+
+    @Transactional
+    public void updatePassword(Long userId, Password password) {
+        User user = userFindService.findByUserId(userId);
+
+        user.updatePassword(password);
     }
 
     private void validateNicknameIsNotDuplicated(Nickname nickname) {
