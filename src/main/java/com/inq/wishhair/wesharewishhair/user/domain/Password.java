@@ -18,7 +18,7 @@ public class Password {
     private static final String PASSWORD_PATTERN = "^(?=.*[a-zA-Z])(?=.*\\d)(?=.*\\W).{8,20}$";
     private static final Pattern PASSWORD_MATCHER = Pattern.compile(PASSWORD_PATTERN);
 
-    @Column(name = "pw")
+    @Column(name = "pw", nullable = false)
     private String value;
 
     public Password(String pw) {
