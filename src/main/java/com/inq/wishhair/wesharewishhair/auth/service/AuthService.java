@@ -23,7 +23,7 @@ public class AuthService {
     @Transactional
     public TokenResponse login(String email, String pw) {
         User user = userFindRepository.findByEmail(new Email(email))
-                .filter(findUser -> findUser.getPw().equals(pw))
+                .filter(findUser -> findUser.getPasswordValue().equals(pw))
                 .orElseThrow(() -> new WishHairException(ErrorCode.LOGIN_FAIL));
 
         return issueAndSynchronizeToken(user);

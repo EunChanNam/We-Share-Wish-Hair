@@ -1,6 +1,8 @@
 package com.inq.wishhair.wesharewishhair.user.controller.dto.request;
 
 import com.inq.wishhair.wesharewishhair.user.domain.Email;
+import com.inq.wishhair.wesharewishhair.user.domain.Nickname;
+import com.inq.wishhair.wesharewishhair.user.domain.Password;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import jakarta.validation.constraints.NotNull;
@@ -33,9 +35,9 @@ public class UserCreateRequest {
     public User toEntity() {
         return User.builder()
                 .email(new Email(email))
-                .pw(pw)
+                .password(new Password(pw))
                 .name(name)
-                .nickname(nickname)
+                .nickname(new Nickname(nickname))
                 .sex(sex)
                 .build();
     }

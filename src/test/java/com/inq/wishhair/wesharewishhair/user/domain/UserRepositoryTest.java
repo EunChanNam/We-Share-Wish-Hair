@@ -41,9 +41,9 @@ class UserRepositoryTest extends RepositoryTest {
         User findUserC = userRepository.findById(userC.getId()).get();
 
         assertAll(
-                () -> assertThat(userA.getPw()).isEqualTo(findUserA.getPw()),
-                () -> assertThat(userB.getPw()).isEqualTo(findUserB.getPw()),
-                () -> assertThat(userC.getPw()).isEqualTo(findUserC.getPw())
+                () -> assertThat(userA.getPasswordValue()).isEqualTo(findUserA.getPasswordValue()),
+                () -> assertThat(userB.getPasswordValue()).isEqualTo(findUserB.getPasswordValue()),
+                () -> assertThat(userC.getPasswordValue()).isEqualTo(findUserC.getPasswordValue())
         );
     }
 
@@ -55,9 +55,9 @@ class UserRepositoryTest extends RepositoryTest {
         User findUserC = userFindRepository.findByEmail(this.userC.getEmail()).get();
 
         assertAll(
-                () -> assertThat(findUserA.getPw()).isEqualTo(findUserA.getPw()),
-                () -> assertThat(findUserB.getPw()).isEqualTo(findUserB.getPw()),
-                () -> assertThat(userC.getPw()).isEqualTo(findUserC.getPw())
+                () -> assertThat(findUserA.getPasswordValue()).isEqualTo(findUserA.getPasswordValue()),
+                () -> assertThat(findUserB.getPasswordValue()).isEqualTo(findUserB.getPasswordValue()),
+                () -> assertThat(userC.getPasswordValue()).isEqualTo(findUserC.getPasswordValue())
         );
     }
 }

@@ -18,6 +18,8 @@ public enum ErrorCode {
 
     USER_TAG_MISMATCH("USER_001", "얼굴형 태그가 아닙니다.", HttpStatus.BAD_REQUEST),
     USER_INVALID_EMAIL("USER_002", "이메일 형식이 맞지 않습니다.", HttpStatus.BAD_REQUEST),
+    USER_INVALID_PASSWORD("USER_003", "비밀번호 형식이 맞지 않습니다.", HttpStatus.BAD_REQUEST),
+    USER_INVALID_NICKNAME("USER_004", "닉네임 형식이 맞지 않습니다.", HttpStatus.BAD_REQUEST),
 
     MAIL_EXPIRED_KEY("MAIL_001", "인증키가 만료되었습니다.", HttpStatus.UNAUTHORIZED),
     MAIL_INVALID_KEY("MAIL_002", "인증키가 틀립니다.", HttpStatus.UNAUTHORIZED),
@@ -29,6 +31,7 @@ public enum ErrorCode {
     RUN_NO_FACE_SHAPE_TAG("RUN_002", "얼굴형 분석을 다시 시도하세요.", HttpStatus.BAD_REQUEST),
 
     SCORE_MISMATCH("SCORE_001", "정해진 형식의 입력이 아닙니다.", HttpStatus.BAD_REQUEST),
+
     GLOBAL_VALIDATION_ERROR("GLOBAL_001", "잘못된 요청입니다.", HttpStatus.BAD_REQUEST),
     GLOBAL_NOT_SUPPORTED_URI("GLOBAL_002", "지원하지 않는 URI 요청입니다.", HttpStatus.NOT_FOUND),
     GLOBAL_NOT_SUPPORTED_METHOD("GLOBAL_003", "지원하지 않는 Method 요청입니다.", HttpStatus.METHOD_NOT_ALLOWED),

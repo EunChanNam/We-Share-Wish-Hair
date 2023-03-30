@@ -17,17 +17,17 @@ public class UserTest {
 
         User user = User.builder()
                 .email(new Email(A.getEmail()))
-                .pw(A.getPw())
+                .password(new Password(A.getPassword()))
                 .name(A.getName())
-                .nickname(A.getNickname())
+                .nickname(new Nickname(A.getNickname()))
                 .sex(A.getSex())
                 .build();
 
         assertAll(
                 () -> assertThat(user.getEmailValue()).isEqualTo(A.getEmail()),
-                () -> assertThat(user.getPw()).isEqualTo(A.getPw()),
+                () -> assertThat(user.getPasswordValue()).isEqualTo(A.getPassword()),
                 () -> assertThat(user.getName()).isEqualTo(A.getName()),
-                () -> assertThat(user.getNickname()).isEqualTo(A.getNickname()),
+                () -> assertThat(user.getNicknameValue()).isEqualTo(A.getNickname()),
                 () -> assertThat(user.getSex()).isEqualTo(A.getSex())
         );
     }
