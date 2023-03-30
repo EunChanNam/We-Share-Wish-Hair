@@ -70,13 +70,14 @@ public class ReviewListFragment extends Fragment {
 
     //    img
     private static final String IMG_PATH = "C:\\Users\\hath8\\IdeaProjects\\backend\\We-Share-Wish-Hair\\src\\main\\resources\\static\\images\\";
-    private Bitmap bitmap;
 
     //    sort
     private static String sort_selected = null;
     private static final String[] sortItems = {"최신 순", "오래된 순", "좋아요 순"};
 
+//    request
     String accessToken;
+
     @Override
     public void onResume() {
         super.onResume();
@@ -116,13 +117,6 @@ public class ReviewListFragment extends Fragment {
         recentRecyclerView = v.findViewById(R.id.review_recent_recyclerView);
         recentReviewItems = new ArrayList<>();
         listAdapter = new RecyclerViewAdapterRecent(recentReviewItems, getContext());
-        /*//===============================dummy data===============================
-        String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
-        ReviewItem newItem = new ReviewItem(R.drawable.user_sample, "현정" + " 님", "3" + " 개", "3.03",
-                imageSample, imageSample,
-                " is a root vegetable, typically orange in color, though purple, black, red, white, and yellow cultivars exist,[2][3][4] all of which are domesticated forms of the wild carrot, Daucus carota, native to Europe and Southwestern Asia. The plant probably originated in Persia and was originally cultivated for its leaves and seeds. The most commonly eaten part of the plant is the taproot, although the stems and leaves are also eaten. The domestic carrot has been selectively bred for its enlarged, more palatable, less woody-textured taproot.",
-                "3.8", false, 314, "22.05.13");
-        recentReviewItems.add(newItem);*/
 
         //        swipeRefreshLayout
 //        TODO 새로고침 제대로 구현 >>>> 지금 새로고침할때마다 똑같은거 다시 들어감
@@ -165,7 +159,6 @@ public class ReviewListFragment extends Fragment {
                     JSONObject jsonObject = new JSONObject(stringResponse);
                     JSONArray resultArray = jsonObject.getJSONArray("result");
                     for (int i = 0; i < resultArray.length(); i++) {
-//                        RecentReceivedData receivedData = getDate(resultArray);
                         ReviewItem receivedData = new ReviewItem();
                         JSONObject resultObject = resultArray.getJSONObject(i);
 //                        Log.d("resultObject", resultObject.toString());
@@ -187,9 +180,7 @@ public class ReviewListFragment extends Fragment {
                             JSONObject photoObject = photosArray.getJSONObject(j);
                             String storeFilename = photoObject.getString("storeFilename");
 
-//                            String bitmapUrl = setImage(storeFilename);
-//                            Log.d("bitmap URL", bitmapUrl);
-                            fileNames.add(storeFilename);
+                            fileNames.add("https://" + storeFilename);
                         }
                         receivedData.setPhotos(fileNames);
 //                       set review data
@@ -260,23 +251,15 @@ public class ReviewListFragment extends Fragment {
         String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
 
         @SuppressLint("SimpleDateFormat")
-        SimpleDateFormat format = new SimpleDateFormat("yyyy.MM.dd");
         String date = receivedData.getCreatedDate();
 
-        if (photos.size() == 0) {
-//              테스트 할때 이미지 없는거 거슬리니까 일단 넣지 마!
-//            ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
-//                    imageSample, receivedData.getContents(),
-//                    receivedData.getScore(), true, receivedData.getLikes(), date);
-//            recentReviewItems.add(item);
-        }
-        else if (photos.size() == 1) {
+        if (photos.size() == 1) {
             Log.i("received photo url", photos.toString());
             ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
                     photos.get(0), receivedData.getContents(),
                     receivedData.getScore(), true, receivedData.getLikes(), date);
             recentReviewItems.add(item);
-        } else {
+        } else if (photos.size() > 1) {
             ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
                     photos.get(0), photos.get(1), receivedData.getContents(),
                     receivedData.getScore(), true, receivedData.getLikes(), date);
