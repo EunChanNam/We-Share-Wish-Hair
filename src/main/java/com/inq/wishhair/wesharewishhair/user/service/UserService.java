@@ -4,6 +4,7 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.domain.*;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
+import com.inq.wishhair.wesharewishhair.user.service.dto.PasswordUpdateDto;
 import com.inq.wishhair.wesharewishhair.user.service.dto.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -43,11 +44,11 @@ public class UserService {
     }
 
     @Transactional
-    public void updatePassword(Long userId, Password password) {
+    public void updatePassword(Long userId, PasswordUpdateDto dto) {
         User user = userFindService.findByUserId(userId);
 
-        confirmPassword(user, password);
-        user.updatePassword(password);
+        confirmPassword(user, dto.getOldPassword());
+        user.updatePassword(dto.getNewPassword());
     }
 
     private void confirmPassword(User user, Password password) {
