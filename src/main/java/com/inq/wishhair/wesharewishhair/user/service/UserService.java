@@ -46,7 +46,14 @@ public class UserService {
     public void updatePassword(Long userId, Password password) {
         User user = userFindService.findByUserId(userId);
 
+        confirmPassword(user, password);
         user.updatePassword(password);
+    }
+
+    private void confirmPassword(User user, Password password) {
+        if (user.isNotSamePassword(password)) {
+            throw new WishHairException(ErrorCode.USER_WRONG_PASSWORD);
+        }
     }
 
     private void validateNicknameIsNotDuplicated(Nickname nickname) {
