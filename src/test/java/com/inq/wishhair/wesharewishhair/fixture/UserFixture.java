@@ -12,9 +12,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum UserFixture {
 
-    A("namhm1@naver.com", "testA", "userA", "userA", Sex.MAN),
-    B("namhm2@naver.com", "testB", "userB", "userB", Sex.WOMAN),
-    C("namhm3@naver.com", "testC", "userC", "userC", Sex.MAN);
+    A("namhm1@naver.com", "asdf1234@", "userA", "userA", Sex.MAN),
+    B("namhm2@naver.com", "asdf1234@", "userB", "userB", Sex.WOMAN),
+    C("namhm3@naver.com", "asdf1234@", "userC", "userC", Sex.MAN);
 
     private final String email;
 

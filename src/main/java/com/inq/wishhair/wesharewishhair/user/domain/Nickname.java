@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
 @Embeddable
 public class Nickname {
 
-    private static final String NICKNAME_PATTERN = "^[\\w가-힣ㄱ-ㅎㅏ-ㅣ]{2,8}(\\s?[\\w가-힣ㄱ-ㅎㅏ-ㅣ]{1,7})?$";
+    private static final String NICKNAME_PATTERN = "^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{2,8}$";
     private static final Pattern NICKNAME_MATCHER = Pattern.compile(NICKNAME_PATTERN);
 
     @Column(name = "nickname", nullable = false, unique = true)
