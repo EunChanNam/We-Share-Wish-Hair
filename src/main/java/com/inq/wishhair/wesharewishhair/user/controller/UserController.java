@@ -44,7 +44,7 @@ public class UserController {
         return ResponseEntity.ok(new Success());
     }
 
-    @PatchMapping
+    @PatchMapping("/password")
     public ResponseEntity<Success> updatePassword(@RequestBody PasswordUpdateRequest request,
                                                   @ExtractPayload Long userId) {
 
