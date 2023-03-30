@@ -5,13 +5,14 @@ import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("닉네임 검증 테스트")
 public class NicknameTest {
 
-    private static final String CORRECT_NICKNAME = "잘생긴 사람";
+    private static final String CORRECT_NICKNAME = "잘생긴사람";
     private static final String WRONG_NICKNAME1 = "니";
     private static final String WRONG_NICKNAME2 = "니니니니니니니니니니니니니니니";
     private static final String WRONG_NICKNAME3 = "니니       니니";
@@ -34,5 +35,15 @@ public class NicknameTest {
                         .isInstanceOf(WishHairException.class)
                         .hasMessageContaining(expectedError.getMessage())
         );
+    }
+
+    @Test
+    @DisplayName("올바른 닉네임으로 생성에 성공한다")
+    void test2() {
+        //when
+        Nickname result = new Nickname(CORRECT_NICKNAME);
+
+        //then
+        assertThat(result.getValue()).isEqualTo(CORRECT_NICKNAME);
     }
 }
