@@ -80,7 +80,7 @@ public class MyInformationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Toolbar toolbar = getView().findViewById(R.id.toolbar);
+        Toolbar toolbar = getView().findViewById(R.id.modify_toolbar);
         toolbar.setNavigationIcon(R.drawable.back);
 
         LinearLayout MyPointLayout = getView().findViewById(R.id.MyPointLayout);

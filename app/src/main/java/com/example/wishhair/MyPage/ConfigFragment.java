@@ -54,6 +54,7 @@ public class ConfigFragment extends Fragment {
     private Toolbar toolbar;
     private SharedPreferences loginSP;
     final static private String logout_url = UrlConst.URL + "/api/logout";
+    private Button toModify;
     public ConfigFragment() {
         // Required empty public constructor
     }
@@ -96,15 +97,13 @@ public class ConfigFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.my_config_fragment, container, false);
         toolbar = view.findViewById(R.id.config_toolbar);
+        toModify = view.findViewById(R.id.config_modfiy);
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
-
 
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -125,6 +124,13 @@ public class ConfigFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 logout(accessToken);
+            }
+        });
+
+        toModify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.ChangeFragment(5);
             }
         });
     }

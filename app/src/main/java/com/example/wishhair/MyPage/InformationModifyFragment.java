@@ -2,6 +2,7 @@ package com.example.wishhair.MyPage;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -13,15 +14,13 @@ import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,9 +29,10 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wishhair.MainActivity;
 import com.example.wishhair.R;
+import com.example.wishhair.sign.EmailCertActivity;
+import com.example.wishhair.sign.LoginActivity;
 import com.example.wishhair.sign.UrlConst;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -59,13 +59,14 @@ public class InformationModifyFragment extends Fragment {
     private SharedPreferences loginSP;
     final static private String url = UrlConst.URL + "/api/my_page";
     static private String accessToken;
+    Button modify_commit;
+    Button pw_modify;
 
     static TextView nameTv = null;
     static TextView sexTv = null;
     static TextView IDTv = null;
     static TextView PWTv = null;
 
-    ImageButton commitButton;
 
 
     public InformationModifyFragment() {
@@ -123,11 +124,12 @@ public class InformationModifyFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_information_modify, container, false);
-        nameTv = view.findViewById(R.id.NameModify);
-        sexTv = view.findViewById(R.id.GenderModify);
-        IDTv = view.findViewById(R.id.IDModify);
-        PWTv = view.findViewById(R.id.PWModify);
-        commitButton = view.findViewById(R.id.modify_commit_button);
+        nameTv = view.findViewById(R.id.name_modify);
+        sexTv = view.findViewById(R.id.email_modify);
+        IDTv = view.findViewById(R.id.nickname_modify);
+//        PWTv = view.findViewById(R.id.PWModify);
+        modify_commit = view.findViewById(R.id.modify_commit);
+        pw_modify = view.findViewById(R.id.pw_modify);
 
         return view;
     }
@@ -137,7 +139,7 @@ public class InformationModifyFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        Toolbar toolbar = getView().findViewById(R.id.toolbar);
+        Toolbar toolbar = getView().findViewById(R.id.modify_toolbar);
 
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -146,18 +148,25 @@ public class InformationModifyFragment extends Fragment {
                 mainActivity.ChangeFragment(2);
             }
         });
+        pw_modify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mainActivity, EmailCertActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         loginSP = getActivity().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         String accessToken = loginSP.getString("accessToken", "fail acc");
 
-        ImageButton btn = view.findViewById(R.id.modify_commit_button);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ModifyRequest(accessToken);
-            }
-        });
+//        ImageButton btn = view.findViewById(R.id.modify_commit_button);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                ModifyRequest(accessToken);
+//            }
+//        });
 
 
     }
@@ -182,8 +191,9 @@ public class InformationModifyFragment extends Fragment {
             }
         }) {
 
+            @Nullable
             @Override
-            public Map<String, String> getHeaders() {
+            protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap();
                 params.put("Authorization", "bearer" + accessToken);
                 params.put("name",name);
@@ -191,6 +201,13 @@ public class InformationModifyFragment extends Fragment {
                 params.put("id", ID);
                 params.put("pw", PW);
 
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap();
+                params.put("Authorization", "bearer" + accessToken);
                 return params;
             }
         };

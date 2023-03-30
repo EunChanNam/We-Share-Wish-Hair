@@ -1,150 +1,156 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#ffffff"
+    android:orientation="vertical"
     tools:context=".MyPage.MyPageFragment">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/modify_toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/white"
-        app:title="내 정보 수정"
-        app:titleTextColor="#666666"
-        >
-
-        <ImageButton
-            android:id="@+id/modify_commit_button"
+        app:titleTextColor="#666666" >
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right"
-            android:layout_marginRight="10dp"
-            android:background="@color/white"
-            android:src="@drawable/check" />
-
+            android:text="회원정보 수정"
+            android:layout_gravity="center"/>
     </androidx.appcompat.widget.Toolbar>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="15dp"
+        android:src="@drawable/user_sample" />
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="?attr/actionBarSize"
-        android:background="#74FBF9F9">
+        android:layout_marginTop="10dp"
+        android:background="#74FBF9F9"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/mail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="이메일"
+            android:textColor="#666666"
+            android:textSize="6pt" />
+
+        <EditText
+            android:id="@+id/email_modify"
+            android:layout_width="300dp"
+            android:layout_height="49dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/edittext"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="email@email.com"
+            />
 
         <TextView
             android:id="@+id/Name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:text="이름"
-            android:textSize="9pt"
             android:textColor="#666666"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.07"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.05" />
+            android:textSize="6pt"
+            android:layout_marginTop="12dp"/>
+
+        <EditText
+            android:id="@+id/name_modify"
+            android:layout_width="300dp"
+            android:layout_height="49dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/edittext"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="이름" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
+            android:text="닉네임"
+            android:textColor="#666666"
+            android:textSize="6pt"
+            android:layout_marginTop="12dp"/>
+
+        <EditText
+            android:id="@+id/nickname_modify"
+            android:layout_width="300dp"
+            android:layout_height="49dp"
+            android:layout_marginLeft="15dp"
+            android:background="@drawable/edittext"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="닉네임" />
 
         <TextView
             android:id="@+id/Gender"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:text="성별"
             android:textColor="#666666"
-            android:textSize="9pt"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/Name"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/Name"
-            app:layout_constraintTop_toBottomOf="@+id/NameModify"
-            app:layout_constraintVertical_bias="0.05" />
+            android:textSize="6pt"
+            android:layout_marginTop="12dp"/>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/modify_sex_man"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="17dp"
+                android:layout_marginTop="5dp"
+                android:text="남자" />
+
+            <RadioButton
+                android:id="@+id/modify_sex_woman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:text="여자" />
+        </RadioGroup>
 
         <TextView
-            android:id="@+id/ID"
-            android:layout_width="wrap_content"
+            android:id="@+id/password"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ID"
-            android:textColor="#666666"
-            android:textSize="9pt"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/Name"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/Name"
-            app:layout_constraintTop_toBottomOf="@+id/GenderModify"
-            app:layout_constraintVertical_bias="0.05" />
-
-        <TextView
-            android:id="@+id/PW"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginLeft="15dp"
             android:text="비밀번호"
             android:textColor="#666666"
-            android:textSize="9pt"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/Name"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/Name"
-            app:layout_constraintTop_toBottomOf="@+id/IDModify"
-            app:layout_constraintVertical_bias="0.05" />
+            android:textSize="6pt"
+            android:layout_marginTop="12dp"/>
 
-        <EditText
-            android:id="@+id/NameModify"
-            android:layout_width="300dp"
-            android:layout_height="49dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/Name"
-            app:layout_constraintTop_toBottomOf="@+id/Name"
-            app:layout_constraintVertical_bias="0.0" />
+        <Button
+            android:id="@+id/pw_modify"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="비밀번호 변경" />
 
-        <EditText
-            android:id="@+id/GenderModify"
-            android:layout_width="300dp"
-            android:layout_height="49dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/Name"
-            app:layout_constraintTop_toBottomOf="@+id/Gender"
-            app:layout_constraintVertical_bias="0.0" />
+        <Button
+            android:id="@+id/modify_commit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="회원정보 수정" />
 
-        <EditText
-            android:id="@+id/IDModify"
-            android:layout_width="300dp"
-            android:layout_height="49dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/Name"
-            app:layout_constraintTop_toBottomOf="@+id/ID"
-            app:layout_constraintVertical_bias="0.0" />
+    </LinearLayout>
 
-        <EditText
-            android:id="@+id/PWModify"
-            android:layout_width="300dp"
-            android:layout_height="49dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="Name"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/Name"
-            app:layout_constraintTop_toBottomOf="@+id/PW"
-            app:layout_constraintVertical_bias="0.0" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</FrameLayout>
+</LinearLayout>

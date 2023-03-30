@@ -65,7 +65,7 @@ public class MyStyleFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Toolbar toolbar = getView().findViewById(R.id.toolbar);
+        Toolbar toolbar = getView().findViewById(R.id.modify_toolbar);
 
         toolbar.setNavigationIcon(R.drawable.back);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

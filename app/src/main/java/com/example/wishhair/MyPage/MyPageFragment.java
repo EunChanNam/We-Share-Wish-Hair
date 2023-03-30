@@ -83,7 +83,7 @@ public class MyPageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.modify_toolbar);
 
         Button toMyInformationButton = view.findViewById(R.id.toConfig);
         Button toMyPointList = view.findViewById(R.id.toMyPointList);
@@ -121,15 +121,15 @@ public class MyPageFragment extends Fragment {
             }
         });
 
-        userpicture.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                intent.setAction(Intent.ACTION_PICK);
-                activityResultLauncher.launch(intent);
-            }
-        });
+//        userpicture.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(Intent.ACTION_PICK);
+//                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+//                intent.setAction(Intent.ACTION_PICK);
+//                activityResultLauncher.launch(intent);
+//            }
+//        });
 
 /*      HomeFragment로 이동하는 버튼 <불필요 시 삭제>
         toolbar.setNavigationIcon(R.drawable.back);
