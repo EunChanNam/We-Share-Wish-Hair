@@ -1,9 +1,11 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PointUseRequest;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointType;
+import com.inq.wishhair.wesharewishhair.user.service.dto.MailDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,13 +15,32 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class PointService {
 
+    private static final String MAIL_TITLE = "We-Share-Wish-Hair 포인트 환급 요청";
+
     private final PointRepository pointRepository;
+    private final UserFindService userFindService;
+    private final MailSendService mailSendService;
 
     @Transactional
-    public void insertPointHistory(PointType pointType, int dealAmount, User user) {
+    public void usePoint(PointUseRequest request, Long userId) {
 
-        user.updateAvailablePoint(pointType, dealAmount);
+        User user = userFindService.findByUserId(userId);
+        insertPointHistory(PointType.USE, request.getDealAmount(), user);
+
+        sendRefundRequestMail(request, user);
+    }
+
+    @Transactional
+    public void chargePoint(int dealAmount, Long userId) {
+
+        User user = userFindService.findByUserId(userId);
+        insertPointHistory(PointType.CHARGE, dealAmount, user);
+    }
+
+    private void insertPointHistory(PointType pointType, int dealAmount, User user) {
+
         PointHistory pointHistory = generatePointHistory(pointType, dealAmount, user);
+        user.updateAvailablePoint(pointType, dealAmount);
 
         pointRepository.save(pointHistory);
     }
@@ -32,6 +53,21 @@ public class PointService {
             point = user.getAvailablePoint() - dealAmount;
         }
         return PointHistory.createPointHistory(user, pointType, dealAmount, point);
+    }
+
+    private void sendRefundRequestMail(PointUseRequest request, User user) {
+        String contents = generateContents(request, user);
+        MailDto mailDto = new MailDto(user.getEmail(), MAIL_TITLE, contents);
+
+        mailSendService.sendMail(mailDto);
+    }
+
+    private String generateContents(PointUseRequest request, User user) {
+        String contents = "사용자 이름 : " + user.getName() + "\n";
+        contents += "은행 명 : " + request.getBankName() + "\n";
+        contents += "계좌 번호 : " + request.getAccountNumber() + "\n";
+        contents += "환급 금액 : " + request.getDealAmount();
+        return contents;
     }
 }
 
