@@ -4,6 +4,8 @@ import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PointUseRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.utils.PointUseRequestUtils;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -56,6 +58,20 @@ public class PointServiceTest extends ServiceTest {
         }
     }
 
+    @Nested
+    @DisplayName("포인트 사용 서비스")
+    class usePoint {
+        @Test
+        @DisplayName("현재 사용 가능한 포인트보다 큰 dealAmount 로 사용에 실패한다")
+        void test3() {
+            //given
+            PointUseRequest request = PointUseRequestUtils.createRequestByDealAmount(1000);
+            ErrorCode expectedError = ErrorCode.POINT_NOT_ENOUGH;
 
-
+            //when, then
+            assertThatThrownBy(() -> pointService.usePoint(request, user.getId()))
+                    .isInstanceOf(WishHairException.class)
+                    .hasMessageContaining(expectedError.getMessage());
+        }
+    }
 }
