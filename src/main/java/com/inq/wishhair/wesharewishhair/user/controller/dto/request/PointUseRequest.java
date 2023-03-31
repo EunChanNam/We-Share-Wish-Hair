@@ -7,6 +7,8 @@ import lombok.Getter;
 @AllArgsConstructor
 public class PointUseRequest {
 
+    private String bankName;
+
     private String accountNumber;
 
     private int dealAmount;

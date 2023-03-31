@@ -64,8 +64,9 @@ public class PointService {
 
     private String generateContents(PointUseRequest request, User user) {
         String contents = "사용자 이름 : " + user.getName() + "\n";
+        contents += "은행 명 : " + request.getBankName() + "\n";
         contents += "계좌 번호 : " + request.getAccountNumber() + "\n";
-        contents += "환급 포인트 : " + request.getDealAmount();
+        contents += "환급 금액 : " + request.getDealAmount();
         return contents;
     }
 }
