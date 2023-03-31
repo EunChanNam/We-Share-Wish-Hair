@@ -38,7 +38,7 @@ public class ReviewService {
         HairStyle hairStyle = findHairStyleById(dto);
 
         Review review = generateReview(dto, photos, user, hairStyle);
-        pointService.insertPointHistory(PointType.CHARGE, 100, user);
+        pointService.chargePoint(100, user.getId());
 
         return reviewRepository.save(review).getId();
     }
