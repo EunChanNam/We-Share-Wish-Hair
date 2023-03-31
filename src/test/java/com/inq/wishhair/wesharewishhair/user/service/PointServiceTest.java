@@ -73,5 +73,20 @@ public class PointServiceTest extends ServiceTest {
                     .isInstanceOf(WishHairException.class)
                     .hasMessageContaining(expectedError.getMessage());
         }
+
+        @Test
+        @DisplayName("포인트 사용에 성공한다")
+        void test4() {
+            //given
+            pointService.chargePoint(1000, user.getId());
+            PointUseRequest request = PointUseRequestUtils.createRequestByDealAmount(1000);
+
+            //when
+            pointService.usePoint(request, user.getId());
+
+            //then
+            int availablePoint = user.getAvailablePoint();
+            assertThat(availablePoint).isZero();
+        }
     }
 }

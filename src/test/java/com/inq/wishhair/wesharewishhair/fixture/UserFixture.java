@@ -12,7 +12,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum UserFixture {
 
-    A("namhm1@naver.com", "asdf1234@", "userA", "userA", Sex.MAN),
+    A("namhm23@naver.com", "asdf1234@", "userA", "userA", Sex.MAN),
     B("namhm2@naver.com", "asdf1234@", "userB", "userB", Sex.WOMAN),
     C("namhm3@naver.com", "asdf1234@", "userC", "userC", Sex.MAN);
 
