@@ -46,5 +46,12 @@
     <string name="home_message_7">님 만을 위한 추천</string>
 
     <string name="xmlDisplay_username">userName</string>
+    <string name="cert_message_1">이메일을 인증해주세요!</string>
+    <string name="cert_message_2">이메일을 입력해주세요</string>
+    <string name="cert_message_btn_send">인증번호 전송</string>
+    <string name="cert_timer">남은 시간</string>
+    <string name="cert_hint_submit">인증번호를 입력해주세요</string>
+    <string name="cert_message_btn_submit">인증번호 제출</string>
+    <string name="cert_message_btn_intent">확인</string>
 
 </resources>
