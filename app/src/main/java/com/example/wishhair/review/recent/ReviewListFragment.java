@@ -1,9 +1,12 @@
 package com.example.wishhair.review.recent;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -12,7 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Environment;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +46,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -69,7 +76,6 @@ public class ReviewListFragment extends Fragment {
     RecyclerViewAdapterRecent listAdapter;
 
     //    img
-    private static final String IMG_PATH = "C:\\Users\\hath8\\IdeaProjects\\backend\\We-Share-Wish-Hair\\src\\main\\resources\\static\\images\\";
 
     //    sort
     private static String sort_selected = null;
@@ -175,14 +181,13 @@ public class ReviewListFragment extends Fragment {
                         receivedData.setCreatedDate(createDate);
 
                         JSONArray photosArray = resultObject.getJSONArray("photos");
-                        List<String> fileNames = new ArrayList<>();
+                        List<String> receivedImages = new ArrayList<>();
                         for (int j = 0; j < photosArray.length(); j++) {
                             JSONObject photoObject = photosArray.getJSONObject(j);
                             String storeFilename = photoObject.getString("storeFilename");
 
-                            fileNames.add("https://" + storeFilename);
                         }
-                        receivedData.setPhotos(fileNames);
+                        receivedData.setPhotos(receivedImages);
 //                       set review data
                         setReceivedData(receivedData);
 
@@ -223,30 +228,9 @@ public class ReviewListFragment extends Fragment {
         listAdapter.notifyDataSetChanged();
     }
 
-
     private void setReceivedData(ReviewItem receivedData) {
         //                       TODO remove sampleImage
         List<String> photos = receivedData.getPhotos();
-        //어쨋든 이미지를 서버로 보낼 때 Uri로 보내서 서버에 잘 저장되고
-        //받아올 때 URL + fileName 으로 받아와서  그럼 그 URL을 비트맵 형식으로 바꿔야하나? 아닌데 그냥 URL 받으면 된다했었는데
-//      https://stickode.tistory.com/382 >> url to bitmap, imageView에 적용
-//      사진은 list<string>으로 받아왔으니까
-//      사진 ReviewItems 랑 RecentReviewAdapter에서 set할때 잘 건드려바
-//      지금 어쨋든 adapter에서 content1, 2를 모두 bind 하기때문에
-//      bind할때 photos.get(1)같이 접근하면 2번째 사진이 없을 떄 널포인터가 터지겠지?
-//        그러면 이제 bind 할 때 사진 갯수를 파악해서 처리해야하나
-//        아니면 아래에 새로 만들 때 저렇게 처리해도 되나
-//        >> 이건 나중에 테스트 하보고
-//        >>>> 그냥 log에 warring으로만 뜨고 종료되진 않는구나
-//      지금 bind할때 log찍게 해놨으니까 받아지는 url 어떤식으로 받아지나 보고
-//      이거 서버 안되는것도 잘 모르겠네
-//      집노트북에서는 review 데이터가 안받아와
-
-//        그리고 reviewItem에서
-//        setContentImage1_1 / 2_1 둘다 만들어놨는데
-//        어쨋든 지금 서버에서 받아온 사진들은 list<String>에 넣어지니까
-//        저건 필요없고 bind할때 알아서 잘 받아오면 되나
-
 
         String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
 

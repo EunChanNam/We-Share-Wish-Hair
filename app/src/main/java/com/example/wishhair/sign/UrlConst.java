@@ -1,5 +1,5 @@
 package com.example.wishhair.sign;
 
 public interface UrlConst {
-    public static final String URL = "https://53c0-221-165-131-6.jp.ngrok.io";
+    public static final String URL = "https://a23e-118-34-210-23.jp.ngrok.io";
 }
