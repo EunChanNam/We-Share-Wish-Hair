@@ -39,8 +39,8 @@ public class PointService {
 
     private void insertPointHistory(PointType pointType, int dealAmount, User user) {
 
-        user.updateAvailablePoint(pointType, dealAmount);
         PointHistory pointHistory = generatePointHistory(pointType, dealAmount, user);
+        user.updateAvailablePoint(pointType, dealAmount);
 
         pointRepository.save(pointHistory);
     }
