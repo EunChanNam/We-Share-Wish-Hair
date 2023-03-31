@@ -5,13 +5,13 @@ import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 @DisplayName("PointServiceTest - SpringBootTest")
@@ -43,6 +43,19 @@ public class PointServiceTest extends ServiceTest {
                     .isInstanceOf(WishHairException.class)
                     .hasMessageContaining(expectedError.getMessage());
         }
+
+        @Test
+        @DisplayName("포인트 충전에 성공한다")
+        void test2() {
+            //when
+            pointService.chargePoint(1000, user.getId());
+
+            //then
+            int availablePoint = user.getAvailablePoint();
+            assertThat(availablePoint).isEqualTo(1000);
+        }
     }
+
+
 
 }
