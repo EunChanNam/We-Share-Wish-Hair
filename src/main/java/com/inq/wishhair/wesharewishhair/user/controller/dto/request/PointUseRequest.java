@@ -7,5 +7,7 @@ import lombok.Getter;
 @AllArgsConstructor
 public class PointUseRequest {
 
-    private String dealAmount;
+    private String accountNumber;
+
+    private int dealAmount;
 }

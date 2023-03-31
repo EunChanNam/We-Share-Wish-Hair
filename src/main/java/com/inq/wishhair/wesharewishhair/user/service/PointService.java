@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PointUseRequest;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointRepository;

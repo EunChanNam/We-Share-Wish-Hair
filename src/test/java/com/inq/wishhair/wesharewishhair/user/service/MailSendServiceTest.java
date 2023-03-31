@@ -20,6 +20,6 @@ public class MailSendServiceTest extends ServiceTest {
         MailDto mailDto = A.toMailDto();
 
         //when, then -> 성공하면 성공적으로 메일이 발송된다.
-        mailSendService.sendAuthorizationMail(mailDto);
+        mailSendService.sendMail(mailDto);
     }
 }

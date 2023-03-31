@@ -9,9 +9,6 @@ import com.inq.wishhair.wesharewishhair.user.controller.dto.response.SessionIdRe
 import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +32,7 @@ public class MailController {
         String authKey = createAuthKey();
         String sessionId = registerAuthKey(request, authKey);
 
-        mailSendService.sendAuthorizationMail(mailRequest.toMailDto(MAIL_TITLE, authKey));
+        mailSendService.sendMail(mailRequest.toMailDto(MAIL_TITLE, authKey));
 
         return ResponseEntity.ok(new SessionIdResponse(sessionId));
     }
