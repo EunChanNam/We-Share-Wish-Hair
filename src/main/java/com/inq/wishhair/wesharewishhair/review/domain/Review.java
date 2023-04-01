@@ -48,19 +48,18 @@ public class Review extends BaseEntity {
     private LikeReviews likeReviews;
 
     //==생성 메서드==//
+    private Review(User user, String contents, Score score, List<Photo> photos, HairStyle hairStyle) {
+        this.user = user;
+        this.contents = contents;
+        this.score = score;
+        applyPhotos(photos);
+        this.hairStyle = hairStyle;
+        this.likeReviews = new LikeReviews();
+    }
+
     public static Review createReview(
             User user, String contents, Score score, List<Photo> photos, HairStyle hairStyle) {
-        Review review = new Review();
-        review.user = user;
-        review.contents = contents;
-        review.score = score;
-        photos.forEach(photo -> {
-            photo.registerReview(review);
-            review.photos.add(photo);
-        });
-        review.hairStyle = hairStyle;
-        review.likeReviews = new LikeReviews();
-        return review;
+        return new Review(user, contents, score, photos, hairStyle);
     }
 
     //편의 메서드
@@ -74,5 +73,12 @@ public class Review extends BaseEntity {
 
     public List<LikeReview> getLikeReviews() {
         return likeReviews.getLikeReviews();
+    }
+
+    private void applyPhotos(List<Photo> photos) {
+        photos.forEach(photo -> {
+            photo.registerReview(this);
+            this.photos.add(photo);
+        });
     }
 }
