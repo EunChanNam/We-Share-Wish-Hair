@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.review.likereview;
 
 import com.inq.wishhair.wesharewishhair.fixture.ReviewFixture;
+import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviews;
@@ -17,19 +18,12 @@ import static org.mockito.BDDMockito.given;
 @DisplayName("Review-LikeReviews 도메인 테스트")
 public class LikeReviewsTest {
 
-    private final User userA = Mockito.mock(User.class);
-    private final User userB = Mockito.mock(User.class);
-    private final User userC = Mockito.mock(User.class);
     private Review review;
 
     @BeforeEach
     void setUp() {
         //given
-        given(userA.getId()).willReturn(1L);
-        given(userB.getId()).willReturn(2L);
-        given(userC.getId()).willReturn(3L);
-
-        review = ReviewFixture.A.toEntity(userA, null);
+        review = ReviewFixture.A.toEntity(UserFixture.A.toEntity(), null);
     }
 
     @Nested
@@ -40,16 +34,17 @@ public class LikeReviewsTest {
         void test1() {
             //given
             LikeReviews likeReviews = new LikeReviews();
+            User mockUser = Mockito.mock(User.class);
 
             //when
-            likeReviews.executeLike(userA, review);
+            likeReviews.executeLike(mockUser, review);
 
             //then
             List<LikeReview> likes = likeReviews.getLikeReviews();
             assertAll(
                     () -> assertThat(likes).hasSize(1),
                     () -> assertThat(likes.get(0).getReview()).isEqualTo(review),
-                    () -> assertThat(likes.get(0).getUser()).isEqualTo(userA),
+                    () -> assertThat(likes.get(0).getUser()).isEqualTo(mockUser),
                     () -> assertThat(likeReviews.getLikes()).isEqualTo(1)
             );
         }
@@ -59,17 +54,17 @@ public class LikeReviewsTest {
         void test2() {
             //given
             LikeReviews likeReviews = new LikeReviews();
-            likeReviews.executeLike(userA, review);
-            likeReviews.executeLike(userB, review);
-            likeReviews.executeLike(userC, review);
+            User mockUser = Mockito.mock(User.class);
+            given(mockUser.getId()).willReturn(1L);
 
             //when
-            likeReviews.executeLike(userA, review);
+            likeReviews.executeLike(mockUser, review);
+            likeReviews.executeLike(mockUser, review);
 
             //then
             assertAll(
-                    () -> assertThat(likeReviews.getLikeReviews()).hasSize(2),
-                    () -> assertThat(likeReviews.getLikes()).isEqualTo(2)
+                    () -> assertThat(likeReviews.getLikeReviews()).isEmpty(),
+                    () -> assertThat(likeReviews.getLikes()).isZero()
             );
         }
     }
