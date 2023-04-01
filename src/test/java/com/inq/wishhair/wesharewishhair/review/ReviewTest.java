@@ -19,13 +19,12 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @DisplayName("Review 도메인 테스트")
 public class ReviewTest {
 
+    private final User user = UserFixture.B.toEntity();
+    private final HairStyle hairStyle = HairStyleFixture.A.toEntity();
+
     @Test
     @DisplayName("리뷰를 생성한다")
     void test1() {
-        //given
-        User user = UserFixture.B.toEntity();
-        HairStyle hairStyle = HairStyleFixture.A.toEntity();
-
         //when
         Review result = Review.createReview(user, "hello", Score.S2H, new ArrayList<>(), hairStyle);
 
@@ -38,5 +37,18 @@ public class ReviewTest {
                 () -> assertThat(result.getScore()).isEqualTo(Score.S2H),
                 () -> assertThat(result.getContents()).isEqualTo("hello")
         );
+    }
+
+    @Test
+    @DisplayName("좋아요 수를 조회한다")
+    void test2() {
+        //given
+        Review review = ReviewFixture.A.toEntity(user, hairStyle);
+
+        //when
+        int likes = review.getLikes();
+
+        //then
+        assertThat(likes).isZero();
     }
 }
