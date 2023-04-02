@@ -7,6 +7,7 @@ import com.inq.wishhair.wesharewishhair.photo.utils.PhotoStore;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
+import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.service.dto.ReviewCreateDto;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
@@ -27,7 +28,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
     private final HairStyleRepository hairStyleRepository;
-    private final LikeReviewService likeReviewService;
+    private final LikeReviewRepository likeReviewRepository;
     private final ReviewFindService reviewFindService;
     private final PhotoRepository photoRepository;
     private final PhotoStore photoStore;
@@ -50,7 +51,7 @@ public class ReviewService {
     public void deleteReview(Long reviewId, Long userId) {
         Review review = reviewFindService.findById(reviewId);
         validateIsWriter(userId, review);
-        likeReviewService.deleteByReview(review);
+        likeReviewRepository.deleteByReview(review);
         photoRepository.deleteByReview(review);
         reviewRepository.delete(review);
     }

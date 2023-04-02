@@ -4,7 +4,6 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewFindRepository;
-import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +17,6 @@ public class LikeReviewService {
 
     private final ReviewFindRepository reviewFindRepository;
     private final UserRepository userRepository;
-    private final LikeReviewRepository likeReviewRepository;
 
     @Transactional
     public void likeReview(Long reviewId, Long userId) {
@@ -26,11 +24,6 @@ public class LikeReviewService {
         Review review = findReview(reviewId);
 
         review.executeLike(user);
-    }
-
-    @Transactional
-    public void deleteByReview(Review review) {
-        likeReviewRepository.deleteByReview(review);
     }
 
     private Review findReview(Long reviewId) {
