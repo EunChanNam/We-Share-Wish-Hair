@@ -12,12 +12,12 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/review")
 public class ReviewController {
 
     private final ReviewService reviewService;
 
-    @PostMapping("/review")
+    @PostMapping
     public ResponseEntity<Success> createReview(
             @ModelAttribute ReviewRequest reviewRequest,
             @ExtractPayload Long userId) {
@@ -27,5 +27,4 @@ public class ReviewController {
                 .created(URI.create("/api/review/" + reviewId))
                 .body(new Success());
     }
-
 }

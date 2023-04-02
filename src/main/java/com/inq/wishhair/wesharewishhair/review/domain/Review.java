@@ -75,6 +75,10 @@ public class Review extends BaseEntity {
         return likeReviews.getLikeReviews();
     }
 
+    public boolean isWriter(Long userId) {
+        return this.user.getId().equals(userId);
+    }
+
     private void applyPhotos(List<Photo> photos) {
         photos.forEach(photo -> {
             photo.registerReview(this);

@@ -1,12 +1,9 @@
 package com.inq.wishhair.wesharewishhair.review.domain.likereview;
 
+import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 public interface LikeReviewRepository extends JpaRepository<LikeReview, Long> {
 
-    @Query("delete from LikeReview l " +
-            "where l.review.id = :reviewId")
-    void deleteByReviewId(@Param("reviewId") Long reviewId);
+    void deleteByReview(Review review);
 }

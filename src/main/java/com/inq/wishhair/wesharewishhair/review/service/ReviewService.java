@@ -27,6 +27,7 @@ public class ReviewService {
     private final UserRepository userRepository;
     private final HairStyleRepository hairStyleRepository;
     private final LikeReviewService likeReviewService;
+    private final ReviewFindService reviewFindService;
     private final PhotoStore photoStore;
     private final PointService pointService;
 
@@ -44,9 +45,17 @@ public class ReviewService {
     }
 
     @Transactional
-    public void deleteReview(Long reviewId) {
-        likeReviewService.deleteByReviewId(reviewId);
-        reviewRepository.deleteById(reviewId);
+    public void deleteReview(Long reviewId, Long userId) {
+        Review review = reviewFindService.findById(reviewId);
+        validateIsWriter(userId, review);
+        likeReviewService.deleteByReview(review);
+        reviewRepository.delete(review);
+    }
+
+    private void validateIsWriter(Long userId, Review review) {
+        if (!review.isWriter(userId)) {
+            throw new WishHairException(ErrorCode.REVIEW_NOT_WRITER);
+        }
     }
 
     private Review generateReview(ReviewCreateDto dto, List<Photo> photos, User user, HairStyle hairStyle) {

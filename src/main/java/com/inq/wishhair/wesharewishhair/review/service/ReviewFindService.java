@@ -1,5 +1,7 @@
 package com.inq.wishhair.wesharewishhair.review.service;
 
+import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewFindRepository;
@@ -20,6 +22,11 @@ import java.util.List;
 public class ReviewFindService {
 
     private final ReviewFindRepository reviewFindRepository;
+
+    public Review findById(Long id) {
+        return reviewFindRepository.findById(id)
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+    }
 
     public Slice<ReviewResponse> findPagingReviews(Pageable pageable) {
         Slice<Review> sliceResult = reviewFindRepository.findReviewByPaging(pageable);

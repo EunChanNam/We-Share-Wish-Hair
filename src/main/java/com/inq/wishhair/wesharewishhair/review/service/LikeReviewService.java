@@ -29,8 +29,8 @@ public class LikeReviewService {
     }
 
     @Transactional
-    public void deleteByReviewId(Long reviewId) {
-        likeReviewRepository.deleteByReviewId(reviewId);
+    public void deleteByReview(Review review) {
+        likeReviewRepository.deleteByReview(review);
     }
 
     private Review findReview(Long reviewId) {

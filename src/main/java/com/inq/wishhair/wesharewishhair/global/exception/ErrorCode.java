@@ -23,6 +23,8 @@ public enum ErrorCode {
     USER_DUPLICATED_NICKNAME("USER_005", "이미 존재하는 닉네임 입니다.", HttpStatus.BAD_REQUEST),
     USER_WRONG_PASSWORD("USER_006", "일치하지 않는 비밀번호 입니다.", HttpStatus.BAD_REQUEST),
 
+    REVIEW_NOT_WRITER("REVIEW_001", "리뷰 작성자가 아닙니다.", HttpStatus.BAD_REQUEST),
+
     MAIL_EXPIRED_KEY("MAIL_001", "인증키가 만료되었습니다.", HttpStatus.UNAUTHORIZED),
     MAIL_INVALID_KEY("MAIL_002", "인증키가 틀립니다.", HttpStatus.UNAUTHORIZED),
 
