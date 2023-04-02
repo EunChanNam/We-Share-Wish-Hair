@@ -10,10 +10,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagRe
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -77,5 +74,45 @@ public class ReviewFindServiceTest extends ServiceTest {
                                     .contains(tag));
                 }
         );
+    }
+
+    @Nested
+    @DisplayName("사용자가 좋아요한 리뷰를 조회한다")
+    class findLikingReviews {
+        @Test
+        @DisplayName("좋아요 한 리뷰가 없으면 아무것도 조회되지 않는다")
+        void findLikingReviews1() {
+            //when
+            Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), pageable);
+
+            //then
+            assertThat(result.getContent()).isEmpty();
+        }
+
+        @Test
+        @DisplayName("좋아요한 리뷰를 조회한다")
+        void findLikingReviews2() {
+            //given
+            review.executeLike(user);
+
+            //when
+            Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), pageable);
+
+            //then
+            assertAll(
+                    () -> assertThat(result.getContent()).hasSize(1),
+                    () -> {
+                        ReviewResponse response = result.getContent().get(0);
+                        assertThat(response.getContents()).isEqualTo(A.getContents());
+                        assertThat(response.getScore()).isEqualTo(A.getScore().getValue());
+                        assertThat(response.getHairStyleName()).isEqualTo(hairStyle.getName());
+                        assertThat(response.getUserNickName()).isEqualTo(user.getNicknameValue());
+                        hairStyle.getHashTags().stream().map(HashTag::getDescription).toList()
+                                .forEach(tag -> assertThat(response.getHasTags()
+                                        .stream().map(HashTagResponse::getTag).toList())
+                                        .contains(tag));
+                    }
+            );
+        }
     }
 }
