@@ -10,11 +10,14 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewSimpleResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+
+import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.fixture.ReviewFixture.*;
 import static com.inq.wishhair.wesharewishhair.fixture.ReviewFixture.A;
@@ -118,6 +121,16 @@ public class ReviewFindServiceTest extends ServiceTest {
                     assertReviewResponse(response);
                 }
         );
+    }
+
+    @Test
+    @DisplayName("지난달에 작성된 리뷰를 조회한다")
+    void findReviewOfMonth() {
+        //when
+        List<ReviewSimpleResponse> result = reviewFindService.findReviewOfMonth();
+
+        //then
+        assertThat(result).isEmpty();
     }
 
     private void assertReviewResponse(ReviewResponse response) {
