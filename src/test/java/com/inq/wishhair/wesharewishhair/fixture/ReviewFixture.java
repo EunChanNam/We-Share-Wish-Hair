@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.fixture;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
+import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.enums.Score;
 import com.inq.wishhair.wesharewishhair.user.domain.User;

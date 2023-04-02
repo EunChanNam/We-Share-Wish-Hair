@@ -15,7 +15,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class ReviewRequest {
+public class ReviewCreateRequest {
 
     @NotNull
     private String contents;

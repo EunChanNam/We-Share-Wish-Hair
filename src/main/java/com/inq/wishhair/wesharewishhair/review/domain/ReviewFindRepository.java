@@ -13,6 +13,11 @@ import java.util.Optional;
 
 public interface ReviewFindRepository extends JpaRepository<Review, Long> {
 
+    //review find service - 리뷰 단순 조회
+    @Override
+    @EntityGraph(attributePaths = "user")
+    Optional<Review> findById(Long aLong);
+
     //review find service - 전체 리뷰 조회
     @Query("select distinct r from Review r " +
             "left outer join fetch r.photos " +
@@ -51,5 +56,4 @@ public interface ReviewFindRepository extends JpaRepository<Review, Long> {
     @Query("select distinct r from Review r " +
             "left outer join fetch r.likeReviews.likeReviews")
     Optional<Review> findWithLikeReviewsById(@Param("id") Long id);
-
 }
