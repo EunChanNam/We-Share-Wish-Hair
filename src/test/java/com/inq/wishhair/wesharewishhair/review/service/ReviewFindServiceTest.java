@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.review.service;
 
 import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
+import com.inq.wishhair.wesharewishhair.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
+import static com.inq.wishhair.wesharewishhair.fixture.ReviewFixture.*;
 import static com.inq.wishhair.wesharewishhair.fixture.ReviewFixture.A;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -64,14 +66,7 @@ public class ReviewFindServiceTest extends ServiceTest {
                 () -> assertThat(result.getContent()).hasSize(1),
                 () -> {
                     ReviewResponse response = result.getContent().get(0);
-                    assertThat(response.getContents()).isEqualTo(A.getContents());
-                    assertThat(response.getScore()).isEqualTo(A.getScore().getValue());
-                    assertThat(response.getHairStyleName()).isEqualTo(hairStyle.getName());
-                    assertThat(response.getUserNickName()).isEqualTo(user.getNicknameValue());
-                    hairStyle.getHashTags().stream().map(HashTag::getDescription).toList()
-                            .forEach(tag -> assertThat(response.getHasTags()
-                                    .stream().map(HashTagResponse::getTag).toList())
-                                    .contains(tag));
+                    assertReviewResponse(response);
                 }
         );
     }
@@ -103,16 +98,36 @@ public class ReviewFindServiceTest extends ServiceTest {
                     () -> assertThat(result.getContent()).hasSize(1),
                     () -> {
                         ReviewResponse response = result.getContent().get(0);
-                        assertThat(response.getContents()).isEqualTo(A.getContents());
-                        assertThat(response.getScore()).isEqualTo(A.getScore().getValue());
-                        assertThat(response.getHairStyleName()).isEqualTo(hairStyle.getName());
-                        assertThat(response.getUserNickName()).isEqualTo(user.getNicknameValue());
-                        hairStyle.getHashTags().stream().map(HashTag::getDescription).toList()
-                                .forEach(tag -> assertThat(response.getHasTags()
-                                        .stream().map(HashTagResponse::getTag).toList())
-                                        .contains(tag));
+                        assertReviewResponse(response);
                     }
             );
         }
+    }
+
+    @Test
+    @DisplayName("사용자가 작성한 리뷰를 조회한다")
+    void findMyReviews() {
+        //when
+        Slice<ReviewResponse> result = reviewFindService.findMyReviews(user.getId(), pageable);
+
+        //then
+        assertAll(
+                () -> assertThat(result.getContent()).hasSize(1),
+                () -> {
+                    ReviewResponse response = result.getContent().get(0);
+                    assertReviewResponse(response);
+                }
+        );
+    }
+
+    private void assertReviewResponse(ReviewResponse response) {
+        assertThat(response.getContents()).isEqualTo(A.getContents());
+        assertThat(response.getScore()).isEqualTo(A.getScore().getValue());
+        assertThat(response.getHairStyleName()).isEqualTo(hairStyle.getName());
+        assertThat(response.getUserNickName()).isEqualTo(user.getNicknameValue());
+        hairStyle.getHashTags().stream().map(HashTag::getDescription).toList()
+                .forEach(tag -> assertThat(response.getHasTags()
+                        .stream().map(HashTagResponse::getTag).toList())
+                        .contains(tag));
     }
 }
