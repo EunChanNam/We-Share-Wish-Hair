@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.review.service;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
+import com.inq.wishhair.wesharewishhair.photo.domain.PhotoRepository;
 import com.inq.wishhair.wesharewishhair.photo.utils.PhotoStore;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
@@ -28,6 +29,7 @@ public class ReviewService {
     private final HairStyleRepository hairStyleRepository;
     private final LikeReviewService likeReviewService;
     private final ReviewFindService reviewFindService;
+    private final PhotoRepository photoRepository;
     private final PhotoStore photoStore;
     private final PointService pointService;
 
@@ -49,6 +51,7 @@ public class ReviewService {
         Review review = reviewFindService.findById(reviewId);
         validateIsWriter(userId, review);
         likeReviewService.deleteByReview(review);
+        photoRepository.deleteByReview(review);
         reviewRepository.delete(review);
     }
 
