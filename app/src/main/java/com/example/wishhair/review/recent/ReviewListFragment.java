@@ -18,6 +18,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.os.Environment;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,15 +47,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -148,7 +153,6 @@ public class ReviewListFragment extends Fragment {
         sort_select(spinner_sort);
 //        TODO 정렬 기준으로 받아오기
 
-
         return v;
     }
 
@@ -181,15 +185,26 @@ public class ReviewListFragment extends Fragment {
                         receivedData.setCreatedDate(createDate);
 
                         JSONArray photosArray = resultObject.getJSONArray("photos");
-                        List<String> receivedImages = new ArrayList<>();
+                        List<Bitmap> receivedBitmaps = new ArrayList<>();
                         for (int j = 0; j < photosArray.length(); j++) {
                             JSONObject photoObject = photosArray.getJSONObject(j);
-                            String storeFilename = photoObject.getString("storeFilename");
+                            String encodedImage = photoObject.getString("encodedImage");
+
+                            Bitmap imageBitmap = decodeImage(encodedImage);
+                            receivedBitmaps.add(imageBitmap);
 
                         }
-                        receivedData.setPhotos(receivedImages);
+                        receivedData.setBitmapImages(receivedBitmaps);
+
+                        String date = receivedData.getCreatedDate();
+                        if (receivedBitmaps.size() > 0) {
+                            ReviewItem itemB = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
+                                    receivedBitmaps, receivedData.getContents(),
+                                    receivedData.getScore(), true, receivedData.getLikes(), date);
+                            recentReviewItems.add(itemB);
+                        }
 //                       set review data
-                        setReceivedData(receivedData);
+//                        setReceivedData(receivedData);
 
                         /*JSONArray hasTagsArray = resultObject.getJSONArray("hasTags");
                         for (int k = 0; k < hasTagsArray.length(); k++) {
@@ -227,6 +242,14 @@ public class ReviewListFragment extends Fragment {
         recentRecyclerView.setAdapter(listAdapter);
         listAdapter.notifyDataSetChanged();
     }
+
+    public static Bitmap decodeImage(String encodedImage) {
+        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+        Log.d("decoded string", Arrays.toString(decodedString));
+
+        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+    }
+
 
     private void setReceivedData(ReviewItem receivedData) {
         //                       TODO remove sampleImage

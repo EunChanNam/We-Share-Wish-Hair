@@ -1,6 +1,7 @@
 package com.example.wishhair.review.recent;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,8 +53,9 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
         ReviewItem item = reviewItems.get(position);
 
         holder.profileImage.setImageResource(item.getProfileImage());
-        holder.bindSliderImage1(item.getContentImage1());
-        holder.bindSliderImage2(item.getContentImage2());
+//        holder.bindSliderImage1(item.getContentImage1());
+        holder.bindBitmapImage(item.getBitmapImages().get(0));
+//        holder.bindSliderImage2(item.getContentImage2());
         holder.nickname.setText(item.getUserNickName());
         holder.authorAvgGrade.setText(item.getAuthorAvgGrade());
         holder.authorReviewCount.setText(item.getAuthorReviewCount());
@@ -105,6 +107,10 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
         }
         public void bindSliderImage2(String imageURL) {
             Glide.with(context).load(imageURL).into(contentImage2);
+        }
+
+        public void bindBitmapImage(Bitmap imageBitmap) {
+            Glide.with(context).load(imageBitmap).into(contentImage1);
         }
 
     }

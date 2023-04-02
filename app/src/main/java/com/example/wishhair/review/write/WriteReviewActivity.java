@@ -2,6 +2,7 @@ package com.example.wishhair.review.write;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.loader.content.CursorLoader;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -53,11 +54,13 @@ public class WriteReviewActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private WriteReviewAdapter writeReviewAdapter;
 
-    private ArrayList<Uri> items = new ArrayList<>();
+    private final ArrayList<Uri> items = new ArrayList<>();
 
     private RatingBar ratingBar;
 
     private final WriteRequestData writeRequestData = new WriteRequestData();
+
+    private final ArrayList<String> itemPaths = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -101,7 +104,7 @@ public class WriteReviewActivity extends AppCompatActivity {
 
             String contents = String.valueOf(editText_content.getText());
             writeRequestData.setContent(contents);
-            uploader.uploadFiles(writeRequestData.getHairStyleId(), writeRequestData.getRating(), writeRequestData.getContent(), items, accessToken);
+            uploader.uploadFiles(writeRequestData.getHairStyleId(), writeRequestData.getRating(), writeRequestData.getContent(), itemPaths, accessToken);
         });
 
     }
@@ -116,6 +119,7 @@ public class WriteReviewActivity extends AppCompatActivity {
             if (data.getClipData() == null) { //이미지를 하나만 선택한경우
                 Uri imageUri = data.getData();
                 items.add(imageUri);
+                itemPaths.add(getRealPathFromUri(imageUri));
 
                 writeReviewAdapter = new WriteReviewAdapter(items, getApplicationContext());
                 recyclerView.setAdapter(writeReviewAdapter);
@@ -128,9 +132,10 @@ public class WriteReviewActivity extends AppCompatActivity {
                     Toast.makeText(this, "사진은 4장까지만 선택 가능합니다", Toast.LENGTH_SHORT).show();
                 } else {
                     for (int i = 0; i < clipData.getItemCount(); i++) {
-                        Uri imageURI = clipData.getItemAt(i).getUri();
+                        Uri imageUri = clipData.getItemAt(i).getUri();
                         try {
-                            items.add(imageURI);
+                            items.add(imageUri);
+                            itemPaths.add(getRealPathFromUri(imageUri));
                         } catch (Exception e) {
                             Log.e(TAG, "file select error", e);
                         }
@@ -141,6 +146,19 @@ public class WriteReviewActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    private String getRealPathFromUri(Uri uri)
+    {
+        String[] proj=  {MediaStore.Images.Media.DATA};
+        CursorLoader cursorLoader = new CursorLoader(this,uri,proj,null,null,null);
+        Cursor cursor = cursorLoader.loadInBackground();
+
+        int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        String url = cursor.getString(columnIndex);
+        cursor.close();
+        return  url;
     }
 
 }

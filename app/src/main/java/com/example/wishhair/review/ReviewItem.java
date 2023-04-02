@@ -1,5 +1,6 @@
 package com.example.wishhair.review;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import java.text.ParseException;
@@ -25,6 +26,29 @@ public class ReviewItem {
     private boolean isHeart;
     private String contentImage1;
     private String contentImage2;
+
+    private List<Bitmap> bitmapImages;
+
+    public List<Bitmap> getBitmapImages() {
+        return bitmapImages;
+    }
+
+    public void setBitmapImages(List<Bitmap> bitmapImages) {
+        this.bitmapImages = bitmapImages;
+    }
+
+    public ReviewItem(int profileImage, String nickname, String authorReviewCount, String authorAvgGrade, List<Bitmap> bitmapIamge, String contents, String score, boolean isHeart, int likes, String createdDate) {
+        this.profileImage = profileImage;
+        this.userNickName = nickname;
+        this.authorReviewCount = authorReviewCount;
+        this.authorAvgGrade = authorAvgGrade;
+        this.bitmapImages = bitmapIamge;
+        this.contents = contents;
+        this.score = score;
+        this.isHeart = isHeart;
+        this.likes = likes;
+        this.createdDate = createdDate;
+    }
 
     public ReviewItem() {}
 
