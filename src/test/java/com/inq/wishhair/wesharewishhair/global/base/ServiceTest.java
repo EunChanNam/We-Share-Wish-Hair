@@ -6,6 +6,7 @@ import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
 import com.inq.wishhair.wesharewishhair.global.testrepository.PointHistoryTestRepository;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
+import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.UserFindRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import jakarta.persistence.EntityManager;
@@ -35,6 +36,9 @@ public abstract class ServiceTest {
 
     @Autowired
     protected ReviewRepository reviewRepository;
+
+    @Autowired
+    protected LikeReviewRepository likeReviewRepository;
 
     @Autowired
     protected JwtTokenProvider provider;
