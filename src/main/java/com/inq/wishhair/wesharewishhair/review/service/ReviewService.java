@@ -2,8 +2,8 @@ package com.inq.wishhair.wesharewishhair.review.service;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
-import com.inq.wishhair.wesharewishhair.photo.PhotoStore;
-import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
+import com.inq.wishhair.wesharewishhair.photo.utils.PhotoStore;
+import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.service.dto.ReviewCreateDto;

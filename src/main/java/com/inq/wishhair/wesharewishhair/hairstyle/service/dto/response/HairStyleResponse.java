@@ -3,7 +3,7 @@ package com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponse;
-import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
+import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

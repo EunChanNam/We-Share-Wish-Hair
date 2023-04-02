@@ -1,8 +1,8 @@
-package com.inq.wishhair.wesharewishhair.photo;
+package com.inq.wishhair.wesharewishhair.photo.utils;
 
-import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
