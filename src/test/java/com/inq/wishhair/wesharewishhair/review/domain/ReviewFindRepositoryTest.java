@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
+import static com.inq.wishhair.wesharewishhair.fixture.ReviewFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -42,7 +43,7 @@ public class ReviewFindRepositoryTest extends RepositoryTest {
         //given
         user = userRepository.save(UserFixture.B.toEntity());
         hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
-        review = reviewFindRepository.save(ReviewFixture.A.toEntity(user, hairStyle));
+        review = reviewFindRepository.save(A.toEntity(user, hairStyle));
     }
 
     @Test
@@ -56,7 +57,8 @@ public class ReviewFindRepositoryTest extends RepositoryTest {
                 () -> assertThat(result.getContent()).hasSize(1),
                 () -> assertThat(result.getContent().get(0)).isEqualTo(review),
                 () -> assertThat(result.getContent().get(0).getUser()).isEqualTo(user),
-                () -> assertThat(result.getContent().get(0).getHairStyle()).isEqualTo(hairStyle)
+                () -> assertThat(result.getContent().get(0).getHairStyle()).isEqualTo(hairStyle),
+                () -> assertThat(result.getContent().get(0).getPhotos()).hasSize(A.getOriginalFilenames().size())
         );
     }
 
@@ -64,7 +66,7 @@ public class ReviewFindRepositoryTest extends RepositoryTest {
     @DisplayName("사용자가 좋아요한 리뷰를 조회한다")
     void findReviewByLike() {
         //given
-        Review review2 = ReviewFixture.B.toEntity(user, hairStyle);
+        Review review2 = B.toEntity(user, hairStyle);
         review2.executeLike(user);
         reviewFindRepository.save(review2);
 
@@ -77,6 +79,22 @@ public class ReviewFindRepositoryTest extends RepositoryTest {
                 () -> assertThat(result.getContent().get(0)).isEqualTo(review2),
                 () -> assertThat(result.getContent().get(0).getUser()).isEqualTo(user),
                 () -> assertThat(result.getContent().get(0).getHairStyle()).isEqualTo(hairStyle)
+        );
+    }
+
+    @Test
+    @DisplayName("사용자가 작성한 리뷰를 조회한다")
+    void findReviewByUser() {
+        //when
+        Slice<Review> result = reviewFindRepository.findReviewByUser(user.getId(), pageable);
+
+        //then
+        assertAll(
+                () -> assertThat(result.getContent()).hasSize(1),
+                () -> assertThat(result.getContent().get(0)).isEqualTo(review),
+                () -> assertThat(result.getContent().get(0).getUser()).isEqualTo(user),
+                () -> assertThat(result.getContent().get(0).getHairStyle()).isEqualTo(hairStyle),
+                () -> assertThat(result.getContent().get(0).getPhotos()).hasSize(A.getOriginalFilenames().size())
         );
     }
 }
