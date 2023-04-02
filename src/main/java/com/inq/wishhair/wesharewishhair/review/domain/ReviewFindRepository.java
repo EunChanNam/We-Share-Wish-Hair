@@ -48,6 +48,8 @@ public interface ReviewFindRepository extends JpaRepository<Review, Long> {
                                          Pageable pageable);
 
     //likeReview Service
-    @EntityGraph(attributePaths = "likeReviews")
-    Optional<Review> findDistinctById(Long id);
+    @Query("select distinct r from Review r " +
+            "left outer join fetch r.likeReviews.likeReviews")
+    Optional<Review> findWithLikeReviewsById(@Param("id") Long id);
+
 }
