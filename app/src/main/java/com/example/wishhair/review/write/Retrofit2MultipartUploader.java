@@ -59,7 +59,6 @@ public class Retrofit2MultipartUploader {
         for (int i = 0; i < filePaths.size(); i++) {
             // Uri 타입의 파일경로를 가지는 RequestBody 객체 생성
             File file = new File(filePaths.get(i));
-
             RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
 
             // 사진 파일 이름

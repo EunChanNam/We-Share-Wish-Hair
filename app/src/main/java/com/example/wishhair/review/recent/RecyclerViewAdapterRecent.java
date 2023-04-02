@@ -18,6 +18,7 @@ import com.example.wishhair.R;
 import com.example.wishhair.review.ReviewItem;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerViewAdapterRecent.ViewHolder> {
 
@@ -53,12 +54,18 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
         ReviewItem item = reviewItems.get(position);
 
         holder.profileImage.setImageResource(item.getProfileImage());
-//        holder.bindSliderImage1(item.getContentImage1());
-        holder.bindBitmapImage(item.getBitmapImages().get(0));
-//        holder.bindSliderImage2(item.getContentImage2());
+
+//        TODO : 사진 없을 때 처리
+        List<Bitmap> photoBitmaps = item.getBitmapImages();
+        if (photoBitmaps.size() == 1) {
+            holder.bindContentImage1(item.getBitmapImages().get(0));
+        } else if (photoBitmaps.size() > 1) {
+            holder.bindContentImage1(item.getBitmapImages().get(0));
+            holder.bindContentImage2(item.getBitmapImages().get(1));
+        }
+
         holder.nickname.setText(item.getUserNickName());
-        holder.authorAvgGrade.setText(item.getAuthorAvgGrade());
-        holder.authorReviewCount.setText(item.getAuthorReviewCount());
+
         holder.content.setText(item.getContents());
         holder.grade.setText(item.getScore());
         holder.date.setText(item.getCreatedDate());
@@ -83,7 +90,7 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView profileImage, contentImage1, contentImage2, isHeart;
-        TextView nickname, authorReviewCount, authorAvgGrade, content, grade, date, heartCount;
+        TextView nickname, content, grade, date, heartCount;
         Button viewContent;
 
         ViewHolder(View itemView) {
@@ -92,8 +99,6 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
             this.contentImage1 = itemView.findViewById(R.id.review_recent_contentImage1);
             this.contentImage2 = itemView.findViewById(R.id.review_recent_contentImage2);
             this.nickname = itemView.findViewById(R.id.review_recent_tv_name);
-            this.authorAvgGrade = itemView.findViewById(R.id.review_recent_tv_authorAvgGrade);
-            this.authorReviewCount = itemView.findViewById(R.id.review_recent_tv_reviewCount);
             this.content = itemView.findViewById(R.id.review_recent_tv_content);
             this.grade = itemView.findViewById(R.id.review_recent_tv_grade);
             this.isHeart = itemView.findViewById(R.id.review_recent_imageView_isHeart);
@@ -101,16 +106,12 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
             this.date = itemView.findViewById(R.id.review_recent_tv_date);
             this.viewContent = itemView.findViewById(R.id.review_recent_Button_viewContent);
         }
-        public void bindSliderImage1(String imageURL) {
-            Log.i("bind Image URL", imageURL);
-            Glide.with(context).load(imageURL).into(contentImage1);
-        }
-        public void bindSliderImage2(String imageURL) {
-            Glide.with(context).load(imageURL).into(contentImage2);
-        }
 
-        public void bindBitmapImage(Bitmap imageBitmap) {
+        public void bindContentImage1(Bitmap imageBitmap) {
             Glide.with(context).load(imageBitmap).into(contentImage1);
+        }
+        public void bindContentImage2(Bitmap imageBitmap) {
+            Glide.with(context).load(imageBitmap).into(contentImage2);
         }
 
     }

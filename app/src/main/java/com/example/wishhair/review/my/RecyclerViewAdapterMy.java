@@ -48,7 +48,7 @@ public class RecyclerViewAdapterMy extends RecyclerView.Adapter<RecyclerViewAdap
         ReviewItem item = reviewItems.get(position);
 
         holder.hairImage.setImageResource(item.getHairImage());
-        holder.hairStyle.setText(item.getHairStyle());
+        holder.hairStyle.setText(item.getHairStyleName());
         holder.tags.setText(item.getTags());
         holder.grade.setText(item.getScore());
         holder.heartCount.setText(String.valueOf(item.getLikes()));

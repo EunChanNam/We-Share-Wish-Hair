@@ -23,7 +23,7 @@
     <string name="register_term_4">[필수] 개인정보 제공 동의</string>
     <string name="register_button_submit">동의하고 가입하기</string>
     <!--    review -->
-    <string name="centerDot"> · </string>
+
     <string name="review_recent_item_btn"><![CDATA[전체보기 >]]></string>
     <string name="review_filter_whole">전체</string>
     <string name="review_filter_man">남성</string>

@@ -119,11 +119,12 @@ public class WriteReviewActivity extends AppCompatActivity {
             if (data.getClipData() == null) { //이미지를 하나만 선택한경우
                 Uri imageUri = data.getData();
                 items.add(imageUri);
-                itemPaths.add(getRealPathFromUri(imageUri));
 
                 writeReviewAdapter = new WriteReviewAdapter(items, getApplicationContext());
                 recyclerView.setAdapter(writeReviewAdapter);
                 recyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.HORIZONTAL, true));
+
+                itemPaths.add(getRealPathFromUri(imageUri));
             } else { // 이미지 여러장
                 ClipData clipData = data.getClipData();
 //                이미지 선택 갯수 제한

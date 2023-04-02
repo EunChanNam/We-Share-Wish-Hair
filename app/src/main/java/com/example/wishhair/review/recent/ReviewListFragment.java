@@ -173,16 +173,25 @@ public class ReviewListFragment extends Fragment {
                         JSONObject resultObject = resultArray.getJSONObject(i);
 //                        Log.d("resultObject", resultObject.toString());
                         String userNickName = resultObject.getString("userNickName");
+
                         String score = resultObject.getString("score");
                         int likes = resultObject.getInt("likes");
                         String content = resultObject.getString("contents");
                         String createDate = resultObject.getString("createdDate");
+                        String hairStyleName = resultObject.getString("hairStyleName");
+
+                        JSONArray hasTagsArray = resultObject.getJSONArray("hasTags");
+//                        TODO : 일단 태그 하나만 넣는데 나중에 태그 갯수 따로 처리 합시다
+                        JSONObject hasTagObject = hasTagsArray.getJSONObject(0);
+                        String tag = hasTagObject.getString("tag");
 
                         receivedData.setUserNickName(userNickName);
                         receivedData.setScore(score);
                         receivedData.setLikes(likes);
                         receivedData.setContents(content);
                         receivedData.setCreatedDate(createDate);
+                        receivedData.setHairStyleName(hairStyleName);
+                        receivedData.setTags(tag);
 
                         JSONArray photosArray = resultObject.getJSONArray("photos");
                         List<Bitmap> receivedBitmaps = new ArrayList<>();
@@ -196,23 +205,20 @@ public class ReviewListFragment extends Fragment {
                         }
                         receivedData.setBitmapImages(receivedBitmaps);
 
-                        String date = receivedData.getCreatedDate();
+//                       set review data
                         if (receivedBitmaps.size() > 0) {
-                            ReviewItem itemB = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
-                                    receivedBitmaps, receivedData.getContents(),
-                                    receivedData.getScore(), true, receivedData.getLikes(), date);
+                            ReviewItem itemB = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(),
+                                    receivedData.getHairStyleName(), receivedData.getTags(), receivedData.getCreatedDate(),
+                                    receivedData.getScore(), receivedData.getLikes(), false, receivedData.getBitmapImages(),  receivedData.getContents());
+                            recentReviewItems.add(itemB);
+                        } else {
+                            ReviewItem itemB = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(),
+                                    receivedData.getHairStyleName(), receivedData.getTags(), receivedData.getCreatedDate(),
+                                    receivedData.getScore(), receivedData.getLikes(), false, receivedData.getContents());
                             recentReviewItems.add(itemB);
                         }
-//                       set review data
-//                        setReceivedData(receivedData);
-
-                        /*JSONArray hasTagsArray = resultObject.getJSONArray("hasTags");
-                        for (int k = 0; k < hasTagsArray.length(); k++) {
-                            JSONObject hasTagObject = hasTagsArray.getJSONObject(k);
-                            String tag = hasTagObject.getString("tag");
-                            System.out.println("Tag " + (k + 1) + ": " + tag);
-                        }*/
                     }
+
                     JSONObject pagingObject = jsonObject.getJSONObject("paging");
                     String contentSize = pagingObject.getString("contentSize");
                     String page = pagingObject.getString("page");
@@ -245,35 +251,9 @@ public class ReviewListFragment extends Fragment {
 
     public static Bitmap decodeImage(String encodedImage) {
         byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-        Log.d("decoded string", Arrays.toString(decodedString));
-
         return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
-
-    private void setReceivedData(ReviewItem receivedData) {
-        //                       TODO remove sampleImage
-        List<String> photos = receivedData.getPhotos();
-
-        String imageSample = "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg";
-
-        @SuppressLint("SimpleDateFormat")
-        String date = receivedData.getCreatedDate();
-
-        if (photos.size() == 1) {
-            Log.i("received photo url", photos.toString());
-            ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
-                    photos.get(0), receivedData.getContents(),
-                    receivedData.getScore(), true, receivedData.getLikes(), date);
-            recentReviewItems.add(item);
-        } else if (photos.size() > 1) {
-            ReviewItem item = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(), "5", "3.3",
-                    photos.get(0), photos.get(1), receivedData.getContents(),
-                    receivedData.getScore(), true, receivedData.getLikes(), date);
-            recentReviewItems.add(item);
-        }
-
-    }
 
     private void sort_select(Spinner spinner_sort) {
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, sortItems);
