@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.review;
+package com.inq.wishhair.wesharewishhair.review.domain;
 
 import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.fixture.ReviewFixture;
