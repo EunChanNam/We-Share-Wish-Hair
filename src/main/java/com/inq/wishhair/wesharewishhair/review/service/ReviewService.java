@@ -11,7 +11,6 @@ import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.user.domain.point.PointType;
 import com.inq.wishhair.wesharewishhair.user.service.PointService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -27,6 +26,7 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
     private final HairStyleRepository hairStyleRepository;
+    private final LikeReviewService likeReviewService;
     private final PhotoStore photoStore;
     private final PointService pointService;
 
@@ -41,6 +41,12 @@ public class ReviewService {
         pointService.chargePoint(100, user.getId());
 
         return reviewRepository.save(review).getId();
+    }
+
+    @Transactional
+    public void deleteReview(Long reviewId) {
+        likeReviewService.deleteByReviewId(reviewId);
+        reviewRepository.deleteById(reviewId);
     }
 
     private Review generateReview(ReviewCreateDto dto, List<Photo> photos, User user, HairStyle hairStyle) {
