@@ -36,7 +36,7 @@ public class LikeReviewRepositoryTest extends RepositoryTest {
     @DisplayName("입력받은 리뷰를 참조하는 LikeReview 를 삭제한다")
     void deleteByReview() {
         //when
-        likeReviewRepository.deleteByReview(review);
+        likeReviewRepository.deleteAllByReview(review.getId());
 
         //then
         List<LikeReview> result = likeReviewRepository.findAll();

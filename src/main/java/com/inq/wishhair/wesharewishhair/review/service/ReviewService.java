@@ -51,8 +51,8 @@ public class ReviewService {
     public void deleteReview(Long reviewId, Long userId) {
         Review review = reviewFindService.findById(reviewId);
         validateIsWriter(userId, review);
-        likeReviewRepository.deleteByReview(review);
-        photoRepository.deleteByReview(review);
+        likeReviewRepository.deleteAllByReview(reviewId);
+        photoRepository.deleteAllByReview(reviewId);
         reviewRepository.delete(review);
     }
 

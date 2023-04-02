@@ -36,8 +36,7 @@ public class Review extends BaseEntity {
     private Score score;
 
     @OneToMany(mappedBy = "review",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true) // 사진을 값타입 컬렉션 처럼 사용
+            cascade = CascadeType.PERSIST) // 사진을 값타입 컬렉션 처럼 사용
     private List<Photo> photos = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
