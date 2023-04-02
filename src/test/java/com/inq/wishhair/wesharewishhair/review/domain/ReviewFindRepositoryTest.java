@@ -1,7 +1,6 @@
 package com.inq.wishhair.wesharewishhair.review.domain;
 
 import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
-import com.inq.wishhair.wesharewishhair.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
@@ -9,13 +8,15 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.fixture.ReviewFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -95,6 +96,26 @@ public class ReviewFindRepositoryTest extends RepositoryTest {
                 () -> assertThat(result.getContent().get(0).getUser()).isEqualTo(user),
                 () -> assertThat(result.getContent().get(0).getHairStyle()).isEqualTo(hairStyle),
                 () -> assertThat(result.getContent().get(0).getPhotos()).hasSize(A.getOriginalFilenames().size())
+        );
+    }
+
+    @Test
+    @DisplayName("입력된 두 날짜 사이에 작성된 리뷰를 조회한다")
+    void findReviewByCreatedDate() {
+        //given
+        LocalDateTime startDate = LocalDateTime.now().minusMonths(1);
+        LocalDateTime endDate = LocalDateTime.now();
+
+        //when
+        List<Review> result = reviewFindRepository.findReviewByCreatedDate(startDate, endDate, pageable);
+
+        //then
+        assertAll(
+                () -> assertThat(result).hasSize(1),
+                () -> assertThat(result.get(0)).isEqualTo(review),
+                () -> assertThat(result.get(0).getUser()).isEqualTo(user),
+                () -> assertThat(result.get(0).getHairStyle()).isEqualTo(hairStyle),
+                () -> assertThat(result.get(0).getPhotos()).hasSize(A.getOriginalFilenames().size())
         );
     }
 }

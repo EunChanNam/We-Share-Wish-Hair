@@ -5,16 +5,12 @@ import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewFindRepository;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewSimpleResponse;
-import com.inq.wishhair.wesharewishhair.user.domain.User;
-import com.inq.wishhair.wesharewishhair.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -42,8 +38,8 @@ public class ReviewFindService {
     }
 
     public List<ReviewSimpleResponse> findReviewOfMonth() {
-        LocalDate startDate = generateStartDate();
-        LocalDate endDate = generateEndDate();
+        LocalDateTime startDate = generateStartDate();
+        LocalDateTime endDate = generateEndDate();
         Pageable pageable = PageableUtils.generateSimplePageable(5);
 
         List<Review> result = reviewFindRepository.findReviewByCreatedDate(startDate, endDate, pageable);
@@ -58,19 +54,19 @@ public class ReviewFindService {
         return reviews.stream().map(ReviewSimpleResponse::new).toList();
     }
 
-    private LocalDate generateStartDate() {
+    private LocalDateTime generateStartDate() {
         LocalDateTime start = LocalDateTime.now().minusMonths(1);
         int startYear = start.getYear();
         int startMonth = start.getMonthValue();
 
-        return LocalDate.of(startYear, startMonth, 1);
+        return LocalDateTime.of(startYear, startMonth, 1, 0, 0);
     }
 
-    private LocalDate generateEndDate() {
+    private LocalDateTime generateEndDate() {
         LocalDateTime end = LocalDateTime.now();
         int endYear = end.getYear();
         int endMonth = end.getMonthValue();
 
-        return LocalDate.of(endYear, endMonth, 1).minusDays(1);
+        return LocalDateTime.of(endYear, endMonth, 1, 0, 0).minusDays(1);
     }
 }
