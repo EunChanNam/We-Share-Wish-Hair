@@ -1,7 +1,6 @@
 package com.inq.wishhair.wesharewishhair.review.controller.dto.request;
 
 import com.inq.wishhair.wesharewishhair.review.enums.Score;
-import com.inq.wishhair.wesharewishhair.review.service.dto.ReviewCreateDto;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

@@ -16,6 +16,7 @@ application-dev.yml
 
 ### images ###
 **/src/main/resources/static/
+**/src/test/resources/images/
 
 ### STS ###
 .apt_generated
