@@ -27,14 +27,4 @@ public class ReviewCreateRequest {
 
     @NotNull
     private Long hairStyleId;
-
-    public ReviewCreateDto toReviewCreateDto(Long userId) {
-        return new ReviewCreateDto(
-                userId,
-                this.hairStyleId,
-                this.contents,
-                this.score,
-                this.files
-        );
-    }
 }
