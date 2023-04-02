@@ -17,7 +17,7 @@ import java.util.UUID;
 public enum ReviewFixture {
 
     A("A contents", Score.S3, List.of("one.png")),
-    B("B contents", Score.S4H, List.of("two.png")),
+    B("B contents", Score.S4H, List.of("one.png", "two.png")),
     C("C contents", Score.S4H, new ArrayList<>());
 
     private final String contents;

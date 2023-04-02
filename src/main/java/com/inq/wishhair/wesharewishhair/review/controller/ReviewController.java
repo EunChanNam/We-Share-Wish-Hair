@@ -23,7 +23,7 @@ public class ReviewController {
             @ModelAttribute ReviewCreateRequest reviewCreateRequest,
             @ExtractPayload Long userId) {
 
-        Long reviewId = reviewService.createReview(reviewCreateRequest.toReviewCreateDto(userId));
+        Long reviewId = reviewService.createReview(reviewCreateRequest, userId);
         return ResponseEntity
                 .created(URI.create("/api/review/" + reviewId))
                 .body(new Success());

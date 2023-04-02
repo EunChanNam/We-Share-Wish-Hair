@@ -5,10 +5,10 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.photo.domain.PhotoRepository;
 import com.inq.wishhair.wesharewishhair.photo.utils.PhotoStore;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
+import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewCreateRequest;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
-import com.inq.wishhair.wesharewishhair.review.service.dto.ReviewCreateDto;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -35,13 +35,13 @@ public class ReviewService {
     private final PointService pointService;
 
     @Transactional
-    public Long createReview(ReviewCreateDto dto) {
+    public Long createReview(ReviewCreateRequest request, Long userId) {
 
-        List<Photo> photos = photoStore.storePhotos(dto.getFiles());
-        User user = findUserById(dto.getUserId());
-        HairStyle hairStyle = findHairStyleById(dto);
+        List<Photo> photos = photoStore.storePhotos(request.getFiles());
+        User user = findUserById(userId);
+        HairStyle hairStyle = findHairStyleById(request.getHairStyleId());
 
-        Review review = generateReview(dto, photos, user, hairStyle);
+        Review review = generateReview(request, photos, user, hairStyle);
         pointService.chargePoint(100, user.getId());
 
         return reviewRepository.save(review).getId();
@@ -51,8 +51,8 @@ public class ReviewService {
     public void deleteReview(Long reviewId, Long userId) {
         Review review = reviewFindService.findById(reviewId);
         validateIsWriter(userId, review);
-        likeReviewRepository.deleteByReview(review);
-        photoRepository.deleteByReview(review);
+        likeReviewRepository.deleteAllByReview(reviewId);
+        photoRepository.deleteAllByReview(reviewId);
         reviewRepository.delete(review);
     }
 
@@ -62,18 +62,18 @@ public class ReviewService {
         }
     }
 
-    private Review generateReview(ReviewCreateDto dto, List<Photo> photos, User user, HairStyle hairStyle) {
+    private Review generateReview(ReviewCreateRequest request, List<Photo> photos, User user, HairStyle hairStyle) {
         return Review.createReview(
                 user,
-                dto.getContents(),
-                dto.getScore(),
+                request.getContents(),
+                request.getScore(),
                 photos,
                 hairStyle
         );
     }
 
-    private HairStyle findHairStyleById(ReviewCreateDto dto) {
-        return hairStyleRepository.findById(dto.getHairStyleId())
+    private HairStyle findHairStyleById(Long hairStyleId) {
+        return hairStyleRepository.findById(hairStyleId)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 
