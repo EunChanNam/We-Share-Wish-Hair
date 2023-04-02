@@ -7,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -44,11 +43,13 @@ public interface ReviewFindRepository extends JpaRepository<Review, Long> {
             "join fetch r.user " +
             "where r.createdDate between :startDate and :endDate " +
             "order by r.likeReviews.likes")
-    List<Review> findReviewByCreatedDate(@Param("startDate") LocalDate startDate,
-                                         @Param("endDate") LocalDate endDate,
+    List<Review> findReviewByCreatedDate(@Param("startDate") LocalDateTime startDate,
+                                         @Param("endDate") LocalDateTime endDate,
                                          Pageable pageable);
 
     //likeReview Service
-    @EntityGraph(attributePaths = "likeReviews")
-    Optional<Review> findDistinctById(Long id);
+    @Query("select distinct r from Review r " +
+            "left outer join fetch r.likeReviews.likeReviews")
+    Optional<Review> findWithLikeReviewsById(@Param("id") Long id);
+
 }

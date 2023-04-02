@@ -27,7 +27,7 @@ public class LikeReviewService {
     }
 
     private Review findReview(Long reviewId) {
-        return reviewFindRepository.findDistinctById(reviewId)
+        return reviewFindRepository.findWithLikeReviewsById(reviewId)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 
