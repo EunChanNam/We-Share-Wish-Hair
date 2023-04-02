@@ -31,7 +31,7 @@ public class ReviewFindController {
     public ResponseEntity<PagedReviewResponse> findPagingReviews(
             @PageableDefault(sort = LIKES, direction = Sort.Direction.DESC) Pageable pageable) {
 
-        Slice<ReviewResponse> result = reviewFindService.findPagingReviews(pageable);
+        Slice<ReviewResponse> result = reviewFindService.findPagedReviews(pageable);
 
         return ResponseEntity.ok(toPagedResponse(result));
     }

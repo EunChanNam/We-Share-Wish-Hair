@@ -28,7 +28,7 @@ public class ReviewFindService {
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 
-    public Slice<ReviewResponse> findPagingReviews(Pageable pageable) {
+    public Slice<ReviewResponse> findPagedReviews(Pageable pageable) {
         Slice<Review> sliceResult = reviewFindRepository.findReviewByPaging(pageable);
         return transferContentToResponse(sliceResult, true);
     }
