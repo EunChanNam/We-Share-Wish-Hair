@@ -191,7 +191,7 @@ public class ReviewListFragment extends Fragment {
                         receivedData.setContents(content);
                         receivedData.setCreatedDate(createDate);
                         receivedData.setHairStyleName(hairStyleName);
-                        receivedData.setTags(tag);
+                        receivedData.setTags("#" + tag);
 
                         JSONArray photosArray = resultObject.getJSONArray("photos");
                         List<Bitmap> receivedBitmaps = new ArrayList<>();
@@ -214,7 +214,7 @@ public class ReviewListFragment extends Fragment {
                         } else {
                             ReviewItem itemB = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(),
                                     receivedData.getHairStyleName(), receivedData.getTags(), receivedData.getCreatedDate(),
-                                    receivedData.getScore(), receivedData.getLikes(), false, receivedData.getContents());
+                                    receivedData.getScore(), receivedData.getLikes(), false, new ArrayList<>(), receivedData.getContents());
                             recentReviewItems.add(itemB);
                         }
                     }

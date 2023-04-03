@@ -27,23 +27,28 @@
                 android:id="@+id/review_recent_tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="글쓴이 닉네임" />
+                android:text="글쓴이 닉네임"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/review_recent_tv_name">
                 <TextView
-                    android:id="@+id/review_recent_tv_hariStyleName"
+                    android:id="@+id/review_recent_tv_hairStyleName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="7dp"
-                    android:text="hairStyleName " />
+                    android:text="hairStyleName"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
                 <TextView
                     android:id="@+id/review_recent_tv_tags"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/review_recent_tv_hariStyleName"
-                    android:text="tags"/>
+                    android:layout_toEndOf="@id/review_recent_tv_hairStyleName"
+                    android:text="tags"
+                    android:textColor="@color/black"/>
                 <TextView
                     android:id="@+id/review_recent_tv_date"
                     android:layout_width="wrap_content"

@@ -2,7 +2,6 @@ package com.example.wishhair.review.recent;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -64,8 +63,10 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
             holder.bindContentImage2(item.getBitmapImages().get(1));
         }
 
-        holder.nickname.setText(item.getUserNickName());
+        holder.hairStyleName.setText(item.getHairStyleName());
+        holder.tags.setText(item.getTags());
 
+        holder.nickname.setText(item.getUserNickName());
         holder.content.setText(item.getContents());
         holder.grade.setText(item.getScore());
         holder.date.setText(item.getCreatedDate());
@@ -90,7 +91,7 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView profileImage, contentImage1, contentImage2, isHeart;
-        TextView nickname, content, grade, date, heartCount;
+        TextView nickname, content, grade, date, heartCount, hairStyleName, tags;
         Button viewContent;
 
         ViewHolder(View itemView) {
@@ -105,6 +106,8 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
             this.heartCount = itemView.findViewById(R.id.review_recent_tv_heartCount);
             this.date = itemView.findViewById(R.id.review_recent_tv_date);
             this.viewContent = itemView.findViewById(R.id.review_recent_Button_viewContent);
+            this.hairStyleName = itemView.findViewById(R.id.review_recent_tv_hairStyleName);
+            this.tags = itemView.findViewById(R.id.review_recent_tv_tags);
         }
 
         public void bindContentImage1(Bitmap imageBitmap) {
