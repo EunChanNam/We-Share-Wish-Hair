@@ -38,7 +38,7 @@ public class ReviewFindControllerTest extends ControllerTest {
     void findPagingReviews() throws Exception {
         //given
         Slice<ReviewResponse> expectedResult = generateReviewSliceResponse(values().length);
-        given(reviewFindService.findPagedReviews(getLikeDescPageable()))
+        given(reviewFindService.findPagedReviews(getLikeDescPageable(10)))
                 .willReturn(expectedResult);
 
         //when
@@ -63,7 +63,7 @@ public class ReviewFindControllerTest extends ControllerTest {
     void findMyReviews() throws Exception {
         //given
         Slice<ReviewResponse> expectedResult = generateReviewSliceResponse(values().length);
-        given(reviewFindService.findMyReviews(1L, getDateDescPageable()))
+        given(reviewFindService.findMyReviews(1L, getDateDescPageable(10)))
                 .willReturn(expectedResult);
 
         //when

@@ -4,7 +4,7 @@ import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
-import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
+import com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
@@ -17,9 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import static com.inq.wishhair.wesharewishhair.fixture.ReviewFixture.*;
 import static com.inq.wishhair.wesharewishhair.fixture.ReviewFixture.A;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -30,48 +30,70 @@ public class ReviewFindServiceTest extends ServiceTest {
     @Autowired
     private ReviewFindService reviewFindService;
 
-    private Review review;
+    private List<Review> reviews = new ArrayList<>();
     private User user;
     private HairStyle hairStyle;
-    private final Pageable pageable = PageableUtils.getDefaultPageable();
 
     @BeforeEach
     void setUp() {
         //given
-        user = userRepository.save(UserFixture.B.toEntity());
+        user = userRepository.save(UserFixture.A.toEntity());
         hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
-        review = reviewRepository.save(A.toEntity(user, hairStyle));
+
+        for (ReviewFixture fixture : ReviewFixture.values()) {
+            reviews.add(reviewRepository.save(fixture.toEntity(user, hairStyle)));
+        }
     }
 
     @Test
     @DisplayName("아이디로 리뷰를 조회한다")
     void findById() {
         //when
+        Review review = reviews.get(0);
         Review result = reviewFindService.findById(review.getId());
 
         //then
         assertAll(
                 () -> assertThat(result.getUser()).isEqualTo(user),
                 () -> assertThat(result.getHairStyle()).isEqualTo(hairStyle),
-                () -> assertThat(result.getScore()).isEqualTo(A.getScore()),
-                () -> assertThat(result.getContents()).isEqualTo(A.getContents())
+                () -> assertThat(result.getScore()).isEqualTo(review.getScore()),
+                () -> assertThat(result.getContents()).isEqualTo(review.getContents())
         );
     }
 
-    @Test
+    @Nested
     @DisplayName("전체 리뷰를 조회한다")
-    void findPagedReviews() {
-        //when
-        Slice<ReviewResponse> result = reviewFindService.findPagedReviews(pageable);
+    class findPagedReview {
+        @Test
+        @DisplayName("전체 리뷰를 좋아요 수로 정렬하여 조회한다")
+        void findPagedReviews() {
+            //given
+            User user1 = userRepository.save(UserFixture.B.toEntity());
+            User user2 = userRepository.save(UserFixture.C.toEntity());
+            addLikes(user, List.of(1, 4, 5));
+            addLikes(user1, List.of(4, 5));
+            addLikes(user2, List.of(5));
 
-        //then
-        assertAll(
-                () -> assertThat(result.getContent()).hasSize(1),
-                () -> {
-                    ReviewResponse response = result.getContent().get(0);
-                    assertReviewResponse(response);
-                }
-        );
+            Pageable pageable = DefaultPageableUtils.getLikeDescPageable(3);
+
+            //when
+            Slice<ReviewResponse> result = reviewFindService.findPagedReviews(pageable);
+
+            //then
+            assertAll(
+                    () -> assertThat(result.getContent()).hasSize(3),
+                    () -> assertThat(result.hasNext()).isTrue(),
+                    () -> {
+                        List<String> findContents = result.getContent().stream()
+                                .map(ReviewResponse::getContents).toList();
+                        assertThat(findContents).containsExactly(
+                                reviews.get(5).getContents(),
+                                reviews.get(4).getContents(),
+                                reviews.get(1).getContents());
+                    }
+            );
+        }
+
     }
 
     @Nested
@@ -81,7 +103,7 @@ public class ReviewFindServiceTest extends ServiceTest {
         @DisplayName("좋아요 한 리뷰가 없으면 아무것도 조회되지 않는다")
         void findLikingReviews1() {
             //when
-            Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), pageable);
+            Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), null);
 
             //then
             assertThat(result.getContent()).isEmpty();
@@ -90,11 +112,9 @@ public class ReviewFindServiceTest extends ServiceTest {
         @Test
         @DisplayName("좋아요한 리뷰를 조회한다")
         void findLikingReviews2() {
-            //given
-            review.executeLike(user);
 
             //when
-            Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), pageable);
+            Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), null);
 
             //then
             assertAll(
@@ -111,7 +131,7 @@ public class ReviewFindServiceTest extends ServiceTest {
     @DisplayName("사용자가 작성한 리뷰를 조회한다")
     void findMyReviews() {
         //when
-        Slice<ReviewResponse> result = reviewFindService.findMyReviews(user.getId(), pageable);
+        Slice<ReviewResponse> result = reviewFindService.findMyReviews(user.getId(), null);
 
         //then
         assertAll(
@@ -142,5 +162,15 @@ public class ReviewFindServiceTest extends ServiceTest {
                 .forEach(tag -> assertThat(response.getHasTags()
                         .stream().map(HashTagResponse::getTag).toList())
                         .contains(tag));
+    }
+
+    private void addLikes(User user, List<Integer> indexes) {
+        for (int index : indexes) {
+            executeLike(reviews.get(index), user);
+        }
+    }
+
+    private void executeLike(Review review, User user) {
+        review.executeLike(user);
     }
 }
