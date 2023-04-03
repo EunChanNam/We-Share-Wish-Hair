@@ -33,7 +33,7 @@ public class ReviewControllerTest extends ControllerTest {
 
     @SneakyThrows
     @Test
-    @DisplayName("리뷰 작성 API")
+    @DisplayName("리뷰 작성 API 테스트")
     void createReview() {
         //given
         ReviewCreateRequest request = ReviewCreateRequestUtils.createRequest(ReviewFixture.A, 1L);
@@ -57,7 +57,24 @@ public class ReviewControllerTest extends ControllerTest {
                 );
     }
 
-    private static void generateParams(ReviewCreateRequest request, MultiValueMap<String, String> parms) {
+    @Test
+    @DisplayName("리뷰 삭제 API 테스트")
+    void deleteReview() throws Exception {
+        //when
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .delete(BASE_URL + "/1")
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpectAll(
+                        status().isOk(),
+                        jsonPath("$").exists(),
+                        jsonPath("$.success").value(true)
+                );
+    }
+
+    private void generateParams(ReviewCreateRequest request, MultiValueMap<String, String> parms) {
         parms.add("contents", request.getContents());
         parms.add("score", "4.5");
         parms.add("hairStyleId", "1");
