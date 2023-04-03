@@ -16,11 +16,14 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.fixture.ReviewFixture.A;
+import static java.time.LocalDateTime.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -41,15 +44,18 @@ public class ReviewFindServiceTest extends ServiceTest {
         hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
 
         for (ReviewFixture fixture : ReviewFixture.values()) {
-            reviews.add(reviewRepository.save(fixture.toEntity(user, hairStyle)));
+            reviews.add(fixture.toEntity(user, hairStyle));
         }
     }
 
     @Test
     @DisplayName("아이디로 리뷰를 조회한다")
     void findById() {
-        //when
+        //given
+        saveReview(List.of(0), List.of(now()));
         Review review = reviews.get(0);
+
+        //when
         Review result = reviewFindService.findById(review.getId());
 
         //then
@@ -68,8 +74,11 @@ public class ReviewFindServiceTest extends ServiceTest {
         @DisplayName("전체 리뷰를 좋아요 수로 정렬하여 조회한다")
         void findPagedReviews() {
             //given
+            saveReview(List.of(1, 4, 5), List.of(now(), now(), now()));
+
             User user1 = userRepository.save(UserFixture.B.toEntity());
             User user2 = userRepository.save(UserFixture.C.toEntity());
+
             addLikes(user, List.of(1, 4, 5));
             addLikes(user1, List.of(4, 5));
             addLikes(user2, List.of(5));
@@ -82,7 +91,7 @@ public class ReviewFindServiceTest extends ServiceTest {
             //then
             assertAll(
                     () -> assertThat(result.getContent()).hasSize(3),
-                    () -> assertThat(result.hasNext()).isTrue(),
+                    () -> assertThat(result.hasNext()).isFalse(),
                     () -> {
                         List<String> findContents = result.getContent().stream()
                                 .map(ReviewResponse::getContents).toList();
@@ -93,6 +102,7 @@ public class ReviewFindServiceTest extends ServiceTest {
                     }
             );
         }
+
 
     }
 
@@ -162,6 +172,18 @@ public class ReviewFindServiceTest extends ServiceTest {
                 .forEach(tag -> assertThat(response.getHasTags()
                         .stream().map(HashTagResponse::getTag).toList())
                         .contains(tag));
+    }
+
+    private void saveReview(List<Integer> indexes, List<LocalDateTime> times) {
+        for (int i = 0; i < indexes.size(); i++) {
+            int index = indexes.get(i);
+
+            Review review = reviews.get(index);
+            LocalDateTime time = times.get(i);
+
+            ReflectionTestUtils.setField(review, "createdDate", time);
+            reviewRepository.save(review);
+        }
     }
 
     private void addLikes(User user, List<Integer> indexes) {
