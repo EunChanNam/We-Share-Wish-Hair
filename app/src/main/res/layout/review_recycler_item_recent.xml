@@ -27,38 +27,28 @@
                 android:id="@+id/review_recent_tv_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="글쓴이 닉네임" />
+                android:text="글쓴이 닉네임"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/review_recent_tv_name">
                 <TextView
-                    android:id="@+id/review_recent_tv_review"
+                    android:id="@+id/review_recent_tv_hairStyleName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="리뷰 " />
+                    android:layout_marginEnd="7dp"
+                    android:text="hairStyleName"
+                    android:textStyle="bold"
+                    android:textColor="@color/black"/>
                 <TextView
-                    android:id="@+id/review_recent_tv_reviewCount"
+                    android:id="@+id/review_recent_tv_tags"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/review_recent_tv_review"/>
-                <TextView
-                    android:id="@+id/centerDot"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/centerDot"
-                    android:layout_toEndOf="@id/review_recent_tv_reviewCount"/>
-                <TextView
-                    android:id="@+id/review_recent_tv_avg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="평균별점 "
-                    android:layout_toEndOf="@id/centerDot"/>
-                <TextView
-                    android:id="@+id/review_recent_tv_authorAvgGrade"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/review_recent_tv_avg"/>
+                    android:layout_toEndOf="@id/review_recent_tv_hairStyleName"
+                    android:text="tags"
+                    android:textColor="@color/black"/>
                 <TextView
                     android:id="@+id/review_recent_tv_date"
                     android:layout_width="wrap_content"
@@ -82,13 +72,11 @@
             android:id="@+id/review_recent_contentImage1"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/user_sample"
             android:layout_marginEnd="10dp" />
         <ImageView
             android:id="@+id/review_recent_contentImage2"
             android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/user_sample" />
+            android:layout_height="100dp" />
     </LinearLayout>
 <!--    grade, heart -->
     <RelativeLayout

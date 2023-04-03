@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
-        <!--            TODO: what is this image-->
         <ImageView
             android:id="@+id/hairStyleImage"
             android:layout_width="40dp"

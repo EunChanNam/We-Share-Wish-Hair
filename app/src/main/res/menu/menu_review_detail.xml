@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_detail_modify"
+        android:title="@string/review_detail_menu_modify"
+        android:icon="@drawable/border_menu_detail"/>
+    <item
+        android:id="@+id/menu_detail_delete"
+        android:title="@string/review_detail_menu_delete" />
+</menu>

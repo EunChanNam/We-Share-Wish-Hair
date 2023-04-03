@@ -2,12 +2,6 @@
     <string name="app_name">WishHair</string>
     <string name="App_title_name">We Share Wish Hair</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <!--    review -->
-    <string name="centerDot"> · </string>
-    <string name="review_recent_item_btn"><![CDATA[전체보기 >]]></string>
-    <string name="review_filter_whole">전체</string>
-    <string name="review_filter_man">남성</string>
-    <string name="review_filter_woman">여성</string>
     <!--    login -->
     <string name="login_hint_id">ID</string>
     <string name="login_hint_pw">PW</string>
@@ -28,6 +22,15 @@
     <string name="register_term_3">[필수] 개인정보 수집 및 이용 동의</string>
     <string name="register_term_4">[필수] 개인정보 제공 동의</string>
     <string name="register_button_submit">동의하고 가입하기</string>
+    <!--    review -->
+
+    <string name="review_recent_item_btn"><![CDATA[전체보기 >]]></string>
+    <string name="review_filter_whole">전체</string>
+    <string name="review_filter_man">남성</string>
+    <string name="review_filter_woman">여성</string>
+<!--        review detail -->
+    <string name="review_detail_menu_modify">리뷰 수정</string>
+    <string name="review_detail_menu_delete">리뷰 삭제</string>
     <!--    write review -->
     <string name="write_review_message_1">시술은 만족스러우셨나요?</string>
     <string name="write_review_massage_2">시술에 대한 별점을 매겨주세요</string>
@@ -43,4 +46,12 @@
     <string name="home_message_7">님 만을 위한 추천</string>
 
     <string name="xmlDisplay_username">userName</string>
+    <string name="cert_message_1">이메일을 인증해주세요!</string>
+    <string name="cert_message_2">이메일을 입력해주세요</string>
+    <string name="cert_message_btn_send">인증번호 전송</string>
+    <string name="cert_timer">남은 시간</string>
+    <string name="cert_hint_submit">인증번호를 입력해주세요</string>
+    <string name="cert_message_btn_submit">인증번호 제출</string>
+    <string name="cert_message_btn_intent">확인</string>
+
 </resources>
