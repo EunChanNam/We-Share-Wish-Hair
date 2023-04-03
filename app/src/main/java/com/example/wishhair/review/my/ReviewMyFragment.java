@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wishhair.R;
-import com.example.wishhair.review.recent.RecyclerViewAdapterRecent;
+import com.example.wishhair.review.recent.RecentAdapter;
 import com.example.wishhair.review.ReviewItem;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class ReviewMyFragment extends Fragment {
         myRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
         // TODO: 2023-03-13  나중에 아이템 클릭시 해당 게시글 이동 리스너로 활용
-        recyclerViewAdapterMy.setOnItemClickListener(new RecyclerViewAdapterRecent.OnItemClickListener() {
+        recyclerViewAdapterMy.setOnItemClickListener(new RecentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
 

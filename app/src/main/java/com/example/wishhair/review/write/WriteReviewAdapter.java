@@ -65,6 +65,5 @@ public class WriteReviewAdapter extends RecyclerView.Adapter<WriteReviewAdapter.
     public void deleteItems(int position) {
         items.remove(position);
         notifyItemRemoved(position);
-        notifyItemRangeRemoved(position, items.size());
     }
 }

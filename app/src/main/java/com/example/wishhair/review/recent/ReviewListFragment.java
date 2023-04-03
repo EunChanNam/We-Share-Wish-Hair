@@ -1,13 +1,9 @@
 package com.example.wishhair.review.recent;
 
 import android.annotation.SuppressLint;
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -15,9 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
-import android.os.Environment;
 import android.os.Handler;
-import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,7 +27,6 @@ import android.widget.Spinner;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wishhair.CustomTokenHandler;
@@ -47,19 +40,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -78,9 +59,7 @@ public class ReviewListFragment extends Fragment {
     private RadioButton filter_whole, filter_man, filter_woman;
     private Button btn_temp_write;
     private RecyclerView recentRecyclerView;
-    RecyclerViewAdapterRecent listAdapter;
-
-    //    img
+    RecentAdapter recentAdapter;
 
     //    sort
     private static String sort_selected = null;
@@ -94,10 +73,7 @@ public class ReviewListFragment extends Fragment {
         super.onResume();
 
         //       request List data
-        ReviewListRequest(accessToken);
-
-        recentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
-        recentRecyclerView.setAdapter(listAdapter);
+        reviewListRequest(accessToken);
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -120,27 +96,24 @@ public class ReviewListFragment extends Fragment {
             }
         });
 
-        filter = v.findViewById(R.id.review_fragment_filter_radioGroup);
-        filter_whole = v.findViewById(R.id.review_fragment_filter_whole);
-        filter_man = v.findViewById(R.id.review_fragment_filter_man);
-        filter_woman = v.findViewById(R.id.review_fragment_filter_woman);
-
-        recentRecyclerView = v.findViewById(R.id.review_recent_recyclerView);
+//        review list
         recentReviewItems = new ArrayList<>();
-        listAdapter = new RecyclerViewAdapterRecent(recentReviewItems, getContext());
+        recentAdapter = new RecentAdapter(recentReviewItems, getContext());
+        recentRecyclerView = v.findViewById(R.id.review_recent_recyclerView);
+        recentRecyclerView.setAdapter(recentAdapter);
+        recentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
         //        swipeRefreshLayout
 //        TODO 새로고침 제대로 구현 >>>> 지금 새로고침할때마다 똑같은거 다시 들어감
         SwipeRefreshLayout swipeRefreshLayout = v.findViewById(R.id.review_recent_swipeRefLayout);
         swipeRefreshLayout.setOnRefreshListener(() -> {
-            ReviewListRequest(accessToken);
-            listAdapter.notifyDataSetChanged();
+            reviewListRequest(accessToken);
             final Handler handler = new Handler();
             handler.postDelayed(() -> swipeRefreshLayout.setRefreshing(false), 500);
         });
 
         // TODO: 2023-03-12  나중에 아이템 클릭시 해당 게시글 이동 리스너로 활용
-        listAdapter.setOnItemClickListener(new RecyclerViewAdapterRecent.OnItemClickListener() {
+        recentAdapter.setOnItemClickListener(new RecentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(v.getContext(), ReviewDetailActivity.class);
@@ -149,6 +122,11 @@ public class ReviewListFragment extends Fragment {
         });
 
 //        sort
+        filter = v.findViewById(R.id.review_fragment_filter_radioGroup);
+        filter_whole = v.findViewById(R.id.review_fragment_filter_whole);
+        filter_man = v.findViewById(R.id.review_fragment_filter_man);
+        filter_woman = v.findViewById(R.id.review_fragment_filter_woman);
+
         Spinner spinner_sort = v.findViewById(R.id.review_fragment_spinner_sort);
         sort_select(spinner_sort);
 //        TODO 정렬 기준으로 받아오기
@@ -156,9 +134,11 @@ public class ReviewListFragment extends Fragment {
         return v;
     }
 
+    List<ReviewItem> requestItems = new ArrayList<>();
     @SuppressLint("NotifyDataSetChanged")
-    private void ReviewListRequest(String accessToken) {
+    private void reviewListRequest(String accessToken) {
         final String URL_REVIEWLIST = UrlConst.URL + "/api/review";
+
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL_REVIEWLIST, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -210,12 +190,12 @@ public class ReviewListFragment extends Fragment {
                             ReviewItem itemB = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(),
                                     receivedData.getHairStyleName(), receivedData.getTags(), receivedData.getCreatedDate(),
                                     receivedData.getScore(), receivedData.getLikes(), false, receivedData.getBitmapImages(),  receivedData.getContents());
-                            recentReviewItems.add(itemB);
+                            requestItems.add(itemB);
                         } else {
                             ReviewItem itemB = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(),
                                     receivedData.getHairStyleName(), receivedData.getTags(), receivedData.getCreatedDate(),
                                     receivedData.getScore(), receivedData.getLikes(), false, new ArrayList<>(), receivedData.getContents());
-                            recentReviewItems.add(itemB);
+                            requestItems.add(itemB);
                         }
                     }
 
@@ -224,17 +204,16 @@ public class ReviewListFragment extends Fragment {
                     String page = pagingObject.getString("page");
                     String hasNext = pagingObject.getString("hasNext");
                     Log.d("paging", contentSize + " " + page + " " + hasNext);
+
+                    recentReviewItems.clear();
+                    recentReviewItems.addAll(requestItems);
+                    recentAdapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e("reviewList error", error.toString());
-            }
-        }) { @Override
+        }, error -> Log.e("reviewList error", error.toString())) { @Override
             public Map<String, String> getHeaders() {
                 Map<String, String>  params = new HashMap();
                 params.put("Authorization", "bearer" + accessToken);
@@ -244,16 +223,12 @@ public class ReviewListFragment extends Fragment {
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         requestQueue.add(jsonObjectRequest);
-
-        recentRecyclerView.setAdapter(listAdapter);
-        listAdapter.notifyDataSetChanged();
     }
 
     public static Bitmap decodeImage(String encodedImage) {
         byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
-
 
     private void sort_select(Spinner spinner_sort) {
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(getContext(), androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, sortItems);
