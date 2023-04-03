@@ -8,23 +8,33 @@
     android:orientation="vertical">
 
 <!--    topBar -->
+<!--    setText " " -->
     <include layout="@layout/top_bar_title" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="이메일을 인증해주세요!"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="10dp"
+        android:text="@string/cert_message_1"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"/>
 
 <!--    input email -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
+        android:layout_marginTop="20dp"
         android:orientation="vertical">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="이메일을 입력해주세요"/>
+            android:layout_marginBottom="10dp"
+            android:text="@string/cert_message_2"
+            android:textColor="@color/black"
+            android:textStyle="bold"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -51,40 +61,52 @@
                 android:importantForAutofill="no"
                 tools:ignore="RtlSymmetry" />
         </LinearLayout>
-        <androidx.appcompat.widget.AppCompatButton
+        <Button
             android:id="@+id/sign_cert_btn_requestSend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="인증번호 전송"/>
+            android:layout_marginTop="10dp"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/cert_message_btn_send"/>
 
 <!--        input code -->
-        <TextView
-            android:id="@+id/sign_cert_timer"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="남은 시간"/>
-
-        <EditText
-            android:id="@+id/sign_cert_et_code"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxLength="6"
-            android:inputType="number"
-            android:hint="인증번호를 입력해주세요"/>
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+            <TextView
+                android:id="@+id/sign_cert_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:text="@string/cert_timer"
+                android:textColor="@color/timer_red"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/sign_cert_btn_confirmCode"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="인증번호 제출"/>
+<!--            TODO : 회원정보 수정에 있는 닉네임 테두리 가져다 쓰기 -->
+            <EditText
+                android:id="@+id/sign_cert_et_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="6"
+                android:inputType="number"
+                android:hint="@string/cert_hint_submit"/>
 
-<!--        확인 -->
-        <Button
-            android:id="@+id/sign_cert_btn_intent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="invisible"
-            android:text="확인"/>
+            <Button
+                android:id="@+id/sign_cert_btn_confirmCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:text="@string/cert_message_btn_submit"/>
+
+            <!--        확인 -->
+            <Button
+                android:id="@+id/sign_cert_btn_intent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:text="@string/cert_message_btn_intent"/>
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -12,7 +12,6 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp">
-<!--        TODO setText " " -->
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/review_detail_viewPager"
             android:layout_width="match_parent"
@@ -20,7 +19,25 @@
             android:clipToPadding="false"
             android:clipChildren="false" />
 
-        <include layout="@layout/top_bar_title" />
+<!--        top bar-->
+        <androidx.appcompat.widget.Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize">
+            <Button
+                android:id="@+id/toolbar_btn_back"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/back"
+                android:layout_gravity="center_vertical"/>
+
+            <androidx.appcompat.widget.AppCompatImageButton
+                android:id="@+id/review_detail_menu"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/write_menu"
+                android:layout_gravity="end"
+                android:onClick="showMenu" />
+        </androidx.appcompat.widget.Toolbar>
 
         <me.relex.circleindicator.CircleIndicator3
             android:id="@+id/review_detail_indicator"

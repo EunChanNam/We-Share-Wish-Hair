@@ -1,7 +1,5 @@
 package com.example.wishhair.review.write;
 
-import com.example.wishhair.sign.UrlConst;
-
 import java.util.List;
 import java.util.Map;
 

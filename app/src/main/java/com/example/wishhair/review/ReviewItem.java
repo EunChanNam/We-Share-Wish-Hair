@@ -1,51 +1,70 @@
 package com.example.wishhair.review;
 
+import android.graphics.Bitmap;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
 public class ReviewItem {
 
     // common
-    private String content;
-    private String date;
-    private int heartCount;
-    private String grade;
+    private String contents;
+    private String createdDate;
+    private int likes;
+    private String score;
+    private String hairStyleName;
+    private String tags;
 
+    public ReviewItem() {}
 
     // recent
     private int profileImage;
-    private String nickname;
-    private String authorReviewCount;
-    private String authorAvgGrade;
+    private String userNickName;
     private boolean isHeart;
-    private int contentImage1;
-    private int contentImage2;
+    private List<Bitmap> bitmapImages;
+
+    //사진이 있을 때
+    public ReviewItem(int profileImage, String userNickName,String hairStyleName, String tags, String createdDate, String score, int likes, boolean isHeart, List<Bitmap> bitmapImages, String contents) {
+        this.contents = contents;
+        this.createdDate = createdDate;
+        this.likes = likes;
+        this.score = score;
+        this.hairStyleName = hairStyleName;
+        this.tags = tags;
+        this.profileImage = profileImage;
+        this.userNickName = userNickName;
+        this.isHeart = isHeart;
+        this.bitmapImages = bitmapImages;
+    }
+
+    //사진이 없을 때
+    public ReviewItem(int profileImage, String userNickName,String hairStyleName, String tags, String createdDate, String score, int likes, boolean isHeart, String contents) {
+        this.contents = contents;
+        this.createdDate = createdDate;
+        this.likes = likes;
+        this.score = score;
+        this.hairStyleName = hairStyleName;
+        this.tags = tags;
+        this.profileImage = profileImage;
+        this.userNickName = userNickName;
+        this.isHeart = isHeart;
+    }
 
     // my
     private int hairImage;
-    private String hairStyle;
-    private String tags;
     private boolean isPoint;
 
-    public ReviewItem(int profileImage, String nickname, String authorReviewCount, String authorAvgGrade, int contentImage1, int contentImage2, String content, String grade, boolean isHeart, int heartCount, String date) {
-        this.profileImage = profileImage;
-        this.nickname = nickname;
-        this.authorReviewCount = authorReviewCount;
-        this.authorAvgGrade = authorAvgGrade;
-        this.contentImage1 = contentImage1;
-        this.contentImage2 = contentImage2;
-        this.content = content;
-        this.grade = grade;
-        this.isHeart = isHeart;
-        this.heartCount = heartCount;
-        this.date = date;
-    }
-
-    public ReviewItem(int hairImage, String hairStyle, String tags, String content, String grade, int heartCount, String date, boolean isPoint) {
+    public ReviewItem(int hairImage, String hairStyleName, String tags, String contents, String score, int likes, String createdDate, boolean isPoint) {
         this.hairImage = hairImage;
-        this.hairStyle = hairStyle;
+        this.hairStyleName = hairStyleName;
         this.tags = tags;
-        this.grade = grade;
-        this.heartCount = heartCount;
-        this.content = content;
-        this.date = date;
+        this.score = score;
+        this.likes = likes;
+        this.contents = contents;
+        this.createdDate = createdDate;
         this.isPoint = isPoint;
     }
 
@@ -57,60 +76,36 @@ public class ReviewItem {
         this.profileImage = profileImage;
     }
 
-    public String getNickname() {
-        return nickname;
+    public String getUserNickName() {
+        return userNickName;
     }
 
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
     }
 
-    public String getAuthorReviewCount() {
-        return authorReviewCount;
+    public String getContents() {
+        return contents;
     }
 
-    public void setAuthorReviewCount(String authorReviewCount) {
-        this.authorReviewCount = authorReviewCount;
+    public void setContents(String contents) {
+        this.contents = contents;
     }
 
-    public String getAuthorAvgGrade() {
-        return authorAvgGrade;
+    public String getScore() {
+        return score;
     }
 
-    public void setAuthorAvgGrade(String authorAvgGrade) {
-        this.authorAvgGrade = authorAvgGrade;
+    public void setScore(String score) {
+        this.score = score;
     }
 
-    public int getContentImage1() {
-        return contentImage1;
+    public List<Bitmap> getBitmapImages() {
+        return bitmapImages;
     }
 
-    public void setContentImage1(int contentImage1) {
-        this.contentImage1 = contentImage1;
-    }
-
-    public int getContentImage2() {
-        return contentImage2;
-    }
-
-    public void setContentImage2(int contentImage2) {
-        this.contentImage2 = contentImage2;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
-
-    public String getGrade() {
-        return grade;
-    }
-
-    public void setGrade(String grade) {
-        this.grade = grade;
+    public void setBitmapImages(List<Bitmap> bitmapImages) {
+        this.bitmapImages = bitmapImages;
     }
 
     public boolean getIsHeart() {
@@ -121,20 +116,33 @@ public class ReviewItem {
         this.isHeart = isHeart;
     }
 
-    public int getHeartCount() {
-        return heartCount;
+    public int getLikes() {
+        return likes;
     }
 
-    public void setHeartCount(int heartCount) {
-        this.heartCount = heartCount;
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 
-    public String getDate() {
-        return date;
+    public String getCreatedDate() {
+        return createdDate;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCreatedDate(String createdDate) {
+        this.createdDate = parseDate(createdDate);
+    }
+
+    private String parseDate(String inputDate) {
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault());
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy.MM.dd", Locale.getDefault());
+
+        try {
+            Date date = inputFormat.parse(inputDate);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return "failParseDate";
     }
 
     public int getHairImage() {
@@ -145,12 +153,12 @@ public class ReviewItem {
         this.hairImage = hairImage;
     }
 
-    public String getHairStyle() {
-        return hairStyle;
+    public String getHairStyleName() {
+        return hairStyleName;
     }
 
-    public void setHairStyle(String hairStyle) {
-        this.hairStyle = hairStyle;
+    public void setHairStyleName(String hairStyleName) {
+        this.hairStyleName = hairStyleName;
     }
 
     public String getTags() {
