@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.fixture.ReviewFixture.*;
+import static com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils.getDateDescPageable;
+import static com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils.getLikeDescPageable;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -35,12 +37,37 @@ public class ReviewFindControllerTest extends ControllerTest {
     void findPagingReviews() throws Exception {
         //given
         Slice<ReviewResponse> expectedResult = generateReviewSliceResponse(values().length);
-        given(reviewFindService.findPagedReviews(DefaultPageableUtils.getLikeDescPageable()))
+        given(reviewFindService.findPagedReviews(getLikeDescPageable()))
                 .willReturn(expectedResult);
 
         //when
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                 .get(BASE_URL)
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpectAll(
+                        status().isOk(),
+                        jsonPath("$").exists(),
+                        jsonPath("$.result").exists(),
+                        jsonPath("$.paging").exists(),
+                        jsonPath("$.paging.hasNext").value(false),
+                        jsonPath("$.paging.contentSize").value(values().length)
+                );
+    }
+
+    @Test
+    @DisplayName("나의 리뷰 조회 API")
+    void findMyReviews() throws Exception {
+        //given
+        Slice<ReviewResponse> expectedResult = generateReviewSliceResponse(values().length);
+        given(reviewFindService.findMyReviews(1L, getDateDescPageable()))
+                .willReturn(expectedResult);
+
+        //when
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get(BASE_URL + "/my")
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
 
         //then
