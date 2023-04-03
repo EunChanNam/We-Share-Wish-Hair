@@ -8,6 +8,7 @@ import com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewSimpleResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -82,6 +83,28 @@ public class ReviewFindControllerTest extends ControllerTest {
                 );
     }
 
+    @Test
+    @DisplayName("이달의 추천 리뷰 조회 API")
+    void findReviewOfMonth() throws Exception {
+        //given
+        List<ReviewSimpleResponse> expectedResult = generateReviewSimpleResponse(values().length);
+        given(reviewFindService.findReviewOfMonth()).willReturn(expectedResult);
+
+        //when
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .get(BASE_URL + "/month")
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpectAll(
+                        status().isOk(),
+                        jsonPath("$").exists(),
+                        jsonPath("$.result").exists(),
+                        jsonPath("$.result.size()").value(values().length)
+                );
+    }
+
     private Slice<ReviewResponse> generateReviewSliceResponse(int count) {
         return new SliceImpl<>(generateReviewResponses(count));
     }
@@ -98,6 +121,28 @@ public class ReviewFindControllerTest extends ControllerTest {
 
             Review review = fixture.toEntity(user, hairStyle);
             result.add(new ReviewResponse(review, true));
+        }
+
+        return result;
+    }
+
+    private List<ReviewSimpleResponse> generateReviewSimpleResponse(int count) {
+        User user = UserFixture.B.toEntity();
+        HairStyle hairStyle = HairStyleFixture.A.toEntity();
+
+        List<ReviewSimpleResponse> result = new ArrayList<>();
+        ReviewFixture[] reviewFixtures = values();
+
+        for (int index = 0; index < count; index++) {
+            ReviewFixture fixture = reviewFixtures[index];
+
+            Review review = fixture.toEntity(user, hairStyle);
+            result.add(new ReviewSimpleResponse(
+                    1L,
+                    user.getNicknameValue(),
+                    hairStyle.getName(),
+                    review.getContents()
+            ));
         }
 
         return result;
