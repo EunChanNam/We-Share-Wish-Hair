@@ -24,13 +24,6 @@ public class ReviewControllerTest extends ControllerTest {
 
     private static final String BASE_URL = "/api/review";
 
-    @BeforeEach
-    void setUp() {
-        //given
-        given(provider.isValidToken(ACCESS_TOKEN)).willReturn(true);
-        given(provider.getId(ACCESS_TOKEN)).willReturn(1L);
-    }
-
     @SneakyThrows
     @Test
     @DisplayName("리뷰 작성 API 테스트")
