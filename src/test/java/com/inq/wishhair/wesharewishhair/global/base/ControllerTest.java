@@ -8,21 +8,31 @@ import com.inq.wishhair.wesharewishhair.auth.service.AuthService;
 import com.inq.wishhair.wesharewishhair.auth.service.TokenReissueService;
 import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleService;
+import com.inq.wishhair.wesharewishhair.review.controller.LikeReviewController;
+import com.inq.wishhair.wesharewishhair.review.controller.ReviewController;
+import com.inq.wishhair.wesharewishhair.review.controller.ReviewFindController;
+import com.inq.wishhair.wesharewishhair.review.service.LikeReviewService;
+import com.inq.wishhair.wesharewishhair.review.service.ReviewFindService;
+import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.user.controller.MailController;
 import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
 import com.inq.wishhair.wesharewishhair.user.service.PointService;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleController;
 import com.inq.wishhair.wesharewishhair.user.controller.UserController;
-import jakarta.servlet.http.HttpServletRequest;
+import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.ACCESS_TOKEN;
+import static org.mockito.BDDMockito.given;
+
 @WebMvcTest(value =
         {UserController.class, HairStyleController.class, AuthController.class, TokenReissueController.class,
-        HairStyleController.class, MailController.class})
+        HairStyleController.class, MailController.class, ReviewController.class, ReviewFindController.class,
+        LikeReviewController.class})
 public abstract class ControllerTest {
 
     @Autowired
@@ -53,9 +63,22 @@ public abstract class ControllerTest {
     protected MailSendService mailSendService;
 
     @MockBean
-    protected HttpServletRequest httpServletRequest;
+    protected ReviewService reviewService;
+
+    @MockBean
+    protected ReviewFindService reviewFindService;
+
+    @MockBean
+    protected LikeReviewService likeReviewService;
 
     public String toJson(Object object) throws JsonProcessingException {
         return objectMapper.writeValueAsString(object);
+    }
+
+    @BeforeEach
+    void setUp() {
+        //given
+        given(provider.isValidToken(ACCESS_TOKEN)).willReturn(true);
+        given(provider.getId(ACCESS_TOKEN)).willReturn(1L);
     }
 }

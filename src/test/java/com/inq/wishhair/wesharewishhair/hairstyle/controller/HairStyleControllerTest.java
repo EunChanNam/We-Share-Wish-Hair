@@ -30,12 +30,6 @@ public class HairStyleControllerTest extends ControllerTest {
     private static final String RECOMMEND_URL = "/api/hair_style/recommend";
     private static final String FACE_RECOMMEND_URL = "/api/hair_style/home";
 
-    @BeforeEach
-    void setUp() {
-        given(provider.isValidToken(ACCESS_TOKEN)).willReturn(true);
-        given(provider.getId(ACCESS_TOKEN)).willReturn(1L);
-    }
-
     @Nested
     @DisplayName("헤어 추천 API")
     class respondRecommendedHairStyle {

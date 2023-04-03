@@ -96,10 +96,6 @@ public class AuthControllerTest extends ControllerTest {
         @Test
         @DisplayName("로그아웃을 성공한다")
         void test4() throws Exception {
-            //given
-            given(provider.isValidToken(ACCESS_TOKEN)).willReturn(true);
-            given(provider.getId(ACCESS_TOKEN)).willReturn(1L);
-
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                     .post(LOGOUT_URL)

@@ -47,7 +47,7 @@ public class ApiExceptionHandler {
         return convert(ErrorCode.GLOBAL_NOT_SUPPORTED_METHOD);
     }
 
-    @ExceptionHandler(RuntimeException.class)
+//    @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<ErrorResponse> handleAnyException() {
         return convert(ErrorCode.GLOBAL_INTERNAL_SERVER_ERROR);
     }
