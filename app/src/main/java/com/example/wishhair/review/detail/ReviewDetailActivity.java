@@ -32,7 +32,8 @@ public class ReviewDetailActivity extends AppCompatActivity {
 
     private Button btn_back;
     //    content
-    private TextView hairStyleName;
+    private TextView hairStyleName, tags, score, likes, date, content;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +54,23 @@ public class ReviewDetailActivity extends AppCompatActivity {
 //        content
         hairStyleName = findViewById(R.id.review_detail_hairStyleName);
         hairStyleName.setText(getIntent().getStringExtra("hairStyleName"));
+
+        tags = findViewById(R.id.review_detail_tags);
+        tags.setText(getIntent().getStringExtra("tags"));
+
+        score = findViewById(R.id.review_detail_tv_score);
+        score.setText(getIntent().getStringExtra("score"));
+
+        likes = findViewById(R.id.review_detail_tv_likes);
+        likes.setText(String.valueOf(getIntent().getIntExtra("likes", 0)));
+
+        date = findViewById(R.id.review_detail_tv_date);
+        date.setText(getIntent().getStringExtra("date"));
+
+        content = findViewById(R.id.review_detail_tv_content);
+        content.setText(getIntent().getStringExtra("content"));
+
+
 
     }
 

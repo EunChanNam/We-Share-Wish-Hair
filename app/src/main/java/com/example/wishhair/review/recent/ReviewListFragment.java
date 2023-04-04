@@ -119,6 +119,14 @@ public class ReviewListFragment extends Fragment {
                 Intent intent = new Intent(v.getContext(), ReviewDetailActivity.class);
                 ReviewItem selectedItem = recentReviewItems.get(position);
                 intent.putExtra("hairStyleName", selectedItem.getHairStyleName());
+                intent.putExtra("tags", selectedItem.getTags());
+                intent.putExtra("score", selectedItem.getScore());
+                intent.putExtra("likes", selectedItem.getLikes());
+                intent.putExtra("date", selectedItem.getCreatedDate());
+                intent.putExtra("content", selectedItem.getContents());
+                for (int i = 0; i < selectedItem.getBitmapImages().size(); i++) {
+                    intent.putExtra("photo" + i, selectedItem.getBitmapImages().get(i));
+                }
                 startActivity(intent);
             }
         });
