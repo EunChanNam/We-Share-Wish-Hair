@@ -117,6 +117,8 @@ public class ReviewListFragment extends Fragment {
             @Override
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(v.getContext(), ReviewDetailActivity.class);
+                ReviewItem selectedItem = recentReviewItems.get(position);
+                intent.putExtra("hairStyleName", selectedItem.getHairStyleName());
                 startActivity(intent);
             }
         });

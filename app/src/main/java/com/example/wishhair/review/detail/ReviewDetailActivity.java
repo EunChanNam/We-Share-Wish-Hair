@@ -30,7 +30,9 @@ public class ReviewDetailActivity extends AppCompatActivity {
             "https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg"
     };
 
-    Button btn_back;
+    private Button btn_back;
+    //    content
+    private TextView hairStyleName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,10 @@ public class ReviewDetailActivity extends AppCompatActivity {
         sliderViewPager.setAdapter(new ImageSliderAdapter(this, images));
 
         circleIndicator.setViewPager(sliderViewPager);
+
+//        content
+        hairStyleName = findViewById(R.id.review_detail_hairStyleName);
+        hairStyleName.setText(getIntent().getStringExtra("hairStyleName"));
 
     }
 
