@@ -134,11 +134,11 @@ public class ReviewListFragment extends Fragment {
         return v;
     }
 
-    List<ReviewItem> requestItems = new ArrayList<>();
+
     @SuppressLint("NotifyDataSetChanged")
     private void reviewListRequest(String accessToken) {
         final String URL_REVIEWLIST = UrlConst.URL + "/api/review";
-
+        List<ReviewItem> requestItems = new ArrayList<>();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL_REVIEWLIST, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
