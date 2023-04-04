@@ -27,13 +27,17 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wishhair.MainActivity;
 import com.example.wishhair.MyPage.adapters.PointAdapter;
-import com.example.wishhair.MyPage.items.PointItem;
 import com.example.wishhair.R;
 import com.example.wishhair.sign.UrlConst;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -61,6 +65,8 @@ public class MyPointList extends Fragment {
     DividerItemDecoration dividerItemDecoration;
     private SharedPreferences loginSP;
     final static private String url = UrlConst.URL + "/api/my_page";
+    final static private String point_url = UrlConst.URL + "/api/point";
+
     static private String accessToken;
     TextView mypointview;
     public MyPointList() {
@@ -131,16 +137,10 @@ public class MyPointList extends Fragment {
         dividerItemDecoration = new DividerItemDecoration(getContext(), 1);
         dividerItemDecoration.setDrawable(getResources().getDrawable(R.drawable.point_recyclerview_divider));
         recyclerView.addItemDecoration(dividerItemDecoration);
-
-        adapter.addItem(new PointItem());
-        adapter.addItem(new PointItem());
-        adapter.addItem(new PointItem());
-        adapter.addItem(new PointItem());
-        adapter.addItem(new PointItem());
-        adapter.addItem(new PointItem());
         recyclerView.setAdapter(adapter);
 
         PointListRequest(accessToken);
+        PointHistoryRequest(accessToken);
 
 
     }
@@ -182,5 +182,46 @@ public class MyPointList extends Fragment {
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(jsonObjectRequest);
+    }
+    public void PointHistoryRequest(String accessToken) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, point_url , null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("Gson", "request");
+                processResponse(response);
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap();
+                params.put("Authorization", "bearer" + accessToken);
+
+                return params;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(jsonObjectRequest);
+    }
+
+    public void processResponse(JSONObject response) {
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<PointHistory>>(){}.getType();
+        List<PointHistory> phList = new ArrayList<PointHistory>();
+        PointHistory test1 = new PointHistory();
+        phList.add(test1);
+        if (phList != null && !phList.isEmpty()) {
+            adapter.setItems((ArrayList<PointHistory>) phList);
+            adapter.notifyDataSetChanged();
+            Log.d("Gson","adapter passed");
+        }
+        else
+            Log.d("Gson","else passed");
     }
 }
