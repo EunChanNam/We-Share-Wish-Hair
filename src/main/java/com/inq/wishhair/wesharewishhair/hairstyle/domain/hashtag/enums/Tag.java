@@ -23,6 +23,6 @@ public enum Tag {
     private final TagType tagType;
 
     public boolean isFaceShapeType() {
-        return tagType.equals(FACE_SHAPE);
+        return tagType.isFaceType();
     }
 }
