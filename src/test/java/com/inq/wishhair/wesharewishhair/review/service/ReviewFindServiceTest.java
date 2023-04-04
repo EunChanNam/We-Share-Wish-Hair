@@ -115,9 +115,12 @@ public class ReviewFindServiceTest extends ServiceTest {
             //when
             Slice<ReviewResponse> result = reviewFindService.findPagedReviews(pageable);
 
+            result.getContent().forEach(response -> System.out.println(response.getContents()));
+
             //then
             assertAll(
                     () -> assertThat(result.getContent()).hasSize(5),
+                    () -> assertThat(result.hasNext()).isFalse(),
                     () -> {
                         List<String> findContents = extractContents(result);
                         assertThat(findContents).containsExactly(
@@ -157,18 +160,30 @@ public class ReviewFindServiceTest extends ServiceTest {
         @DisplayName("좋아요한 리뷰를 최신 날짜 순으로 조회한다")
         void findLikingReviews2() {
             //given
+            saveReview(List.of(1, 2, 3, 4), List.of(now(), now().minusMinutes(1), now().minusHours(1),
+                    now().minusDays(1)));
 
+            addLikes(user, List.of(1, 2, 3, 4));
+
+            Pageable pageable = DefaultPageableUtils.getDateAscPageable(4);
 
             //when
-            Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), null);
+            Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), pageable);
 
             //then
             assertAll(
-                    () -> assertThat(result.getContent()).hasSize(1),
+                    () -> assertThat(result.getContent()).hasSize(4),
+                    () -> assertThat(result.hasNext()).isFalse(),
                     () -> {
-                        ReviewResponse response = result.getContent().get(0);
-                        assertReviewResponse(response);
-                    }
+                        List<String> findContents = extractContents(result);
+                        assertThat(findContents).containsExactly(
+                                reviews.get(1).getContents(),
+                                reviews.get(2).getContents(),
+                                reviews.get(3).getContents(),
+                                reviews.get(4).getContents()
+                        );
+                    },
+                    () -> assertReviewResponseValues(result.getContent().get(0), reviews.get(1))
             );
         }
 

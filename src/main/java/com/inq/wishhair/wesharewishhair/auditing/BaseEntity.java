@@ -21,4 +21,11 @@ public class BaseEntity {
 
     @LastModifiedDate
     private LocalDateTime updatedDate;
+
+    public LocalDateTime getCreatedDate() {
+        if (createdDate == null) {
+            return null;
+        }
+        return createdDate.withSecond(0).withNano(0);
+    }
 }
