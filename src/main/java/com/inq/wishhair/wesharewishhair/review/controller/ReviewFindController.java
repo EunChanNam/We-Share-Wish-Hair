@@ -38,7 +38,7 @@ public class ReviewFindController {
 
     @GetMapping("/my")
     public ResponseEntity<PagedReviewResponse> findMyReviews(
-            @PageableDefault(sort = DATE, direction = Sort.Direction.DESC) Pageable pageable,
+            @PageableDefault(sort = DATE, direction = Sort.Direction.ASC) Pageable pageable,
             @ExtractPayload Long userId) {
 
         Slice<ReviewResponse> result = reviewFindService.findMyReviews(userId, pageable);

@@ -72,7 +72,7 @@ public class ReviewFindServiceTest extends ServiceTest {
     class findPagedReview {
         @Test
         @DisplayName("전체 리뷰를 좋아요 수로 정렬하여 조회한다")
-        void findPagedReviews() {
+        void orderByLikes() {
             //given
             saveReview(List.of(1, 4, 5), List.of(now(), now(), now()));
 
@@ -93,22 +93,51 @@ public class ReviewFindServiceTest extends ServiceTest {
                     () -> assertThat(result.getContent()).hasSize(3),
                     () -> assertThat(result.hasNext()).isFalse(),
                     () -> {
-                        List<String> findContents = result.getContent().stream()
-                                .map(ReviewResponse::getContents).toList();
+                        List<String> findContents = extractContents(result);
                         assertThat(findContents).containsExactly(
                                 reviews.get(5).getContents(),
                                 reviews.get(4).getContents(),
                                 reviews.get(1).getContents());
-                    }
+                    },
+                    () -> assertReviewResponseValues(result.getContent().get(0), reviews.get(5))
             );
         }
 
+        @Test
+        @DisplayName("전체 리뷰를 최신 날짜 순으로 정렬해서 조회한다")
+        void orderByDate() {
+            //given
+            saveReview(List.of(1, 2, 3, 4, 5), List.of(now(), now().minusMinutes(1), now().minusHours(1),
+                    now().minusDays(1), now().minusMonths(1)));
 
+            Pageable pageable = DefaultPageableUtils.getDateDescPageable(5);
+
+            //when
+            Slice<ReviewResponse> result = reviewFindService.findPagedReviews(pageable);
+
+            //then
+            assertAll(
+                    () -> assertThat(result.getContent()).hasSize(5),
+                    () -> {
+                        List<String> findContents = extractContents(result);
+                        assertThat(findContents).containsExactly(
+                                reviews.get(1).getContents(),
+                                reviews.get(2).getContents(),
+                                reviews.get(3).getContents(),
+                                reviews.get(4).getContents(),
+                                reviews.get(5).getContents()
+                        );
+                    },
+                    () -> assertReviewResponseValues(result.getContent().get(0), reviews.get(1))
+            );
+
+        }
     }
 
     @Nested
     @DisplayName("사용자가 좋아요한 리뷰를 조회한다")
     class findLikingReviews {
+
         @Test
         @DisplayName("좋아요 한 리뷰가 없으면 아무것도 조회되지 않는다")
         void findLikingReviews1() {
@@ -135,8 +164,8 @@ public class ReviewFindServiceTest extends ServiceTest {
                     }
             );
         }
-    }
 
+    }
     @Test
     @DisplayName("사용자가 작성한 리뷰를 조회한다")
     void findMyReviews() {
@@ -152,7 +181,6 @@ public class ReviewFindServiceTest extends ServiceTest {
                 }
         );
     }
-
     @Test
     @DisplayName("지난달에 작성된 리뷰를 조회한다")
     void findReviewOfMonth() {
@@ -161,17 +189,6 @@ public class ReviewFindServiceTest extends ServiceTest {
 
         //then
         assertThat(result).isEmpty();
-    }
-
-    private void assertReviewResponse(ReviewResponse response) {
-        assertThat(response.getContents()).isEqualTo(A.getContents());
-        assertThat(response.getScore()).isEqualTo(A.getScore().getValue());
-        assertThat(response.getHairStyleName()).isEqualTo(hairStyle.getName());
-        assertThat(response.getUserNickName()).isEqualTo(user.getNicknameValue());
-        hairStyle.getHashTags().stream().map(HashTag::getDescription).toList()
-                .forEach(tag -> assertThat(response.getHasTags()
-                        .stream().map(HashTagResponse::getTag).toList())
-                        .contains(tag));
     }
 
     private void saveReview(List<Integer> indexes, List<LocalDateTime> times) {
@@ -188,11 +205,36 @@ public class ReviewFindServiceTest extends ServiceTest {
 
     private void addLikes(User user, List<Integer> indexes) {
         for (int index : indexes) {
-            executeLike(reviews.get(index), user);
+            reviews.get(index).executeLike(user);
         }
     }
 
-    private void executeLike(Review review, User user) {
-        review.executeLike(user);
+    private List<String> extractContents(Slice<ReviewResponse> result) {
+        return result.getContent().stream()
+                .map(ReviewResponse::getContents).toList();
+    }
+
+    private void assertReviewResponseValues(ReviewResponse response, Review expected) {
+        assertThat(response.getLikes()).isEqualTo(expected.getLikes());
+        assertThat(response.getScore()).isEqualTo(expected.getScore().getValue());
+        assertThat(response.getHairStyleName()).isEqualTo(expected.getHairStyle().getName());
+        assertThat(response.getUserNickName()).isEqualTo(expected.getUser().getNicknameValue());
+
+        List<String> expectedTags = expected.getHairStyle().getHashTags().stream()
+                .map(HashTag::getDescription).toList();
+        List<String> resultTags = response.getHasTags().stream().map(HashTagResponse::getTag).toList();
+
+        expectedTags.forEach(tag -> assertThat(resultTags).contains(tag));
+    }
+
+    private void assertReviewResponse(ReviewResponse response) {
+        assertThat(response.getContents()).isEqualTo(A.getContents());
+        assertThat(response.getScore()).isEqualTo(A.getScore().getValue());
+        assertThat(response.getHairStyleName()).isEqualTo(hairStyle.getName());
+        assertThat(response.getUserNickName()).isEqualTo(user.getNicknameValue());
+        hairStyle.getHashTags().stream().map(HashTag::getDescription).toList()
+                .forEach(tag -> assertThat(response.getHasTags()
+                        .stream().map(HashTagResponse::getTag).toList())
+                        .contains(tag));
     }
 }

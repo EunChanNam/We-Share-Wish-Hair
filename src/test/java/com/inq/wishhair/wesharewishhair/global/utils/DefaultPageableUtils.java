@@ -13,7 +13,7 @@ public abstract class DefaultPageableUtils {
     }
 
     public static Pageable getDateDescPageable(int size) {
-        return PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, DATE));
+        return PageRequest.of(0, size, Sort.by(Sort.Direction.ASC, DATE));
     }
 
 
