@@ -88,25 +88,16 @@ public class ReviewFindServiceTest extends ServiceTest {
             Slice<ReviewResponse> result = reviewFindService.findPagedReviews(pageable);
 
             //then
-            assertAll(
-                    () -> assertThat(result.getContent()).hasSize(3),
-                    () -> assertThat(result.hasNext()).isFalse(),
-                    () -> {
-                        List<String> findContents = extractContents(result);
-                        assertThat(findContents).containsExactly(
-                                reviews.get(5).getContents(),
-                                reviews.get(4).getContents(),
-                                reviews.get(1).getContents());
-                    },
-                    () -> assertReviewResponseValues(result.getContent().get(0), reviews.get(5))
-            );
+            assertThat(result.hasNext()).isFalse();
+            assertReviewResponseMatch(result.getContent(),
+                    List.of(reviews.get(5), reviews.get(4), reviews.get(1)));
         }
 
         @Test
         @DisplayName("전체 리뷰를 최신 날짜 순으로 정렬해서 조회한다")
         void orderByDate() {
             //given
-            saveReview(List.of(1, 2, 3, 4, 5), List.of(now(), now().minusMinutes(1), now().minusHours(1),
+            saveReview(List.of(1, 2, 3, 4, 5), List.of(now().minusMonths(2), now().minusMinutes(1), now().minusHours(1),
                     now().minusDays(1), now().minusMonths(1)));
 
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(5);
@@ -114,24 +105,10 @@ public class ReviewFindServiceTest extends ServiceTest {
             //when
             Slice<ReviewResponse> result = reviewFindService.findPagedReviews(pageable);
 
-            result.getContent().forEach(response -> System.out.println(response.getContents()));
-
             //then
-            assertAll(
-                    () -> assertThat(result.getContent()).hasSize(5),
-                    () -> assertThat(result.hasNext()).isFalse(),
-                    () -> {
-                        List<String> findContents = extractContents(result);
-                        assertThat(findContents).containsExactly(
-                                reviews.get(1).getContents(),
-                                reviews.get(2).getContents(),
-                                reviews.get(3).getContents(),
-                                reviews.get(4).getContents(),
-                                reviews.get(5).getContents()
-                        );
-                    },
-                    () -> assertReviewResponseValues(result.getContent().get(0), reviews.get(1))
-            );
+            assertThat(result.hasNext()).isFalse();
+            assertReviewResponseMatch(result.getContent(),
+                    List.of(reviews.get(2), reviews.get(3), reviews.get(4), reviews.get(5), reviews.get(1)));
 
         }
     }
@@ -170,20 +147,9 @@ public class ReviewFindServiceTest extends ServiceTest {
             Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), pageable);
 
             //then
-            assertAll(
-                    () -> assertThat(result.getContent()).hasSize(4),
-                    () -> assertThat(result.hasNext()).isFalse(),
-                    () -> {
-                        List<String> findContents = extractContents(result);
-                        assertThat(findContents).containsExactly(
-                                reviews.get(3).getContents(),
-                                reviews.get(2).getContents(),
-                                reviews.get(4).getContents(),
-                                reviews.get(1).getContents()
-                        );
-                    },
-                    () -> assertReviewResponseValues(result.getContent().get(0), reviews.get(3))
-            );
+            assertThat(result.hasNext()).isFalse();
+            assertReviewResponseMatch(result.getContent(),
+                    List.of(reviews.get(3), reviews.get(2), reviews.get(4), reviews.get(1)));
         }
 
     }
@@ -220,20 +186,9 @@ public class ReviewFindServiceTest extends ServiceTest {
             Slice<ReviewResponse> result = reviewFindService.findMyReviews(user.getId(), pageable);
 
             //then
-            assertAll(
-                    () -> assertThat(result.getContent()).hasSize(4),
-                    () -> assertThat(result.hasNext()).isFalse(),
-                    () -> {
-                        List<String> findContents = extractContents(result);
-                        assertThat(findContents).containsExactly(
-                                reviews.get(3).getContents(),
-                                reviews.get(2).getContents(),
-                                reviews.get(4).getContents(),
-                                reviews.get(1).getContents()
-                        );
-                    },
-                    () -> assertReviewResponseValues(result.getContent().get(0), reviews.get(3))
-            );
+            assertThat(result.hasNext()).isFalse();
+            assertReviewResponseMatch(result.getContent(),
+                    List.of(reviews.get(3), reviews.get(2), reviews.get(4), reviews.get(1)));
         }
     }
 
@@ -255,22 +210,8 @@ public class ReviewFindServiceTest extends ServiceTest {
         List<ReviewSimpleResponse> result = reviewFindService.findReviewOfMonth();
 
         //then
-        assertAll(
-                () -> assertThat(result).hasSize(3),
-                () -> assertThat(result.stream().map(ReviewSimpleResponse::getContents))
-                        .containsExactly(
-                                reviews.get(5).getContents(),
-                                reviews.get(4).getContents(),
-                                reviews.get(1).getContents()
-                        ),
-                () -> {
-                    ReviewSimpleResponse response = result.get(0);
-                    Review expected = reviews.get(5);
-                    assertThat(response.getReviewId()).isEqualTo(expected.getId());
-                    assertThat(response.getNickname()).isEqualTo(expected.getUser().getNicknameValue());
-                    assertThat(response.getHairStyleName()).isEqualTo(expected.getHairStyle().getName());
-                }
-        );
+        assertReviewSimpleResponseMatch(result,
+                List.of(reviews.get(5), reviews.get(4), reviews.get(1)));
     }
 
     private void saveReview(List<Integer> indexes, List<LocalDateTime> times) {
@@ -290,21 +231,48 @@ public class ReviewFindServiceTest extends ServiceTest {
         }
     }
 
-    private List<String> extractContents(Slice<ReviewResponse> result) {
-        return result.getContent().stream()
-                .map(ReviewResponse::getContents).toList();
+    private void assertReviewResponseMatch(List<ReviewResponse> responses, List<Review> expectedReviews) {
+        assertThat(responses).hasSize(expectedReviews.size());
+
+        int expectedSize = responses.size();
+
+        for (int index = 0; index < expectedSize; index++) {
+            ReviewResponse response = responses.get(index);
+            Review expected = expectedReviews.get(index);
+
+            assertAll(
+                    () -> assertThat(response.getLikes()).isEqualTo(expected.getLikes()),
+                    () -> assertThat(response.getContents()).isEqualTo(expected.getContents()),
+                    () -> assertThat(response.getScore()).isEqualTo(expected.getScore().getValue()),
+                    () -> assertThat(response.getCreatedDate()).isEqualTo(expected.getCreatedDate()),
+                    () -> assertThat(response.getHairStyleName()).isEqualTo(expected.getHairStyle().getName()),
+                    () -> assertThat(response.getUserNickName()).isEqualTo(expected.getUser().getNicknameValue()),
+                    () -> {
+                        List<String> expectedTags = expected.getHairStyle().getHashTags().stream()
+                                .map(HashTag::getDescription).toList();
+                        List<String> resultTags = response.getHasTags().stream().map(HashTagResponse::getTag).toList();
+
+                        expectedTags.forEach(tag -> assertThat(resultTags).contains(tag));
+                    }
+            );
+        }
     }
 
-    private void assertReviewResponseValues(ReviewResponse response, Review expected) {
-        assertThat(response.getLikes()).isEqualTo(expected.getLikes());
-        assertThat(response.getScore()).isEqualTo(expected.getScore().getValue());
-        assertThat(response.getHairStyleName()).isEqualTo(expected.getHairStyle().getName());
-        assertThat(response.getUserNickName()).isEqualTo(expected.getUser().getNicknameValue());
+    private void assertReviewSimpleResponseMatch(List<ReviewSimpleResponse> responses, List<Review> expectedReviews) {
+        assertThat(responses).hasSize(expectedReviews.size());
 
-        List<String> expectedTags = expected.getHairStyle().getHashTags().stream()
-                .map(HashTag::getDescription).toList();
-        List<String> resultTags = response.getHasTags().stream().map(HashTagResponse::getTag).toList();
+        int expectedSize = responses.size();
 
-        expectedTags.forEach(tag -> assertThat(resultTags).contains(tag));
+        for (int index = 0; index < expectedSize; index++) {
+            ReviewSimpleResponse response = responses.get(index);
+            Review expected = expectedReviews.get(index);
+
+            assertAll(
+                    () -> assertThat(response.getReviewId()).isEqualTo(expected.getId()),
+                    () -> assertThat(response.getContents()).isEqualTo(expected.getContents()),
+                    () -> assertThat(response.getHairStyleName()).isEqualTo(expected.getHairStyle().getName()),
+                    () -> assertThat(response.getUserNickname()).isEqualTo(expected.getUser().getNicknameValue())
+            );
+        }
     }
 }
