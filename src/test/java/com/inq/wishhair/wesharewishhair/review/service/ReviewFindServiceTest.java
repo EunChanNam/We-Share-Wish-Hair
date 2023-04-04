@@ -110,7 +110,7 @@ public class ReviewFindServiceTest extends ServiceTest {
             saveReview(List.of(1, 2, 3, 4, 5), List.of(now(), now().minusMinutes(1), now().minusHours(1),
                     now().minusDays(1), now().minusMonths(1)));
 
-            Pageable pageable = DefaultPageableUtils.getDateDescPageable(5);
+            Pageable pageable = DefaultPageableUtils.getDateAscPageable(5);
 
             //when
             Slice<ReviewResponse> result = reviewFindService.findPagedReviews(pageable);
@@ -140,17 +140,24 @@ public class ReviewFindServiceTest extends ServiceTest {
 
         @Test
         @DisplayName("좋아요 한 리뷰가 없으면 아무것도 조회되지 않는다")
-        void findLikingReviews1() {
+        void doesNotExistResult() {
+            //given
+            saveReview(List.of(1, 2, 3), List.of(now(), now(), now()));
+
+            Pageable pageable = DefaultPageableUtils.getDateAscPageable(3);
+
             //when
-            Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), null);
+            Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), pageable);
 
             //then
             assertThat(result.getContent()).isEmpty();
         }
 
         @Test
-        @DisplayName("좋아요한 리뷰를 조회한다")
+        @DisplayName("좋아요한 리뷰를 최신 날짜 순으로 조회한다")
         void findLikingReviews2() {
+            //given
+
 
             //when
             Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), null);

@@ -24,7 +24,7 @@ public class MyPageController {
     @GetMapping("/my_page")
     public ResponseEntity<MyPageResponse> getMyPageInfo(
             @ExtractPayload Long userId,
-            @PageableDefault(size = 3, sort = DATE, direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(size = 3, sort = DATE, direction = Sort.Direction.ASC) Pageable pageable) {
 
         MyPageResponse response = myPageService.getMyPageInfo(userId, pageable);
 
