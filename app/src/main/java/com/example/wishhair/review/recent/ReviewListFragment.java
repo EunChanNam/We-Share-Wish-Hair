@@ -40,7 +40,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -124,9 +126,19 @@ public class ReviewListFragment extends Fragment {
                 intent.putExtra("likes", selectedItem.getLikes());
                 intent.putExtra("date", selectedItem.getCreatedDate());
                 intent.putExtra("content", selectedItem.getContents());
-                for (int i = 0; i < selectedItem.getBitmapImages().size(); i++) {
-                    intent.putExtra("photo" + i, selectedItem.getBitmapImages().get(i));
-                }
+
+//                intent.putExtra("photo" + i, selectedItem.getBitmapImages());
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                selectedItem.getBitmapImages().get(0).compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                Log.d("byte", Arrays.toString(byteArray));
+                Log.d("size: ", String.valueOf(byteArray.length));
+//                bitmap size 초과 에러인듯
+//                intent로 사진 넘기는법 다시 찾아 보자구요
+//                intent.putExtra("photo", byteArray);
+
+                intent.putExtra("listSize", selectedItem.getBitmapImages().size());
+
                 startActivity(intent);
             }
         });

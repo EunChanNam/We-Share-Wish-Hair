@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -14,9 +16,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wishhair.R;
+
+import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator3;
 
@@ -33,6 +36,7 @@ public class ReviewDetailActivity extends AppCompatActivity {
     private Button btn_back;
     //    content
     private TextView hairStyleName, tags, score, likes, date, content;
+    private List<Bitmap> photos;
 
 
     @Override
@@ -47,7 +51,7 @@ public class ReviewDetailActivity extends AppCompatActivity {
         CircleIndicator3 circleIndicator = findViewById(R.id.review_detail_indicator);
 
         sliderViewPager.setOffscreenPageLimit(1);
-        sliderViewPager.setAdapter(new ImageSliderAdapter(this, images));
+//        sliderViewPager.setAdapter(new ImageSliderAdapter(this, images));
 
         circleIndicator.setViewPager(sliderViewPager);
 
@@ -70,7 +74,11 @@ public class ReviewDetailActivity extends AppCompatActivity {
         content = findViewById(R.id.review_detail_tv_content);
         content.setText(getIntent().getStringExtra("content"));
 
-
+        /*for (int i = 0; i < getIntent().getIntExtra("listSize", 0); i++) {
+            byte[] byteArray = getIntent().getByteArrayExtra("photo" + i);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            photos.add(bitmap);
+        }*/
 
     }
 
