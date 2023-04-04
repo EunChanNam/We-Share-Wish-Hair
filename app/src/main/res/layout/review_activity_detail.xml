@@ -55,7 +55,7 @@
         android:padding="20dp">
         <!--    title -->
         <TextView
-            android:id="@+id/review_detail_hairStyle"
+            android:id="@+id/review_detail_hairStyleName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="헤어스타일 이름"
