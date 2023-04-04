@@ -33,7 +33,7 @@ public class ReviewFindServiceTest extends ServiceTest {
     @Autowired
     private ReviewFindService reviewFindService;
 
-    private List<Review> reviews = new ArrayList<>();
+    private final List<Review> reviews = new ArrayList<>();
     private User user;
     private HairStyle hairStyle;
 
@@ -158,7 +158,7 @@ public class ReviewFindServiceTest extends ServiceTest {
 
         @Test
         @DisplayName("좋아요한 리뷰를 최신 날짜 순으로 조회한다")
-        void findLikingReviews2() {
+        void orderByDate() {
             //given
             saveReview(List.of(1, 2, 3, 4), List.of(now(), now().minusMinutes(1), now().minusHours(1),
                     now().minusDays(1)));
@@ -188,20 +188,54 @@ public class ReviewFindServiceTest extends ServiceTest {
         }
 
     }
-    @Test
-    @DisplayName("사용자가 작성한 리뷰를 조회한다")
-    void findMyReviews() {
-        //when
-        Slice<ReviewResponse> result = reviewFindService.findMyReviews(user.getId(), null);
 
-        //then
-        assertAll(
-                () -> assertThat(result.getContent()).hasSize(1),
-                () -> {
-                    ReviewResponse response = result.getContent().get(0);
-                    assertReviewResponse(response);
-                }
-        );
+    @Nested
+    @DisplayName("사용자가 작성한 리뷰를 조회한다")
+    class findMyReviews {
+        @Test
+        @DisplayName("작성한 리뷰가 없으면 아무것도 조회되지 않는다")
+        void doesNotExistResult() {
+            //given
+            User other = userRepository.save(UserFixture.B.toEntity());
+            saveReview(List.of(1, 2, 3, 4), List.of(now(), now(), now(), now()));
+
+            Pageable pageable = DefaultPageableUtils.getDateAscPageable(4);
+
+            //when
+            Slice<ReviewResponse> result = reviewFindService.findMyReviews(other.getId(), pageable);
+
+            //then
+            assertThat(result.getContent()).isEmpty();
+        }
+
+        @Test
+        @DisplayName("작성한 리뷰를 최신 날짜 순으로 조회한다")
+        void orderByDate() {
+            //given
+            saveReview(List.of(1, 2, 3, 4), List.of(now(), now().minusMinutes(1), now().minusHours(1),
+                    now().minusDays(1)));
+
+            Pageable pageable = DefaultPageableUtils.getDateAscPageable(4);
+
+            //when
+            Slice<ReviewResponse> result = reviewFindService.findMyReviews(user.getId(), pageable);
+
+            //then
+            assertAll(
+                    () -> assertThat(result.getContent()).hasSize(4),
+                    () -> assertThat(result.hasNext()).isFalse(),
+                    () -> {
+                        List<String> findContents = extractContents(result);
+                        assertThat(findContents).containsExactly(
+                                reviews.get(1).getContents(),
+                                reviews.get(2).getContents(),
+                                reviews.get(3).getContents(),
+                                reviews.get(4).getContents()
+                        );
+                    },
+                    () -> assertReviewResponseValues(result.getContent().get(0), reviews.get(1))
+            );
+        }
     }
     @Test
     @DisplayName("지난달에 작성된 리뷰를 조회한다")
