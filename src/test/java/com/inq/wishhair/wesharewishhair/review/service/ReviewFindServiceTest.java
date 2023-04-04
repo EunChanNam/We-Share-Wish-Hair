@@ -16,6 +16,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;
@@ -237,24 +238,50 @@ public class ReviewFindServiceTest extends ServiceTest {
             );
         }
     }
+
     @Test
-    @DisplayName("지난달에 작성된 리뷰를 조회한다")
+    @DisplayName("지난달에 작성된 리뷰를 좋아요 수로 정렬해서 조회한다")
     void findReviewOfMonth() {
+        //given
+        saveReview(List.of(1, 2, 4, 5), List.of(now().minusMonths(1), now(),
+                now().minusMonths(1), now().minusMonths(1)));
+
+        User user1 = userRepository.save(UserFixture.B.toEntity());
+        User user2 = userRepository.save(UserFixture.C.toEntity());
+
+        addLikes(user, List.of(4, 5));
+        addLikes(user1, List.of(4, 5));
+        addLikes(user2, List.of(5));
+
         //when
         List<ReviewSimpleResponse> result = reviewFindService.findReviewOfMonth();
 
         //then
-        assertThat(result).isEmpty();
+        assertAll(
+                () -> assertThat(result).hasSize(3),
+                () -> assertThat(result.stream().map(ReviewSimpleResponse::getContents))
+                        .containsExactly(
+                                reviews.get(5).getContents(),
+                                reviews.get(4).getContents(),
+                                reviews.get(1).getContents()
+                        ),
+                () -> {
+                    ReviewSimpleResponse response = result.get(0);
+                    Review expected = reviews.get(5);
+                    assertThat(response.getReviewId()).isEqualTo(expected.getId());
+                    assertThat(response.getNickname()).isEqualTo(expected.getUser().getNicknameValue());
+                    assertThat(response.getHairStyleName()).isEqualTo(expected.getHairStyle().getName());
+                }
+        );
     }
 
     private void saveReview(List<Integer> indexes, List<LocalDateTime> times) {
         for (int i = 0; i < indexes.size(); i++) {
             int index = indexes.get(i);
-
             Review review = reviews.get(index);
             LocalDateTime time = times.get(i);
-
             ReflectionTestUtils.setField(review, "createdDate", time);
+
             reviewRepository.save(review);
         }
     }

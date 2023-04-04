@@ -49,6 +49,8 @@ public class ReviewFindService {
         LocalDateTime endDate = generateEndDate();
         Pageable pageable = PageableUtils.generateSimplePageable(5);
 
+        System.out.println("startDate = " + startDate);
+        System.out.println("endDate = " + endDate);
         List<Review> result = reviewFindRepository.findReviewByCreatedDate(startDate, endDate, pageable);
         return toSimpleResponse(result);
     }
@@ -62,18 +64,10 @@ public class ReviewFindService {
     }
 
     private LocalDateTime generateStartDate() {
-        LocalDateTime start = LocalDateTime.now().minusMonths(1);
-        int startYear = start.getYear();
-        int startMonth = start.getMonthValue();
-
-        return LocalDateTime.of(startYear, startMonth, 1, 0, 0);
+        return LocalDateTime.now().minusMonths(1).withDayOfMonth(1).withHour(0).withMinute(0);
     }
 
     private LocalDateTime generateEndDate() {
-        LocalDateTime end = LocalDateTime.now();
-        int endYear = end.getYear();
-        int endMonth = end.getMonthValue();
-
-        return LocalDateTime.of(endYear, endMonth, 1, 0, 0).minusDays(1);
+        return LocalDateTime.now().withDayOfMonth(1).withHour(0).withMinute(0);
     }
 }

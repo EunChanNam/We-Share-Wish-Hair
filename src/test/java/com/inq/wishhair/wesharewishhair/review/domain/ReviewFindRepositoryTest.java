@@ -15,7 +15,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.test.util.ReflectionTestUtils;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -47,6 +49,7 @@ public class ReviewFindRepositoryTest extends RepositoryTest {
         user = userRepository.save(UserFixture.B.toEntity());
         hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
         review = reviewFindRepository.save(A.toEntity(user, hairStyle));
+        ReflectionTestUtils.setField(review, "createdDate", LocalDateTime.now().minusDays(4));
     }
 
     @Test
