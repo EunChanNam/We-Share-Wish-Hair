@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.fixture.ReviewFixture.*;
-import static com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils.getDateAscPageable;
+import static com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils.getDateDescPageable;
 import static com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils.getLikeDescPageable;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.mockito.BDDMockito.given;
@@ -62,7 +62,7 @@ public class ReviewFindControllerTest extends ControllerTest {
     void findMyReviews() throws Exception {
         //given
         Slice<ReviewResponse> expectedResult = generateReviewSliceResponse(values().length);
-        given(reviewFindService.findMyReviews(1L, getDateAscPageable(10)))
+        given(reviewFindService.findMyReviews(1L, getDateDescPageable(10)))
                 .willReturn(expectedResult);
 
         //when

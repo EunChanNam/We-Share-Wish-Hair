@@ -16,14 +16,12 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.inq.wishhair.wesharewishhair.fixture.ReviewFixture.A;
 import static java.time.LocalDateTime.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -111,7 +109,7 @@ public class ReviewFindServiceTest extends ServiceTest {
             saveReview(List.of(1, 2, 3, 4, 5), List.of(now(), now().minusMinutes(1), now().minusHours(1),
                     now().minusDays(1), now().minusMonths(1)));
 
-            Pageable pageable = DefaultPageableUtils.getDateAscPageable(5);
+            Pageable pageable = DefaultPageableUtils.getDateDescPageable(5);
 
             //when
             Slice<ReviewResponse> result = reviewFindService.findPagedReviews(pageable);
@@ -148,7 +146,7 @@ public class ReviewFindServiceTest extends ServiceTest {
             //given
             saveReview(List.of(1, 2, 3), List.of(now(), now(), now()));
 
-            Pageable pageable = DefaultPageableUtils.getDateAscPageable(3);
+            Pageable pageable = DefaultPageableUtils.getDateDescPageable(3);
 
             //when
             Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), pageable);
@@ -161,12 +159,12 @@ public class ReviewFindServiceTest extends ServiceTest {
         @DisplayName("좋아요한 리뷰를 최신 날짜 순으로 조회한다")
         void orderByDate() {
             //given
-            saveReview(List.of(1, 2, 3, 4), List.of(now(), now().minusMinutes(1), now().minusHours(1),
+            saveReview(List.of(1, 2, 3, 4), List.of(now().minusMonths(1), now().minusMinutes(1), now(),
                     now().minusDays(1)));
 
             addLikes(user, List.of(1, 2, 3, 4));
 
-            Pageable pageable = DefaultPageableUtils.getDateAscPageable(4);
+            Pageable pageable = DefaultPageableUtils.getDateDescPageable(4);
 
             //when
             Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), pageable);
@@ -178,13 +176,13 @@ public class ReviewFindServiceTest extends ServiceTest {
                     () -> {
                         List<String> findContents = extractContents(result);
                         assertThat(findContents).containsExactly(
-                                reviews.get(1).getContents(),
-                                reviews.get(2).getContents(),
                                 reviews.get(3).getContents(),
-                                reviews.get(4).getContents()
+                                reviews.get(2).getContents(),
+                                reviews.get(4).getContents(),
+                                reviews.get(1).getContents()
                         );
                     },
-                    () -> assertReviewResponseValues(result.getContent().get(0), reviews.get(1))
+                    () -> assertReviewResponseValues(result.getContent().get(0), reviews.get(3))
             );
         }
 
@@ -200,7 +198,7 @@ public class ReviewFindServiceTest extends ServiceTest {
             User other = userRepository.save(UserFixture.B.toEntity());
             saveReview(List.of(1, 2, 3, 4), List.of(now(), now(), now(), now()));
 
-            Pageable pageable = DefaultPageableUtils.getDateAscPageable(4);
+            Pageable pageable = DefaultPageableUtils.getDateDescPageable(4);
 
             //when
             Slice<ReviewResponse> result = reviewFindService.findMyReviews(other.getId(), pageable);
@@ -213,10 +211,10 @@ public class ReviewFindServiceTest extends ServiceTest {
         @DisplayName("작성한 리뷰를 최신 날짜 순으로 조회한다")
         void orderByDate() {
             //given
-            saveReview(List.of(1, 2, 3, 4), List.of(now(), now().minusMinutes(1), now().minusHours(1),
+            saveReview(List.of(1, 2, 3, 4), List.of(now().minusMonths(1), now().minusMinutes(1), now(),
                     now().minusDays(1)));
 
-            Pageable pageable = DefaultPageableUtils.getDateAscPageable(4);
+            Pageable pageable = DefaultPageableUtils.getDateDescPageable(4);
 
             //when
             Slice<ReviewResponse> result = reviewFindService.findMyReviews(user.getId(), pageable);
@@ -228,13 +226,13 @@ public class ReviewFindServiceTest extends ServiceTest {
                     () -> {
                         List<String> findContents = extractContents(result);
                         assertThat(findContents).containsExactly(
-                                reviews.get(1).getContents(),
-                                reviews.get(2).getContents(),
                                 reviews.get(3).getContents(),
-                                reviews.get(4).getContents()
+                                reviews.get(2).getContents(),
+                                reviews.get(4).getContents(),
+                                reviews.get(1).getContents()
                         );
                     },
-                    () -> assertReviewResponseValues(result.getContent().get(0), reviews.get(1))
+                    () -> assertReviewResponseValues(result.getContent().get(0), reviews.get(3))
             );
         }
     }
@@ -308,16 +306,5 @@ public class ReviewFindServiceTest extends ServiceTest {
         List<String> resultTags = response.getHasTags().stream().map(HashTagResponse::getTag).toList();
 
         expectedTags.forEach(tag -> assertThat(resultTags).contains(tag));
-    }
-
-    private void assertReviewResponse(ReviewResponse response) {
-        assertThat(response.getContents()).isEqualTo(A.getContents());
-        assertThat(response.getScore()).isEqualTo(A.getScore().getValue());
-        assertThat(response.getHairStyleName()).isEqualTo(hairStyle.getName());
-        assertThat(response.getUserNickName()).isEqualTo(user.getNicknameValue());
-        hairStyle.getHashTags().stream().map(HashTag::getDescription).toList()
-                .forEach(tag -> assertThat(response.getHasTags()
-                        .stream().map(HashTagResponse::getTag).toList())
-                        .contains(tag));
     }
 }

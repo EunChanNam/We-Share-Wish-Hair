@@ -49,8 +49,6 @@ public class ReviewFindService {
         LocalDateTime endDate = generateEndDate();
         Pageable pageable = PageableUtils.generateSimplePageable(5);
 
-        System.out.println("startDate = " + startDate);
-        System.out.println("endDate = " + endDate);
         List<Review> result = reviewFindRepository.findReviewByCreatedDate(startDate, endDate, pageable);
         return toSimpleResponse(result);
     }
