@@ -3,7 +3,6 @@ package com.inq.wishhair.wesharewishhair.user.service;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.domain.*;
-import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import com.inq.wishhair.wesharewishhair.user.service.dto.PasswordUpdateDto;
 import com.inq.wishhair.wesharewishhair.user.service.dto.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +16,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserFindService userFindService;
-    private final UserFindRepository userFindRepository;
 
     @Transactional
     public Long createUser(User user) {
@@ -58,7 +56,7 @@ public class UserService {
     }
 
     private void validateNicknameIsNotDuplicated(Nickname nickname) {
-        if (userFindRepository.existsByNickname(nickname)) {
+        if (userRepository.existsByNickname(nickname)) {
             throw new WishHairException(ErrorCode.USER_DUPLICATED_NICKNAME);
         }
     }

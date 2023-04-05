@@ -8,7 +8,6 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleSearchRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
-import com.inq.wishhair.wesharewishhair.user.domain.UserFindRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -34,9 +33,6 @@ public abstract class ServiceTest {
 
     @Autowired
     protected UserRepository userRepository;
-
-    @Autowired
-    protected UserFindRepository userFindRepository;
 
     @Autowired
     protected ReviewRepository reviewRepository;
