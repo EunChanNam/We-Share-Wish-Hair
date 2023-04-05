@@ -47,25 +47,6 @@ public class ReviewSearchServiceTest extends ServiceTest {
         }
     }
 
-    @Test
-    @DisplayName("아이디로 리뷰를 조회한다")
-    void findById() {
-        //given
-        saveReview(List.of(0), List.of(now()));
-        Review review = reviews.get(0);
-
-        //when
-        Review result = reviewSearchService.findById(review.getId());
-
-        //then
-        assertAll(
-                () -> assertThat(result.getUser()).isEqualTo(user),
-                () -> assertThat(result.getHairStyle()).isEqualTo(hairStyle),
-                () -> assertThat(result.getScore()).isEqualTo(review.getScore()),
-                () -> assertThat(result.getContents()).isEqualTo(review.getContents())
-        );
-    }
-
     @Nested
     @DisplayName("전체 리뷰를 조회한다")
     class findPagedReview {

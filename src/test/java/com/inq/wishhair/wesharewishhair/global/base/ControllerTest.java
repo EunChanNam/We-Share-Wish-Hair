@@ -10,7 +10,7 @@ import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleSearchService;
 import com.inq.wishhair.wesharewishhair.review.controller.LikeReviewController;
 import com.inq.wishhair.wesharewishhair.review.controller.ReviewController;
-import com.inq.wishhair.wesharewishhair.review.controller.ReviewFindController;
+import com.inq.wishhair.wesharewishhair.review.controller.ReviewSearchController;
 import com.inq.wishhair.wesharewishhair.review.service.LikeReviewService;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewSearchService;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
@@ -31,7 +31,7 @@ import static org.mockito.BDDMockito.given;
 
 @WebMvcTest(value =
         {UserController.class, HairStyleController.class, AuthController.class, TokenReissueController.class,
-        HairStyleController.class, MailController.class, ReviewController.class, ReviewFindController.class,
+        HairStyleController.class, MailController.class, ReviewController.class, ReviewSearchController.class,
         LikeReviewController.class})
 public abstract class ControllerTest {
 

@@ -23,7 +23,7 @@ import static com.inq.wishhair.wesharewishhair.review.common.ReviewSortCondition
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/review")
-public class ReviewFindController {
+public class ReviewSearchController {
 
     private final ReviewSearchService reviewSearchService;
 

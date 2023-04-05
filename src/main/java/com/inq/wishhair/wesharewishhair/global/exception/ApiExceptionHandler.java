@@ -5,7 +5,7 @@ import com.inq.wishhair.wesharewishhair.auth.controller.AuthController;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleController;
 import com.inq.wishhair.wesharewishhair.review.controller.LikeReviewController;
 import com.inq.wishhair.wesharewishhair.review.controller.ReviewController;
-import com.inq.wishhair.wesharewishhair.review.controller.ReviewFindController;
+import com.inq.wishhair.wesharewishhair.review.controller.ReviewSearchController;
 import com.inq.wishhair.wesharewishhair.user.controller.MailController;
 import com.inq.wishhair.wesharewishhair.user.controller.MyPageController;
 import com.inq.wishhair.wesharewishhair.user.controller.PointFindController;
@@ -23,7 +23,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
         UserController.class, AuthController.class, HairStyleController.class,
         ReviewController.class, WishListController.class, AuthController.class,
         TokenReissueController.class, MailController.class, MyPageController.class,
-        LikeReviewController.class, ReviewFindController.class, PointFindController.class
+        LikeReviewController.class, ReviewSearchController.class, PointFindController.class
 })
 public class ApiExceptionHandler {
 

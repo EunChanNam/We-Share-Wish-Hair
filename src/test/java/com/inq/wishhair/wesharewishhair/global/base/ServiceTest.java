@@ -4,6 +4,7 @@ import com.inq.wishhair.wesharewishhair.WeShareWishHairApplication;
 import com.inq.wishhair.wesharewishhair.auth.domain.TokenRepository;
 import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
 import com.inq.wishhair.wesharewishhair.global.testrepository.PointHistoryTestRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleSearchRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
@@ -21,6 +22,9 @@ public abstract class ServiceTest {
 
     @Autowired
     protected PointHistoryTestRepository pointHistoryTestRepository;
+
+    @Autowired
+    protected HairStyleRepository hairStyleRepository;
 
     @Autowired
     protected HairStyleSearchRepository hairStyleSearchRepository;
