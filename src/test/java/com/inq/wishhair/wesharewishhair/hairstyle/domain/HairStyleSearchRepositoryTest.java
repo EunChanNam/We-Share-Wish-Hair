@@ -20,10 +20,10 @@ import static com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class HairStyleRepositoryTest extends RepositoryTest {
+public class HairStyleSearchRepositoryTest extends RepositoryTest {
 
     @Autowired
-    private HairStyleRepository hairStyleRepository;
+    private HairStyleSearchRepository hairStyleSearchRepository;
 
     private HairStyle a;
     private HairStyle c;
@@ -37,11 +37,11 @@ public class HairStyleRepositoryTest extends RepositoryTest {
         c = C.toEntity();
         d = D.toEntity();
         e = E.toEntity();
-        hairStyleRepository.save(a);
-        hairStyleRepository.save(B.toEntity());
-        hairStyleRepository.save(c);
-        hairStyleRepository.save(d);
-        hairStyleRepository.save(e);
+        hairStyleSearchRepository.save(a);
+        hairStyleSearchRepository.save(B.toEntity());
+        hairStyleSearchRepository.save(c);
+        hairStyleSearchRepository.save(d);
+        hairStyleSearchRepository.save(e);
     }
 
     @Nested
@@ -56,7 +56,7 @@ public class HairStyleRepositoryTest extends RepositoryTest {
             Pageable pageable = PageableUtils.getDefaultPageable();
 
             //when
-            List<HairStyle> result = hairStyleRepository.findByHashTags(tags, sex, pageable);
+            List<HairStyle> result = hairStyleSearchRepository.findByHashTags(tags, sex, pageable);
 
             //then
             assertAll(
@@ -81,7 +81,7 @@ public class HairStyleRepositoryTest extends RepositoryTest {
             Pageable pageable = PageableUtils.getDefaultPageable();
 
             //when
-            List<HairStyle> result = hairStyleRepository.findByHashTags(tags, A.getSex(), pageable);
+            List<HairStyle> result = hairStyleSearchRepository.findByHashTags(tags, A.getSex(), pageable);
 
             //then
             assertAll(
@@ -98,7 +98,7 @@ public class HairStyleRepositoryTest extends RepositoryTest {
             Pageable pageable = PageableUtils.getDefaultPageable();
 
             //when
-            List<HairStyle> result = hairStyleRepository.findByHashTags(tags, A.getSex(), pageable);
+            List<HairStyle> result = hairStyleSearchRepository.findByHashTags(tags, A.getSex(), pageable);
 
             //then
             assertAll(
@@ -119,7 +119,7 @@ public class HairStyleRepositoryTest extends RepositoryTest {
             Pageable pageable = PageableUtils.getDefaultPageable();
 
             //when
-            List<HairStyle> result = hairStyleRepository.findByFaceShapeTag(faceShapeTag, A.getSex(), pageable);
+            List<HairStyle> result = hairStyleSearchRepository.findByFaceShapeTag(faceShapeTag, A.getSex(), pageable);
 
             //then
             assertAll(
@@ -135,7 +135,7 @@ public class HairStyleRepositoryTest extends RepositoryTest {
             Pageable pageable = PageableUtils.getDefaultPageable();
 
             //when
-            List<HairStyle> result = hairStyleRepository.findByNoFaceShapeTag(A.getSex(), pageable);
+            List<HairStyle> result = hairStyleSearchRepository.findByNoFaceShapeTag(A.getSex(), pageable);
 
             //then
             assertAll(

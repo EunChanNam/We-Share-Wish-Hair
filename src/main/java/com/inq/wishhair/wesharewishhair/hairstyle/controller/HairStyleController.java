@@ -3,7 +3,7 @@ package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleService;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleSearchService;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.dto.response.PagedHairStyleResponse;
@@ -20,7 +20,7 @@ import java.util.List;
 @RequestMapping("/api/hair_style")
 public class HairStyleController {
 
-    private final HairStyleService hairStyleService;
+    private final HairStyleSearchService hairStyleSearchService;
 
     @GetMapping("/recommend")
     public ResponseEntity<PagedHairStyleResponse> respondRecommendedHairStyle(
@@ -30,7 +30,7 @@ public class HairStyleController {
 
         validateHasTag(tags);
 
-        List<HairStyleResponse> result = hairStyleService.findRecommendedHairStyle(tags, userId, pageable);
+        List<HairStyleResponse> result = hairStyleSearchService.findRecommendedHairStyle(tags, userId, pageable);
 
         return ResponseEntity.ok(toPagedResponse(result));
     }
@@ -39,7 +39,7 @@ public class HairStyleController {
     public ResponseEntity<PagedHairStyleResponse> findHairStyleByFaceShape(
             @ExtractPayload Long userId) {
 
-        List<HairStyleResponse> result = hairStyleService.findHairStyleByFaceShape(userId);
+        List<HairStyleResponse> result = hairStyleSearchService.findHairStyleByFaceShape(userId);
 
         return ResponseEntity.ok(toPagedResponse(result));
     }

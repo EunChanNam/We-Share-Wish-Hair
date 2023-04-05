@@ -4,7 +4,6 @@ import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
@@ -12,7 +11,6 @@ import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -23,19 +21,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("HairStyleServiceTest - SpringBootTest")
-public class HairStyleServiceTest extends ServiceTest {
+public class HairStyleSearchServiceTest extends ServiceTest {
 
     @Autowired
-    private HairStyleService hairStyleService;
+    private HairStyleSearchService hairStyleSearchService;
 
     @BeforeEach
     void setUp() {
         //given
-        hairStyleRepository.save(A.toEntity());
-        hairStyleRepository.save(B.toEntity());
-        hairStyleRepository.save(C.toEntity());
-        hairStyleRepository.save(D.toEntity());
-        hairStyleRepository.save(E.toEntity());
+        hairStyleSearchRepository.save(A.toEntity());
+        hairStyleSearchRepository.save(B.toEntity());
+        hairStyleSearchRepository.save(C.toEntity());
+        hairStyleSearchRepository.save(D.toEntity());
+        hairStyleSearchRepository.save(E.toEntity());
     }
 
     @Nested
@@ -50,7 +48,7 @@ public class HairStyleServiceTest extends ServiceTest {
 
             //when
             List<HairStyleResponse> result =
-                    hairStyleService.findRecommendedHairStyle(tags, userId, getDefaultPageable());
+                    hairStyleSearchService.findRecommendedHairStyle(tags, userId, getDefaultPageable());
 
             //then
             assertAll(
@@ -73,7 +71,7 @@ public class HairStyleServiceTest extends ServiceTest {
             ErrorCode expectedError = ErrorCode.RUN_NO_FACE_SHAPE_TAG;
 
             //when, then
-            assertThatThrownBy(() -> hairStyleService.findRecommendedHairStyle(tags, userId, getDefaultPageable()))
+            assertThatThrownBy(() -> hairStyleSearchService.findRecommendedHairStyle(tags, userId, getDefaultPageable()))
                     .isInstanceOf(WishHairException.class)
                     .hasMessageContaining(expectedError.getMessage());
         }
@@ -86,7 +84,7 @@ public class HairStyleServiceTest extends ServiceTest {
             Long userId = userRepository.save(UserFixture.B.toEntity()).getId();
 
             //when
-            List<HairStyleResponse> result = hairStyleService.findRecommendedHairStyle(tags, userId, getDefaultPageable());
+            List<HairStyleResponse> result = hairStyleSearchService.findRecommendedHairStyle(tags, userId, getDefaultPageable());
 
             //then
             assertAll(
@@ -108,7 +106,7 @@ public class HairStyleServiceTest extends ServiceTest {
             assertThat(user.existFaceShape()).isFalse();
 
             //when
-            hairStyleService.findRecommendedHairStyle(tags, user.getId(), getDefaultPageable());
+            hairStyleSearchService.findRecommendedHairStyle(tags, user.getId(), getDefaultPageable());
 
             //then
             assertAll(
@@ -130,7 +128,7 @@ public class HairStyleServiceTest extends ServiceTest {
             user.updateFaceShape(new FaceShape(Tag.OBLONG));
 
             //when
-            List<HairStyleResponse> result = hairStyleService.findHairStyleByFaceShape(user.getId());
+            List<HairStyleResponse> result = hairStyleSearchService.findHairStyleByFaceShape(user.getId());
 
             //then
             assertAll(
@@ -148,7 +146,7 @@ public class HairStyleServiceTest extends ServiceTest {
             userRepository.save(user);
 
             //when
-            List<HairStyleResponse> result = hairStyleService.findHairStyleByFaceShape(user.getId());
+            List<HairStyleResponse> result = hairStyleSearchService.findHairStyleByFaceShape(user.getId());
 
             //then
             assertAll(

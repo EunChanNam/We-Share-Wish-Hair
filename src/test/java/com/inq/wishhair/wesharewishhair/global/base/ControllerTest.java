@@ -7,12 +7,12 @@ import com.inq.wishhair.wesharewishhair.auth.controller.TokenReissueController;
 import com.inq.wishhair.wesharewishhair.auth.service.AuthService;
 import com.inq.wishhair.wesharewishhair.auth.service.TokenReissueService;
 import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
-import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleService;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleSearchService;
 import com.inq.wishhair.wesharewishhair.review.controller.LikeReviewController;
 import com.inq.wishhair.wesharewishhair.review.controller.ReviewController;
-import com.inq.wishhair.wesharewishhair.review.controller.ReviewFindController;
+import com.inq.wishhair.wesharewishhair.review.controller.ReviewSearchController;
 import com.inq.wishhair.wesharewishhair.review.service.LikeReviewService;
-import com.inq.wishhair.wesharewishhair.review.service.ReviewFindService;
+import com.inq.wishhair.wesharewishhair.review.service.ReviewSearchService;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.user.controller.MailController;
 import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
@@ -31,7 +31,7 @@ import static org.mockito.BDDMockito.given;
 
 @WebMvcTest(value =
         {UserController.class, HairStyleController.class, AuthController.class, TokenReissueController.class,
-        HairStyleController.class, MailController.class, ReviewController.class, ReviewFindController.class,
+        HairStyleController.class, MailController.class, ReviewController.class, ReviewSearchController.class,
         LikeReviewController.class})
 public abstract class ControllerTest {
 
@@ -45,7 +45,7 @@ public abstract class ControllerTest {
     protected UserService userService;
 
     @MockBean
-    protected HairStyleService hairStyleService;
+    protected HairStyleSearchService hairStyleSearchService;
 
     @MockBean
     protected PointService pointService;
@@ -66,7 +66,7 @@ public abstract class ControllerTest {
     protected ReviewService reviewService;
 
     @MockBean
-    protected ReviewFindService reviewFindService;
+    protected ReviewSearchService reviewSearchService;
 
     @MockBean
     protected LikeReviewService likeReviewService;

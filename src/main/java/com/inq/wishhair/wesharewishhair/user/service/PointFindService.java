@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
-import com.inq.wishhair.wesharewishhair.user.domain.point.PointFindRepository;
+import com.inq.wishhair.wesharewishhair.user.domain.point.PointSearchRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.PointResponse;
 import lombok.RequiredArgsConstructor;
@@ -14,11 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class PointFindService {
 
-    private final PointFindRepository pointFindRepository;
+    private final PointSearchRepository pointSearchRepository;
 
     public Slice<PointResponse> findPointHistories(Long userId, Pageable pageable) {
 
-        return transferContentToResponse(pointFindRepository.findByUserIdOrderByNew(userId, pageable));
+        return transferContentToResponse(pointSearchRepository.findByUserIdOrderByNew(userId, pageable));
     }
 
     private Slice<PointResponse> transferContentToResponse(Slice<PointHistory> slice) {

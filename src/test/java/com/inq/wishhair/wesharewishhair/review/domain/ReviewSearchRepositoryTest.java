@@ -5,7 +5,7 @@ import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleSearchRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
@@ -17,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -27,16 +26,16 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("ReviewFindRepository DataJpaTest")
-public class ReviewFindRepositoryTest extends RepositoryTest {
+public class ReviewSearchRepositoryTest extends RepositoryTest {
 
     @Autowired
-    private ReviewFindRepository reviewFindRepository;
+    private ReviewSearchRepository reviewSearchRepository;
 
     @Autowired
     private UserRepository userRepository;
 
     @Autowired
-    private HairStyleRepository hairStyleRepository;
+    private HairStyleSearchRepository hairStyleSearchRepository;
 
     private User user;
     private HairStyle hairStyle;
@@ -47,8 +46,8 @@ public class ReviewFindRepositoryTest extends RepositoryTest {
     void setUp() {
         //given
         user = userRepository.save(UserFixture.B.toEntity());
-        hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
-        review = reviewFindRepository.save(A.toEntity(user, hairStyle));
+        hairStyle = hairStyleSearchRepository.save(HairStyleFixture.A.toEntity());
+        review = reviewSearchRepository.save(A.toEntity(user, hairStyle));
         ReflectionTestUtils.setField(review, "createdDate", LocalDateTime.now().minusDays(4));
     }
 
@@ -56,7 +55,7 @@ public class ReviewFindRepositoryTest extends RepositoryTest {
     @DisplayName("전체리뷰를 조회한다")
     void findReviewByPaging() {
         //when
-        Slice<Review> result = reviewFindRepository.findReviewByPaging(pageable);
+        Slice<Review> result = reviewSearchRepository.findReviewByPaging(pageable);
 
         //then
         assertAll(
@@ -74,10 +73,10 @@ public class ReviewFindRepositoryTest extends RepositoryTest {
         //given
         Review review2 = B.toEntity(user, hairStyle);
         review2.executeLike(user);
-        reviewFindRepository.save(review2);
+        reviewSearchRepository.save(review2);
 
         //when
-        Slice<Review> result = reviewFindRepository.findReviewByLike(user.getId(), pageable);
+        Slice<Review> result = reviewSearchRepository.findReviewByLike(user.getId(), pageable);
 
         //then
         assertAll(
@@ -92,7 +91,7 @@ public class ReviewFindRepositoryTest extends RepositoryTest {
     @DisplayName("사용자가 작성한 리뷰를 조회한다")
     void findReviewByUser() {
         //when
-        Slice<Review> result = reviewFindRepository.findReviewByUser(user.getId(), pageable);
+        Slice<Review> result = reviewSearchRepository.findReviewByUser(user.getId(), pageable);
 
         //then
         assertAll(
@@ -112,7 +111,7 @@ public class ReviewFindRepositoryTest extends RepositoryTest {
         LocalDateTime endDate = LocalDateTime.now();
 
         //when
-        List<Review> result = reviewFindRepository.findReviewByCreatedDate(startDate, endDate, pageable);
+        List<Review> result = reviewSearchRepository.findReviewByCreatedDate(startDate, endDate, pageable);
 
         //then
         assertAll(
@@ -131,7 +130,7 @@ public class ReviewFindRepositoryTest extends RepositoryTest {
         review.executeLike(user);
 
         //when
-        Optional<Review> result = reviewFindRepository.findWithLikeReviewsById(review.getId());
+        Optional<Review> result = reviewSearchRepository.findWithLikeReviewsById(review.getId());
 
         //then
         assertAll(

@@ -15,9 +15,6 @@ class UserRepositoryTest extends RepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private UserFindRepository userFindRepository;
-
     private User userA;
     private User userB;
     private User userC;
@@ -50,14 +47,14 @@ class UserRepositoryTest extends RepositoryTest {
     @Test
     @DisplayName("로그인 아이디로 회원 조회 테스트")
     void findByLoginIdTest() {
-        User findUserA = userFindRepository.findByEmail(this.userA.getEmail()).get();
-        User findUserB = userFindRepository.findByEmail(this.userB.getEmail()).get();
-        User findUserC = userFindRepository.findByEmail(this.userC.getEmail()).get();
+        User findUserA = userRepository.findByEmail(this.userA.getEmail()).get();
+        User findUserB = userRepository.findByEmail(this.userB.getEmail()).get();
+        User findUserC = userRepository.findByEmail(this.userC.getEmail()).get();
 
         assertAll(
-                () -> assertThat(findUserA.getPasswordValue()).isEqualTo(findUserA.getPasswordValue()),
-                () -> assertThat(findUserB.getPasswordValue()).isEqualTo(findUserB.getPasswordValue()),
-                () -> assertThat(userC.getPasswordValue()).isEqualTo(findUserC.getPasswordValue())
+                () -> assertThat(findUserA.getPasswordValue()).isEqualTo(userA.getPasswordValue()),
+                () -> assertThat(findUserB.getPasswordValue()).isEqualTo(userB.getPasswordValue()),
+                () -> assertThat(findUserC.getPasswordValue()).isEqualTo(userC.getPasswordValue())
         );
     }
 }

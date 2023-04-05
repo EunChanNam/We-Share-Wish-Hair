@@ -3,7 +3,7 @@ package com.inq.wishhair.wesharewishhair.user.domain;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
-import com.inq.wishhair.wesharewishhair.user.domain.point.PointFindRepository;
+import com.inq.wishhair.wesharewishhair.user.domain.point.PointSearchRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,10 +18,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("PointFindRepositoryTest - DataJpaTest")
-public class PointFindRepositoryTest extends RepositoryTest {
+public class PointSearchRepositoryTest extends RepositoryTest {
 
     @Autowired
-    private PointFindRepository pointFindRepository;
+    private PointSearchRepository pointSearchRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -48,8 +48,8 @@ public class PointFindRepositoryTest extends RepositoryTest {
         Pageable pageable2 = PageableUtils.generateSimplePageable(2);
 
         //when
-        Slice<PointHistory> result1 = pointFindRepository.findByUserIdOrderByNew(user.getId(), pageable1);
-        Slice<PointHistory> result2 = pointFindRepository.findByUserIdOrderByNew(user.getId(), pageable2);
+        Slice<PointHistory> result1 = pointSearchRepository.findByUserIdOrderByNew(user.getId(), pageable1);
+        Slice<PointHistory> result2 = pointSearchRepository.findByUserIdOrderByNew(user.getId(), pageable2);
 
         //then
         assertAll(
