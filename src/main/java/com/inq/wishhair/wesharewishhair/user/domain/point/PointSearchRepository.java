@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 
-public interface PointFindRepository extends JpaRepository<PointHistory, Long> {
+public interface PointSearchRepository extends JpaRepository<PointHistory, Long> {
 
     @Query("select p from PointHistory p " +
             "where p.user.id = :userId " +
