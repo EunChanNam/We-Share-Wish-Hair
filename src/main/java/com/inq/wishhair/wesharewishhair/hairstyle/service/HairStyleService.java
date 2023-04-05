@@ -8,9 +8,9 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
-import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -26,13 +26,13 @@ import java.util.List;
 public class HairStyleService {
 
     private final HairStyleRepository hairStyleRepository;
-    private final UserRepository userRepository;
+    private final UserFindService userFindService;
 
     @Transactional
     public List<HairStyleResponse> findRecommendedHairStyle(
             List<Tag> tags, Long userId, Pageable pageable) {
 
-        User user = findUser(userId);
+        User user = userFindService.findByUserId(userId);
         List<HairStyle> hairStyles = hairStyleRepository.findByHashTags(tags, user.getSex(), pageable);
 
         Tag faceShapeTag = extractFaceShapeTag(tags);
@@ -44,7 +44,7 @@ public class HairStyleService {
     }
 
     public List<HairStyleResponse> findHairStyleByFaceShape(Long userId) {
-        User user = findUser(userId);
+        User user = userFindService.findByUserId(userId);
         Pageable pageable = PageableUtils.generateSimplePageable(4);
 
         if (user.existFaceShape()) {
@@ -68,11 +68,6 @@ public class HairStyleService {
                 .filter(Tag::isFaceShapeType)
                 .findAny().
                 orElseThrow(() -> new WishHairException(ErrorCode.RUN_NO_FACE_SHAPE_TAG));
-    }
-
-    private User findUser(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 
     private void updateFaceShape(User user, List<HairStyle> hairStyles) {

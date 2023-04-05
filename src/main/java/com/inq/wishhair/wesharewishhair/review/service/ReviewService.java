@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.review.service;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleFindService;
 import com.inq.wishhair.wesharewishhair.photo.domain.PhotoRepository;
 import com.inq.wishhair.wesharewishhair.photo.utils.PhotoStore;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
@@ -14,6 +15,7 @@ import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.service.PointService;
+import com.inq.wishhair.wesharewishhair.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,20 +28,20 @@ import java.util.List;
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
-    private final UserRepository userRepository;
-    private final HairStyleRepository hairStyleRepository;
     private final LikeReviewRepository likeReviewRepository;
     private final ReviewFindService reviewFindService;
     private final PhotoRepository photoRepository;
     private final PhotoStore photoStore;
     private final PointService pointService;
+    private final UserFindService userFindService;
+    private final HairStyleFindService hairStyleFindService;
 
     @Transactional
     public Long createReview(ReviewCreateRequest request, Long userId) {
 
         List<Photo> photos = photoStore.storePhotos(request.getFiles());
-        User user = findUserById(userId);
-        HairStyle hairStyle = findHairStyleById(request.getHairStyleId());
+        User user = userFindService.findByUserId(userId);
+        HairStyle hairStyle = hairStyleFindService.findById(request.getHairStyleId());
 
         Review review = generateReview(request, photos, user, hairStyle);
         pointService.chargePoint(100, user.getId());
@@ -70,15 +72,5 @@ public class ReviewService {
                 photos,
                 hairStyle
         );
-    }
-
-    private HairStyle findHairStyleById(Long hairStyleId) {
-        return hairStyleRepository.findById(hairStyleId)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
-    }
-
-    private User findUserById(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 }
