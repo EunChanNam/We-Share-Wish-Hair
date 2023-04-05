@@ -40,14 +40,4 @@ public class WishListController {
         wishListService.deleteWishList(id);
         return ResponseEntity.ok(new Success());
     }
-
-    @GetMapping("/wish_list")
-    public ResponseEntity<PagedWishListResponse> getWishList(
-            @PageableDefault(size = 4) Pageable pageable,
-            @ExtractPayload Long userId) {
-
-        Slice<WishListResponse> result = wishListService.getWishList(userId, pageable);
-
-        return ResponseEntity.ok(new PagedWishListResponse(result));
-    }
 }

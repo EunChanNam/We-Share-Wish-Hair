@@ -2,8 +2,10 @@ package com.inq.wishhair.wesharewishhair.wishlist.service;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleFindService;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
+import com.inq.wishhair.wesharewishhair.user.service.UserFindService;
 import com.inq.wishhair.wesharewishhair.wishlist.domain.WishList;
 import com.inq.wishhair.wesharewishhair.wishlist.domain.WishListRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -21,14 +23,15 @@ import org.springframework.transaction.annotation.Transactional;
 public class WishListService {
 
     private final WishListRepository wishListRepository;
-    private final HairStyleRepository hairStyleRepository;
-    private final UserRepository userRepository;
+    private final UserFindService userFindService;
+    private final HairStyleFindService hairStyleFindService;
+    private final WishListFindService wishListFindService;
 
     @Transactional
     public Long createWishList(Long hairStyleId, Long userId) {
 
-        HairStyle hairStyle = findHairStyle(hairStyleId);
-        User user = findUser(userId);
+        HairStyle hairStyle = hairStyleFindService.findById(hairStyleId);
+        User user = userFindService.findByUserId(userId);
 
         WishList wishList = WishList.createWishList(user, hairStyle);
 
@@ -39,33 +42,9 @@ public class WishListService {
 
     @Transactional
     public void deleteWishList(Long wishListId) {
-        WishList wishList = findWishList(wishListId);
+        WishList wishList = wishListFindService.findByIdWithHairStyle(wishListId);
         wishList.getHairStyle().minusWishListCount();
 
         wishListRepository.deleteById(wishListId);
-    }
-
-    public Slice<WishListResponse> getWishList(Long userId, Pageable pageable) {
-        Slice<WishList> wishLists = wishListRepository.findByUser(userId, pageable);
-        return transferContentToResponse(wishLists);
-    }
-
-    private WishList findWishList(Long wishListId) {
-        return wishListRepository.findById(wishListId)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
-    }
-
-    private Slice<WishListResponse> transferContentToResponse(Slice<WishList> wishLists) {
-        return wishLists.map(wishList -> new WishListResponse(wishList.getHairStyle()));
-    }
-
-    private User findUser(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
-    }
-
-    private HairStyle findHairStyle(Long hairStyleId) {
-        return hairStyleRepository.findById(hairStyleId)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 }
