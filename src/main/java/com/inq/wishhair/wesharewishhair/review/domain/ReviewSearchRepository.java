@@ -2,7 +2,6 @@ package com.inq.wishhair.wesharewishhair.review.domain;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,12 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-public interface ReviewFindRepository extends JpaRepository<Review, Long> {
-
-    //review find service - 리뷰 단순 조회
-    @Override
-    @EntityGraph(attributePaths = "user")
-    Optional<Review> findById(Long aLong);
+public interface ReviewSearchRepository extends JpaRepository<Review, Long> {
 
     //review find service - 전체 리뷰 조회
     @Query("select distinct r from Review r " +

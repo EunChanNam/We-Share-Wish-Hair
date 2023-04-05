@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
-import com.inq.wishhair.wesharewishhair.review.service.ReviewFindService;
+import com.inq.wishhair.wesharewishhair.review.service.ReviewSearchService;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
@@ -17,11 +17,11 @@ import java.util.List;
 public class MyPageService {
 
     private final UserFindService userFindService;
-    private final ReviewFindService reviewFindService;
+    private final ReviewSearchService reviewSearchService;
 
     public MyPageResponse getMyPageInfo(Long userId, Pageable pageable) {
 
-        List<ReviewResponse> reviewResponses = reviewFindService.findLikingReviews(userId, pageable).getContent();
+        List<ReviewResponse> reviewResponses = reviewSearchService.findLikingReviews(userId, pageable).getContent();
         User user = userFindService.findByUserId(userId);
 
         return new MyPageResponse(user, reviewResponses);

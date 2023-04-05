@@ -3,7 +3,7 @@ package com.inq.wishhair.wesharewishhair.review.controller;
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.global.dto.response.SimpleResponseWrapper;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.response.PagedReviewResponse;
-import com.inq.wishhair.wesharewishhair.review.service.ReviewFindService;
+import com.inq.wishhair.wesharewishhair.review.service.ReviewSearchService;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewSimpleResponse;
 import lombok.RequiredArgsConstructor;
@@ -25,13 +25,13 @@ import static com.inq.wishhair.wesharewishhair.review.common.ReviewSortCondition
 @RequestMapping("/api/review")
 public class ReviewFindController {
 
-    private final ReviewFindService reviewFindService;
+    private final ReviewSearchService reviewSearchService;
 
     @GetMapping
     public ResponseEntity<PagedReviewResponse> findPagingReviews(
             @PageableDefault(sort = LIKES, direction = Sort.Direction.DESC) Pageable pageable) {
 
-        Slice<ReviewResponse> result = reviewFindService.findPagedReviews(pageable);
+        Slice<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable);
 
         return ResponseEntity.ok(toPagedResponse(result));
     }
@@ -41,7 +41,7 @@ public class ReviewFindController {
             @PageableDefault(sort = DATE, direction = Sort.Direction.DESC) Pageable pageable,
             @ExtractPayload Long userId) {
 
-        Slice<ReviewResponse> result = reviewFindService.findMyReviews(userId, pageable);
+        Slice<ReviewResponse> result = reviewSearchService.findMyReviews(userId, pageable);
 
         return ResponseEntity.ok(toPagedResponse(result));
     }
@@ -49,7 +49,7 @@ public class ReviewFindController {
     @GetMapping("/month")
     public SimpleResponseWrapper<List<ReviewSimpleResponse>> findReviewOfMonth() {
 
-        List<ReviewSimpleResponse> result = reviewFindService.findReviewOfMonth();
+        List<ReviewSimpleResponse> result = reviewSearchService.findReviewOfMonth();
 
         return wrapSimpleResponse(result);
     }

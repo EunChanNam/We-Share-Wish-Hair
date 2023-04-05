@@ -12,7 +12,7 @@ import com.inq.wishhair.wesharewishhair.review.controller.LikeReviewController;
 import com.inq.wishhair.wesharewishhair.review.controller.ReviewController;
 import com.inq.wishhair.wesharewishhair.review.controller.ReviewFindController;
 import com.inq.wishhair.wesharewishhair.review.service.LikeReviewService;
-import com.inq.wishhair.wesharewishhair.review.service.ReviewFindService;
+import com.inq.wishhair.wesharewishhair.review.service.ReviewSearchService;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.user.controller.MailController;
 import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
@@ -66,7 +66,7 @@ public abstract class ControllerTest {
     protected ReviewService reviewService;
 
     @MockBean
-    protected ReviewFindService reviewFindService;
+    protected ReviewSearchService reviewSearchService;
 
     @MockBean
     protected LikeReviewService likeReviewService;

@@ -27,10 +27,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("ReviewFindServiceTest - SpringBootTest")
-public class ReviewFindServiceTest extends ServiceTest {
+public class ReviewSearchServiceTest extends ServiceTest {
 
     @Autowired
-    private ReviewFindService reviewFindService;
+    private ReviewSearchService reviewSearchService;
 
     private final List<Review> reviews = new ArrayList<>();
     private User user;
@@ -55,7 +55,7 @@ public class ReviewFindServiceTest extends ServiceTest {
         Review review = reviews.get(0);
 
         //when
-        Review result = reviewFindService.findById(review.getId());
+        Review result = reviewSearchService.findById(review.getId());
 
         //then
         assertAll(
@@ -85,7 +85,7 @@ public class ReviewFindServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getLikeDescPageable(3);
 
             //when
-            Slice<ReviewResponse> result = reviewFindService.findPagedReviews(pageable);
+            Slice<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable);
 
             //then
             assertThat(result.hasNext()).isFalse();
@@ -103,7 +103,7 @@ public class ReviewFindServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(5);
 
             //when
-            Slice<ReviewResponse> result = reviewFindService.findPagedReviews(pageable);
+            Slice<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable);
 
             //then
             assertThat(result.hasNext()).isFalse();
@@ -126,7 +126,7 @@ public class ReviewFindServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(3);
 
             //when
-            Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), pageable);
+            Slice<ReviewResponse> result = reviewSearchService.findLikingReviews(user.getId(), pageable);
 
             //then
             assertThat(result.getContent()).isEmpty();
@@ -144,7 +144,7 @@ public class ReviewFindServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(4);
 
             //when
-            Slice<ReviewResponse> result = reviewFindService.findLikingReviews(user.getId(), pageable);
+            Slice<ReviewResponse> result = reviewSearchService.findLikingReviews(user.getId(), pageable);
 
             //then
             assertThat(result.hasNext()).isFalse();
@@ -167,7 +167,7 @@ public class ReviewFindServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(4);
 
             //when
-            Slice<ReviewResponse> result = reviewFindService.findMyReviews(other.getId(), pageable);
+            Slice<ReviewResponse> result = reviewSearchService.findMyReviews(other.getId(), pageable);
 
             //then
             assertThat(result.getContent()).isEmpty();
@@ -183,7 +183,7 @@ public class ReviewFindServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(4);
 
             //when
-            Slice<ReviewResponse> result = reviewFindService.findMyReviews(user.getId(), pageable);
+            Slice<ReviewResponse> result = reviewSearchService.findMyReviews(user.getId(), pageable);
 
             //then
             assertThat(result.hasNext()).isFalse();
@@ -207,7 +207,7 @@ public class ReviewFindServiceTest extends ServiceTest {
         addLikes(user2, List.of(5));
 
         //when
-        List<ReviewSimpleResponse> result = reviewFindService.findReviewOfMonth();
+        List<ReviewSimpleResponse> result = reviewSearchService.findReviewOfMonth();
 
         //then
         assertReviewSimpleResponseMatch(result,
