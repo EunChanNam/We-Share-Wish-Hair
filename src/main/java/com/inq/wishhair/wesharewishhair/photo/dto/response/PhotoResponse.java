@@ -4,8 +4,8 @@ import com.inq.wishhair.wesharewishhair.photo.entity.Photo;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Base64;
 
@@ -13,21 +13,21 @@ import java.util.Base64;
 @AllArgsConstructor
 public class PhotoResponse {
 
-    private final String encodedFullPath;
+    private final String encodedImage;
 
     public PhotoResponse(Photo photo) {
         String fullPath = FileDir.VALUE + photo.getStoreFilename();
+        File file = new File(fullPath);
 
+        byte[] imageBytes = new byte[(int) file.length()];
         try {
-            FileInputStream fileInputStream = new FileInputStream(fullPath);
-
-            file
-
-            Base64.getEncoder().encode()
+            FileInputStream fileInputStream = new FileInputStream(file);
+            fileInputStream.read(imageBytes);
+            fileInputStream.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-
+        encodedImage = Base64.getEncoder().encodeToString(imageBytes);
     }
 }
