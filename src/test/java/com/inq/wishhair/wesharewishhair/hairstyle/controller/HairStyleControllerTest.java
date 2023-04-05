@@ -5,7 +5,6 @@ import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -40,7 +39,7 @@ public class HairStyleControllerTest extends ControllerTest {
             List<Tag> tags = A.getTags();
             List<HairStyleResponse> expectedResponse = generateExpectedResponse(List.of(A, C, D, E));
 
-            given(hairStyleService.findRecommendedHairStyle(tags, 1L, getDefaultPageable()))
+            given(hairStyleSearchService.findRecommendedHairStyle(tags, 1L, getDefaultPageable()))
                     .willReturn(expectedResponse);
 
             MultiValueMap<String, String> params = generateTagParams(tags);
@@ -93,7 +92,7 @@ public class HairStyleControllerTest extends ControllerTest {
         void test3() throws Exception {
             //given
 
-            given(hairStyleService.findHairStyleByFaceShape(1L))
+            given(hairStyleSearchService.findHairStyleByFaceShape(1L))
                     .willReturn(generateExpectedResponse(List.of(C, E, D)));
 
             //when

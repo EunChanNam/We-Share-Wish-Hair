@@ -5,7 +5,7 @@ import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleSearchRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
@@ -17,7 +17,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -36,7 +35,7 @@ public class ReviewFindRepositoryTest extends RepositoryTest {
     private UserRepository userRepository;
 
     @Autowired
-    private HairStyleRepository hairStyleRepository;
+    private HairStyleSearchRepository hairStyleSearchRepository;
 
     private User user;
     private HairStyle hairStyle;
@@ -47,7 +46,7 @@ public class ReviewFindRepositoryTest extends RepositoryTest {
     void setUp() {
         //given
         user = userRepository.save(UserFixture.B.toEntity());
-        hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
+        hairStyle = hairStyleSearchRepository.save(HairStyleFixture.A.toEntity());
         review = reviewFindRepository.save(A.toEntity(user, hairStyle));
         ReflectionTestUtils.setField(review, "createdDate", LocalDateTime.now().minusDays(4));
     }

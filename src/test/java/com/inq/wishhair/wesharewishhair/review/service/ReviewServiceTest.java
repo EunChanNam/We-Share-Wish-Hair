@@ -1,7 +1,6 @@
 package com.inq.wishhair.wesharewishhair.review.service;
 
 import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
-import com.inq.wishhair.wesharewishhair.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -35,7 +34,7 @@ public class ReviewServiceTest extends ServiceTest {
     @BeforeEach
     void setUp() {
         user = userRepository.save(UserFixture.B.toEntity());
-        hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
+        hairStyle = hairStyleSearchRepository.save(HairStyleFixture.A.toEntity());
     }
 
     @Nested

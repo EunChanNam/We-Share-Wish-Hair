@@ -2,7 +2,7 @@ package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleSearchRepository;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
@@ -23,9 +23,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 @Slf4j
-public class HairStyleService {
+public class HairStyleSearchService {
 
-    private final HairStyleRepository hairStyleRepository;
+    private final HairStyleSearchRepository hairStyleSearchRepository;
     private final UserFindService userFindService;
 
     @Transactional
@@ -33,7 +33,7 @@ public class HairStyleService {
             List<Tag> tags, Long userId, Pageable pageable) {
 
         User user = userFindService.findByUserId(userId);
-        List<HairStyle> hairStyles = hairStyleRepository.findByHashTags(tags, user.getSex(), pageable);
+        List<HairStyle> hairStyles = hairStyleSearchRepository.findByHashTags(tags, user.getSex(), pageable);
 
         Tag faceShapeTag = extractFaceShapeTag(tags);
         filterHasFaceShapeTag(hairStyles, faceShapeTag);
@@ -48,10 +48,10 @@ public class HairStyleService {
         Pageable pageable = PageableUtils.generateSimplePageable(4);
 
         if (user.existFaceShape()) {
-            List<HairStyle> hairStyles = hairStyleRepository.findByFaceShapeTag(user.getFaceShape(), user.getSex(), pageable);
+            List<HairStyle> hairStyles = hairStyleSearchRepository.findByFaceShapeTag(user.getFaceShape(), user.getSex(), pageable);
             return generateHairStyleResponses(hairStyles);
         } else {
-            List<HairStyle> hairStyles = hairStyleRepository.findByNoFaceShapeTag(user.getSex(), pageable);
+            List<HairStyle> hairStyles = hairStyleSearchRepository.findByNoFaceShapeTag(user.getSex(), pageable);
             return generateHairStyleResponses(hairStyles);
         }
     }
