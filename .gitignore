@@ -15,9 +15,6 @@ application-dev.yml
 ### sql ###
 **/src/main/resources/sql/
 
-### file dir ###
-**/FileDir
-
 ### images ###
 **/src/main/resources/static/
 **/src/test/resources/images/
