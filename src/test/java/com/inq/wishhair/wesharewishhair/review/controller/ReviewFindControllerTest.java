@@ -4,7 +4,6 @@ import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
-import com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
@@ -38,7 +37,7 @@ public class ReviewFindControllerTest extends ControllerTest {
     void findPagingReviews() throws Exception {
         //given
         Slice<ReviewResponse> expectedResult = generateReviewSliceResponse(values().length);
-        given(reviewFindService.findPagedReviews(getLikeDescPageable()))
+        given(reviewFindService.findPagedReviews(getLikeDescPageable(10)))
                 .willReturn(expectedResult);
 
         //when
@@ -63,7 +62,7 @@ public class ReviewFindControllerTest extends ControllerTest {
     void findMyReviews() throws Exception {
         //given
         Slice<ReviewResponse> expectedResult = generateReviewSliceResponse(values().length);
-        given(reviewFindService.findMyReviews(1L, getDateDescPageable()))
+        given(reviewFindService.findMyReviews(1L, getDateDescPageable(10)))
                 .willReturn(expectedResult);
 
         //when

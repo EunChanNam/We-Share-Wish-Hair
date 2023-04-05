@@ -12,6 +12,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +55,7 @@ public class Review extends BaseEntity {
         applyPhotos(photos);
         this.hairStyle = hairStyle;
         this.likeReviews = new LikeReviews();
+        this.createdDate = LocalDateTime.now();
     }
 
     public static Review createReview(

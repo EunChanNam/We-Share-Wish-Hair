@@ -18,7 +18,13 @@ public enum ReviewFixture {
 
     A("A contents", Score.S3, List.of("one.png")),
     B("B contents", Score.S4H, List.of("one.png", "two.png")),
-    C("C contents", Score.S4H, new ArrayList<>());
+    C("C contents", Score.S4H, new ArrayList<>()),
+    D("D contents", Score.S4, List.of("one.png", "two.png")),
+    E("E contents", Score.S3H, List.of("one.png", "two.png")),
+    F("F contents", Score.S3, List.of("`one`.png", "two.png")),
+    G("G contents", Score.S5, List.of("one.png", "two.png")),
+    ;
+
 
     private final String contents;
     private final Score score;

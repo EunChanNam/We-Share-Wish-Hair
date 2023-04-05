@@ -47,7 +47,7 @@ public interface ReviewFindRepository extends JpaRepository<Review, Long> {
             "join fetch r.hairStyle " +
             "join fetch r.user " +
             "where r.createdDate between :startDate and :endDate " +
-            "order by r.likeReviews.likes")
+            "order by r.likeReviews.likes desc")
     List<Review> findReviewByCreatedDate(@Param("startDate") LocalDateTime startDate,
                                          @Param("endDate") LocalDateTime endDate,
                                          Pageable pageable);

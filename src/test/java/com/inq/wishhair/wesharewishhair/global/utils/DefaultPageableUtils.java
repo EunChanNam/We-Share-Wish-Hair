@@ -8,11 +8,13 @@ import static com.inq.wishhair.wesharewishhair.review.common.ReviewSortCondition
 import static com.inq.wishhair.wesharewishhair.review.common.ReviewSortCondition.LIKES;
 
 public abstract class DefaultPageableUtils {
-    public static Pageable getLikeDescPageable() {
-        return PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, LIKES));
+    public static Pageable getLikeDescPageable(int size) {
+        return PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, LIKES));
     }
 
-    public static Pageable getDateDescPageable() {
-        return PageRequest.of(0, 10, Sort.by(Sort.Direction.DESC, DATE));
+    public static Pageable getDateDescPageable(int size) {
+        return PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, DATE));
     }
+
+
 }

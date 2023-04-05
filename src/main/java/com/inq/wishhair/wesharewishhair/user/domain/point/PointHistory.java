@@ -7,6 +7,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -35,6 +37,7 @@ public class PointHistory extends BaseEntity {
         this.dealAmount = dealAmount;
         this.point = point;
         this.user = user;
+        this.createdDate = LocalDateTime.now();
     }
 
     public static PointHistory createPointHistory(User user, PointType pointType, int dealAmount, int point) {
