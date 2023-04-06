@@ -6,6 +6,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleSearchReposito
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponseAssembler;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -40,7 +41,7 @@ public class HairStyleSearchService {
 
         updateFaceShape(user, hairStyles);
 
-        return generateHairStyleResponses(hairStyles);
+        return HairStyleResponseAssembler.hairStyleResponses(hairStyles);
     }
 
     public List<HairStyleResponse> findHairStyleByFaceShape(Long userId) {
@@ -49,10 +50,10 @@ public class HairStyleSearchService {
 
         if (user.existFaceShape()) {
             List<HairStyle> hairStyles = hairStyleSearchRepository.findByFaceShapeTag(user.getFaceShape(), user.getSex(), pageable);
-            return generateHairStyleResponses(hairStyles);
+            return HairStyleResponseAssembler.hairStyleResponses(hairStyles);
         } else {
             List<HairStyle> hairStyles = hairStyleSearchRepository.findByNoFaceShapeTag(user.getSex(), pageable);
-            return generateHairStyleResponses(hairStyles);
+            return HairStyleResponseAssembler.hairStyleResponses(hairStyles);
         }
     }
 
@@ -76,11 +77,5 @@ public class HairStyleSearchService {
             Tag faceShapeTag = firstHairStyle.findFaceShapeTag();
             user.updateFaceShape(new FaceShape(faceShapeTag));
         }
-    }
-
-    private List<HairStyleResponse> generateHairStyleResponses(List<HairStyle> hairStyles) {
-        return hairStyles.stream()
-                .map(HairStyleResponse::new)
-                .toList();
     }
 }

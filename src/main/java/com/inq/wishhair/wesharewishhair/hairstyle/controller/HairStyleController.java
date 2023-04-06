@@ -6,7 +6,6 @@ import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleSearchService;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
-import com.inq.wishhair.wesharewishhair.hairstyle.controller.dto.response.PagedHairStyleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -23,7 +22,7 @@ public class HairStyleController {
     private final HairStyleSearchService hairStyleSearchService;
 
     @GetMapping("/recommend")
-    public ResponseEntity<PagedHairStyleResponse> respondRecommendedHairStyle(
+    public ResponseEntity<List<HairStyleResponse>> respondRecommendedHairStyle(
             @PageableDefault(size = 4) Pageable pageable,
             @RequestParam(defaultValue = "ERROR") List<Tag> tags,
             @ExtractPayload Long userId) {
@@ -32,25 +31,21 @@ public class HairStyleController {
 
         List<HairStyleResponse> result = hairStyleSearchService.findRecommendedHairStyle(tags, userId, pageable);
 
-        return ResponseEntity.ok(toPagedResponse(result));
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/home")
-    public ResponseEntity<PagedHairStyleResponse> findHairStyleByFaceShape(
+    public ResponseEntity<List<HairStyleResponse>> findHairStyleByFaceShape(
             @ExtractPayload Long userId) {
 
         List<HairStyleResponse> result = hairStyleSearchService.findHairStyleByFaceShape(userId);
 
-        return ResponseEntity.ok(toPagedResponse(result));
+        return ResponseEntity.ok(result);
     }
 
     private void validateHasTag(List<Tag> tags) {
         if (tags.get(0).equals(Tag.ERROR)) {
             throw new WishHairException(ErrorCode.RUN_NOT_ENOUGH_TAG);
         }
-    }
-
-    private PagedHairStyleResponse toPagedResponse(List<HairStyleResponse> result) {
-        return new PagedHairStyleResponse(result);
     }
 }
