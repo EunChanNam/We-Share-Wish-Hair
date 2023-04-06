@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
+import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleSearchRepository;
@@ -20,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponseAssembler.*;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -30,7 +33,7 @@ public class HairStyleSearchService {
     private final UserFindService userFindService;
 
     @Transactional
-    public List<HairStyleResponse> findRecommendedHairStyle(
+    public ResponseWrapper<List<HairStyleResponse>> findRecommendedHairStyle(
             List<Tag> tags, Long userId, Pageable pageable) {
 
         User user = userFindService.findByUserId(userId);
@@ -41,19 +44,19 @@ public class HairStyleSearchService {
 
         updateFaceShape(user, hairStyles);
 
-        return HairStyleResponseAssembler.toHairStyleResponses(hairStyles);
+        return ResponseWrapper.wrapResponse(toHairStyleResponses(hairStyles));
     }
 
-    public List<HairStyleResponse> findHairStyleByFaceShape(Long userId) {
+    public ResponseWrapper<List<HairStyleResponse>> findHairStyleByFaceShape(Long userId) {
         User user = userFindService.findByUserId(userId);
         Pageable pageable = PageableUtils.generateSimplePageable(4);
 
         if (user.existFaceShape()) {
             List<HairStyle> hairStyles = hairStyleSearchRepository.findByFaceShapeTag(user.getFaceShape(), user.getSex(), pageable);
-            return HairStyleResponseAssembler.toHairStyleResponses(hairStyles);
+            return ResponseWrapper.wrapResponse(toHairStyleResponses(hairStyles));
         } else {
             List<HairStyle> hairStyles = hairStyleSearchRepository.findByNoFaceShapeTag(user.getSex(), pageable);
-            return HairStyleResponseAssembler.toHairStyleResponses(hairStyles);
+            return ResponseWrapper.wrapResponse(toHairStyleResponses(hairStyles));
         }
     }
 

@@ -6,6 +6,8 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Slice;
 
+import java.util.List;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class ReviewResponseAssembler {
 
@@ -19,5 +21,9 @@ public abstract class ReviewResponseAssembler {
 
     private static ReviewResponse toReviewResponse(Review review) {
         return new ReviewResponse(review);
+    }
+
+    public static List<ReviewSimpleResponse> toSimpleResponse(List<Review> reviews) {
+        return reviews.stream().map(ReviewSimpleResponse::new).toList();
     }
 }

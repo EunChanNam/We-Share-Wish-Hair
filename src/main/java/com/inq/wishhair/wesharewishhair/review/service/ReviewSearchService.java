@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.review.service;
 
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
+import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewSearchRepository;
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler.toPagedReviewResponse;
+import static com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler.toSimpleResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -41,17 +43,13 @@ public class ReviewSearchService {
         return toPagedReviewResponse(sliceResult);
     }
 
-    public List<ReviewSimpleResponse> findReviewOfMonth() {
+    public ResponseWrapper<List<ReviewSimpleResponse>> findReviewOfMonth() {
         LocalDateTime startDate = generateStartDate();
         LocalDateTime endDate = generateEndDate();
         Pageable pageable = PageableUtils.generateSimplePageable(5);
 
         List<Review> result = reviewSearchRepository.findReviewByCreatedDate(startDate, endDate, pageable);
-        return toSimpleResponse(result);
-    }
-
-    private List<ReviewSimpleResponse> toSimpleResponse(List<Review> reviews) {
-        return reviews.stream().map(ReviewSimpleResponse::new).toList();
+        return ResponseWrapper.wrapResponse(toSimpleResponse(result));
     }
 
     private LocalDateTime generateStartDate() {

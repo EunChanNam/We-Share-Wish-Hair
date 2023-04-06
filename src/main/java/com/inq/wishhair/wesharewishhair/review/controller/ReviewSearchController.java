@@ -48,8 +48,6 @@ public class ReviewSearchController {
     @GetMapping("/month")
     public ResponseWrapper<List<ReviewSimpleResponse>> findReviewOfMonth() {
 
-        List<ReviewSimpleResponse> result = reviewSearchService.findReviewOfMonth();
-
-        return ResponseWrapper.wrapResponse(result);
+        return reviewSearchService.findReviewOfMonth();
     }
 }
