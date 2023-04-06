@@ -6,7 +6,6 @@ import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewSearchRepository;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
-import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewSimpleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -17,8 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler.toPagedReviewResponse;
-import static com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler.toSimpleResponse;
+import static com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler.*;
 
 @Service
 @RequiredArgsConstructor
@@ -49,7 +47,7 @@ public class ReviewSearchService {
         Pageable pageable = PageableUtils.generateSimplePageable(5);
 
         List<Review> result = reviewSearchRepository.findReviewByCreatedDate(startDate, endDate, pageable);
-        return ResponseWrapper.wrapResponse(toSimpleResponse(result));
+        return toWrappedSimpleResponse(result);
     }
 
     private LocalDateTime generateStartDate() {

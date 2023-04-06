@@ -12,4 +12,8 @@ public class Paging {
     private int page;
 
     private boolean hasNext;
+
+    public boolean hasNext() {
+        return hasNext;
+    }
 }

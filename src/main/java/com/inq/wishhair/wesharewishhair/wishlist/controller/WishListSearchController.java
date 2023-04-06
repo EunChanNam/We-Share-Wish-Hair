@@ -1,7 +1,6 @@
 package com.inq.wishhair.wesharewishhair.wishlist.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
-import com.inq.wishhair.wesharewishhair.wishlist.controller.dto.response.PagedWishListResponse;
 import com.inq.wishhair.wesharewishhair.wishlist.service.WishListSearchService;
 import com.inq.wishhair.wesharewishhair.wishlist.service.dto.response.WishListResponse;
 import lombok.RequiredArgsConstructor;

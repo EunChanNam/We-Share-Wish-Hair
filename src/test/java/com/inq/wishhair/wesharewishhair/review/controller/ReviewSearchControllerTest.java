@@ -7,6 +7,7 @@ import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewSimpleResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
@@ -104,10 +105,6 @@ public class ReviewSearchControllerTest extends ControllerTest {
                 );
     }
 
-    private Slice<ReviewResponse> generateReviewSliceResponse(int count) {
-        return new SliceImpl<>(generateReviewResponses(count));
-    }
-
     private List<ReviewResponse> generateReviewResponses(int count) {
         User user = UserFixture.B.toEntity();
         HairStyle hairStyle = HairStyleFixture.A.toEntity();
@@ -121,6 +118,8 @@ public class ReviewSearchControllerTest extends ControllerTest {
             Review review = fixture.toEntity(user, hairStyle);
             result.add(new ReviewResponse(review));
         }
+
+        ReviewResponseAssembler.
 
         return result;
     }

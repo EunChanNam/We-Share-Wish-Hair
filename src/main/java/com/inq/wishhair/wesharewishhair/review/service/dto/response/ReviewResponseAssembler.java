@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.review.service.dto.response;
 
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
+import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,11 @@ public abstract class ReviewResponseAssembler {
         return new ReviewResponse(review);
     }
 
-    public static List<ReviewSimpleResponse> toSimpleResponse(List<Review> reviews) {
+    public static ResponseWrapper<List<ReviewSimpleResponse>> toWrappedSimpleResponse(List<Review> reviews) {
+        return new ResponseWrapper<>(toSimpleResponse(reviews));
+    }
+
+    private static List<ReviewSimpleResponse> toSimpleResponse(List<Review> reviews) {
         return reviews.stream().map(ReviewSimpleResponse::new).toList();
     }
 }
