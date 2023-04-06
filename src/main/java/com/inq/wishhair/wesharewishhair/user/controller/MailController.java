@@ -5,7 +5,7 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.AuthKeyRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.MailRequest;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.response.SessionIdResponse;
+import com.inq.wishhair.wesharewishhair.user.service.dto.response.SessionIdResponse;
 import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
