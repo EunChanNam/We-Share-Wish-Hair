@@ -13,11 +13,11 @@ public abstract class ReviewResponseAssembler {
         return new PagedResponse<>(transferContentToResponse(slice));
     }
 
-    private Slice<ReviewResponse> transferContentToResponse(Slice<Review> slice) {
-        return slice.map(this::toReviewResponse);
+    private static Slice<ReviewResponse> transferContentToResponse(Slice<Review> slice) {
+        return slice.map(ReviewResponseAssembler::toReviewResponse);
     }
 
-    private ReviewResponse toReviewResponse(Review review) {
+    private static ReviewResponse toReviewResponse(Review review) {
         return new ReviewResponse(review);
     }
 }

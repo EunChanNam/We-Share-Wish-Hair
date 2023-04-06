@@ -8,4 +8,8 @@ import lombok.Getter;
 public class SimpleResponseWrapper<T> {
 
     private T result;
+
+    public static <T> SimpleResponseWrapper<T> wrapResponse(T response) {
+        return new SimpleResponseWrapper<>(response);
+    }
 }
