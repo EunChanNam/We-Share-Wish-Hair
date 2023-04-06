@@ -1,18 +1,26 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-public interface HairStyleResponseAssembler {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public abstract class HairStyleResponseAssembler {
 
-    static List<HairStyleResponse> hairStyleResponses(List<HairStyle> hairStyles) {
+    public static List<HairStyleResponse> toHairStyleResponses(List<HairStyle> hairStyles) {
         return hairStyles.stream()
-                .map(HairStyleResponseAssembler::hairStyleResponse)
+                .map(HairStyleResponseAssembler::toHairStyleResponse)
                 .toList();
     }
 
-    static HairStyleResponse hairStyleResponse(HairStyle hairStyle) {
+    private static HairStyleResponse toHairStyleResponse(HairStyle hairStyle) {
         return new HairStyleResponse(hairStyle);
+    }
+
+    public static List<HashTagResponse> toHashTagResponses(List<HashTag> hashTags) {
+        return hashTags.stream().map(HashTagResponse::new).toList();
     }
 }

@@ -1,9 +1,11 @@
 package com.inq.wishhair.wesharewishhair.review.service;
 
+import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewSearchRepository;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewSimpleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +16,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler.toPagedReviewResponse;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -21,20 +25,20 @@ public class ReviewSearchService {
 
     private final ReviewSearchRepository reviewSearchRepository;
 
-    public Slice<ReviewResponse> findPagedReviews(Pageable pageable) {
+    public PagedResponse<ReviewResponse> findPagedReviews(Pageable pageable) {
         Slice<Review> sliceResult = reviewSearchRepository.findReviewByPaging(pageable);
-        return transferContentToResponse(sliceResult, true);
+        return toPagedReviewResponse(sliceResult);
     }
 
-    public Slice<ReviewResponse> findLikingReviews(Long userId, Pageable pageable) {
+    public PagedResponse<ReviewResponse> findLikingReviews(Long userId, Pageable pageable) {
         Slice<Review> sliceResult = reviewSearchRepository.findReviewByLike(userId, pageable);
-        return transferContentToResponse(sliceResult, false);
+        return toPagedReviewResponse(sliceResult);
     }
 
-    public Slice<ReviewResponse> findMyReviews(Long userId, Pageable pageable) {
+    public PagedResponse<ReviewResponse> findMyReviews(Long userId, Pageable pageable) {
         Slice<Review> sliceResult = reviewSearchRepository.findReviewByUser(userId, pageable);
 
-        return transferContentToResponse(sliceResult, true);
+        return toPagedReviewResponse(sliceResult);
     }
 
     public List<ReviewSimpleResponse> findReviewOfMonth() {
@@ -44,10 +48,6 @@ public class ReviewSearchService {
 
         List<Review> result = reviewSearchRepository.findReviewByCreatedDate(startDate, endDate, pageable);
         return toSimpleResponse(result);
-    }
-
-    private Slice<ReviewResponse> transferContentToResponse(Slice<Review> slice, boolean isPhotoLoaded) {
-        return slice.map(review -> new ReviewResponse(review, isPhotoLoaded));
     }
 
     private List<ReviewSimpleResponse> toSimpleResponse(List<Review> reviews) {

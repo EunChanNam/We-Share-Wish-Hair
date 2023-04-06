@@ -41,7 +41,7 @@ public class HairStyleSearchService {
 
         updateFaceShape(user, hairStyles);
 
-        return HairStyleResponseAssembler.hairStyleResponses(hairStyles);
+        return HairStyleResponseAssembler.toHairStyleResponses(hairStyles);
     }
 
     public List<HairStyleResponse> findHairStyleByFaceShape(Long userId) {
@@ -50,10 +50,10 @@ public class HairStyleSearchService {
 
         if (user.existFaceShape()) {
             List<HairStyle> hairStyles = hairStyleSearchRepository.findByFaceShapeTag(user.getFaceShape(), user.getSex(), pageable);
-            return HairStyleResponseAssembler.hairStyleResponses(hairStyles);
+            return HairStyleResponseAssembler.toHairStyleResponses(hairStyles);
         } else {
             List<HairStyle> hairStyles = hairStyleSearchRepository.findByNoFaceShapeTag(user.getSex(), pageable);
-            return HairStyleResponseAssembler.hairStyleResponses(hairStyles);
+            return HairStyleResponseAssembler.toHairStyleResponses(hairStyles);
         }
     }
 

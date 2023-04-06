@@ -119,7 +119,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
             ReviewFixture fixture = reviewFixtures[index];
 
             Review review = fixture.toEntity(user, hairStyle);
-            result.add(new ReviewResponse(review, true));
+            result.add(new ReviewResponse(review));
         }
 
         return result;
