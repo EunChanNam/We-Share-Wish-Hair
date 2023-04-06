@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 
 import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
+import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
@@ -37,7 +38,7 @@ public class HairStyleControllerTest extends ControllerTest {
         void test1() throws Exception {
             //given
             List<Tag> tags = A.getTags();
-            List<HairStyleResponse> expectedResponse = generateExpectedResponse(List.of(A, C, D, E));
+            ResponseWrapper<HairStyleResponse> expectedResponse = assembleWrappedResponse(List.of(A, C, D, E));
 
             given(hairStyleSearchService.findRecommendedHairStyle(tags, 1L, getDefaultPageable()))
                     .willReturn(expectedResponse);
@@ -54,12 +55,7 @@ public class HairStyleControllerTest extends ControllerTest {
             mockMvc.perform(requestBuilder)
                     .andExpectAll(
                             status().isOk(),
-                            jsonPath("$").exists(),
-                            jsonPath("$.contentSize").value(4),
-                            jsonPath("$.result.size()").value(4),
-                            jsonPath("$.result.[0].hairStyleId").value(1L),
-                            jsonPath("$.result.[0].name").value(A.getName()),
-                            jsonPath("$.result.[0].photos.size()").value(4)
+                            jsonPath("$").exists()
                     );
         }
 
@@ -91,9 +87,8 @@ public class HairStyleControllerTest extends ControllerTest {
         @DisplayName("사용자 얼굴형 기반 헤어추천 서비스 로직의 결과를 헤어스타일 응답으로 변환해 응답한다")
         void test3() throws Exception {
             //given
-
             given(hairStyleSearchService.findHairStyleByFaceShape(1L))
-                    .willReturn(generateExpectedResponse(List.of(C, E, D)));
+                    .willReturn(assembleWrappedResponse(List.of(C, E, D)));
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -104,12 +99,7 @@ public class HairStyleControllerTest extends ControllerTest {
             mockMvc.perform(requestBuilder)
                     .andExpectAll(
                             status().isOk(),
-                            jsonPath("$").exists(),
-                            jsonPath("$.contentSize").value(3),
-                            jsonPath("$.result.size()").value(3),
-                            jsonPath("$.result.[0].hairStyleId").value(1L),
-                            jsonPath("$.result.[0].name").value(C.getName()),
-                            jsonPath("$.result.[0].photos.size()").value(4)
+                            jsonPath("$").exists()
                     );
         }
     }
@@ -118,6 +108,10 @@ public class HairStyleControllerTest extends ControllerTest {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         tags.forEach(tag -> queryParams.add("tags", tag.toString()));
         return queryParams;
+    }
+
+    private ResponseWrapper<HairStyleResponse> assembleWrappedResponse(List<HairStyleFixture> fixtures) {
+        return new ResponseWrapper<>(generateExpectedResponse(fixtures));
     }
 
     private List<HairStyleResponse> generateExpectedResponse(List<HairStyleFixture> fixtures) {

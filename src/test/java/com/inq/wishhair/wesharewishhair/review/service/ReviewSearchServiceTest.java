@@ -4,6 +4,8 @@ import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
+import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
+import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
@@ -15,7 +17,6 @@ import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;
@@ -34,13 +35,12 @@ public class ReviewSearchServiceTest extends ServiceTest {
 
     private final List<Review> reviews = new ArrayList<>();
     private User user;
-    private HairStyle hairStyle;
 
     @BeforeEach
     void setUp() {
         //given
         user = userRepository.save(UserFixture.A.toEntity());
-        hairStyle = hairStyleSearchRepository.save(HairStyleFixture.A.toEntity());
+        HairStyle hairStyle = hairStyleSearchRepository.save(HairStyleFixture.A.toEntity());
 
         for (ReviewFixture fixture : ReviewFixture.values()) {
             reviews.add(fixture.toEntity(user, hairStyle));
@@ -66,11 +66,11 @@ public class ReviewSearchServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getLikeDescPageable(3);
 
             //when
-            Slice<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable);
+            PagedResponse<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable);
 
             //then
-            assertThat(result.hasNext()).isFalse();
-            assertReviewResponseMatch(result.getContent(),
+            assertThat(result.getPaging().hasNext()).isFalse();
+            assertReviewResponseMatch(result.getResult(),
                     List.of(reviews.get(5), reviews.get(4), reviews.get(1)));
         }
 
@@ -84,11 +84,11 @@ public class ReviewSearchServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(5);
 
             //when
-            Slice<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable);
+            PagedResponse<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable);
 
             //then
-            assertThat(result.hasNext()).isFalse();
-            assertReviewResponseMatch(result.getContent(),
+            assertThat(result.getPaging().hasNext()).isFalse();
+            assertReviewResponseMatch(result.getResult(),
                     List.of(reviews.get(2), reviews.get(3), reviews.get(4), reviews.get(5), reviews.get(1)));
 
         }
@@ -107,10 +107,10 @@ public class ReviewSearchServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(3);
 
             //when
-            Slice<ReviewResponse> result = reviewSearchService.findLikingReviews(user.getId(), pageable);
+            PagedResponse<ReviewResponse> result = reviewSearchService.findLikingReviews(user.getId(), pageable);
 
             //then
-            assertThat(result.getContent()).isEmpty();
+            assertThat(result.getResult()).isEmpty();
         }
 
         @Test
@@ -125,11 +125,11 @@ public class ReviewSearchServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(4);
 
             //when
-            Slice<ReviewResponse> result = reviewSearchService.findLikingReviews(user.getId(), pageable);
+            PagedResponse<ReviewResponse> result = reviewSearchService.findLikingReviews(user.getId(), pageable);
 
             //then
-            assertThat(result.hasNext()).isFalse();
-            assertReviewResponseMatch(result.getContent(),
+            assertThat(result.getPaging().hasNext()).isFalse();
+            assertReviewResponseMatch(result.getResult(),
                     List.of(reviews.get(3), reviews.get(2), reviews.get(4), reviews.get(1)));
         }
 
@@ -148,10 +148,10 @@ public class ReviewSearchServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(4);
 
             //when
-            Slice<ReviewResponse> result = reviewSearchService.findMyReviews(other.getId(), pageable);
+            PagedResponse<ReviewResponse> result = reviewSearchService.findMyReviews(other.getId(), pageable);
 
             //then
-            assertThat(result.getContent()).isEmpty();
+            assertThat(result.getResult()).isEmpty();
         }
 
         @Test
@@ -164,11 +164,11 @@ public class ReviewSearchServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(4);
 
             //when
-            Slice<ReviewResponse> result = reviewSearchService.findMyReviews(user.getId(), pageable);
+            PagedResponse<ReviewResponse> result = reviewSearchService.findMyReviews(user.getId(), pageable);
 
             //then
-            assertThat(result.hasNext()).isFalse();
-            assertReviewResponseMatch(result.getContent(),
+            assertThat(result.getPaging().hasNext()).isFalse();
+            assertReviewResponseMatch(result.getResult(),
                     List.of(reviews.get(3), reviews.get(2), reviews.get(4), reviews.get(1)));
         }
     }
@@ -188,10 +188,10 @@ public class ReviewSearchServiceTest extends ServiceTest {
         addLikes(user2, List.of(5));
 
         //when
-        List<ReviewSimpleResponse> result = reviewSearchService.findReviewOfMonth();
+        ResponseWrapper<ReviewSimpleResponse> result = reviewSearchService.findReviewOfMonth();
 
         //then
-        assertReviewSimpleResponseMatch(result,
+        assertReviewSimpleResponseMatch(result.getResult(),
                 List.of(reviews.get(5), reviews.get(4), reviews.get(1)));
     }
 

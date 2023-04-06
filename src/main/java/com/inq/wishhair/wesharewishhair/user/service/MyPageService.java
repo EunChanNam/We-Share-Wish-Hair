@@ -21,7 +21,7 @@ public class MyPageService {
 
     public MyPageResponse getMyPageInfo(Long userId, Pageable pageable) {
 
-        List<ReviewResponse> reviewResponses = reviewSearchService.findLikingReviews(userId, pageable).getContent();
+        List<ReviewResponse> reviewResponses = reviewSearchService.findLikingReviews(userId, pageable).getResult();
         User user = userFindService.findByUserId(userId);
 
         return new MyPageResponse(user, reviewResponses);

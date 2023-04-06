@@ -1,11 +1,13 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
+import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleSearchRepository;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponseAssembler;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -19,6 +21,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponseAssembler.*;
+
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
@@ -29,7 +33,7 @@ public class HairStyleSearchService {
     private final UserFindService userFindService;
 
     @Transactional
-    public List<HairStyleResponse> findRecommendedHairStyle(
+    public ResponseWrapper<HairStyleResponse> findRecommendedHairStyle(
             List<Tag> tags, Long userId, Pageable pageable) {
 
         User user = userFindService.findByUserId(userId);
@@ -40,19 +44,19 @@ public class HairStyleSearchService {
 
         updateFaceShape(user, hairStyles);
 
-        return generateHairStyleResponses(hairStyles);
+        return toWrappedHairStyleResponse(hairStyles);
     }
 
-    public List<HairStyleResponse> findHairStyleByFaceShape(Long userId) {
+    public ResponseWrapper<HairStyleResponse> findHairStyleByFaceShape(Long userId) {
         User user = userFindService.findByUserId(userId);
         Pageable pageable = PageableUtils.generateSimplePageable(4);
 
         if (user.existFaceShape()) {
             List<HairStyle> hairStyles = hairStyleSearchRepository.findByFaceShapeTag(user.getFaceShape(), user.getSex(), pageable);
-            return generateHairStyleResponses(hairStyles);
+            return toWrappedHairStyleResponse(hairStyles);
         } else {
             List<HairStyle> hairStyles = hairStyleSearchRepository.findByNoFaceShapeTag(user.getSex(), pageable);
-            return generateHairStyleResponses(hairStyles);
+            return toWrappedHairStyleResponse(hairStyles);
         }
     }
 
@@ -76,11 +80,5 @@ public class HairStyleSearchService {
             Tag faceShapeTag = firstHairStyle.findFaceShapeTag();
             user.updateFaceShape(new FaceShape(faceShapeTag));
         }
-    }
-
-    private List<HairStyleResponse> generateHairStyleResponses(List<HairStyle> hairStyles) {
-        return hairStyles.stream()
-                .map(HairStyleResponse::new)
-                .toList();
     }
 }
