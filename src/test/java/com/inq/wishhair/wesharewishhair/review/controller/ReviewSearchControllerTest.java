@@ -10,13 +10,10 @@ import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
-import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewSimpleResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.domain.Slice;
-import org.springframework.data.domain.SliceImpl;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -136,7 +133,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
 
             Review review = fixture.toEntity(user, hairStyle);
             ReflectionTestUtils.setField(review, "id", 1L + index);
-            result.add(new ReviewSimpleResponse(review);
+            result.add(new ReviewSimpleResponse(review));
         }
 
         return result;

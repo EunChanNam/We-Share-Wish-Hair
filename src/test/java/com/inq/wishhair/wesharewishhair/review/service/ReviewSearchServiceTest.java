@@ -188,7 +188,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
         addLikes(user2, List.of(5));
 
         //when
-        ResponseWrapper<List<ReviewSimpleResponse>> result = reviewSearchService.findReviewOfMonth();
+        ResponseWrapper<ReviewSimpleResponse> result = reviewSearchService.findReviewOfMonth();
 
         //then
         assertReviewSimpleResponseMatch(result.getResult(),

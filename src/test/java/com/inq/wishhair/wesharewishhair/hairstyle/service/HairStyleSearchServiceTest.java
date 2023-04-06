@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
+import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
@@ -22,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("HairStyleServiceTest - SpringBootTest")
 public class HairStyleSearchServiceTest extends ServiceTest {
+    //todo 검증코드 리팩토링하기
 
     @Autowired
     private HairStyleSearchService hairStyleSearchService;
@@ -47,14 +49,15 @@ public class HairStyleSearchServiceTest extends ServiceTest {
             Long userId = userRepository.save(UserFixture.B.toEntity()).getId();
 
             //when
-            List<HairStyleResponse> result =
+            ResponseWrapper<HairStyleResponse> result =
                     hairStyleSearchService.findRecommendedHairStyle(tags, userId, getDefaultPageable());
 
             //then
+            List<HairStyleResponse> actual = result.getResult();
             assertAll(
-                    () -> assertThat(result).hasSize(1),
+                    () -> assertThat(actual).hasSize(1),
                     () -> {
-                        HairStyleResponse response = result.get(0);
+                        HairStyleResponse response = actual.get(0);
                         assertThat(response.getName()).isEqualTo(A.getName());
                         assertThat(response.getHashTags().stream().map(HashTagResponse::getTag).toList())
                                 .containsAll(A.getTags().stream().map(Tag::getDescription).toList());
@@ -84,12 +87,14 @@ public class HairStyleSearchServiceTest extends ServiceTest {
             Long userId = userRepository.save(UserFixture.B.toEntity()).getId();
 
             //when
-            List<HairStyleResponse> result = hairStyleSearchService.findRecommendedHairStyle(tags, userId, getDefaultPageable());
+            ResponseWrapper<HairStyleResponse> result =
+                    hairStyleSearchService.findRecommendedHairStyle(tags, userId, getDefaultPageable());
 
             //then
+            List<HairStyleResponse> actual = result.getResult();
             assertAll(
-                    () -> assertThat(result).hasSize(3),
-                    () -> assertThat(result.stream().map(HairStyleResponse::getName).toList())
+                    () -> assertThat(actual).hasSize(3),
+                    () -> assertThat(actual.stream().map(HairStyleResponse::getName).toList())
                             .containsExactly(E.getName(), C.getName(), D.getName())
             );
         }
@@ -128,12 +133,13 @@ public class HairStyleSearchServiceTest extends ServiceTest {
             user.updateFaceShape(new FaceShape(Tag.OBLONG));
 
             //when
-            List<HairStyleResponse> result = hairStyleSearchService.findHairStyleByFaceShape(user.getId());
+            ResponseWrapper<HairStyleResponse> result = hairStyleSearchService.findHairStyleByFaceShape(user.getId());
 
             //then
+            List<HairStyleResponse> actual = result.getResult();
             assertAll(
-                    () -> assertThat(result).hasSize(3),
-                    () -> assertThat(result.stream().map(HairStyleResponse::getName).toList())
+                    () -> assertThat(actual).hasSize(3),
+                    () -> assertThat(actual.stream().map(HairStyleResponse::getName).toList())
                             .containsExactly(C.getName(), E.getName(), D.getName())
             );
         }
@@ -146,12 +152,14 @@ public class HairStyleSearchServiceTest extends ServiceTest {
             userRepository.save(user);
 
             //when
-            List<HairStyleResponse> result = hairStyleSearchService.findHairStyleByFaceShape(user.getId());
+            ResponseWrapper<HairStyleResponse> result =
+                    hairStyleSearchService.findHairStyleByFaceShape(user.getId());
 
             //then
+            List<HairStyleResponse> actual = result.getResult();
             assertAll(
-                    () -> assertThat(result).hasSize(4),
-                    () -> assertThat(result.stream().map(HairStyleResponse::getName).toList())
+                    () -> assertThat(actual).hasSize(4),
+                    () -> assertThat(actual.stream().map(HairStyleResponse::getName).toList())
                             .containsExactly(C.getName(), A.getName(), E.getName(), D.getName())
             );
         }
