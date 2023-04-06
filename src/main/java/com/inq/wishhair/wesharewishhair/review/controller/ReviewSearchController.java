@@ -2,7 +2,7 @@ package com.inq.wishhair.wesharewishhair.review.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
-import com.inq.wishhair.wesharewishhair.global.dto.response.SimpleResponseWrapper;
+import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewSearchService;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewSimpleResponse;
@@ -46,10 +46,10 @@ public class ReviewSearchController {
     }
 
     @GetMapping("/month")
-    public SimpleResponseWrapper<List<ReviewSimpleResponse>> findReviewOfMonth() {
+    public ResponseWrapper<List<ReviewSimpleResponse>> findReviewOfMonth() {
 
         List<ReviewSimpleResponse> result = reviewSearchService.findReviewOfMonth();
 
-        return SimpleResponseWrapper.wrapResponse(result);
+        return ResponseWrapper.wrapResponse(result);
     }
 }

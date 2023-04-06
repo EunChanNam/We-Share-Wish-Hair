@@ -5,11 +5,11 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class SimpleResponseWrapper<T> {
+public class ResponseWrapper<T> {
 
     private T result;
 
-    public static <T> SimpleResponseWrapper<T> wrapResponse(T response) {
-        return new SimpleResponseWrapper<>(response);
+    public static <T> ResponseWrapper<T> wrapResponse(T response) {
+        return new ResponseWrapper<>(response);
     }
 }

@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
+import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleSearchService;
@@ -9,7 +10,6 @@ import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyle
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +22,7 @@ public class HairStyleController {
     private final HairStyleSearchService hairStyleSearchService;
 
     @GetMapping("/recommend")
-    public ResponseEntity<List<HairStyleResponse>> respondRecommendedHairStyle(
+    public ResponseWrapper<List<HairStyleResponse>> respondRecommendedHairStyle(
             @PageableDefault(size = 4) Pageable pageable,
             @RequestParam(defaultValue = "ERROR") List<Tag> tags,
             @ExtractPayload Long userId) {
@@ -31,16 +31,16 @@ public class HairStyleController {
 
         List<HairStyleResponse> result = hairStyleSearchService.findRecommendedHairStyle(tags, userId, pageable);
 
-        return ResponseEntity.ok(result);
+        return ResponseWrapper.wrapResponse(result);
     }
 
     @GetMapping("/home")
-    public ResponseEntity<List<HairStyleResponse>> findHairStyleByFaceShape(
+    public ResponseWrapper<List<HairStyleResponse>> findHairStyleByFaceShape(
             @ExtractPayload Long userId) {
 
         List<HairStyleResponse> result = hairStyleSearchService.findHairStyleByFaceShape(userId);
 
-        return ResponseEntity.ok(result);
+        return ResponseWrapper.wrapResponse(result);
     }
 
     private void validateHasTag(List<Tag> tags) {
