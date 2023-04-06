@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 import static com.inq.wishhair.wesharewishhair.review.common.ReviewSortCondition.*;
 
 @RestController
@@ -46,7 +44,7 @@ public class ReviewSearchController {
     }
 
     @GetMapping("/month")
-    public ResponseWrapper<List<ReviewSimpleResponse>> findReviewOfMonth() {
+    public ResponseWrapper<ReviewSimpleResponse> findReviewOfMonth() {
 
         return reviewSearchService.findReviewOfMonth();
     }

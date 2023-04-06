@@ -24,7 +24,7 @@ public abstract class ReviewResponseAssembler {
         return new ReviewResponse(review);
     }
 
-    public static ResponseWrapper<List<ReviewSimpleResponse>> toWrappedSimpleResponse(List<Review> reviews) {
+    public static ResponseWrapper<ReviewSimpleResponse> toWrappedSimpleResponse(List<Review> reviews) {
         return new ResponseWrapper<>(toSimpleResponse(reviews));
     }
 

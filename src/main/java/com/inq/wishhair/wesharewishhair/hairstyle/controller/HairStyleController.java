@@ -22,25 +22,21 @@ public class HairStyleController {
     private final HairStyleSearchService hairStyleSearchService;
 
     @GetMapping("/recommend")
-    public ResponseWrapper<List<HairStyleResponse>> respondRecommendedHairStyle(
+    public ResponseWrapper<HairStyleResponse> respondRecommendedHairStyle(
             @PageableDefault(size = 4) Pageable pageable,
             @RequestParam(defaultValue = "ERROR") List<Tag> tags,
             @ExtractPayload Long userId) {
 
         validateHasTag(tags);
 
-        List<HairStyleResponse> result = hairStyleSearchService.findRecommendedHairStyle(tags, userId, pageable);
-
-        return ResponseWrapper.wrapResponse(result);
+        return hairStyleSearchService.findRecommendedHairStyle(tags, userId, pageable);
     }
 
     @GetMapping("/home")
-    public ResponseWrapper<List<HairStyleResponse>> findHairStyleByFaceShape(
+    public ResponseWrapper<HairStyleResponse> findHairStyleByFaceShape(
             @ExtractPayload Long userId) {
 
-        List<HairStyleResponse> result = hairStyleSearchService.findHairStyleByFaceShape(userId);
-
-        return ResponseWrapper.wrapResponse(result);
+        return hairStyleSearchService.findHairStyleByFaceShape(userId);
     }
 
     private void validateHasTag(List<Tag> tags) {

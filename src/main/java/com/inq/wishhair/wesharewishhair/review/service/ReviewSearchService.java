@@ -41,7 +41,7 @@ public class ReviewSearchService {
         return toPagedReviewResponse(sliceResult);
     }
 
-    public ResponseWrapper<List<ReviewSimpleResponse>> findReviewOfMonth() {
+    public ResponseWrapper<ReviewSimpleResponse> findReviewOfMonth() {
         LocalDateTime startDate = generateStartDate();
         LocalDateTime endDate = generateEndDate();
         Pageable pageable = PageableUtils.generateSimplePageable(5);
