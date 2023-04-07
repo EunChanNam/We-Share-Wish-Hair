@@ -74,7 +74,7 @@ public class UserControllerTest extends ControllerTest {
 
         @Test
         @DisplayName("올바르지 않은 비밀번호 형식으로 400 예외를 던진다")
-        void failByPassword() throws Exception{
+        void failByPassword() throws Exception {
             //given
             UserCreateRequest request = wrongPasswordRequest();
 
@@ -86,7 +86,17 @@ public class UserControllerTest extends ControllerTest {
             //then
             performAndAssertException(expectedError, requestBuilder);
         }
+
+        private MockHttpServletRequestBuilder buildJoinRequest(UserCreateRequest request) throws JsonProcessingException {
+            return MockMvcRequestBuilders
+                    .post(JOIN_URL)
+                    .content(toJson(request))
+                    .contentType(APPLICATION_JSON);
+        }
+
     }
+
+
 
     private void performAndAssertException(ErrorCode expectedError, MockHttpServletRequestBuilder requestBuilder) throws Exception {
         mockMvc.perform(requestBuilder)
@@ -96,11 +106,6 @@ public class UserControllerTest extends ControllerTest {
                         jsonPath("$.message").value(expectedError.getMessage())
                 );
     }
-
-    private MockHttpServletRequestBuilder buildJoinRequest(UserCreateRequest request) throws JsonProcessingException {
-        return MockMvcRequestBuilders
-                .post(JOIN_URL)
-                .content(toJson(request))
-                .contentType(APPLICATION_JSON);
-    }
 }
+
+

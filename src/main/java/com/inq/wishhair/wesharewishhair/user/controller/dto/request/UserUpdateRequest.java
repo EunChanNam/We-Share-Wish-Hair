@@ -13,8 +13,4 @@ public class UserUpdateRequest {
     private String nickname;
 
     private Sex sex;
-
-    public UserUpdateDto updateDto() {
-        return new UserUpdateDto(new Nickname(nickname), sex);
-    }
 }
