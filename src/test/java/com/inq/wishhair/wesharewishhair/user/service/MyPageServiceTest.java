@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("User-MyPageServiceTest - SpringBootTest")
 public class MyPageServiceTest extends ServiceTest {
-
+    //todo 리뷰에 대한 검증을 한번 더 해야되는지
     @Autowired
     private MyPageService myPageService;
 
