@@ -16,7 +16,7 @@ public abstract class UserCreateRequestUtils {
         );
     }
 
-    public static UserCreateRequest WrongEmailRequest() {
+    public static UserCreateRequest wrongEmailRequest() {
         return new UserCreateRequest(
                 "wrongEmail121",
                 a.getPassword(),
@@ -26,7 +26,7 @@ public abstract class UserCreateRequestUtils {
         );
     }
 
-    public static UserCreateRequest WrongPasswordRequest() {
+    public static UserCreateRequest wrongPasswordRequest() {
         return new UserCreateRequest(
                 a.getEmail(),
                 "12341234",
@@ -36,7 +36,7 @@ public abstract class UserCreateRequestUtils {
         );
     }
 
-    public static UserCreateRequest WrongNicknameRequest() {
+    public static UserCreateRequest wrongNicknameRequest() {
         return new UserCreateRequest(
                 a.getEmail(),
                 a.getPassword(),

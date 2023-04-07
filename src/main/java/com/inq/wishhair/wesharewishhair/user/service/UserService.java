@@ -19,6 +19,8 @@ public class UserService {
 
     @Transactional
     public Long createUser(User user) {
+
+        validateNicknameIsNotDuplicated(user.getNickname());
         User saveUser = userRepository.save(user);
 
         return saveUser.getId();
