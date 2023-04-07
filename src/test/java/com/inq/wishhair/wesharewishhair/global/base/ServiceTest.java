@@ -9,18 +9,19 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleSearchReposito
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
+import com.inq.wishhair.wesharewishhair.user.domain.point.PointRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-@SpringBootTest(classes = {WeShareWishHairApplication.class, PointHistoryTestRepository.class})
+@SpringBootTest
 @Transactional
 public abstract class ServiceTest {
 
     @Autowired
-    protected PointHistoryTestRepository pointHistoryTestRepository;
+    protected PointRepository pointRepository;
 
     @Autowired
     protected HairStyleRepository hairStyleRepository;
