@@ -27,14 +27,10 @@ public class HairStyle {
     @Column(nullable = false, updatable = false)
     private String name;
 
-    @OneToMany(mappedBy = "hairStyle",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true) // 사진을 값타입 컬렉션 처럼 사용
+    @OneToMany(mappedBy = "hairStyle", cascade = CascadeType.PERSIST)
     private List<Photo> photos = new ArrayList<>();
 
-    @OneToMany(mappedBy = "hairStyle",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true) // 해쉬태그를 값타입 컬렉션 처럼 사용
+    @OneToMany(mappedBy = "hairStyle", cascade = CascadeType.PERSIST)
     private List<HashTag> hashTags = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
@@ -44,22 +40,21 @@ public class HairStyle {
     private WishListCount wishListCount;
 
     //==생성 메서드==//
-    private HairStyle(String name, Sex sex, List<Photo> photos, List<HashTag> hashTags) {
+    private HairStyle(String name, Sex sex, List<Photo> photos, List<Tag> tags) {
         this.name = name;
         this.sex = sex;
-        photos.forEach(photo -> photo.registerHairStyle(this));
-        hashTags.forEach(hashTag -> hashTag.registerHairStyle(this));
-        this.photos.addAll(photos);
-        this.hashTags.addAll(hashTags);
+        applyPhotos(photos);
+        applyHasTags(tags);
         wishListCount = new WishListCount();
     }
 
     public static HairStyle createHairStyle(
-            String name, Sex sex, List<Photo> photos, List<HashTag> hashTags) {
-        return new HairStyle(name, sex, photos, hashTags);
+            String name, Sex sex, List<Photo> photos, List<Tag> tags) {
+        return new HairStyle(name, sex, photos, tags);
     }
 
     //==편의 메서드--//
+
     public Tag findFaceShapeTag() {
         return hashTags.stream()
                 .map(HashTag::getTag)
@@ -67,7 +62,6 @@ public class HairStyle {
                 .findAny()
                 .orElseThrow(() -> new WishHairException(ErrorCode.HAIR_STYLE_NO_FACE_SHAPE_TAG));
     }
-
     public void plusWishListCount() {
         wishListCount.plusWishListCount();
     }
@@ -78,5 +72,18 @@ public class HairStyle {
 
     public int getWishListCount() {
         return wishListCount.getValue();
+    }
+
+    private void applyHasTags(List<Tag> tags) {
+        tags.stream().map(HashTag::of).toList()
+                .forEach(hashTag -> {
+                    hashTag.registerHairStyle(this);
+                    hashTags.add(hashTag);
+                });
+    }
+
+    private void applyPhotos(List<Photo> photos) {
+        photos.forEach(photo -> photo.registerHairStyle(this));
+        this.photos.addAll(photos);
     }
 }
