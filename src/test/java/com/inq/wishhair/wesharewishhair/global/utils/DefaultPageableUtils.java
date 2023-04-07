@@ -16,5 +16,7 @@ public abstract class DefaultPageableUtils {
         return PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, DATE));
     }
 
-
+    public static Pageable getDefualtPageable() {
+        return PageRequest.of(0, 10);
+    }
 }

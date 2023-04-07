@@ -44,9 +44,7 @@ public enum HairStyleFixture {
         List<Photo> photos = originalFilenames.stream()
                 .map((originalFilename) -> Photo.of(originalFilename, createStoreFilename(originalFilename)))
                 .toList();
-        List<HashTag> hashTags = tags.stream()
-                .map(HashTag::of).toList();
-        HairStyle hairStyle = HairStyle.createHairStyle(name, sex, photos, hashTags);
+        HairStyle hairStyle = HairStyle.createHairStyle(name, sex, photos, tags);
         for (int i = 0; i < wishListCount; i++) {
             hairStyle.plusWishListCount();
         }
