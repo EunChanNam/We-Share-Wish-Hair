@@ -7,10 +7,13 @@ import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.fixture.UserFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -48,6 +51,30 @@ class UserServiceTest extends ServiceTest {
             assertThatThrownBy(() -> userService.createUser(A.toEntity()))
                     .isInstanceOf(WishHairException.class)
                     .hasMessageContaining(ErrorCode.USER_DUPLICATED_NICKNAME.getMessage());
+        }
+    }
+
+    @Nested
+    @DisplayName("회원 탈퇴 서비스")
+    class deleteUser {
+
+        private User user;
+
+        @BeforeEach
+        void setUp() {
+            //given
+            user = userRepository.save(B.toEntity());
+        }
+
+        @Test
+        @DisplayName("회원 탈퇴에 성공한다")
+        void success() {
+            //when
+            userService.deleteUser(user.getId());
+
+            //then
+            List<User> result = userRepository.findAll();
+            assertThat(result).isEmpty();
         }
     }
 }

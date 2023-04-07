@@ -5,8 +5,6 @@ import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.domain.*;
-import com.inq.wishhair.wesharewishhair.user.service.dto.PasswordUpdateDto;
-import com.inq.wishhair.wesharewishhair.user.service.dto.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
