@@ -1,12 +1,16 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserCreateRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.utils.UserUpdateRequestUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -35,12 +39,7 @@ public class UserControllerTest extends ControllerTest {
             MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
 
             //then
-            mockMvc.perform(requestBuilder)
-                    .andExpectAll(
-                            status().isCreated(),
-                            jsonPath("$").exists(),
-                            jsonPath("$.success").value(true)
-                    );
+            assertSuccess(requestBuilder, status().isCreated());
         }
 
         @Test
@@ -55,7 +54,7 @@ public class UserControllerTest extends ControllerTest {
             MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
 
             //then
-            performAndAssertException(expectedError, requestBuilder);
+            assertException(expectedError, requestBuilder);
         }
 
         @Test
@@ -70,7 +69,7 @@ public class UserControllerTest extends ControllerTest {
             MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
 
             //then
-            performAndAssertException(expectedError, requestBuilder);
+            assertException(expectedError, requestBuilder);
         }
 
         @Test
@@ -85,7 +84,7 @@ public class UserControllerTest extends ControllerTest {
             MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
 
             //then
-            performAndAssertException(expectedError, requestBuilder);
+            assertException(expectedError, requestBuilder);
         }
 
         private MockHttpServletRequestBuilder buildJoinRequest(UserCreateRequest request) throws JsonProcessingException {
@@ -106,17 +105,36 @@ public class UserControllerTest extends ControllerTest {
                 .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
 
         //then
+        assertSuccess(requestBuilder, status().isOk());
+    }
+
+    @Test
+    @DisplayName("회원 정보 수정 API - 정보 수정에 성공한다")
+    void successUpdateUser() throws Exception {
+        //given
+        UserUpdateRequest request = UserUpdateRequestUtils.request(UserFixture.A);
+
+        //when
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .patch(BASE_URL)
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .content(toJson(request))
+                .contentType(APPLICATION_JSON);
+
+        //then
+        assertSuccess(requestBuilder, status().isOk());
+    }
+
+    private void assertSuccess(MockHttpServletRequestBuilder requestBuilder, ResultMatcher status) throws Exception {
         mockMvc.perform(requestBuilder)
                 .andExpectAll(
-                        status().isOk(),
+                        status,
                         jsonPath("$").exists(),
                         jsonPath("$.success").value(true)
                 );
     }
 
-
-
-    private void performAndAssertException(ErrorCode expectedError, MockHttpServletRequestBuilder requestBuilder) throws Exception {
+    private void assertException(ErrorCode expectedError, MockHttpServletRequestBuilder requestBuilder) throws Exception {
         mockMvc.perform(requestBuilder)
                 .andExpectAll(
                         status().isBadRequest(),
