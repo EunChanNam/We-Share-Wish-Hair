@@ -12,7 +12,6 @@ import com.inq.wishhair.wesharewishhair.user.controller.utils.UserUpdateRequestU
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -56,7 +55,7 @@ public class UserControllerTest extends ControllerTest {
             MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
 
             //then
-            assertException(expectedError, requestBuilder);
+            assertException(expectedError, requestBuilder, status().isBadRequest());
         }
 
         @Test
@@ -71,7 +70,7 @@ public class UserControllerTest extends ControllerTest {
             MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
 
             //then
-            assertException(expectedError, requestBuilder);
+            assertException(expectedError, requestBuilder, status().isBadRequest());
         }
 
         @Test
@@ -86,7 +85,7 @@ public class UserControllerTest extends ControllerTest {
             MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
 
             //then
-            assertException(expectedError, requestBuilder);
+            assertException(expectedError, requestBuilder, status().isBadRequest());
         }
 
         private MockHttpServletRequestBuilder buildJoinRequest(UserCreateRequest request) throws JsonProcessingException {
@@ -142,25 +141,6 @@ public class UserControllerTest extends ControllerTest {
 
         //then
         assertSuccess(requestBuilder, status().isOk());
-    }
-
-
-    private void assertSuccess(MockHttpServletRequestBuilder requestBuilder, ResultMatcher status) throws Exception {
-        mockMvc.perform(requestBuilder)
-                .andExpectAll(
-                        status,
-                        jsonPath("$").exists(),
-                        jsonPath("$.success").value(true)
-                );
-    }
-
-    private void assertException(ErrorCode expectedError, MockHttpServletRequestBuilder requestBuilder) throws Exception {
-        mockMvc.perform(requestBuilder)
-                .andExpectAll(
-                        status().isBadRequest(),
-                        jsonPath("$").exists(),
-                        jsonPath("$.message").value(expectedError.getMessage())
-                );
     }
 }
 

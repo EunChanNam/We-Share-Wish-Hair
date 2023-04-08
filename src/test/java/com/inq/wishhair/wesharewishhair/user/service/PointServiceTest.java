@@ -65,7 +65,7 @@ public class PointServiceTest extends ServiceTest {
         @DisplayName("현재 사용 가능한 포인트보다 큰 dealAmount 로 사용에 실패한다")
         void test3() {
             //given
-            PointUseRequest request = PointUseRequestUtils.createRequestByDealAmount(1000);
+            PointUseRequest request = PointUseRequestUtils.request(1000);
             ErrorCode expectedError = ErrorCode.POINT_NOT_ENOUGH;
 
             //when, then
@@ -79,7 +79,7 @@ public class PointServiceTest extends ServiceTest {
         void test4() {
             //given
             pointService.chargePoint(1000, user.getId());
-            PointUseRequest request = PointUseRequestUtils.createRequestByDealAmount(1000);
+            PointUseRequest request = PointUseRequestUtils.request(1000);
 
             //when
             pointService.usePoint(request, user.getId());

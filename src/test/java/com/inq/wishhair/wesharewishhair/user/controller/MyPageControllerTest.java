@@ -13,8 +13,6 @@ import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -23,7 +21,6 @@ import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("User-MyPageControllerTest - WebMvcTest")
@@ -83,17 +80,5 @@ public class MyPageControllerTest extends ControllerTest {
         Review review = ReviewFixture.A.toEntity(user, hairStyle);
 
         return new ReviewResponse(review);
-    }
-
-    private void assertException(ErrorCode expectedError,
-                                 MockHttpServletRequestBuilder requestBuilder,
-                                 ResultMatcher status) throws Exception {
-
-        mockMvc.perform(requestBuilder)
-                .andExpectAll(
-                        status,
-                        jsonPath("$").exists(),
-                        jsonPath("$.message").value(expectedError.getMessage())
-                );
     }
 }
