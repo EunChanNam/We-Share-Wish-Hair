@@ -1,7 +1,11 @@
 package com.inq.wishhair.wesharewishhair.global.utils;
 
+import com.inq.wishhair.wesharewishhair.review.common.ReviewSortCondition;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+
+import static com.inq.wishhair.wesharewishhair.review.common.ReviewSortCondition.DATE;
 
 public interface PageableUtils {
     static Pageable getDefaultPageable() {
@@ -10,5 +14,9 @@ public interface PageableUtils {
 
     static Pageable generateSimplePageable(int size) {
         return PageRequest.of(0, size);
+    }
+
+    static Pageable generateDateDescPageable(int size) {
+        return PageRequest.of(0, size, Sort.by(Sort.Direction.DESC, DATE));
     }
 }

@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
-import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.UserUpdateRequestUtils;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.fixture.UserFixture.*;
+import static com.inq.wishhair.wesharewishhair.user.controller.utils.PasswordUpdateRequestUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -121,6 +122,57 @@ class UserServiceTest extends ServiceTest {
             assertThatThrownBy(() -> userService.updateUser(user.getId(), request))
                     .isInstanceOf(WishHairException.class)
                     .hasMessageContaining(ErrorCode.USER_DUPLICATED_NICKNAME.getMessage());
+        }
+    }
+
+    @Nested
+    @DisplayName("비밀번호 변경 서비스")
+    class updatePassword {
+
+        private User user;
+
+        @BeforeEach
+        void setUp() {
+            //given
+            user = userRepository.save(A.toEntity());
+        }
+
+        @Test
+        @DisplayName("현재 비밀번호가 틀려 실패한다")
+        void failByOldPassword() {
+            //given
+            PasswordUpdateRequest request = wrongOldPwRequest();
+
+            //when, then
+            assertThatThrownBy(() -> userService.updatePassword(user.getId(), request))
+                    .isInstanceOf(WishHairException.class)
+                    .hasMessageContaining(ErrorCode.USER_WRONG_PASSWORD.getMessage());
+        }
+
+        @Test
+        @DisplayName("새로운 비밀번호의 형식이 틀려 실패한다")
+        void failByNewPassword() {
+            //given
+            PasswordUpdateRequest request = wrongNewPwRequest(A);
+
+            //when, then
+            assertThatThrownBy(() -> userService.updatePassword(user.getId(), request))
+                    .isInstanceOf(WishHairException.class)
+                    .hasMessageContaining(ErrorCode.USER_INVALID_PASSWORD.getMessage());
+        }
+
+        @Test
+        @DisplayName("비밀번호 변경에 성공한다")
+        void success() {
+            //given
+            PasswordUpdateRequest request = request(A);
+
+            //when
+            userService.updatePassword(user.getId(), request);
+
+            //then
+            User result = userRepository.findById(user.getId()).get();
+            assertThat(result.getPasswordValue()).isEqualTo(request.getNewPassword());
         }
     }
 }

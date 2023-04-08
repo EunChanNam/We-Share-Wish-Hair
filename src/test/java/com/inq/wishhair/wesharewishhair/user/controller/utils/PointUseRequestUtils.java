@@ -4,7 +4,10 @@ import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PointUseRequ
 
 public abstract class PointUseRequestUtils {
 
-    public static PointUseRequest createRequestByDealAmount(int dealAmount) {
-        return new PointUseRequest("기업 은행", "12341234", dealAmount);
+    private static final String BANK_NAME = "기업은행";
+    private static final String ACCOUNT_NUMBER = "12341234";
+
+    public static PointUseRequest request(int dealAmount) {
+        return new PointUseRequest(BANK_NAME, ACCOUNT_NUMBER, dealAmount);
     }
 }

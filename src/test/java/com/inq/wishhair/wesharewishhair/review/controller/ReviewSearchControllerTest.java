@@ -38,7 +38,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
     @DisplayName("전체 리뷰 조회 API 테스트")
     void findPagingReviews() throws Exception {
         //given
-        PagedResponse<ReviewResponse> expectedResponse = assemblePagedResponse(generateReviewResponses(values().length));
+        PagedResponse<ReviewResponse> expectedResponse = assemblePagedResponse(values().length);
         given(reviewSearchService.findPagedReviews(getLikeDescPageable(10)))
                 .willReturn(expectedResponse);
 
@@ -59,7 +59,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
     @DisplayName("나의 리뷰 조회 API")
     void findMyReviews() throws Exception {
         //given
-        PagedResponse<ReviewResponse> expectedResponse = assemblePagedResponse(generateReviewResponses(values().length));
+        PagedResponse<ReviewResponse> expectedResponse = assemblePagedResponse(values().length);
         given(reviewSearchService.findMyReviews(1L, getDateDescPageable(10)))
                 .willReturn(expectedResponse);
 
@@ -99,9 +99,9 @@ public class ReviewSearchControllerTest extends ControllerTest {
                 );
     }
 
-    private PagedResponse<ReviewResponse> assemblePagedResponse(List<ReviewResponse> responses) {
-        Paging defaultPaging = new Paging(responses.size(), 0, false);
-        return new PagedResponse<>(responses, defaultPaging);
+    private PagedResponse<ReviewResponse> assemblePagedResponse(int count) {
+        Paging defaultPaging = new Paging(count, 0, false);
+        return new PagedResponse<>(generateReviewResponses(count), defaultPaging);
     }
 
     private List<ReviewResponse> generateReviewResponses(int count) {
