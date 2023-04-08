@@ -89,7 +89,7 @@ public class User {
     }
 
     public boolean isNotSamePassword(Password password) {
-        return this.password != password;
+        return !this.password.equals(password);
     }
 
     public String getPasswordValue() {

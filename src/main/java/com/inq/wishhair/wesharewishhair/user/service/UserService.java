@@ -45,10 +45,9 @@ public class UserService {
     @Transactional
     public void updatePassword(Long userId, PasswordUpdateRequest request) {
         User user = userFindService.findByUserId(userId);
-        Password newPassword = new Password(request.getOldPassword());
+        confirmPassword(user, new Password(request.getOldPassword()));
 
-        confirmPassword(user, newPassword);
-        user.updatePassword(newPassword);
+        user.updatePassword(new Password(request.getNewPassword()));
     }
 
     private void confirmPassword(User user, Password password) {
