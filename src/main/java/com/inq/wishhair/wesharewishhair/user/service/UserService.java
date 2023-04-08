@@ -2,9 +2,9 @@ package com.inq.wishhair.wesharewishhair.user.service;
 
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.domain.*;
-import com.inq.wishhair.wesharewishhair.user.service.dto.PasswordUpdateDto;
-import com.inq.wishhair.wesharewishhair.user.service.dto.UserUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +19,8 @@ public class UserService {
 
     @Transactional
     public Long createUser(User user) {
+
+        validateNicknameIsNotDuplicated(user.getNickname());
         User saveUser = userRepository.save(user);
 
         return saveUser.getId();
@@ -30,23 +32,22 @@ public class UserService {
     }
 
     @Transactional
-    public void updateUser(Long userId, UserUpdateDto dto) {
+    public void updateUser(Long userId, UserUpdateRequest request) {
         User user = userFindService.findByUserId(userId);
+        Nickname newNickname = new Nickname(request.getNickname());
 
-        validateNicknameIsNotDuplicated(dto.getNickname());
-        user.updateNickname(dto.getNickname());
+        validateNicknameIsNotDuplicated(newNickname);
 
-        if (user.isNotSameSex(dto.getSex())) {
-            user.updateSex(dto.getSex());
-        }
+        user.updateNickname(newNickname);
+        user.updateSex(request.getSex());
     }
 
     @Transactional
-    public void updatePassword(Long userId, PasswordUpdateDto dto) {
+    public void updatePassword(Long userId, PasswordUpdateRequest request) {
         User user = userFindService.findByUserId(userId);
+        confirmPassword(user, new Password(request.getOldPassword()));
 
-        confirmPassword(user, dto.getOldPassword());
-        user.updatePassword(dto.getNewPassword());
+        user.updatePassword(new Password(request.getNewPassword()));
     }
 
     private void confirmPassword(User user, Password password) {

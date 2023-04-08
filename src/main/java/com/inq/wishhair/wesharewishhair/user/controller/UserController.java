@@ -39,7 +39,7 @@ public class UserController {
     public ResponseEntity<Success> updateUser(@RequestBody UserUpdateRequest request,
                                               @ExtractPayload Long userId) {
 
-        userService.updateUser(userId, request.updateDto());
+        userService.updateUser(userId, request);
 
         return ResponseEntity.ok(new Success());
     }
@@ -48,7 +48,7 @@ public class UserController {
     public ResponseEntity<Success> updatePassword(@RequestBody PasswordUpdateRequest request,
                                                   @ExtractPayload Long userId) {
 
-        userService.updatePassword(userId, request.toPasswordUpdateRequest());
+        userService.updatePassword(userId, request);
 
         return ResponseEntity.ok(new Success());
     }

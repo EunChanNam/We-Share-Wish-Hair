@@ -1,39 +1,147 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
-import com.inq.wishhair.wesharewishhair.user.controller.utils.UserCreateRequestUtils;
+import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserCreateRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.utils.PasswordUpdateRequestUtils;
+import com.inq.wishhair.wesharewishhair.user.controller.utils.UserUpdateRequestUtils;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
+import static com.inq.wishhair.wesharewishhair.user.controller.utils.UserCreateRequestUtils.*;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("UserControllerTest - Mock")
 public class UserControllerTest extends ControllerTest {
 
-    private static final String JOIN_URL = "/api/user";
+    private static final String BASE_URL = "/api/user";
+
+    @Nested
+    @DisplayName("회원가입 API 테스트")
+    class createUser {
+        @Test
+        @DisplayName("성공적인 회원가입 테스트")
+        void success() throws Exception {
+            //given
+            UserCreateRequest request = successRequest();
+            given(userService.createUser(request.toEntity())).willReturn(1L);
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
+
+            //then
+            assertSuccess(requestBuilder, status().isCreated());
+        }
+
+        @Test
+        @DisplayName("올바르지 않은 이메일 형식으로 400 예외를 던진다")
+        void failByEmail() throws Exception {
+            //given
+            UserCreateRequest request = wrongEmailRequest();
+
+            ErrorCode expectedError = ErrorCode.USER_INVALID_EMAIL;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isBadRequest());
+        }
+
+        @Test
+        @DisplayName("올바르지 않은 닉네임으로 400 예외를 던진다")
+        void failByNickname() throws Exception {
+            //given
+            UserCreateRequest request = wrongNicknameRequest();
+
+            ErrorCode expectedError = ErrorCode.USER_INVALID_NICKNAME;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isBadRequest());
+        }
+
+        @Test
+        @DisplayName("올바르지 않은 비밀번호 형식으로 400 예외를 던진다")
+        void failByPassword() throws Exception {
+            //given
+            UserCreateRequest request = wrongPasswordRequest();
+
+            ErrorCode expectedError = ErrorCode.USER_INVALID_PASSWORD;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isBadRequest());
+        }
+
+        private MockHttpServletRequestBuilder buildJoinRequest(UserCreateRequest request) throws JsonProcessingException {
+            return MockMvcRequestBuilders
+                    .post(BASE_URL)
+                    .content(toJson(request))
+                    .contentType(APPLICATION_JSON);
+        }
+
+    }
 
     @Test
-    @DisplayName("성공적인 회원가입 테스트")
-    void successCreateUserTest() throws Exception {
-
-        UserCreateRequest request = UserCreateRequestUtils.createRequest();
-        given(userService.createUser(request.toEntity())).willReturn(1L);
-
+    @DisplayName("회원탈퇴 API - 회원 탈퇴에 성공한다")
+    void successDeleteUser() throws Exception {
+        //when
         MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                .post(JOIN_URL)
-                .content(toJson(request))
-                .contentType(MediaType.APPLICATION_JSON);
+                .delete(BASE_URL)
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
 
-        mockMvc.perform(requestBuilder)
-                .andExpectAll(
-                        status().isCreated(),
-                        jsonPath("$").exists(),
-                        jsonPath("$.success").value(true)
-                );
+        //then
+        assertSuccess(requestBuilder, status().isOk());
+    }
+
+    @Test
+    @DisplayName("회원 정보 수정 API - 정보 수정에 성공한다")
+    void successUpdateUser() throws Exception {
+        //given
+        UserUpdateRequest request = UserUpdateRequestUtils.request(UserFixture.A);
+
+        //when
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .patch(BASE_URL)
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .content(toJson(request))
+                .contentType(APPLICATION_JSON);
+
+        //then
+        assertSuccess(requestBuilder, status().isOk());
+    }
+
+    @Test
+    @DisplayName("비밀번호 변경 API - 비밀번호 변경에 성공한다")
+    void successUpdatePassword() throws Exception {
+        //given
+        PasswordUpdateRequest request = PasswordUpdateRequestUtils.request(UserFixture.A);
+
+        //when
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .patch(BASE_URL)
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .content(toJson(request))
+                .contentType(APPLICATION_JSON);
+
+        //then
+        assertSuccess(requestBuilder, status().isOk());
     }
 }
+
+
