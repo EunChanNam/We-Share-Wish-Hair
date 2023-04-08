@@ -15,7 +15,9 @@ import com.inq.wishhair.wesharewishhair.review.service.LikeReviewService;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewSearchService;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.user.controller.MailController;
+import com.inq.wishhair.wesharewishhair.user.controller.MyPageController;
 import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
+import com.inq.wishhair.wesharewishhair.user.service.MyPageService;
 import com.inq.wishhair.wesharewishhair.user.service.PointService;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleController;
@@ -32,7 +34,7 @@ import static org.mockito.BDDMockito.given;
 @WebMvcTest(value =
         {UserController.class, HairStyleController.class, AuthController.class, TokenReissueController.class,
         HairStyleController.class, MailController.class, ReviewController.class, ReviewSearchController.class,
-        LikeReviewController.class})
+        LikeReviewController.class, MyPageController.class})
 public abstract class ControllerTest {
 
     @Autowired
@@ -70,6 +72,9 @@ public abstract class ControllerTest {
 
     @MockBean
     protected LikeReviewService likeReviewService;
+
+    @MockBean
+    protected MyPageService myPageService;
 
     public String toJson(Object object) throws JsonProcessingException {
         return objectMapper.writeValueAsString(object);
