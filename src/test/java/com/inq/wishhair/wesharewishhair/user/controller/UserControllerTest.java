@@ -4,8 +4,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserCreateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.utils.PasswordUpdateRequestUtils;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.UserUpdateRequestUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -124,6 +126,24 @@ public class UserControllerTest extends ControllerTest {
         //then
         assertSuccess(requestBuilder, status().isOk());
     }
+
+    @Test
+    @DisplayName("비밀번호 변경 API - 비밀번호 변경에 성공한다")
+    void successUpdatePassword() throws Exception {
+        //given
+        PasswordUpdateRequest request = PasswordUpdateRequestUtils.request(UserFixture.A);
+
+        //when
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .patch(BASE_URL)
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                .content(toJson(request))
+                .contentType(APPLICATION_JSON);
+
+        //then
+        assertSuccess(requestBuilder, status().isOk());
+    }
+
 
     private void assertSuccess(MockHttpServletRequestBuilder requestBuilder, ResultMatcher status) throws Exception {
         mockMvc.perform(requestBuilder)
