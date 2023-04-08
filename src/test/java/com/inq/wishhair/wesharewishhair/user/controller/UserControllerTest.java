@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static com.inq.wishhair.wesharewishhair.user.controller.utils.UserCreateRequestUtils.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -18,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("UserControllerTest - Mock")
 public class UserControllerTest extends ControllerTest {
 
-    private static final String JOIN_URL = "/api/user";
+    private static final String BASE_URL = "/api/user";
 
     @Nested
     @DisplayName("회원가입 API 테스트")
@@ -89,11 +90,28 @@ public class UserControllerTest extends ControllerTest {
 
         private MockHttpServletRequestBuilder buildJoinRequest(UserCreateRequest request) throws JsonProcessingException {
             return MockMvcRequestBuilders
-                    .post(JOIN_URL)
+                    .post(BASE_URL)
                     .content(toJson(request))
                     .contentType(APPLICATION_JSON);
         }
 
+    }
+
+    @Test
+    @DisplayName("회원탈퇴 API - 회원 탈퇴에 성공한다")
+    void successDeleteUser() throws Exception {
+        //when
+        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                .delete(BASE_URL)
+                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+        //then
+        mockMvc.perform(requestBuilder)
+                .andExpectAll(
+                        status().isOk(),
+                        jsonPath("$").exists(),
+                        jsonPath("$.success").value(true)
+                );
     }
 
 
