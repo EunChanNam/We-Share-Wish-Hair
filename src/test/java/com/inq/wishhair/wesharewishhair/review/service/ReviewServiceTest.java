@@ -57,7 +57,7 @@ public class ReviewServiceTest extends ServiceTest {
                         Review review = result.get();
                         assertThat(review.getUser()).isEqualTo(user);
                         assertThat(review.getHairStyle()).isEqualTo(hairStyle);
-                        assertThat(review.getContents()).isEqualTo(A.getContents());
+                        assertThat(review.getContentsValue()).isEqualTo(A.getContents());
                         assertThat(review.getScore()).isEqualTo(A.getScore());
                         assertThat(review.getPhotos()).hasSize(A.getOriginalFilenames().size());
                     }
@@ -81,7 +81,7 @@ public class ReviewServiceTest extends ServiceTest {
                         Review review = result.get();
                         assertThat(review.getUser()).isEqualTo(user);
                         assertThat(review.getHairStyle()).isEqualTo(hairStyle);
-                        assertThat(review.getContents()).isEqualTo(C.getContents());
+                        assertThat(review.getContentsValue()).isEqualTo(C.getContents());
                         assertThat(review.getScore()).isEqualTo(C.getScore());
                         assertThat(review.getPhotos()).hasSize(C.getOriginalFilenames().size());
                     }

@@ -38,7 +38,7 @@ public class ReviewTest {
                 () -> assertThat(result.getUser()).isEqualTo(user),
                 () -> assertThat(result.getPhotos()).isEmpty(),
                 () -> assertThat(result.getScore()).isEqualTo(Score.S2H),
-                () -> assertThat(result.getContents()).isEqualTo("hello")
+                () -> assertThat(result.getContentsValue()).isEqualTo("hello")
         );
     }
 
