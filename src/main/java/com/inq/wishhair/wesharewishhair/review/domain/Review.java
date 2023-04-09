@@ -29,8 +29,7 @@ public class Review extends BaseEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(nullable = false)
-    private String contents;
+    private Contents contents;
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
@@ -50,7 +49,7 @@ public class Review extends BaseEntity {
     //==생성 메서드==//
     private Review(User user, String contents, Score score, List<Photo> photos, HairStyle hairStyle) {
         this.user = user;
-        this.contents = contents;
+        this.contents = new Contents(contents);
         this.score = score;
         applyPhotos(photos);
         this.hairStyle = hairStyle;
@@ -74,6 +73,10 @@ public class Review extends BaseEntity {
 
     public List<LikeReview> getLikeReviews() {
         return likeReviews.getLikeReviews();
+    }
+
+    public String getContentsValue() {
+        return contents.getValue();
     }
 
     public boolean isWriter(Long userId) {

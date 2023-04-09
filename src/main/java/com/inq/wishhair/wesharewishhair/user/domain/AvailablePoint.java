@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
 public class AvailablePoint {
 

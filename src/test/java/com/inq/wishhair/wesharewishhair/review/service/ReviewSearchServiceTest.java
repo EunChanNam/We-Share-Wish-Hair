@@ -223,7 +223,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
 
             assertAll(
                     () -> assertThat(response.getLikes()).isEqualTo(expected.getLikes()),
-                    () -> assertThat(response.getContents()).isEqualTo(expected.getContents()),
+                    () -> assertThat(response.getContents()).isEqualTo(expected.getContentsValue()),
                     () -> assertThat(response.getScore()).isEqualTo(expected.getScore().getValue()),
                     () -> assertThat(response.getCreatedDate()).isEqualTo(expected.getCreatedDate()),
                     () -> assertThat(response.getHairStyleName()).isEqualTo(expected.getHairStyle().getName()),
@@ -250,7 +250,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
 
             assertAll(
                     () -> assertThat(response.getReviewId()).isEqualTo(expected.getId()),
-                    () -> assertThat(response.getContents()).isEqualTo(expected.getContents()),
+                    () -> assertThat(response.getContents()).isEqualTo(expected.getContentsValue()),
                     () -> assertThat(response.getHairStyleName()).isEqualTo(expected.getHairStyle().getName()),
                     () -> assertThat(response.getUserNickname()).isEqualTo(expected.getUser().getNicknameValue())
             );

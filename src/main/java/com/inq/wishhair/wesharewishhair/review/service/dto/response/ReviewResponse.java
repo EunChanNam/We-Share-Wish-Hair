@@ -36,7 +36,7 @@ public class ReviewResponse {
         this.hairStyleName = review.getHairStyle().getName();
         this.userNickName = review.getUser().getName();
         this.score = review.getScore().getValue();
-        this.contents = review.getContents();
+        this.contents = review.getContentsValue();
         this.createdDate = review.getCreatedDate();
         this.likes = review.getLikes();
         this.photos = PhotoResponseAssembler.toPhotoResponses(review.getPhotos());
