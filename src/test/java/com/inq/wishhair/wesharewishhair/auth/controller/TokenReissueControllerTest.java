@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.auth.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
+import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -27,40 +28,46 @@ public class TokenReissueControllerTest extends ControllerTest {
     @DisplayName("토큰 재발급 API")
     class ReissueToken {
         @Test
+        @DisplayName("헤더에 refresh 토큰을 포함하지 않아 예외를 던진다")
+        void failByNoRefreshToken() throws Exception {
+            //when
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .post(BASE_URL);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
+        }
+
+        @Test
         @DisplayName("잘못된 Refresh 토큰으로 재발급에 실패해 유효하지 않은 토큰 예외를 던진다")
         void test1() throws Exception {
             //given
             setUpSuccessToken();
+            ErrorCode expectedError = AUTH_INVALID_TOKEN;
             given(tokenReissueService.reissueToken(1L, REFRESH_TOKEN))
-                    .willThrow(new WishHairException(AUTH_INVALID_TOKEN));
+                    .willThrow(new WishHairException(expectedError));
 
             //when
             MockHttpServletRequestBuilder requestBuilder = buildReissueRequest();
 
             //then
-            mockMvc.perform(requestBuilder)
-                    .andExpectAll(
-                            status().isUnauthorized(),
-                            jsonPath("$.message").value(AUTH_INVALID_TOKEN.getMessage())
-                    );
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
         }
 
         @Test
         @DisplayName("만료된 Refresh 토큰으로 재발급에 실패해 만료된 토큰 예외를 던진다")
         void test2() throws Exception {
             //given
+            ErrorCode expectedError = AUTH_EXPIRED_TOKEN;
             given(provider.isValidToken(REFRESH_TOKEN))
-                    .willThrow(new WishHairException(AUTH_EXPIRED_TOKEN));
+                    .willThrow(new WishHairException(expectedError));
 
             //when
             MockHttpServletRequestBuilder requestBuilder = buildReissueRequest();
 
             //then
-            mockMvc.perform(requestBuilder)
-                    .andExpectAll(
-                            status().isUnauthorized(),
-                            jsonPath("$.message").value(AUTH_EXPIRED_TOKEN.getMessage())
-                    );
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
         }
 
         @Test
