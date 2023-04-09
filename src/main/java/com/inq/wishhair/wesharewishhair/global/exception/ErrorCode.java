@@ -25,6 +25,8 @@ public enum ErrorCode {
 
     REVIEW_NOT_WRITER("REVIEW_001", "리뷰 작성자가 아닙니다.", HttpStatus.BAD_REQUEST),
 
+    CONTENTS_INVALID_LENGTH("CONTENTS_001", "5자 이상 100자 이하로 작성해주세요", HttpStatus.BAD_REQUEST),
+
     MAIL_EXPIRED_KEY("MAIL_001", "인증키가 만료되었습니다.", HttpStatus.UNAUTHORIZED),
     MAIL_INVALID_KEY("MAIL_002", "인증키가 틀립니다.", HttpStatus.UNAUTHORIZED),
 
