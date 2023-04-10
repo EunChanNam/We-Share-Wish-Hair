@@ -1,6 +1,7 @@
 package com.example.wishhair.MyPage.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,18 @@ public class PointAdapter extends RecyclerView.Adapter<PointAdapter.ViewHolder> 
             PointlistNum = view.findViewById(R.id.point_num);
             PointlistDate = view.findViewById(R.id.point_date);
         }
+
+        public void setItem(PointHistory item) {
+            if(item.getPointType().equals("CHARGE")) {
+                PointlistNum.setText("+" + Integer.toString(item.getDealAmount()));
+                PointlistNum.setTextColor(Color.RED);
+            }
+            else {
+                PointlistNum.setText("-" + Integer.toString(item.getDealAmount()));
+                PointlistNum.setTextColor(Color.BLUE);
+            }
+            PointlistDate.setText(item.getDealDate().toString());
+        }
     }
 
     @NonNull
@@ -45,6 +58,7 @@ public class PointAdapter extends RecyclerView.Adapter<PointAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PointHistory item = pointItems.get(position);
+        holder.setItem(item);
     }
 
     @Override
