@@ -97,51 +97,112 @@ public class UserControllerTest extends ControllerTest {
 
     }
 
-    @Test
-    @DisplayName("회원탈퇴 API - 회원 탈퇴에 성공한다")
-    void successDeleteUser() throws Exception {
-        //when
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                .delete(BASE_URL)
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+    @Nested
+    @DisplayName("회원탈퇴 API 테스트")
+    class deleteUser {
+        @Test
+        @DisplayName("헤더에 토큰을 포함하지 않아 예외를 던진다")
+        void failByNoAccessToken() throws Exception {
+            //given
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
 
-        //then
-        assertSuccess(requestBuilder, status().isOk());
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .delete(BASE_URL);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
+        }
+
+        @Test
+        @DisplayName("회원탈퇴를 한다")
+        void success() throws Exception {
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .delete(BASE_URL)
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+            //then
+            assertSuccess(requestBuilder, status().isOk());
+        }
     }
 
-    @Test
-    @DisplayName("회원 정보 수정 API - 정보 수정에 성공한다")
-    void successUpdateUser() throws Exception {
-        //given
-        UserUpdateRequest request = UserUpdateRequestUtils.request(UserFixture.A);
+    @Nested
+    @DisplayName("회원 정보 수정 API 테스트")
+    class updateUser {
+        @Test
+        @DisplayName("헤더에 토큰을 포함하지 않아 예외를 던진다")
+        void failByNoAccessToken() throws Exception {
+            //given
+            UserUpdateRequest request = UserUpdateRequestUtils.request(UserFixture.A);
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
 
-        //when
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                .patch(BASE_URL)
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .content(toJson(request))
-                .contentType(APPLICATION_JSON);
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .patch(BASE_URL)
+                    .content(toJson(request))
+                    .contentType(APPLICATION_JSON);
 
-        //then
-        assertSuccess(requestBuilder, status().isOk());
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
+        }
+
+        @Test
+        @DisplayName("회원 정보 수정을 한다")
+        void success() throws Exception {
+            //given
+            UserUpdateRequest request = UserUpdateRequestUtils.request(UserFixture.A);
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .patch(BASE_URL)
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                    .content(toJson(request))
+                    .contentType(APPLICATION_JSON);
+
+            //then
+            assertSuccess(requestBuilder, status().isOk());
+        }
     }
 
-    @Test
-    @DisplayName("비밀번호 변경 API - 비밀번호 변경에 성공한다")
-    void successUpdatePassword() throws Exception {
-        //given
-        PasswordUpdateRequest request = PasswordUpdateRequestUtils.request(UserFixture.A);
+    @Nested
+    @DisplayName("비밀번호 변경 API 테스트")
+    class updatePassword {
+        @Test
+        @DisplayName("헤더에 토큰을 포함하지 않아 예외를 던진다")
+        void failByNoAccessToken() throws Exception {
+            //given
+            PasswordUpdateRequest request = PasswordUpdateRequestUtils.request(UserFixture.A);
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
 
-        //when
-        MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                .patch(BASE_URL)
-                .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                .content(toJson(request))
-                .contentType(APPLICATION_JSON);
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .patch(BASE_URL + "/password")
+                    .content(toJson(request))
+                    .contentType(APPLICATION_JSON);
 
-        //then
-        assertSuccess(requestBuilder, status().isOk());
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
+        }
+
+        @Test
+        @DisplayName("비밀번호 변경을 한다")
+        void successUpdatePassword() throws Exception {
+            //given
+            PasswordUpdateRequest request = PasswordUpdateRequestUtils.request(UserFixture.A);
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .patch(BASE_URL + "/password")
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                    .content(toJson(request))
+                    .contentType(APPLICATION_JSON);
+
+            //then
+            assertSuccess(requestBuilder, status().isOk());
+        }
     }
+
 }
 
 

@@ -34,6 +34,22 @@ public class HairStyleControllerTest extends ControllerTest {
     @DisplayName("헤어 추천 API")
     class respondRecommendedHairStyle {
         @Test
+        @DisplayName("헤더에 Access 토큰을 포함하지 않아서 예외를 던진다")
+        void failByNoAccessToken() throws Exception {
+            //given
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
+            MultiValueMap<String, String> params = generateTagParams(A.getTags());
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .get(RECOMMEND_URL)
+                    .queryParams(params);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
+        }
+
+        @Test
         @DisplayName("입력된 태그와 userId로 조회된 헤어스타일에 대한 응답을 받는다")
         void test1() throws Exception {
             //given
