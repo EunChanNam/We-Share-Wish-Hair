@@ -7,6 +7,7 @@ import com.inq.wishhair.wesharewishhair.auth.controller.TokenReissueController;
 import com.inq.wishhair.wesharewishhair.auth.service.AuthService;
 import com.inq.wishhair.wesharewishhair.auth.service.TokenReissueService;
 import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
+import com.inq.wishhair.wesharewishhair.global.config.RestDocsConfig;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleSearchService;
 import com.inq.wishhair.wesharewishhair.review.controller.LikeReviewController;
@@ -24,10 +25,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
+import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.restdocs.snippet.Attributes;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -39,6 +42,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.ACCESS_TOKEN;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -48,6 +52,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         HairStyleController.class, MailController.class, ReviewController.class, ReviewSearchController.class,
         LikeReviewController.class, MyPageController.class, PointController.class, PointSearchController.class})
 @ExtendWith(RestDocumentationExtension.class)
+@Import(RestDocsConfig.class)
 @AutoConfigureRestDocs
 public abstract class ControllerTest {
 
@@ -132,6 +137,14 @@ public abstract class ControllerTest {
                         status,
                         jsonPath("$").exists(),
                         jsonPath("$.message").value(expectedError.getMessage())
+                ).andDo(
+                        restDocs.document(
+                                responseFields(
+                                        fieldWithPath("status").description("Http 상태 코드"),
+                                        fieldWithPath("code").description("예외 코드"),
+                                        fieldWithPath("message").description("예외 메세지")
+                                )
+                        )
                 );
     }
 
