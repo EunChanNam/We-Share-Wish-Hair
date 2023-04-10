@@ -55,7 +55,7 @@
         android:padding="20dp">
         <!--    title -->
         <TextView
-            android:id="@+id/review_detail_hairStyle"
+            android:id="@+id/review_detail_hairStyleName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="헤어스타일 이름"
@@ -85,7 +85,7 @@
                 tools:ignore="ContentDescription" />
 
             <TextView
-                android:id="@+id/review_detail_tv_grade"
+                android:id="@+id/review_detail_tv_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="3.04" />
@@ -100,7 +100,7 @@
                 tools:ignore="ContentDescription" />
 
             <TextView
-                android:id="@+id/review_detail_tv_heartCount"
+                android:id="@+id/review_detail_tv_likes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="500" />
@@ -129,6 +129,13 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="내용"/>
+
+<!--        TODO test image View 제거 -->
+        <ImageView
+            android:id="@+id/test_image_view"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="fitCenter"/>
     </LinearLayout>
 
 </LinearLayout>

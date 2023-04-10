@@ -2,9 +2,11 @@ package com.example.wishhair.sign;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -36,6 +38,7 @@ public class EmailCertActivity extends AppCompatActivity {
 
     private EditText ed_email, ed_code;
     private Button btn_intent;
+    private TextView remainTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,12 +51,31 @@ public class EmailCertActivity extends AppCompatActivity {
         TextView pageTitle = findViewById(R.id.toolbar_textView_title);
         pageTitle.setText("");
 
+//        timer
+        remainTime = findViewById(R.id.sign_cert_timer);
+        CountDownTimer timer = new CountDownTimer(180000, 1000) {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void onTick(long millisUntilFinished) {
+                long min = (millisUntilFinished / 1000) / 60;
+                long sec = (millisUntilFinished / 1000) % 60;
+
+                remainTime.setText(min + " : " + sec);
+            }
+
+            @Override
+            public void onFinish() {
+                remainTime.setText("인증번호를 다시 전송해 주세요.");
+            }
+        };
+
 //        send request
         ed_email = findViewById(R.id.sign_cert_et_email);
         Button btn_send = findViewById(R.id.sign_cert_btn_requestSend);
         btn_send.setOnClickListener(view -> {
-            String inputEmail = String.valueOf(ed_email.getText());
-            emailSendRequest(inputEmail);
+            timer.start();
+//            String inputEmail = String.valueOf(ed_email.getText());
+//            emailSendRequest(inputEmail);
         });
 
 //        confirmCode request

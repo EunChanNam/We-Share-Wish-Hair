@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wishhair.R;
-import com.example.wishhair.review.recent.RecyclerViewAdapterRecent;
+import com.example.wishhair.review.recent.RecentAdapter;
 import com.example.wishhair.review.ReviewItem;
 
 import java.util.ArrayList;
@@ -27,8 +27,8 @@ public class RecyclerViewAdapterMy extends RecyclerView.Adapter<RecyclerViewAdap
     public interface OnItemClickListener {
         void onItemClick(View v, int position);
     }
-    private RecyclerViewAdapterRecent.OnItemClickListener mListener = null;
-    public void setOnItemClickListener(RecyclerViewAdapterRecent.OnItemClickListener listener) {
+    private RecentAdapter.OnItemClickListener mListener = null;
+    public void setOnItemClickListener(RecentAdapter.OnItemClickListener listener) {
         this.mListener = listener;
     }
 

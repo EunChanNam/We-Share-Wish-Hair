@@ -19,12 +19,12 @@ import com.example.wishhair.review.ReviewItem;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerViewAdapterRecent.ViewHolder> {
+public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder> {
 
     private final ArrayList<ReviewItem> reviewItems;
     private final Context context;
 
-    public RecyclerViewAdapterRecent(ArrayList<ReviewItem> reviewItems, Context context) {
+    public RecentAdapter(ArrayList<ReviewItem> reviewItems, Context context) {
         this.reviewItems = reviewItems;
         this.context = context;
     }
@@ -54,7 +54,6 @@ public class RecyclerViewAdapterRecent extends RecyclerView.Adapter<RecyclerView
 
         holder.profileImage.setImageResource(item.getProfileImage());
 
-//        TODO : 사진 없을 때 처리
         List<Bitmap> photoBitmaps = item.getBitmapImages();
         if (photoBitmaps.size() == 1) {
             holder.bindContentImage1(item.getBitmapImages().get(0));

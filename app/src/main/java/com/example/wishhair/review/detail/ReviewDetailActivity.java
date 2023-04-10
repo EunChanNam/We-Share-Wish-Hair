@@ -1,22 +1,25 @@
 package com.example.wishhair.review.detail;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.wishhair.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator3;
 
@@ -30,7 +33,11 @@ public class ReviewDetailActivity extends AppCompatActivity {
             "https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg"
     };
 
-    Button btn_back;
+    private Button btn_back;
+    //    content
+    private TextView hairStyleName, tags, score, likes, date, content;
+    private List<Bitmap> photos;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +51,40 @@ public class ReviewDetailActivity extends AppCompatActivity {
         CircleIndicator3 circleIndicator = findViewById(R.id.review_detail_indicator);
 
         sliderViewPager.setOffscreenPageLimit(1);
-        sliderViewPager.setAdapter(new ImageSliderAdapter(this, images));
+//        sliderViewPager.setAdapter(new ImageSliderAdapter(this, images));
 
         circleIndicator.setViewPager(sliderViewPager);
+
+//        content
+        hairStyleName = findViewById(R.id.review_detail_hairStyleName);
+        hairStyleName.setText(getIntent().getStringExtra("hairStyleName"));
+
+        tags = findViewById(R.id.review_detail_tags);
+        tags.setText(getIntent().getStringExtra("tags"));
+
+        score = findViewById(R.id.review_detail_tv_score);
+        score.setText(getIntent().getStringExtra("score"));
+
+        likes = findViewById(R.id.review_detail_tv_likes);
+        likes.setText(String.valueOf(getIntent().getIntExtra("likes", 0)));
+
+        date = findViewById(R.id.review_detail_tv_date);
+        date.setText(getIntent().getStringExtra("date"));
+
+        content = findViewById(R.id.review_detail_tv_content);
+        content.setText(getIntent().getStringExtra("content"));
+
+        /*for (int i = 0; i < getIntent().getIntExtra("listSize", 0); i++) {
+            byte[] byteArray = getIntent().getByteArrayExtra("photo" + i);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+            photos.add(bitmap);
+        }*/
+
+        List<Uri> images = new ArrayList<>();
+        images.add(Uri.parse(getIntent().getStringExtra("image_uri")));
+//        TODO 테스트용 이미지 뷰 제거
+        ImageView testImageView = findViewById(R.id.test_image_view);
+        testImageView.setImageURI(images.get(0));
 
     }
 

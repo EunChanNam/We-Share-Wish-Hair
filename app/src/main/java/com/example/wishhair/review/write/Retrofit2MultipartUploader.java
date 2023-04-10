@@ -4,6 +4,7 @@ import com.example.wishhair.BuildConfig;
 import com.example.wishhair.sign.UrlConst;
 import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
@@ -74,7 +75,7 @@ public class Retrofit2MultipartUploader {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.d(TAG, "response");
+                ((Activity)context).finish();
             }
 
             @Override
