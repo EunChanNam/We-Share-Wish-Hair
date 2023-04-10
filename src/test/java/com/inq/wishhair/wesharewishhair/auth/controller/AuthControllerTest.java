@@ -116,10 +116,7 @@ public class AuthControllerTest extends ControllerTest {
                             jsonPath("$.success").value(true)
                     ).andDo(
                             restDocs.document(
-                                    requestHeaders(
-                                            headerWithName(AUTHORIZATION).description("Bearer + Access Token")
-                                                    .attributes(constraint("반드시 포함"))
-                                    ),
+                                    accessTokenHeaderDocument(),
                                     successResponseDocument()
                             )
                     );

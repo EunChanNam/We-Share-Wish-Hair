@@ -7,6 +7,8 @@ import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.restdocs.headers.HeaderDocumentation;
+import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -14,6 +16,9 @@ import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.AUTH_E
 import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.AUTH_INVALID_TOKEN;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -41,7 +46,7 @@ public class TokenReissueControllerTest extends ControllerTest {
 
         @Test
         @DisplayName("잘못된 Refresh 토큰으로 재발급에 실패해 유효하지 않은 토큰 예외를 던진다")
-        void test1() throws Exception {
+        void failByInvalidRefreshToken() throws Exception {
             //given
             setUpSuccessToken();
             ErrorCode expectedError = AUTH_INVALID_TOKEN;
@@ -57,7 +62,7 @@ public class TokenReissueControllerTest extends ControllerTest {
 
         @Test
         @DisplayName("만료된 Refresh 토큰으로 재발급에 실패해 만료된 토큰 예외를 던진다")
-        void test2() throws Exception {
+        void failByExpiredRefreshToken() throws Exception {
             //given
             ErrorCode expectedError = AUTH_EXPIRED_TOKEN;
             given(provider.isValidToken(REFRESH_TOKEN))
@@ -72,7 +77,7 @@ public class TokenReissueControllerTest extends ControllerTest {
 
         @Test
         @DisplayName("토큰 재발급에 성공한다")
-        void test3() throws Exception {
+        void success() throws Exception {
             //given
             setUpSuccessToken();
 
@@ -90,6 +95,16 @@ public class TokenReissueControllerTest extends ControllerTest {
                             jsonPath("$").exists(),
                             jsonPath("$.accessToken").value(expectedResponse.getAccessToken()),
                             jsonPath("$.refreshToken").value(expectedResponse.getRefreshToken())
+                    ).andDo(
+                            restDocs.document(
+                                    requestHeaders(
+                                            headerWithName(AUTHORIZATION).description("Bearer + Refresh Token")
+                                    ),
+                                    responseFields(
+                                            fieldWithPath("accessToken").description("Access 토큰 (Expire 2시간)"),
+                                            fieldWithPath("refreshToken").description("Refresh 토큰 (Expire 2주)")
+                                    )
+                            )
                     );
         }
     }
