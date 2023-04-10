@@ -40,9 +40,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,7 +112,7 @@ public class ReviewListFragment extends Fragment {
             handler.postDelayed(() -> swipeRefreshLayout.setRefreshing(false), 500);
         });
 
-        // TODO: 2023-03-12  나중에 아이템 클릭시 해당 게시글 이동 리스너로 활용
+        // TODO: 2023-03-12  해당 게시글 이동 리스너
         recentAdapter.setOnItemClickListener(new RecentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
@@ -127,20 +125,11 @@ public class ReviewListFragment extends Fragment {
                 intent.putExtra("date", selectedItem.getCreatedDate());
                 intent.putExtra("content", selectedItem.getContents());
 
-//                intent.putExtra("photo" + i, selectedItem.getBitmapImages());
-                ByteArrayOutputStream stream = new ByteArrayOutputStream();
-                selectedItem.getBitmapImages().get(0).compress(Bitmap.CompressFormat.PNG, 100, stream);
-                byte[] byteArray = stream.toByteArray();
-                Log.d("byte", Arrays.toString(byteArray));
-                Log.d("size: ", String.valueOf(byteArray.length));
-//                bitmap size 초과 에러인듯
-//                intent로 사진 넘기는법 다시 찾아 보자구요
-//                intent.putExtra("photo", byteArray);
-
-                intent.putExtra("listSize", selectedItem.getBitmapImages().size());
-
+//                TODO 04.10 : 이미지 넘기기
+                Bitmap bitmapImage = selectedItem.getBitmapImages().get(0);
                 startActivity(intent);
             }
+
         });
 
 //        sort
@@ -202,8 +191,8 @@ public class ReviewListFragment extends Fragment {
                             String encodedImage = photoObject.getString("encodedImage");
 
                             Bitmap imageBitmap = decodeImage(encodedImage);
+                            Log.d("size", "encoded : " + encodedImage.length());
                             receivedBitmaps.add(imageBitmap);
-
                         }
                         receivedData.setBitmapImages(receivedBitmaps);
 
@@ -249,6 +238,7 @@ public class ReviewListFragment extends Fragment {
 
     public static Bitmap decodeImage(String encodedImage) {
         byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
+        Log.d("byte size", "byte " + decodedString.length);
         return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 

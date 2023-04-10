@@ -2,6 +2,7 @@ package com.example.wishhair.review.detail;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,16 +20,16 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
 
     private final Context context;
 //    private final String[] sliderImage;
-    private final List<Bitmap> bitmapIamges;
+    private final List<Uri> uriImages;
 
     /*public ImageSliderAdapter(Context context, String[] sliderImage) {
         this.context = context;
         this.sliderImage = sliderImage;
     }*/
 
-    public ImageSliderAdapter(Context context, List<Bitmap> bitmapIamges) {
+    public ImageSliderAdapter(Context context, List<Uri> uriImages) {
         this.context = context;
-        this.bitmapIamges = bitmapIamges;
+        this.uriImages = uriImages;
     }
 
     @NonNull
@@ -41,13 +42,14 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
 //        holder.bindSliderImage(sliderImage[position]);
-        holder.bindBitmapImage(bitmapIamges.get(position));
+//        holder.bindBitmapImage(uriImages.get(position));
+        holder.bindUriImage(uriImages.get(position));
     }
 
     @Override
     public int getItemCount() {
 //        return sliderImage.length;
-        return bitmapIamges.size();
+        return uriImages.size();
     }
 
 
@@ -65,6 +67,10 @@ public class ImageSliderAdapter extends RecyclerView.Adapter<ImageSliderAdapter.
 
         public void bindBitmapImage(Bitmap image) {
             Glide.with(context).load(image).into(mImageView);
+        }
+
+        public void bindUriImage(Uri imageUri) {
+            Glide.with(context).load(imageUri).into(mImageView);
         }
     }
 }

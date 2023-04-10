@@ -1,24 +1,24 @@
 package com.example.wishhair.review.detail;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.example.wishhair.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator3;
@@ -79,6 +79,12 @@ public class ReviewDetailActivity extends AppCompatActivity {
             Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
             photos.add(bitmap);
         }*/
+
+        List<Uri> images = new ArrayList<>();
+        images.add(Uri.parse(getIntent().getStringExtra("image_uri")));
+//        TODO 테스트용 이미지 뷰 제거
+        ImageView testImageView = findViewById(R.id.test_image_view);
+        testImageView.setImageURI(images.get(0));
 
     }
 
