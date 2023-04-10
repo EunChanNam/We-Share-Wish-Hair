@@ -9,6 +9,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyle
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
@@ -21,6 +22,10 @@ import static com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture.*
 import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.getDefaultPageable;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,7 +37,7 @@ public class HairStyleControllerTest extends ControllerTest {
 
     @Nested
     @DisplayName("헤어 추천 API")
-    class respondRecommendedHairStyle {
+    class recommendHairStyle {
         @Test
         @DisplayName("헤더에 Access 토큰을 포함하지 않아서 예외를 던진다")
         void failByNoAccessToken() throws Exception {
@@ -51,7 +56,7 @@ public class HairStyleControllerTest extends ControllerTest {
 
         @Test
         @DisplayName("입력된 태그와 userId로 조회된 헤어스타일에 대한 응답을 받는다")
-        void test1() throws Exception {
+        void success() throws Exception {
             //given
             List<Tag> tags = A.getTags();
             ResponseWrapper<HairStyleResponse> expectedResponse = assembleWrappedResponse(List.of(A, C, D, E));
@@ -72,12 +77,21 @@ public class HairStyleControllerTest extends ControllerTest {
                     .andExpectAll(
                             status().isOk(),
                             jsonPath("$").exists()
+                    ).andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    queryParameters(
+                                            parameterWithName("tags").description("검색 Tag")
+                                                    .attributes(constraint("하나 이상 필요"))
+                                    ),
+                                    hairStyleResponseDocument()
+                            )
                     );
         }
 
         @Test
         @DisplayName("태그를 입력하지 않으면 400 예외를 던진다")
-        void test2() throws Exception {
+        void failByNoTag() throws Exception {
             //given, 태그 X
             ErrorCode expectedError = ErrorCode.RUN_NOT_ENOUGH_TAG;
 
@@ -87,18 +101,27 @@ public class HairStyleControllerTest extends ControllerTest {
                     .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
 
             //then
-            mockMvc.perform(requestBuilder)
-                    .andExpectAll(
-                            status().isBadRequest(),
-                            jsonPath("$").exists(),
-                            jsonPath("$.message").value(expectedError.getMessage())
-                    );
+            assertException(expectedError, requestBuilder, status().isBadRequest());
         }
     }
 
     @Nested
     @DisplayName("사용자 얼굴형 맞춤 헤어 추천 API")
     class findHairStyleByFaceShape {
+
+        @Test
+        @DisplayName("헤더에 Access 토큰을 포함하지 않아서 예외를 던진다")
+        void failByNoAccessToken() throws Exception {
+            //given
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .get(RECOMMEND_URL);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
+        }
         @Test
         @DisplayName("사용자 얼굴형 기반 헤어추천 서비스 로직의 결과를 헤어스타일 응답으로 변환해 응답한다")
         void test3() throws Exception {
@@ -118,8 +141,8 @@ public class HairStyleControllerTest extends ControllerTest {
                             jsonPath("$").exists()
                     );
         }
-    }
 
+    }
     private MultiValueMap<String, String> generateTagParams(List<Tag> tags) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         tags.forEach(tag -> queryParams.add("tags", tag.toString()));
@@ -137,5 +160,14 @@ public class HairStyleControllerTest extends ControllerTest {
             expectedResponse.add(fixture.toResponse(id++));
         }
         return expectedResponse;
+    }
+
+    private ResponseFieldsSnippet hairStyleResponseDocument() {
+        return responseFields(
+                fieldWithPath("result[].hairStyleId").description("헤어스타일 ID(PK)"),
+                fieldWithPath("result[].name").description("헤어스타일 이름"),
+                fieldWithPath("result[].photos[].storeFilename").description("저장된 사진 이름"),
+                fieldWithPath("result[].hashTags[].tag").description("헤어스타일 해시태그")
+        );
     }
 }

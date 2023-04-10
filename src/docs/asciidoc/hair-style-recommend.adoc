@@ -1,0 +1,27 @@
+= 헤어스타일 검색 API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+
+== 헤어스타일 추천 API
+Http Request
+include::{snippets}/recommend-hair-style/success/http-request.adoc[]
+include::{snippets}/recommend-hair-style/success/request-headers.adoc[]
+
+=== 1. 조회 성공
+Http Response
+include::{snippets}/recommend-hair-style/success/http-response.adoc[]
+include::{snippets}/recommend-hair-style/success/response-fields.adoc[]
+
+=== 2. 태그를 입력하지 않아 실패
+Http Response
+include::{snippets}/recommend-hair-style/fail-by-no-tag/http-response.adoc[]
+include::{snippets}/recommend-hair-style/fail-by-no-tag/response-fields.adoc[]
+
+=== 3. 헤더에 토큰을 포함하지 않아 실패
+Http Response
+include::{snippets}/recommend-hair-style/fail-by-no-access-token/http-response.adoc[]
+include::{snippets}/recommend-hair-style/fail-by-no-access-token/response-fields.adoc[]
+
