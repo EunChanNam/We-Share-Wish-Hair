@@ -1,8 +1,8 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
-import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
-import com.inq.wishhair.wesharewishhair.fixture.ReviewFixture;
-import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;

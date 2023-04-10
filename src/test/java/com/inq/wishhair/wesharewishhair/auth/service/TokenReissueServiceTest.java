@@ -2,7 +2,7 @@ package com.inq.wishhair.wesharewishhair.auth.service;
 
 import com.inq.wishhair.wesharewishhair.auth.domain.Token;
 import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
-import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;

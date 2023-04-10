@@ -120,9 +120,7 @@ public class AuthControllerTest extends ControllerTest {
                                             headerWithName(AUTHORIZATION).description("Bearer + Access Token")
                                                     .attributes(constraint("반드시 포함"))
                                     ),
-                                    responseFields(
-                                            fieldWithPath("success").description("성공 여부")
-                                    )
+                                    successResponseDocument()
                             )
                     );
         }

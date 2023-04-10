@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 
-import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -17,7 +17,7 @@ import org.springframework.util.MultiValueMap;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture.*;
+import static com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture.*;
 import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.getDefaultPageable;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.mockito.BDDMockito.given;

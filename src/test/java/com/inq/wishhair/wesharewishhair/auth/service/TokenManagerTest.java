@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.auth.service;
 
 import com.inq.wishhair.wesharewishhair.auth.domain.Token;
-import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;

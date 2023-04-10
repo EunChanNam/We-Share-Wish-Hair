@@ -16,7 +16,7 @@ import org.springframework.data.domain.Pageable;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture.*;
+import static com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

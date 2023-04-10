@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.review.controller.utils;
 
-import com.inq.wishhair.wesharewishhair.fixture.ReviewFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewCreateRequest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;

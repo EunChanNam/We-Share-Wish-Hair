@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.review.service;
 
-import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
-import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
-import static com.inq.wishhair.wesharewishhair.fixture.ReviewFixture.*;
+import static com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;

@@ -1,8 +1,8 @@
 package com.inq.wishhair.wesharewishhair.review.service;
 
-import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
-import com.inq.wishhair.wesharewishhair.fixture.ReviewFixture;
-import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;

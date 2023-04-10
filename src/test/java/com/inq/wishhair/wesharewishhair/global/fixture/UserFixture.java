@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.fixture;
+package com.inq.wishhair.wesharewishhair.global.fixture;
 
 import com.inq.wishhair.wesharewishhair.user.domain.Email;
 import com.inq.wishhair.wesharewishhair.user.domain.Nickname;
