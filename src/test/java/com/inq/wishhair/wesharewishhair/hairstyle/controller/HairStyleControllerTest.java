@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 
+import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
@@ -21,6 +22,7 @@ import java.util.List;
 import static com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture.*;
 import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.getDefaultPageable;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -58,8 +60,8 @@ public class HairStyleControllerTest extends ControllerTest {
         @DisplayName("입력된 태그와 userId로 조회된 헤어스타일에 대한 응답을 받는다")
         void success() throws Exception {
             //given
-            List<Tag> tags = A.getTags();
-            ResponseWrapper<HairStyleResponse> expectedResponse = assembleWrappedResponse(List.of(A, C, D, E));
+            List<Tag> tags = E.getTags();
+            ResponseWrapper<HairStyleResponse> expectedResponse = assembleWrappedResponse(List.of(E, C, D));
 
             given(hairStyleSearchService.findRecommendedHairStyle(tags, 1L, getDefaultPageable()))
                     .willReturn(expectedResponse);
@@ -69,7 +71,7 @@ public class HairStyleControllerTest extends ControllerTest {
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                     .get(RECOMMEND_URL)
-                    .header(AUTHORIZATION, BEARER +  ACCESS_TOKEN)
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
                     .queryParams(params);
 
             //then
@@ -82,7 +84,7 @@ public class HairStyleControllerTest extends ControllerTest {
                                     accessTokenHeaderDocument(),
                                     queryParameters(
                                             parameterWithName("tags").description("검색 Tag")
-                                                    .attributes(constraint("하나 이상 필요"))
+                                                    .attributes(constraint("얼굴형 태그 포함 하나 이상 필요"))
                                     ),
                                     hairStyleResponseDocument()
                             )
@@ -103,11 +105,33 @@ public class HairStyleControllerTest extends ControllerTest {
             //then
             assertException(expectedError, requestBuilder, status().isBadRequest());
         }
+
+        @Test
+        @DisplayName("태그에 얼굴형 태그가 없으면 400 예외를 던진다")
+        void failByNoFaceShapeTag() throws Exception{
+            //given
+            List<Tag> tags = E.getTags();
+            tags.removeIf(Tag::isFaceShapeType);
+            MultiValueMap<String, String> params = generateTagParams(tags);
+
+            ErrorCode expectedError = ErrorCode.RUN_NO_FACE_SHAPE_TAG;
+            given(hairStyleSearchService.findRecommendedHairStyle(any(), any(), any()))
+                    .willThrow(new WishHairException(expectedError));
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .get(RECOMMEND_URL)
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                    .queryParams(params);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isBadRequest());
+        }
     }
 
     @Nested
     @DisplayName("사용자 얼굴형 맞춤 헤어 추천 API")
-    class findHairStyleByFaceShape {
+    class recommendHairStyleByFaceShape {
 
         @Test
         @DisplayName("헤더에 Access 토큰을 포함하지 않아서 예외를 던진다")
@@ -124,7 +148,7 @@ public class HairStyleControllerTest extends ControllerTest {
         }
         @Test
         @DisplayName("사용자 얼굴형 기반 헤어추천 서비스 로직의 결과를 헤어스타일 응답으로 변환해 응답한다")
-        void test3() throws Exception {
+        void success() throws Exception {
             //given
             given(hairStyleSearchService.findHairStyleByFaceShape(1L))
                     .willReturn(assembleWrappedResponse(List.of(C, E, D)));
@@ -139,6 +163,11 @@ public class HairStyleControllerTest extends ControllerTest {
                     .andExpectAll(
                             status().isOk(),
                             jsonPath("$").exists()
+                    ).andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    hairStyleResponseDocument()
+                            )
                     );
         }
 
