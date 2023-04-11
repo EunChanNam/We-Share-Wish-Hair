@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.user.event;
+package com.inq.wishhair.wesharewishhair.user.event.listener;
 
 import com.inq.wishhair.wesharewishhair.global.event.MailSendEvent;
 import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
@@ -9,7 +9,7 @@ import org.springframework.transaction.event.TransactionalEventListener;
 
 @Component
 @RequiredArgsConstructor
-public class MailSendListener {
+public class MailSendEventListener {
 
     private final MailSendService mailSendService;
 
