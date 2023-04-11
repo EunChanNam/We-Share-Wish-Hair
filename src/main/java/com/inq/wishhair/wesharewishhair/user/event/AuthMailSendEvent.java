@@ -1,6 +1,5 @@
 package com.inq.wishhair.wesharewishhair.user.event;
 
-import com.inq.wishhair.wesharewishhair.global.event.MailSendEvent;
 import com.inq.wishhair.wesharewishhair.user.service.dto.MailDto;
 
 public class AuthMailSendEvent extends MailSendEvent {

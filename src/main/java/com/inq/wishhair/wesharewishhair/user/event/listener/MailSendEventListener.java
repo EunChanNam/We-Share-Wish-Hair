@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.event.listener;
 
-import com.inq.wishhair.wesharewishhair.global.event.MailSendEvent;
+import com.inq.wishhair.wesharewishhair.user.event.MailSendEvent;
 import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

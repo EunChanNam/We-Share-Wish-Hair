@@ -1,6 +1,5 @@
 package com.inq.wishhair.wesharewishhair.user.event;
 
-import com.inq.wishhair.wesharewishhair.global.event.MailSendEvent;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PointUseRequest;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.service.dto.MailDto;
