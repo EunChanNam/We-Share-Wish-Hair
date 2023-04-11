@@ -11,8 +11,12 @@ import org.springframework.stereotype.Service;
 public class MailSendService {
 
     private final JavaMailSender mailSender;
+    private final UserValidator userValidator;
 
     public void sendMail(MailDto dto) {
+
+        userValidator.validateEmailIsNotDuplicated(dto.getEmail());
+
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("namhm23@kyonggi.ac.kr");
         message.setTo(dto.getEmail().getValue());
