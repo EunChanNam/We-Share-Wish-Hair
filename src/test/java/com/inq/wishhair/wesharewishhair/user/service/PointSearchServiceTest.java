@@ -1,13 +1,12 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
-import com.inq.wishhair.wesharewishhair.fixture.PointFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.PointFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.PointResponse;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,8 +17,8 @@ import org.springframework.test.util.ReflectionTestUtils;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.inq.wishhair.wesharewishhair.fixture.PointFixture.values;
-import static com.inq.wishhair.wesharewishhair.fixture.UserFixture.A;
+import static com.inq.wishhair.wesharewishhair.global.fixture.PointFixture.values;
+import static com.inq.wishhair.wesharewishhair.global.fixture.UserFixture.A;
 import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;

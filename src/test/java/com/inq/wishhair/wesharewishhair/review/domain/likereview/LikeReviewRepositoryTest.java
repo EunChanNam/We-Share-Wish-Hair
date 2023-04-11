@@ -1,10 +1,9 @@
 package com.inq.wishhair.wesharewishhair.review.domain.likereview;
 
-import com.inq.wishhair.wesharewishhair.fixture.ReviewFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

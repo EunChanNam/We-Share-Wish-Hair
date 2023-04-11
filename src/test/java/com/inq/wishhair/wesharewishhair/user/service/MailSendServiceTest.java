@@ -6,7 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.inq.wishhair.wesharewishhair.fixture.MailDtoFixture.A;
+import static com.inq.wishhair.wesharewishhair.global.fixture.MailDtoFixture.A;
 
 public class MailSendServiceTest extends ServiceTest {
 

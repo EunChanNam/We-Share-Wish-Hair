@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
-import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;

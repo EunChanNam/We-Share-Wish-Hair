@@ -15,7 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-import static com.inq.wishhair.wesharewishhair.fixture.UserFixture.*;
+import static com.inq.wishhair.wesharewishhair.global.fixture.UserFixture.*;
 import static com.inq.wishhair.wesharewishhair.user.controller.utils.PasswordUpdateRequestUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

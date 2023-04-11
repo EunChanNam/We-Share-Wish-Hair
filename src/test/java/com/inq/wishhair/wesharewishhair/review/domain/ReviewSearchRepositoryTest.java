@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.review.domain;
 
-import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
-import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static com.inq.wishhair.wesharewishhair.fixture.ReviewFixture.*;
+import static com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

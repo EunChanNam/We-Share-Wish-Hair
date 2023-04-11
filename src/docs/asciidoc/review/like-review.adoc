@@ -1,0 +1,22 @@
+= 리뷰 - 좋아요 API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+
+== 좋아요 실행 API
+=== 1. 실행 성공
+Http Request
+include::{snippets}/like-review/success/http-request.adoc[]
+include::{snippets}/like-review/success/request-headers.adoc[]
+include::{snippets}/like-review/success/path-parameters.adoc[]
+
+Http Response
+include::{snippets}/like-review/success/http-response.adoc[]
+include::{snippets}/like-review/success/response-fields.adoc[]
+
+=== 2. 헤더에 토큰을 포함하지 않아 실패
+Http Response
+include::{snippets}/like-review/fail-by-no-access-token/http-response.adoc[]
+include::{snippets}/like-review/fail-by-no-access-token/response-fields.adoc[]

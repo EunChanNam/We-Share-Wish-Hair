@@ -1,16 +1,14 @@
 package com.inq.wishhair.wesharewishhair.review.controller;
 
-import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
-import com.inq.wishhair.wesharewishhair.fixture.ReviewFixture;
-import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.dto.response.Paging;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewCreateRequest;
-import com.inq.wishhair.wesharewishhair.review.controller.utils.ReviewCreateRequestUtils;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewSimpleResponse;
@@ -21,12 +19,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.inq.wishhair.wesharewishhair.fixture.ReviewFixture.*;
+import static com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture.*;
 import static com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils.getDateDescPageable;
 import static com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils.getLikeDescPageable;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;

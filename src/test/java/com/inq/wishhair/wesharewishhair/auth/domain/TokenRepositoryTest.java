@@ -1,8 +1,7 @@
 package com.inq.wishhair.wesharewishhair.auth.domain;
 
-import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
-import com.inq.wishhair.wesharewishhair.global.utils.TokenUtils;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import jakarta.persistence.EntityManager;

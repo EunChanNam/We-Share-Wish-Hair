@@ -1,0 +1,6 @@
+= We Share Wish Hair REST Docs [API 문서]
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3

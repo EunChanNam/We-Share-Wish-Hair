@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.domain;
 
-import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointSearchRepository;

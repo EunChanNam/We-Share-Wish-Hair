@@ -1,12 +1,11 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
-import com.inq.wishhair.wesharewishhair.fixture.PointFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.PointFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.dto.response.Paging;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils;
-import com.inq.wishhair.wesharewishhair.global.utils.TokenUtils;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.PointResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -19,7 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.inq.wishhair.wesharewishhair.fixture.PointFixture.values;
+import static com.inq.wishhair.wesharewishhair.global.fixture.PointFixture.values;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;

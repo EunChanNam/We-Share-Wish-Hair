@@ -5,10 +5,13 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -38,8 +41,8 @@ public class LikeReviewControllerTest extends ControllerTest {
         @DisplayName("좋아요를 실행한다")
         void success() throws Exception {
             //when
-            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .post(BASE_URL + "/1")
+            MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
+                    .post(BASE_URL + "/{reviewId}", 1L)
                     .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
 
             //then
@@ -48,6 +51,15 @@ public class LikeReviewControllerTest extends ControllerTest {
                             status().isOk(),
                             jsonPath("$").exists(),
                             jsonPath("$.success").value(true)
+                    ).andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    pathParameters(
+                                            parameterWithName("reviewId").attributes(constraint("필수 입니다"))
+                                            .description("좋아요 할 리뷰 ID(PK)")
+                                            ),
+                                    successResponseDocument()
+                            )
                     );
         }
     }

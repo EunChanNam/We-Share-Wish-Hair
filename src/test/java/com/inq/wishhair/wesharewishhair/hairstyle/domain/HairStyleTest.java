@@ -2,7 +2,7 @@ package com.inq.wishhair.wesharewishhair.hairstyle.domain;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
-import com.inq.wishhair.wesharewishhair.fixture.HairStyleFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

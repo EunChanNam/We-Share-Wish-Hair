@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.inq.wishhair.wesharewishhair.fixture.UserFixture;
+import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;

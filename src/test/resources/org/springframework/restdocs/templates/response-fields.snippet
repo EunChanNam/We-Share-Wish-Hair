@@ -1,0 +1,10 @@
+[cols="3,2,6,6", options=header]
+|===
+|필드명|타입|제약 조건|설명
+{{#fields}}
+|{{#tableCellContent}}`+{{path}}+`{{/tableCellContent}}
+|{{#tableCellContent}}`+{{type}}+`{{/tableCellContent}}
+|{{#tableCellContent}}{{#constraints}}{{.}}{{/constraints}}{{/tableCellContent}}
+|{{#tableCellContent}}{{description}}{{/tableCellContent}}
+{{/fields}}
+|===

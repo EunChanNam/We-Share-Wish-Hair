@@ -1,0 +1,43 @@
+= Auth 로그인 인증 API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+
+== 로그인 요청 API
+Http Request
+include::{snippets}/login/success/http-request.adoc[]
+include::{snippets}/login/success/request-fields.adoc[]
+
+=== 1. 로그인 성공
+
+Http Response
+include::{snippets}/login/success/http-response.adoc[]
+include::{snippets}/login/success/response-fields.adoc[]
+
+=== 2. 로그인 실패
+Http Response
+include::{snippets}/login/login-fail/http-response.adoc[]
+include::{snippets}/login/login-fail/response-fields.adoc[]
+
+== 로그아웃 요청 API
+Http Request
+include::{snippets}/logout/success/http-request.adoc[]
+include::{snippets}/logout/success/request-headers.adoc[]
+
+=== 1. 로그아웃 성공
+Http Response
+include::{snippets}/logout/success/http-response.adoc[]
+include::{snippets}/logout/success/response-fields.adoc[]
+
+=== 2. 로그아웃 실패
+Http Response
+include::{snippets}/logout/fail-by-no-access-token/http-response.adoc[]
+include::{snippets}/logout/fail-by-no-access-token/response-fields.adoc[]
+
+
+
+
+
+
