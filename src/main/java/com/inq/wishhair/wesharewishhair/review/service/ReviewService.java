@@ -13,7 +13,6 @@ import com.inq.wishhair.wesharewishhair.review.event.PointChargeEvent;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.user.service.PointService;
 import com.inq.wishhair.wesharewishhair.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;

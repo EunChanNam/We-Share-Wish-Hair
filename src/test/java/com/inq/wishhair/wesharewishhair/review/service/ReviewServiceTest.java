@@ -20,11 +20,10 @@ import java.util.Optional;
 import static com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 
 @DisplayName("ReviewServiceTest - SpringBootTest")
 public class ReviewServiceTest extends ServiceTest {
-
+    //todo 포인트 충전 테스트 추가 + 이벤트 테스트
     @Autowired
     private ReviewService reviewService;
 
