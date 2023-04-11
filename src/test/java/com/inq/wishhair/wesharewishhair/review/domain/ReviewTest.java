@@ -4,7 +4,7 @@ import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.review.enums.Score;
+import com.inq.wishhair.wesharewishhair.review.domain.enums.Score;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
