@@ -6,7 +6,6 @@ import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointType;
 import com.inq.wishhair.wesharewishhair.user.event.RefundMailSendEvent;
-import com.inq.wishhair.wesharewishhair.user.service.dto.MailDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
