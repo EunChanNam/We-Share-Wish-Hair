@@ -17,7 +17,7 @@ public class MailSendService {
 
     public void sendMail(MailDto dto) {
 
-        if (dto.isAuthRequire()) {
+        if (dto.isRequireValidate()) {
             userValidator.validateEmailIsNotDuplicated(dto.getEmail());
         }
 

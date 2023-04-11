@@ -10,7 +10,7 @@ public class RefundMailSendEvent extends MailSendEvent {
     private static final String MAIL_TITLE = "We-Share-Wish-Hair 포인트 환급 요청";
 
     public RefundMailSendEvent(PointUseRequest request, User user) {
-        super(MailDto.of(user.getEmailValue(), MAIL_TITLE, generateContents(request, user), false));
+        super(MailDto.of(user.getEmail(), MAIL_TITLE, generateContents(request, user)));
     }
 
     private static String generateContents(PointUseRequest request, User user) {

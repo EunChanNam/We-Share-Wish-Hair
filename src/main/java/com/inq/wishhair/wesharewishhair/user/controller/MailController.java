@@ -5,11 +5,12 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.AuthKeyRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.MailRequest;
+import com.inq.wishhair.wesharewishhair.user.event.AuthMailSendEvent;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.SessionIdResponse;
-import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,10 +21,9 @@ import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.MAIL_I
 @RequiredArgsConstructor
 public class MailController {
 
-    private static final String MAIL_TITLE = "We-Share-Wish-Hair 이메일 인증";
     private static final String AUTH_KEY = "KEY";
 
-    private final MailSendService mailSendService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @PostMapping("/send")
     public ResponseEntity<SessionIdResponse> sendAuthorizationMail(@RequestBody MailRequest mailRequest,
@@ -32,7 +32,7 @@ public class MailController {
         String authKey = createAuthKey();
         String sessionId = registerAuthKey(request, authKey);
 
-        mailSendService.sendMail(mailRequest.toMailDto(MAIL_TITLE, authKey));
+        eventPublisher.publishEvent(new AuthMailSendEvent(mailRequest.getEmail(), authKey));
 
         return ResponseEntity.ok(new SessionIdResponse(sessionId));
     }

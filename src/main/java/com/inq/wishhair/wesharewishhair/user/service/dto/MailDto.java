@@ -11,13 +11,13 @@ public class MailDto {
     private Email email;
     private String title;
     private String content;
-    private boolean authRequire;
+    private boolean requireValidate;
 
     public static MailDto of(Email email, String title, String content) {
         return new MailDto(email, title, content, false);
     }
 
-    public static MailDto of(String address, String title, String content, boolean authRequire) {
-        return new MailDto(new Email(address), title, content, authRequire);
+    public static MailDto of(String address, String title, String content, boolean requireValidate) {
+        return new MailDto(new Email(address), title, content, requireValidate);
     }
 }
