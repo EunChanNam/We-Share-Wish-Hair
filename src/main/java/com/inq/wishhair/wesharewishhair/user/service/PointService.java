@@ -7,6 +7,7 @@ import com.inq.wishhair.wesharewishhair.user.domain.point.PointRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointType;
 import com.inq.wishhair.wesharewishhair.user.service.dto.MailDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +20,7 @@ public class PointService {
 
     private final PointRepository pointRepository;
     private final UserFindService userFindService;
-    private final MailSendService mailSendService;
+    private final ApplicationEventPublisher eventPublisher;
 
     @Transactional
     public void usePoint(PointUseRequest request, Long userId) {
@@ -59,7 +60,7 @@ public class PointService {
         String contents = generateContents(request, user);
         MailDto mailDto = MailDto.of(user.getEmail(), MAIL_TITLE, contents);
 
-        mailSendService.sendMail(mailDto);
+        eventPublisher.publishEvent(mailDto);
     }
 
     private String generateContents(PointUseRequest request, User user) {

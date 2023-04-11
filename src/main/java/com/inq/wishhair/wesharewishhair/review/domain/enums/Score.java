@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.review.enums;
+package com.inq.wishhair.wesharewishhair.review.domain.enums;
 
 import lombok.Getter;
 

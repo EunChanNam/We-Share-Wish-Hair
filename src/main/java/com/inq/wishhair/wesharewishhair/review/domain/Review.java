@@ -5,7 +5,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviews;
-import com.inq.wishhair.wesharewishhair.review.enums.Score;
+import com.inq.wishhair.wesharewishhair.review.domain.enums.Score;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
