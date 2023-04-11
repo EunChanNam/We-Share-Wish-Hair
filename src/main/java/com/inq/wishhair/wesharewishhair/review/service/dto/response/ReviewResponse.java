@@ -5,7 +5,6 @@ import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagRe
 import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponseAssembler;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponse;
-import jakarta.persistence.Persistence;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -15,6 +14,8 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class ReviewResponse {
+
+    private Long reviewId;
 
     private String hairStyleName;
 
@@ -33,6 +34,7 @@ public class ReviewResponse {
     private List<HashTagResponse> hasTags;
 
     public ReviewResponse(Review review) {
+        this.reviewId = review.getId();
         this.hairStyleName = review.getHairStyle().getName();
         this.userNickName = review.getUser().getName();
         this.score = review.getScore().getValue();
