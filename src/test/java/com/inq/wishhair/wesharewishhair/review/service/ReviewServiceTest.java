@@ -12,6 +12,7 @@ import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.transaction.TestTransaction;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,56 +37,31 @@ public class ReviewServiceTest extends ServiceTest {
         hairStyle = hairStyleSearchRepository.save(HairStyleFixture.A.toEntity());
     }
 
-    @Nested
+    @Test
     @DisplayName("리뷰를 생성한다")
-    class createReview {
-        @Test
-        @DisplayName("사진이 있는 리뷰를 생성한다")
-        void test1() throws IOException {
-            //given
-            ReviewCreateRequest request = ReviewCreateRequestUtils.createRequest(A, hairStyle.getId());
+    void test1() throws IOException {
+        //given
+        ReviewCreateRequest request = ReviewCreateRequestUtils.createRequest(A, hairStyle.getId());
 
-            //when
-            Long reviewId = reviewService.createReview(request, user.getId());
+        //when
+        Long reviewId = reviewService.createReview(request, user.getId());
 
-            //then
-            Optional<Review> result = reviewRepository.findById(reviewId);
-            assertAll(
-                    () -> assertThat(result).isPresent(),
-                    () -> {
-                        Review review = result.get();
-                        assertThat(review.getUser()).isEqualTo(user);
-                        assertThat(review.getHairStyle()).isEqualTo(hairStyle);
-                        assertThat(review.getContentsValue()).isEqualTo(A.getContents());
-                        assertThat(review.getScore()).isEqualTo(A.getScore());
-                        assertThat(review.getPhotos()).hasSize(A.getOriginalFilenames().size());
-                    }
-            );
-        }
+        //then
+        Review result = reviewRepository.findById(reviewId).orElseThrow();
+        assertAll(
+                () -> assertThat(result.getUser()).isEqualTo(user),
+                () -> assertThat(result.getUser()).isEqualTo(user),
+                () -> assertThat(result.getHairStyle()).isEqualTo(hairStyle),
+                () -> assertThat(result.getContentsValue()).isEqualTo(A.getContents()),
+                () -> assertThat(result.getScore()).isEqualTo(A.getScore()),
+                () -> assertThat(result.getPhotos()).hasSize(A.getOriginalFilenames().size())
+        );
 
-        @Test
-        @DisplayName("사진이 없는 리뷰를 생성한다")
-        void test2() throws IOException {
-            //given
-            ReviewCreateRequest request = ReviewCreateRequestUtils.createRequest(C, hairStyle.getId());
+        //이벤트 리스너 강제 실행
+        TestTransaction.flagForCommit();
+        TestTransaction.end();
 
-            //when
-            Long reviewId = reviewService.createReview(request, user.getId());
-
-            //then
-            Optional<Review> result = reviewRepository.findById(reviewId);
-            assertAll(
-                    () -> assertThat(result).isPresent(),
-                    () -> {
-                        Review review = result.get();
-                        assertThat(review.getUser()).isEqualTo(user);
-                        assertThat(review.getHairStyle()).isEqualTo(hairStyle);
-                        assertThat(review.getContentsValue()).isEqualTo(C.getContents());
-                        assertThat(review.getScore()).isEqualTo(C.getScore());
-                        assertThat(review.getPhotos()).hasSize(C.getOriginalFilenames().size());
-                    }
-            );
-        }
+        assertThat(user.getAvailablePoint()).isEqualTo(100);
     }
 
     @Nested
