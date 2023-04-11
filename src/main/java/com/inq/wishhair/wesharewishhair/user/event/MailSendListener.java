@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.user.event;
 
+import com.inq.wishhair.wesharewishhair.global.event.MailSendEvent;
 import com.inq.wishhair.wesharewishhair.user.service.MailSendService;
-import com.inq.wishhair.wesharewishhair.user.service.dto.MailDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ public class MailSendListener {
     private final MailSendService mailSendService;
 
     @EventListener
-    public void sendMail(MailDto mailDto) {
-        mailSendService.sendMail(mailDto);
+    public void sendMail(MailSendEvent event) {
+        mailSendService.sendMail(event.getMailDto());
     }
 }
