@@ -17,6 +17,6 @@ public class MailRequest {
     private String email;
 
     public MailDto toMailDto(String title, String content) {
-        return MailDto.of(email, title, content);
+        return MailDto.of(email, title, content, true);
     }
 }

@@ -10,6 +10,6 @@ public abstract class MailDtoUtils {
     private static final String CONTENTS = "2839";
 
     public static MailDto mailDto(UserFixture fixture) {
-        return new MailDto(new Email(fixture.getEmail()), TITLE, CONTENTS);
+        return MailDto.of(fixture.getEmail(), TITLE, CONTENTS, true);
     }
 }

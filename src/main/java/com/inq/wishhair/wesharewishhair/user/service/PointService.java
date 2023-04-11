@@ -57,7 +57,7 @@ public class PointService {
 
     private void sendRefundRequestMail(PointUseRequest request, User user) {
         String contents = generateContents(request, user);
-        MailDto mailDto = new MailDto(user.getEmail(), MAIL_TITLE, contents);
+        MailDto mailDto = MailDto.of(user.getEmail(), MAIL_TITLE, contents);
 
         mailSendService.sendMail(mailDto);
     }

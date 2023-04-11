@@ -5,9 +5,11 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class MailSendService {
 
     private final JavaMailSender mailSender;
@@ -15,7 +17,9 @@ public class MailSendService {
 
     public void sendMail(MailDto dto) {
 
-        userValidator.validateEmailIsNotDuplicated(dto.getEmail());
+        if (dto.isAuthRequire()) {
+            userValidator.validateEmailIsNotDuplicated(dto.getEmail());
+        }
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("namhm23@kyonggi.ac.kr");
