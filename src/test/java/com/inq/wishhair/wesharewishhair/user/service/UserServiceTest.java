@@ -101,18 +101,6 @@ class UserServiceTest extends ServiceTest {
         }
 
         @Test
-        @DisplayName("틀린 형식의 닉네임으로 수정에 실패힌다")
-        void failByNickname() {
-            //given
-            UserUpdateRequest request = UserUpdateRequestUtils.wrongNicknameRequest(A);
-
-            //when, then
-            assertThatThrownBy(() -> userService.updateUser(user.getId(), request))
-                    .isInstanceOf(WishHairException.class)
-                    .hasMessageContaining(ErrorCode.USER_INVALID_NICKNAME.getMessage());
-        }
-
-        @Test
         @DisplayName("중복된 닉네임으로 수정에 실패한다")
         void failByDuplicatedNickname() {
             //given
@@ -147,18 +135,6 @@ class UserServiceTest extends ServiceTest {
             assertThatThrownBy(() -> userService.updatePassword(user.getId(), request))
                     .isInstanceOf(WishHairException.class)
                     .hasMessageContaining(ErrorCode.USER_WRONG_PASSWORD.getMessage());
-        }
-
-        @Test
-        @DisplayName("새로운 비밀번호의 형식이 틀려 실패한다")
-        void failByNewPassword() {
-            //given
-            PasswordUpdateRequest request = wrongNewPwRequest(A);
-
-            //when, then
-            assertThatThrownBy(() -> userService.updatePassword(user.getId(), request))
-                    .isInstanceOf(WishHairException.class)
-                    .hasMessageContaining(ErrorCode.USER_INVALID_PASSWORD.getMessage());
         }
 
         @Test

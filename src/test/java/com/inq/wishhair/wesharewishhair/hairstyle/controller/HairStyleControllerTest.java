@@ -110,7 +110,7 @@ public class HairStyleControllerTest extends ControllerTest {
         @DisplayName("태그에 얼굴형 태그가 없으면 400 예외를 던진다")
         void failByNoFaceShapeTag() throws Exception{
             //given
-            List<Tag> tags = E.getTags();
+            List<Tag> tags = new ArrayList<>(E.getTags());
             tags.removeIf(Tag::isFaceShapeType);
             MultiValueMap<String, String> params = generateTagParams(tags);
 

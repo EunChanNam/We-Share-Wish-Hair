@@ -16,11 +16,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserFindService userFindService;
+    private final UserValidator userValidator;
 
     @Transactional
     public Long createUser(User user) {
 
-        validateNicknameIsNotDuplicated(user.getNickname());
+        userValidator.validateNicknameIsNotDuplicated(user.getNickname());
         User saveUser = userRepository.save(user);
 
         return saveUser.getId();
@@ -36,7 +37,7 @@ public class UserService {
         User user = userFindService.findByUserId(userId);
         Nickname newNickname = new Nickname(request.getNickname());
 
-        validateNicknameIsNotDuplicated(newNickname);
+        userValidator.validateNicknameIsNotDuplicated(newNickname);
 
         user.updateNickname(newNickname);
         user.updateSex(request.getSex());
@@ -53,12 +54,6 @@ public class UserService {
     private void confirmPassword(User user, Password password) {
         if (user.isNotSamePassword(password)) {
             throw new WishHairException(ErrorCode.USER_WRONG_PASSWORD);
-        }
-    }
-
-    private void validateNicknameIsNotDuplicated(Nickname nickname) {
-        if (userRepository.existsByNickname(nickname)) {
-            throw new WishHairException(ErrorCode.USER_DUPLICATED_NICKNAME);
         }
     }
 }
