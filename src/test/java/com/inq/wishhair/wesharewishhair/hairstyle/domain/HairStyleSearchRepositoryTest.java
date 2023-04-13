@@ -68,7 +68,7 @@ public class HairStyleSearchRepositoryTest extends RepositoryTest {
                             .containsAll(tags),
                     () -> assertThat(result.get(0).getPhotos().stream()
                             .map(Photo::getOriginalFilename).toList())
-                            .containsAll(B.getOriginalFilenames()),
+                            .containsAll(B.getFilenames()),
                     () -> assertThat(result.get(0).getWishListCount()).isEqualTo(B.getWishListCount())
             );
         }

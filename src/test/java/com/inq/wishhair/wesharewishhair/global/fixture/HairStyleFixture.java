@@ -1,7 +1,6 @@
 package com.inq.wishhair.wesharewishhair.global.fixture;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
@@ -13,26 +12,25 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
 public enum HairStyleFixture {
 
-    A("hairStyleA", new ArrayList<>(List.of("test1.png", "test2.png", "test3.png", "test4.png")),
+    A("hairStyleA", new ArrayList<>(List.of("one.png", "two.png")),
             new ArrayList<>(List.of(Tag.PERM, Tag.LONG, Tag.SQUARE, Tag.UPSTAGE)), Sex.WOMAN, 3),
-    B("hairStyleB", new ArrayList<>(List.of("test5.png", "test6.png", "test7.png", "test8.png")),
+    B("hairStyleB", new ArrayList<>(List.of("one.png", "two.png")),
             new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.NEAT, Tag.OVAL)), Sex.MAN, 2),
-    C("hairStyleC", new ArrayList<>(List.of("test9.png", "test10.png", "test11.png", "test12.png")),
+    C("hairStyleC", new ArrayList<>(List.of("one.png", "two.png", "three.png")),
             new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.UPSTAGE, Tag.CUTE, Tag.OBLONG)), Sex.WOMAN, 4),
-    D("hairStyleD", new ArrayList<>(List.of("test13.png", "test14.png", "test15.png", "test16.png")),
+    D("hairStyleD", new ArrayList<>(List.of("one.png", "two.png", "three.png")),
             new ArrayList<>(List.of(Tag.PERM, Tag.LONG, Tag.HARD, Tag.FORMAL, Tag.OBLONG)), Sex.WOMAN, 2),
-    E("hairStyleE", new ArrayList<>(List.of("test13.png", "test14.png", "test15.png", "test16.png")),
+    E("hairStyleE", new ArrayList<>(List.of("one.png", "two.png")),
             new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.LIGHT, Tag.FORMAL, Tag.OBLONG)), Sex.WOMAN, 3);
 
     private final String name;
 
-    private final List<String> originalFilenames;
+    private final List<String> filenames;
 
     private final List<Tag> tags;
 
@@ -41,8 +39,8 @@ public enum HairStyleFixture {
     private final int wishListCount;
 
     public HairStyle toEntity() {
-        List<Photo> photos = originalFilenames.stream()
-                .map((originalFilename) -> Photo.of(originalFilename, createStoreFilename(originalFilename)))
+        List<Photo> photos = filenames.stream()
+                .map((originalFilename) -> Photo.of(originalFilename, originalFilename))
                 .toList();
         HairStyle hairStyle = HairStyle.createHairStyle(name, sex, photos, tags);
         for (int i = 0; i < wishListCount; i++) {
@@ -67,15 +65,4 @@ public enum HairStyleFixture {
         return hairStyle.getPhotos().stream()
                 .map(PhotoResponse::new).toList();
     }
-
-    private String createStoreFilename(String originalFilename) {
-        String ext = getExt(originalFilename);
-        return UUID.randomUUID() + ext;
-    }
-
-    private String getExt(String originalFilename) {
-        int index = originalFilename.lastIndexOf(".");
-        return originalFilename.substring(index);
-    }
-
 }
