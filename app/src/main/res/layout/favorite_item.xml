@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp">
+
+        <ImageView
+            android:id="@+id/favorite_style_image"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            app:srcCompat="@drawable/my_page" />
+
+        <TextView
+            android:id="@+id/favorite_style_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/favorite_style_image"
+            android:layout_marginTop="5dp"
+            android:text="히피펌"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/favorite_heart_mark"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_below="@id/favorite_style_name"
+            android:layout_marginEnd="5dp"
+            android:src="@drawable/heart_fill" />
+
+        <TextView
+            android:id="@+id/favorite_heart_count"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_below="@id/favorite_style_name"
+            android:layout_toEndOf="@id/favorite_heart_mark"
+            android:includeFontPadding="false"
+            android:text="500"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+</LinearLayout>

@@ -30,7 +30,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/heartlist_stylename"
-            android:text="안드로이드가너무좋아님"
             android:textSize="8sp" />
 
         <ImageView

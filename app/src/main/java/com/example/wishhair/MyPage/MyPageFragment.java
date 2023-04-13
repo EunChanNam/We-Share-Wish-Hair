@@ -41,6 +41,7 @@ import com.example.wishhair.R;
 import com.example.wishhair.sign.LoginActivity;
 import com.example.wishhair.sign.UrlConst;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -57,7 +58,7 @@ public class MyPageFragment extends Fragment {
     private SharedPreferences loginSP;
     final static private String url = UrlConst.URL + "/api/logout";
     final static private String url2 = UrlConst.URL + "/api/my_page";
-    final static private String url_wishlist = UrlConst.URL + "/api/wish_list";
+    final static private String url_wishlist = UrlConst.URL + "/api/wish_list/wish_list";
 
     static String testName = null;
     TextView tv;
@@ -96,9 +97,6 @@ public class MyPageFragment extends Fragment {
 //        HeartlistRecyclerView.addItemDecoration(recyclerDecoration);
 
         adapter = new MyPageRecyclerViewAdapter();
-        adapter.addItem(new HeartlistItem());
-        adapter.addItem(new HeartlistItem());
-        adapter.addItem(new HeartlistItem());
 
         HeartlistRecyclerView.setAdapter(adapter);
 
@@ -159,6 +157,7 @@ public class MyPageFragment extends Fragment {
             }
         });
         myPageRequest(accessToken);
+        myPageRecyclerviewRequest(accessToken);
 
     }
 
@@ -223,6 +222,8 @@ public class MyPageFragment extends Fragment {
                     testName = response.getString("nickname");
                     Log.i("받아온 거", testName);
                     tv.setText(testName+" 님");
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -247,6 +248,49 @@ public class MyPageFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(jsonObjectRequest);
     }
+
+    //wishlist recyclerview request
+    public void myPageRecyclerviewRequest(String accessToken) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url_wishlist , null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONObject obj = new JSONObject(response.toString());
+                    JSONArray jsonArray = obj.getJSONArray("result");
+                    for (int i=0;i<3;i++) {
+                        HeartlistItem item = new HeartlistItem();
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        item.setHeartlistStyleName(object.getString("hairStyleName"));
+                        Log.i("photo response test", object.getString("hairStyleName"));
+                        adapter.addItem(item);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap();
+                params.put("Authorization", "bearer" + accessToken);
+
+                return params;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(jsonObjectRequest);
+    }
+
 
 
     public ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(

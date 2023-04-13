@@ -51,39 +51,40 @@ public class CouponReceiveAdapter extends RecyclerView.Adapter<CouponReceiveAdap
         ViewHolder(View view) {
             super(view);
 
+
             CouponItemReceiveButton = view.findViewById(R.id.coupon_receive_button);
             CouponItemReceiveTitle = view.findViewById(R.id.coupon_receive_title);
             CouponItemReceiveExplanation = view.findViewById(R.id.coupon_receive_explanation);
             CouponItemReceiveConstraint = view.findViewById(R.id.coupon_receive_constraint);
 
-            CouponItemReceiveButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    AlertDialog.Builder myAlertBuilder =
-                            new AlertDialog.Builder(view.getContext());
-                    // alert의 title과 Messege 세팅
-//        myAlertBuilder.setTitle("Alert");
-                    myAlertBuilder.setMessage("test"+"P를 차감하여\n쿠폰을 구입하시겠습니까?");
-                    // 버튼 추가 (Ok 버튼과 Cancle 버튼 )
-                    myAlertBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener(){
-                        public void onClick(DialogInterface dialog,int which){
-                            // OK 버튼을 눌렸을 경우
-                            Toast.makeText(view.getContext().getApplicationContext(), "구입 완료",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    myAlertBuilder.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            // Cancle 버튼을 눌렸을 경우
-                            Toast.makeText(view.getContext().getApplicationContext(), "",
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                    });
-                    // Alert를 생성해주고 보여주는 메소드(show를 선언해야 Alert가 생성됨)
-                    myAlertBuilder.show();
-                }
-            });
+//            CouponItemReceiveButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    AlertDialog.Builder myAlertBuilder =
+//                            new AlertDialog.Builder(view.getContext());
+//                    // alert의 title과 Messege 세팅
+////        myAlertBuilder.setTitle("Alert");
+//                    myAlertBuilder.setMessage("test"+"P를 차감하여\n쿠폰을 구입하시겠습니까?");
+//                    // 버튼 추가 (Ok 버튼과 Cancle 버튼 )
+//                    myAlertBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener(){
+//                        public void onClick(DialogInterface dialog,int which){
+//                            // OK 버튼을 눌렸을 경우
+//                            Toast.makeText(view.getContext().getApplicationContext(), "구입 완료",
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                    myAlertBuilder.setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            // Cancle 버튼을 눌렸을 경우
+//                            Toast.makeText(view.getContext().getApplicationContext(), "",
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//                    // Alert를 생성해주고 보여주는 메소드(show를 선언해야 Alert가 생성됨)
+//                    myAlertBuilder.show();
+//                }
+//            });
         }
     }
 
@@ -92,7 +93,10 @@ public class CouponReceiveAdapter extends RecyclerView.Adapter<CouponReceiveAdap
     public CouponReceiveAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
         View view = inflater.inflate(R.layout.coupon_receive_item, parent, false);
-        return new CouponReceiveAdapter.ViewHolder(view);
+        ViewHolder vh = new ViewHolder(view);
+        context = parent.getContext();
+        return vh;
+//        return new CouponReceiveAdapter.ViewHolder(view);
     }
 
     @Override
@@ -130,7 +134,7 @@ public class CouponReceiveAdapter extends RecyclerView.Adapter<CouponReceiveAdap
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap();
                 params.put("Authorization", "bearer" + accessToken);
-                params.put("pointType", "CHARGE");
+                params.put("pointType", "USE");
                 params.put("dealAmount" , "1000");
 
                 return params;

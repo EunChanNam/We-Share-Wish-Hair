@@ -1,6 +1,7 @@
 package com.example.wishhair;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -20,6 +21,7 @@ import com.example.wishhair.MyPage.MyPointList;
 import com.example.wishhair.MyPage.MyHeartlistFragment;
 import com.example.wishhair.MyPage.MyStyleFragment;
 
+import com.example.wishhair.favorite.FavoriteFragment;
 import com.example.wishhair.home.HomeFragment;
 import com.example.wishhair.review.ReviewFragment;
 import com.example.wishhair.sign.UrlConst;
@@ -41,12 +43,15 @@ public class MainActivity extends AppCompatActivity {
     private final MyPointList myPointList = new MyPointList();
     private final MyInformationFragment myInformationFragment = new MyInformationFragment();
     private final ConfigFragment configFragment = new ConfigFragment();
+    private final FavoriteFragment favoriteFragment = new FavoriteFragment();
+    public static Context context;
 
 
     final static private String url = UrlConst.URL + "/api/my_page";
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        context = getApplicationContext();
         setContentView(R.layout.activity_main);
 
         fragmentTransaction = fragmentManager.beginTransaction();
@@ -72,8 +77,8 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.bot_nav_home:
                     transaction.replace(R.id.MainLayout, homeFragment).commitAllowingStateLoss();
                     break;
-                case R.id.bot_nav_recommend:
-                    transaction.replace(R.id.MainLayout, recommendFragment).commitAllowingStateLoss();
+                case R.id.bot_nav_favorite:
+                    transaction.replace(R.id.MainLayout, favoriteFragment).commitAllowingStateLoss();
                     break;
                 case R.id.bot_nav_review:
                     transaction.replace(R.id.MainLayout, reviewFragment).commitAllowingStateLoss();

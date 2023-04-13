@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".favorite.FavoriteFragment">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/white"
+        app:titleTextColor="@color/black">
+
+        <TextView
+            android:id="@+id/toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="찜한 스타일"
+            android:textSize="20sp">
+
+        </TextView>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="549dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="20dp"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/favorite_modify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="20dp"
+            android:text="편집" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/favorite_recyclerview"
+            android:layout_width="353dp"
+            android:layout_height="466dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"/>
+    </LinearLayout>
+
+</LinearLayout>

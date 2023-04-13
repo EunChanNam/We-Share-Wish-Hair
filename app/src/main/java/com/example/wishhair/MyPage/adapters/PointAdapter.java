@@ -33,15 +33,16 @@ public class PointAdapter extends RecyclerView.Adapter<PointAdapter.ViewHolder> 
         }
 
         public void setItem(PointHistory item) {
-            if(item.getPointType().equals("CHARGE")) {
-                PointlistNum.setText("+" + Integer.toString(item.getDealAmount()));
-                PointlistNum.setTextColor(Color.RED);
-            }
-            else {
-                PointlistNum.setText("-" + Integer.toString(item.getDealAmount()));
-                PointlistNum.setTextColor(Color.BLUE);
-            }
-            PointlistDate.setText(item.getDealDate().toString());
+
+//            if(item.getPointType().equals("CHARGE")) {
+//                PointlistNum.setText("+" + Integer.toString(item.getDealAmount()));
+//                PointlistNum.setTextColor(Color.RED);
+//            }
+//            else {
+//                PointlistNum.setText("-" + Integer.toString(item.getDealAmount()));
+//                PointlistNum.setTextColor(Color.BLUE);
+//            }
+//            PointlistDate.setText(item.getDealDate().toString());
         }
     }
 
