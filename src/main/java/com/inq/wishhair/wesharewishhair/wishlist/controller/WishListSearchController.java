@@ -19,7 +19,7 @@ public class WishListSearchController {
 
     private final WishListSearchService wishListSearchService;
 
-    @GetMapping("/wish_list")
+    @GetMapping
     public ResponseEntity<PagedResponse<WishListResponse>> getWishList(
             @PageableDefault(size = 4) Pageable pageable,
             @ExtractPayload Long userId) {

@@ -171,6 +171,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
             ReviewFixture fixture = reviewFixtures[index];
 
             Review review = fixture.toEntity(user, hairStyle);
+            ReflectionTestUtils.setField(review, "id", 1L + index);
             result.add(new ReviewResponse(review));
         }
 

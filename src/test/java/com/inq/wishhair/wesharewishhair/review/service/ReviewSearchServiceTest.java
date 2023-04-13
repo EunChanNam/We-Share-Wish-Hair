@@ -222,6 +222,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
             Review expected = expectedReviews.get(index);
 
             assertAll(
+                    () -> assertThat(response.getReviewId()).isEqualTo(expected.getId()),
                     () -> assertThat(response.getLikes()).isEqualTo(expected.getLikes()),
                     () -> assertThat(response.getContents()).isEqualTo(expected.getContentsValue()),
                     () -> assertThat(response.getScore()).isEqualTo(expected.getScore().getValue()),
