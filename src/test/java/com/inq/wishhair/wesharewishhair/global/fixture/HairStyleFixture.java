@@ -19,13 +19,13 @@ public enum HairStyleFixture {
 
     A("hairStyleA", new ArrayList<>(List.of("one.png", "two.png")),
             new ArrayList<>(List.of(Tag.PERM, Tag.LONG, Tag.SQUARE, Tag.UPSTAGE)), Sex.WOMAN, 3),
-    B("hairStyleB", new ArrayList<>(List.of("one.png", "two.png")),
+    B("hairStyleB", new ArrayList<>(List.of("three.png", "four.png")),
             new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.NEAT, Tag.OVAL)), Sex.MAN, 2),
-    C("hairStyleC", new ArrayList<>(List.of("one.png", "two.png", "three.png")),
+    C("hairStyleC", new ArrayList<>(List.of("five.png", "six.png")),
             new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.UPSTAGE, Tag.CUTE, Tag.OBLONG)), Sex.WOMAN, 4),
-    D("hairStyleD", new ArrayList<>(List.of("one.png", "two.png", "three.png")),
+    D("hairStyleD", new ArrayList<>(List.of("seven.png", "eight.png")),
             new ArrayList<>(List.of(Tag.PERM, Tag.LONG, Tag.HARD, Tag.FORMAL, Tag.OBLONG)), Sex.WOMAN, 2),
-    E("hairStyleE", new ArrayList<>(List.of("one.png", "two.png")),
+    E("hairStyleE", new ArrayList<>(List.of("nine.png", "ten.png")),
             new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.LIGHT, Tag.FORMAL, Tag.OBLONG)), Sex.WOMAN, 3);
 
     private final String name;
