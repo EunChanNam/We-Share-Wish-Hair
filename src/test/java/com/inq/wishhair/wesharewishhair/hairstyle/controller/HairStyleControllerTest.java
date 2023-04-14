@@ -195,7 +195,7 @@ public class HairStyleControllerTest extends ControllerTest {
         return responseFields(
                 fieldWithPath("result[].hairStyleId").description("헤어스타일 ID(PK)"),
                 fieldWithPath("result[].name").description("헤어스타일 이름"),
-                fieldWithPath("result[].photos[].storeFilename").description("저장된 사진 이름"),
+                fieldWithPath("result[].photos[].resource").description("사진 URI 리소스"),
                 fieldWithPath("result[].hashTags[].tag").description("헤어스타일 해시태그")
         );
     }

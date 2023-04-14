@@ -1,13 +1,17 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
+import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
+import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
@@ -23,19 +27,19 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("HairStyleServiceTest - SpringBootTest")
 public class HairStyleSearchServiceTest extends ServiceTest {
-    //todo 검증코드 리팩토링하기
 
     @Autowired
     private HairStyleSearchService hairStyleSearchService;
 
+    private final HairStyle[] hairStyles = new HairStyle[values().length];
+
     @BeforeEach
-    void setUp() {
+    void init() {
         //given
-        hairStyleSearchRepository.save(A.toEntity());
-        hairStyleSearchRepository.save(B.toEntity());
-        hairStyleSearchRepository.save(C.toEntity());
-        hairStyleSearchRepository.save(D.toEntity());
-        hairStyleSearchRepository.save(E.toEntity());
+        HairStyleFixture[] fixtures = values();
+        for (int i = 0; i < values().length; i++) {
+            hairStyles[i] = hairStyleSearchRepository.save(fixtures[i].toEntity());
+        }
     }
 
     @Nested
@@ -54,15 +58,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
 
             //then
             List<HairStyleResponse> actual = result.getResult();
-            assertAll(
-                    () -> assertThat(actual).hasSize(1),
-                    () -> {
-                        HairStyleResponse response = actual.get(0);
-                        assertThat(response.getName()).isEqualTo(A.getName());
-                        assertThat(response.getHashTags().stream().map(HashTagResponse::getTag).toList())
-                                .containsAll(A.getTags().stream().map(Tag::getDescription).toList());
-                    }
-            );
+            assertHairStyleResponseMatch(actual, List.of(0));
         }
 
         @Test
@@ -92,11 +88,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
 
             //then
             List<HairStyleResponse> actual = result.getResult();
-            assertAll(
-                    () -> assertThat(actual).hasSize(3),
-                    () -> assertThat(actual.stream().map(HairStyleResponse::getName).toList())
-                            .containsExactly(E.getName(), C.getName(), D.getName())
-            );
+            assertHairStyleResponseMatch(actual, List.of(4, 2, 3));
         }
 
         @Test
@@ -137,11 +129,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
 
             //then
             List<HairStyleResponse> actual = result.getResult();
-            assertAll(
-                    () -> assertThat(actual).hasSize(3),
-                    () -> assertThat(actual.stream().map(HairStyleResponse::getName).toList())
-                            .containsExactly(C.getName(), E.getName(), D.getName())
-            );
+            assertHairStyleResponseMatch(actual, List.of(2, 4, 3));
         }
 
         @Test
@@ -157,10 +145,25 @@ public class HairStyleSearchServiceTest extends ServiceTest {
 
             //then
             List<HairStyleResponse> actual = result.getResult();
+            assertHairStyleResponseMatch(actual, List.of(2, 0, 4, 3));
+        }
+    }
+
+    private void assertHairStyleResponseMatch(List<HairStyleResponse> actualList, List<Integer> indexes) {
+        assertThat(actualList).hasSize(indexes.size());
+        for (int i = 0; i < actualList.size(); i++) {
+            int index = indexes.get(i);
+            HairStyleResponse actual = actualList.get(i);
+            HairStyle expected = hairStyles[index];
             assertAll(
-                    () -> assertThat(actual).hasSize(4),
-                    () -> assertThat(actual.stream().map(HairStyleResponse::getName).toList())
-                            .containsExactly(C.getName(), A.getName(), E.getName(), D.getName())
+                    () -> assertThat(actual.getHairStyleId()).isEqualTo(expected.getId()),
+                    () -> assertThat(actual.getName()).isEqualTo(expected.getName()),
+                    () -> {
+                        List<String> resultTags = actual.getHashTags().stream().map(HashTagResponse::getTag).toList();
+                        List<String> actualTags = expected.getHashTags().stream().map(HashTag::getTag).map(Tag::getDescription).toList();
+                        assertThat(resultTags).containsAll(actualTags);
+                    },
+                    () -> assertThat(actual.getPhotos()).hasSize(expected.getPhotos().size())
             );
         }
     }

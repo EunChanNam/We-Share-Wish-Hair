@@ -235,7 +235,8 @@ public class ReviewSearchServiceTest extends ServiceTest {
                         List<String> resultTags = response.getHasTags().stream().map(HashTagResponse::getTag).toList();
 
                         expectedTags.forEach(tag -> assertThat(resultTags).contains(tag));
-                    }
+                    },
+                    () -> assertThat(response.getPhotos()).hasSize(expected.getPhotos().size())
             );
         }
     }

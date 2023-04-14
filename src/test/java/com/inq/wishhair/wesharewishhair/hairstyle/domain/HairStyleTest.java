@@ -27,7 +27,7 @@ public class HairStyleTest {
                 () -> assertThat(hairStyle.getSex()).isEqualTo(B.getSex()),
                 () -> assertThat(hairStyle.getPhotos().stream()
                         .map(Photo::getOriginalFilename).toList())
-                        .containsAll(B.getOriginalFilenames()),
+                        .containsAll(B.getFilenames()),
                 () -> assertThat(hairStyle.getHashTags().stream()
                         .map(HashTag::getTag).toList())
                         .containsAll(B.getTags()),

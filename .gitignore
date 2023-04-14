@@ -18,6 +18,7 @@ application-dev.yml
 ### images ###
 **/src/main/resources/static/
 **/src/test/resources/images/
+**/src/main/java/com/inq/wishhair/wesharewishhair/photo/dto/response/FilePath.java
 
 ### STS ###
 .apt_generated
