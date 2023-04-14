@@ -61,6 +61,7 @@ public class User {
     }
 
     public boolean existFaceShape() {
+        if (faceShape == null) return false;
         return faceShape.getTag() != null;
     }
 
