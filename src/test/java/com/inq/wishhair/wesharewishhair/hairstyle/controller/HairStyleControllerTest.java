@@ -63,7 +63,7 @@ public class HairStyleControllerTest extends ControllerTest {
             List<Tag> tags = E.getTags();
             ResponseWrapper<HairStyleResponse> expectedResponse = assembleWrappedResponse(List.of(E, C, D));
 
-            given(hairStyleSearchService.findRecommendedHairStyle(tags, 1L, getDefaultPageable()))
+            given(hairStyleSearchService.findRecommendedHairStyle(tags, 1L))
                     .willReturn(expectedResponse);
 
             MultiValueMap<String, String> params = generateTagParams(tags);
@@ -115,7 +115,7 @@ public class HairStyleControllerTest extends ControllerTest {
             MultiValueMap<String, String> params = generateTagParams(tags);
 
             ErrorCode expectedError = ErrorCode.RUN_NO_FACE_SHAPE_TAG;
-            given(hairStyleSearchService.findRecommendedHairStyle(any(), any(), any()))
+            given(hairStyleSearchService.findRecommendedHairStyle(any(), any()))
                     .willThrow(new WishHairException(expectedError));
 
             //when

@@ -23,13 +23,12 @@ public class HairStyleController {
 
     @GetMapping("/recommend")
     public ResponseWrapper<HairStyleResponse> respondRecommendedHairStyle(
-            @PageableDefault(size = 4) Pageable pageable,
             @RequestParam(defaultValue = "ERROR") List<Tag> tags,
             @ExtractPayload Long userId) {
 
         validateHasTag(tags);
 
-        return hairStyleSearchService.findRecommendedHairStyle(tags, userId, pageable);
+        return hairStyleSearchService.findRecommendedHairStyle(tags, userId);
     }
 
     @GetMapping("/home")

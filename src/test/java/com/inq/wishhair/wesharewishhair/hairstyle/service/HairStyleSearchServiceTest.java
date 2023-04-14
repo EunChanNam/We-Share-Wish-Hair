@@ -54,7 +54,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
 
             //when
             ResponseWrapper<HairStyleResponse> result =
-                    hairStyleSearchService.findRecommendedHairStyle(tags, userId, getDefaultPageable());
+                    hairStyleSearchService.findRecommendedHairStyle(tags, userId);
 
             //then
             List<HairStyleResponse> actual = result.getResult();
@@ -70,7 +70,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
             ErrorCode expectedError = ErrorCode.RUN_NO_FACE_SHAPE_TAG;
 
             //when, then
-            assertThatThrownBy(() -> hairStyleSearchService.findRecommendedHairStyle(tags, userId, getDefaultPageable()))
+            assertThatThrownBy(() -> hairStyleSearchService.findRecommendedHairStyle(tags, userId))
                     .isInstanceOf(WishHairException.class)
                     .hasMessageContaining(expectedError.getMessage());
         }
@@ -84,7 +84,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
 
             //when
             ResponseWrapper<HairStyleResponse> result =
-                    hairStyleSearchService.findRecommendedHairStyle(tags, userId, getDefaultPageable());
+                    hairStyleSearchService.findRecommendedHairStyle(tags, userId);
 
             //then
             List<HairStyleResponse> actual = result.getResult();
@@ -103,7 +103,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
             assertThat(user.existFaceShape()).isFalse();
 
             //when
-            hairStyleSearchService.findRecommendedHairStyle(tags, user.getId(), getDefaultPageable());
+            hairStyleSearchService.findRecommendedHairStyle(tags, user.getId());
 
             //then
             assertAll(

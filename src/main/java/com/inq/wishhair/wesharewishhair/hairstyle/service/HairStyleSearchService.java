@@ -34,9 +34,11 @@ public class HairStyleSearchService {
 
     @Transactional
     public ResponseWrapper<HairStyleResponse> findRecommendedHairStyle(
-            List<Tag> tags, Long userId, Pageable pageable) {
+            List<Tag> tags, Long userId) {
 
         User user = userFindService.findByUserId(userId);
+        Pageable pageable = PageableUtils.getDefaultPageable();
+
         List<HairStyle> hairStyles = hairStyleSearchRepository.findByHashTags(tags, user.getSex(), pageable);
 
         Tag faceShapeTag = extractFaceShapeTag(tags);
