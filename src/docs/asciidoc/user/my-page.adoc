@@ -1,0 +1,15 @@
+= 마이페이지 조회 API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+
+== 1. 성공
+Http Request
+include::{snippets}/get-my-page-info/success/http-request.adoc[]
+include::{snippets}/get-my-page-info/success/request-headers.adoc[]
+
+Http Response
+include::{snippets}/get-my-page-info/success/http-response.adoc[]
+include::{snippets}/get-my-page-info/success/response-fields.adoc[]

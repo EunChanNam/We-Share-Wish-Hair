@@ -238,7 +238,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
         return result;
     }
 
-    private ResponseFieldsSnippet pagedReviewResponseDocument() {
+    public static ResponseFieldsSnippet pagedReviewResponseDocument() {
         return responseFields(
                 fieldWithPath("result[].reviewId").description("리뷰 아이디"),
                 fieldWithPath("result[].hairStyleName").description("헤어스타일 이름"),
@@ -246,6 +246,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
                 fieldWithPath("result[].score").description("리뷰 점수"),
                 fieldWithPath("result[].contents").description("리뷰 내용"),
                 fieldWithPath("result[].createdDate").description("리뷰 작성 일"),
+                fieldWithPath("result[].photos").optional().description("사진이 없을 수 있음"),
                 fieldWithPath("result[].photos[].resource").description("리뷰 사진 URI"),
                 fieldWithPath("result[].likes").description("좋아요 수"),
                 fieldWithPath("result[].hashTags[].tag").description("해시 태그"),

@@ -13,6 +13,8 @@ import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.restdocs.payload.PayloadDocumentation;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -21,6 +23,8 @@ import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("User-MyPageControllerTest - WebMvcTest")
@@ -49,7 +53,7 @@ public class MyPageControllerTest extends ControllerTest {
         @DisplayName("사용자의 마이페이지 정보를 조회한다")
         void success() throws Exception {
             //given
-            MyPageResponse expectedResponse = generateMyPageResponse(3);
+            MyPageResponse expectedResponse = generateMyPageResponse();
             given(myPageService.getMyPageInfo(1L)).willReturn(expectedResponse);
 
             //when
@@ -59,25 +63,46 @@ public class MyPageControllerTest extends ControllerTest {
 
             //when
             mockMvc.perform(requestBuilder)
-                    .andExpect(status().isOk());
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    responseFields(
+                                            fieldWithPath("nickname").description("사용자 닉네임"),
+                                            fieldWithPath("sex").description("사용자 성별"),
+                                            fieldWithPath("point").description("사용자 잔여 포인트"),
+                                            fieldWithPath("reviews[].reviewId").description("리뷰 아이디"),
+                                            fieldWithPath("reviews[].hairStyleName").description("헤어스타일 이름"),
+                                            fieldWithPath("reviews[].userNickname").description("작성자 닉네임"),
+                                            fieldWithPath("reviews[].score").description("리뷰 점수"),
+                                            fieldWithPath("reviews[].contents").description("리뷰 내용"),
+                                            fieldWithPath("reviews[].createdDate").description("리뷰 작성 일"),
+                                            fieldWithPath("reviews[].photos").optional().description("사진이 없을 수 있음"),
+                                            fieldWithPath("reviews[].photos[].resource").description("리뷰 사진 URI"),
+                                            fieldWithPath("reviews[].likes").description("좋아요 수"),
+                                            fieldWithPath("reviews[].hashTags[].tag").description("해시 태그")
+                                    )
+                            )
+                    );
         }
     }
 
-    private MyPageResponse generateMyPageResponse(int count) {
+    private MyPageResponse generateMyPageResponse() {
         User user = UserFixture.A.toEntity();
         List<ReviewResponse> reviewResponses = new ArrayList<>();
 
-        for (int index = 0; index < count; index++) {
-            reviewResponses.add(generateReviewResponse());
+        for (int index = 0; index < 3; index++) {
+            reviewResponses.add(generateReviewResponse(index));
         }
         return new MyPageResponse(user, reviewResponses);
     }
 
-    private ReviewResponse generateReviewResponse() {
+    private ReviewResponse generateReviewResponse(int index) {
         User user = UserFixture.B.toEntity();
         HairStyle hairStyle = HairStyleFixture.A.toEntity();
 
-        Review review = ReviewFixture.A.toEntity(user, hairStyle);
+        Review review = ReviewFixture.values()[index].toEntity(user, hairStyle);
+        ReflectionTestUtils.setField(review, "id", index + 1L);
 
         return new ReviewResponse(review);
     }
