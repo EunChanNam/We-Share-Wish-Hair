@@ -1,0 +1,54 @@
+= 리뷰 검색 API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+
+== 전체 리뷰 검색 API
+=== 1. 성공
+Http Request
+include::{snippets}/find-paging-reviews/success/http-request.adoc[]
+include::{snippets}/find-paging-reviews/success/request-headers.adoc[]
+include::{snippets}/find-paging-reviews/success/request-parameters.adoc[]
+
+Http Response
+include::{snippets}/find-paging-reviews/success/http-response.adoc[]
+include::{snippets}/find-paging-reviews/success/response-fields.adoc[]
+
+
+=== 2. 헤더에 토큰을 포함하지 않아 실패
+Http Response
+include::{snippets}/find-paging-reviews/fail-by-no-access-token/http-response.adoc[]
+include::{snippets}/find-paging-reviews/fail-by-no-access-token/response-fields.adoc[]
+
+== 나의 리뷰 검색 API
+=== 1. 성공
+Http Request
+include::{snippets}/find-my-reviews/success/http-request.adoc[]
+include::{snippets}/find-my-reviews/success/request-headers.adoc[]
+include::{snippets}/find-my-reviews/success/request-parameters.adoc[]
+
+Http Response
+include::{snippets}/find-my-reviews/success/http-response.adoc[]
+include::{snippets}/find-my-reviews/success/response-fields.adoc[]
+
+=== 2. 헤더에 토큰을 포함하지 않아 실패
+Http Response
+include::{snippets}/find-my-reviews/fail-by-no-access-token/http-response.adoc[]
+include::{snippets}/find-my-reviews/fail-by-no-access-token/response-fields.adoc[]
+
+== 이달의 추천 리뷰 검색 API
+=== 1. 성공
+Http Request
+include::{snippets}/find-review-of-month/success/http-request.adoc[]
+include::{snippets}/find-review-of-month/success/request-headers.adoc[]
+
+Http Response
+include::{snippets}/find-review-of-month/success/http-response.adoc[]
+include::{snippets}/find-review-of-month/success/response-fields.adoc[]
+
+=== 2. 헤더에 토큰을 포함하지 않아 실패
+Http Response
+include::{snippets}/find-review-of-month/fail-by-no-access-token/http-response.adoc[]
+include::{snippets}/find-review-of-month/fail-by-no-access-token/response-fields.adoc[]

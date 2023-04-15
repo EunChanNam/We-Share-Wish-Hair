@@ -9,7 +9,6 @@ import com.inq.wishhair.wesharewishhair.auth.service.TokenReissueService;
 import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
 import com.inq.wishhair.wesharewishhair.global.config.RestDocsConfig;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
-import com.inq.wishhair.wesharewishhair.global.utils.TokenUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleSearchService;
 import com.inq.wishhair.wesharewishhair.review.controller.LikeReviewController;
 import com.inq.wishhair.wesharewishhair.review.controller.ReviewController;
@@ -34,6 +33,7 @@ import org.springframework.restdocs.mockmvc.MockMvcRestDocumentation;
 import org.springframework.restdocs.mockmvc.RestDocumentationResultHandler;
 import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
+import org.springframework.restdocs.request.RequestParametersSnippet;
 import org.springframework.restdocs.snippet.Attributes;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
@@ -48,6 +48,8 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
 import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
@@ -162,6 +164,19 @@ public abstract class ControllerTest {
                                 )
                         )
                 );
+    }
+
+    protected RequestParametersSnippet pageableParametersDocument(
+            int defaultSize, String defaultSort
+    ) {
+        return requestParameters(
+                parameterWithName("size").description("페이지 사이즈(한번에 가져오는 개수)")
+                        .attributes(constraint("default : " + defaultSize)),
+                parameterWithName("page").description("페이지 번호")
+                        .attributes(constraint("첫 페이지는 0, default : 0")),
+                parameterWithName("sort").description("정렬 조건 정렬변수.direction")
+                        .attributes(constraint("첫 정렬 조건은 반드시 " + defaultSort + " default : " + defaultSort))
+        );
     }
 
     protected void assertSuccess(MockHttpServletRequestBuilder requestBuilder, ResultMatcher status) throws Exception {

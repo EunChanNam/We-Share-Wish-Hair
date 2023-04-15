@@ -16,9 +16,13 @@ import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.data.domain.Pageable;
+import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +31,11 @@ import static com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture.*;
 import static com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils.getDateDescPageable;
 import static com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils.getLikeDescPageable;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -57,27 +65,37 @@ public class ReviewSearchControllerTest extends ControllerTest {
         @DisplayName("전체 리뷰를 조회한다")
         void success() throws Exception {
             //given
-            PagedResponse<ReviewResponse> expectedResponse = assemblePagedResponse(values().length);
-            given(reviewSearchService.findPagedReviews(getLikeDescPageable(10)))
+            PagedResponse<ReviewResponse> expectedResponse = assemblePagedResponse(2);
+
+            given(reviewSearchService.findPagedReviews(any()))
                     .willReturn(expectedResponse);
 
             //when
+            Pageable pageable = getLikeDescPageable(10);
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                     .get(BASE_URL)
-                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                    .queryParams(generatePageableParams(pageable));
 
             //then
             mockMvc.perform(requestBuilder)
                     .andExpectAll(
                             status().isOk(),
                             jsonPath("$").exists()
+                    ).andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    pageableParametersDocument(10, "likeReviews.likes.desc"),
+                                    pagedReviewResponseDocument()
+                            )
                     );
         }
     }
 
     @Nested
     @DisplayName("나의 리뷰 조회 API 테스트")
-    class findByReviews {
+    class findMyReviews {
+
         @Test
         @DisplayName("헤더에 Access 토큰을 포함하지 않아서 예외를 던진다")
         void failByNoAccessToken() throws Exception {
@@ -96,24 +114,32 @@ public class ReviewSearchControllerTest extends ControllerTest {
         @DisplayName("나의 리뷰를 조회한다")
         void success() throws Exception {
             //given
-            PagedResponse<ReviewResponse> expectedResponse = assemblePagedResponse(values().length);
-            given(reviewSearchService.findMyReviews(1L, getDateDescPageable(10)))
+            PagedResponse<ReviewResponse> expectedResponse = assemblePagedResponse(2);
+            given(reviewSearchService.findMyReviews(any(), any()))
                     .willReturn(expectedResponse);
 
             //when
+            Pageable pageable = getDateDescPageable(10);
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                     .get(BASE_URL + "/my")
-                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                    .queryParams(generatePageableParams(pageable));
 
             //then
             mockMvc.perform(requestBuilder)
                     .andExpectAll(
                             status().isOk(),
                             jsonPath("$").exists()
+                    ).andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    pageableParametersDocument(10, "createdDate.desc"),
+                                    pagedReviewResponseDocument()
+                            )
                     );
         }
-    }
 
+    }
     @Nested
     @DisplayName("이달의 추천 리뷰 조회 API")
     class findReviewOfMonth {
@@ -136,7 +162,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
         void success() throws Exception {
             //given
             ResponseWrapper<ReviewSimpleResponse> expectedResponse =
-                    new ResponseWrapper<>(generateReviewSimpleResponse(values().length));
+                    new ResponseWrapper<>(generateReviewSimpleResponse(2));
             given(reviewSearchService.findReviewOfMonth()).willReturn(expectedResponse);
 
             //when
@@ -148,13 +174,29 @@ public class ReviewSearchControllerTest extends ControllerTest {
             mockMvc.perform(requestBuilder)
                     .andExpectAll(
                             status().isOk(),
-                            jsonPath("$").exists(),
-                            jsonPath("$.result").exists(),
-                            jsonPath("$.result.size()").value(values().length)
+                            jsonPath("$").exists()
+                    ).andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    simpleReviewResponseDocument()
+                            )
                     );
         }
-    }
 
+    }
+    private MultiValueMap<String, String> generatePageableParams(Pageable pageable) {
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+
+        String sort = pageable.getSort().toString();
+        String[] splitSort = sort.split(":");
+        String variable = splitSort[0];
+        String direction = splitSort[1].trim();
+
+        params.add("size", String.valueOf(pageable.getPageSize()));
+        params.add("page", String.valueOf(pageable.getPageNumber()));
+        params.add("sort", variable + "." + direction);
+        return params;
+    }
     private PagedResponse<ReviewResponse> assemblePagedResponse(int count) {
         Paging defaultPaging = new Paging(count, 0, false);
         return new PagedResponse<>(generateReviewResponses(count), defaultPaging);
@@ -194,5 +236,32 @@ public class ReviewSearchControllerTest extends ControllerTest {
         }
 
         return result;
+    }
+
+    private ResponseFieldsSnippet pagedReviewResponseDocument() {
+        return responseFields(
+                fieldWithPath("result[].reviewId").description("리뷰 아이디"),
+                fieldWithPath("result[].hairStyleName").description("헤어스타일 이름"),
+                fieldWithPath("result[].userNickname").description("작성자 닉네임"),
+                fieldWithPath("result[].score").description("리뷰 점수"),
+                fieldWithPath("result[].contents").description("리뷰 내용"),
+                fieldWithPath("result[].createdDate").description("리뷰 작성 일"),
+                fieldWithPath("result[].photos[].resource").description("리뷰 사진 URI"),
+                fieldWithPath("result[].likes").description("좋아요 수"),
+                fieldWithPath("result[].hashTags[].tag").description("해시 태그"),
+
+                fieldWithPath("paging.contentSize").description("조회된 리뷰 개수"),
+                fieldWithPath("paging.page").description("현재 페이지"),
+                fieldWithPath("paging.hasNext").description("다음 페이지 존재 여부")
+        );
+    }
+
+    private ResponseFieldsSnippet simpleReviewResponseDocument() {
+        return responseFields(
+                fieldWithPath("result[].reviewId").description("리뷰 아이디"),
+                fieldWithPath("result[].hairStyleName").description("헤어스타일 이름"),
+                fieldWithPath("result[].userNickname").description("작성자 닉네임"),
+                fieldWithPath("result[].contents").description("리뷰 내용")
+        );
     }
 }

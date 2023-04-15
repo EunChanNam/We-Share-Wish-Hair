@@ -228,11 +228,11 @@ public class ReviewSearchServiceTest extends ServiceTest {
                     () -> assertThat(response.getScore()).isEqualTo(expected.getScore().getValue()),
                     () -> assertThat(response.getCreatedDate()).isEqualTo(expected.getCreatedDate()),
                     () -> assertThat(response.getHairStyleName()).isEqualTo(expected.getHairStyle().getName()),
-                    () -> assertThat(response.getUserNickName()).isEqualTo(expected.getUser().getNicknameValue()),
+                    () -> assertThat(response.getUserNickname()).isEqualTo(expected.getUser().getNicknameValue()),
                     () -> {
                         List<String> expectedTags = expected.getHairStyle().getHashTags().stream()
                                 .map(HashTag::getDescription).toList();
-                        List<String> resultTags = response.getHasTags().stream().map(HashTagResponse::getTag).toList();
+                        List<String> resultTags = response.getHashTags().stream().map(HashTagResponse::getTag).toList();
 
                         expectedTags.forEach(tag -> assertThat(resultTags).contains(tag));
                     },
