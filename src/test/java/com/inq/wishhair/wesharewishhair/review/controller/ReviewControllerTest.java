@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.review.controller;
 
+import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -8,6 +9,7 @@ import com.inq.wishhair.wesharewishhair.review.controller.utils.ReviewCreateRequ
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.BDDMockito;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -18,6 +20,9 @@ import org.springframework.util.MultiValueMap;
 
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.willThrow;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -105,6 +110,23 @@ public class ReviewControllerTest extends ControllerTest {
 
             //then
             assertException(expectedError, requestBuilder, status().isUnauthorized());
+        }
+
+        @Test
+        @DisplayName("삭제하려는 리뷰의 작성자가 아니라서 예외를 던진다")
+        void failByWriter() throws Exception {
+            //given
+            ErrorCode expectedError = ErrorCode.REVIEW_NOT_WRITER;
+            doThrow(new WishHairException(expectedError))
+                    .when(reviewService).deleteReview(1L, 1L);
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .delete(BASE_URL + "/1")
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isBadRequest());
         }
 
         @Test

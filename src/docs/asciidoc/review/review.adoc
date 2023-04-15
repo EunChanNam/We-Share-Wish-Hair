@@ -36,3 +36,7 @@ include::{snippets}/delete-review/success/response-fields.adoc[]
 include::{snippets}/delete-review/fail-by-no-access-token/http-response.adoc[]
 include::{snippets}/delete-review/fail-by-no-access-token/response-fields.adoc[]
 
+=== 3. 삭제하려는 리뷰의 작성자가 아니라서 실패
+include::{snippets}/delete-review/fail-by-writer/http-response.adoc[]
+include::{snippets}/delete-review/fail-by-writer/response-fields.adoc[]
+
