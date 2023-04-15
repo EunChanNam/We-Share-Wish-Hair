@@ -2,7 +2,6 @@ package com.inq.wishhair.wesharewishhair.user.controller;
 
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
-import com.inq.wishhair.wesharewishhair.global.utils.TokenUtils;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PointUseRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.PointUseRequestUtils;
 import org.junit.jupiter.api.DisplayName;
@@ -13,6 +12,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("User-PointControllerTest - WebMvcTest")
@@ -22,7 +23,7 @@ public class PointControllerTest extends ControllerTest {
 
     @Nested
     @DisplayName("포인트 사용 API 테스트")
-    class userPoint {
+    class usePoint {
         @Test
         @DisplayName("헤더에 토큰을 포함하지 않아 예외를 던진다")
         void failByNoAccessToken() throws Exception {
@@ -54,7 +55,19 @@ public class PointControllerTest extends ControllerTest {
                     .contentType(APPLICATION_JSON);
 
             //then
-            assertSuccess(requestBuilder, status().isOk());
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    requestFields(
+                                            fieldWithPath("bankName").description("은행 이름"),
+                                            fieldWithPath("accountNumber").description("계좌 번호"),
+                                            fieldWithPath("dealAmount").description("사용 금액")
+                                    ),
+                                    successResponseDocument()
+                            )
+                    );
         }
     }
 }
