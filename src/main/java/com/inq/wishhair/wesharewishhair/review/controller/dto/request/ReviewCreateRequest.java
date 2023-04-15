@@ -1,11 +1,12 @@
 package com.inq.wishhair.wesharewishhair.review.controller.dto.request;
 
 import com.inq.wishhair.wesharewishhair.review.domain.enums.Score;
-import jakarta.validation.constraints.NotNull;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 @Getter

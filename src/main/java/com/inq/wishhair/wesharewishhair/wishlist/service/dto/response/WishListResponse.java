@@ -2,9 +2,11 @@ package com.inq.wishhair.wesharewishhair.wishlist.service.dto.response;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponse;
-import jakarta.persistence.Persistence;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import javax.persistence.Persistence;
 
 @Getter
 @AllArgsConstructor

@@ -7,7 +7,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

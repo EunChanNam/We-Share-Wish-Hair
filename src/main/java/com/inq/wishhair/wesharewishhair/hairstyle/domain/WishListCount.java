@@ -1,7 +1,6 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.domain;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

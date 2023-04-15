@@ -2,8 +2,7 @@ package com.inq.wishhair.wesharewishhair.user.domain;
 
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import jakarta.persistence.Column;
-import jakarta.persistence.Embeddable;
+import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

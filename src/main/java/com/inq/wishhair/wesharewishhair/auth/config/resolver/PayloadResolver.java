@@ -2,13 +2,14 @@ package com.inq.wishhair.wesharewishhair.auth.config.resolver;
 
 import com.inq.wishhair.wesharewishhair.auth.utils.AuthorizationExtractor;
 import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+
+import javax.servlet.http.HttpServletRequest;
 
 @RequiredArgsConstructor
 public class PayloadResolver implements HandlerMethodArgumentResolver {
