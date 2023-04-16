@@ -184,19 +184,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
         }
 
     }
-    private MultiValueMap<String, String> generatePageableParams(Pageable pageable) {
-        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 
-        String sort = pageable.getSort().toString();
-        String[] splitSort = sort.split(":");
-        String variable = splitSort[0];
-        String direction = splitSort[1].trim();
-
-        params.add("size", String.valueOf(pageable.getPageSize()));
-        params.add("page", String.valueOf(pageable.getPageNumber()));
-        params.add("sort", variable + "." + direction);
-        return params;
-    }
     private PagedResponse<ReviewResponse> assemblePagedResponse(int count) {
         Paging defaultPaging = new Paging(count, 0, false);
         return new PagedResponse<>(generateReviewResponses(count), defaultPaging);

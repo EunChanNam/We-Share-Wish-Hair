@@ -21,6 +21,7 @@ import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.PointFixture.values;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
@@ -53,13 +54,14 @@ public class PointSearchControllerTest extends ControllerTest {
         void success() throws Exception {
             //given
             Pageable pageable = DefaultPageableUtils.getDefualtPageable();
-            given(pointSearchService.findPointHistories(1L, pageable))
+            given(pointSearchService.findPointHistories(any(), any()))
                     .willReturn(assemblePagedResponse(values().length));
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                     .get(BASE_URL)
-                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                    .queryParams(generatePageableParams(pageable));
 
             //then
             mockMvc.perform(requestBuilder)
@@ -67,12 +69,17 @@ public class PointSearchControllerTest extends ControllerTest {
                     .andDo(
                             restDocs.document(
                                     accessTokenHeaderDocument(),
+                                    pageableParametersDocument(10, null),
                                     responseFields(
-                                            fieldWithPath("result[]").optional(),
+                                            fieldWithPath("result[]").optional().description("포인트 내역이 없을 수 있음"),
                                             fieldWithPath("result[].pointType").description("포인트 타입"),
                                             fieldWithPath("result[].dealAmount").description("거래 량"),
                                             fieldWithPath("result[].point").description("잔여 포인트"),
-                                            fieldWithPath("result[].dealDate").description("거래 날짜")
+                                            fieldWithPath("result[].dealDate").description("거래 날짜"),
+
+                                            fieldWithPath("paging.contentSize").description("조회된 내역 개수"),
+                                            fieldWithPath("paging.page").description("현재 페이지"),
+                                            fieldWithPath("paging.hasNext").description("다음 페이지 존재 여부")
                                     )
                             )
                     );

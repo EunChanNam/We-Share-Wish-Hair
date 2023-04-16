@@ -26,6 +26,8 @@ import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDoc
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.headers.RequestHeadersSnippet;
@@ -39,6 +41,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
@@ -169,14 +173,17 @@ public abstract class ControllerTest {
     protected RequestParametersSnippet pageableParametersDocument(
             int defaultSize, String defaultSort
     ) {
-        return requestParameters(
+        RequestParametersSnippet result = requestParameters(
                 parameterWithName("size").description("페이지 사이즈(한번에 가져오는 개수)")
                         .attributes(constraint("default : " + defaultSize)),
                 parameterWithName("page").description("페이지 번호")
-                        .attributes(constraint("첫 페이지는 0, default : 0")),
-                parameterWithName("sort").description("정렬 조건 정렬변수.direction")
-                        .attributes(constraint("첫 정렬 조건은 반드시 " + defaultSort + " default : " + defaultSort))
+                        .attributes(constraint("첫 페이지는 0, default : 0"))
         );
+        if (defaultSort != null) {
+            result.and(parameterWithName("sort").description("정렬 조건 정렬변수.direction")
+                    .attributes(constraint("첫 정렬 조건은 반드시 " + defaultSort + " default : " + defaultSort)));
+        }
+        return result;
     }
 
     protected void assertSuccess(MockHttpServletRequestBuilder requestBuilder, ResultMatcher status) throws Exception {
@@ -186,5 +193,21 @@ public abstract class ControllerTest {
                         jsonPath("$").exists(),
                         jsonPath("$.success").value(true)
                 );
+    }
+
+    protected MultiValueMap<String, String> generatePageableParams(Pageable pageable) {
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+
+        if (!pageable.getSort().isEmpty()) {
+            String[] splitSort = pageable.getSort().toString().split(":");
+            String variable = splitSort[0];
+            String direction = splitSort[1].trim();
+
+            params.add("sort", variable + "." + direction);
+        }
+
+        params.add("size", String.valueOf(pageable.getPageSize()));
+        params.add("page", String.valueOf(pageable.getPageNumber()));
+        return params;
     }
 }
