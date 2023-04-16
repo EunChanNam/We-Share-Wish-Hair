@@ -14,10 +14,10 @@ import static com.inq.wishhair.wesharewishhair.user.domain.point.PointType.USE;
 public enum PointFixture {
 
     A(CHARGE, 100, 100),
-    B(CHARGE, 1000, 200),
-    C(CHARGE, 1000, 300),
-    D(CHARGE, 2000, 400),
-    E(CHARGE, 1000, 500),
+    B(CHARGE, 1000, 1100),
+    C(USE, 1000, 100),
+    D(CHARGE, 2000, 2100),
+    E(USE, 1000, 1100),
     ;
     private final PointType pointType;
     private final int dealAmount;

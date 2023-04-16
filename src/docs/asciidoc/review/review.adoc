@@ -1,0 +1,42 @@
+= 리뷰 생성, 수정, 삭제 API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+
+== 리뷰 생성 API
+=== 1. 성공
+Http Request
+include::{snippets}/create-review/success/request-headers.adoc[]
+include::{snippets}/create-review/success/request-parts.adoc[]
+include::{snippets}/create-review/success/request-parameters.adoc[]
+
+Http Response
+include::{snippets}/create-review/success/http-response.adoc[]
+include::{snippets}/create-review/success/response-fields.adoc[]
+
+=== 2. 헤더에 토큰을 포함하지 않아 실패
+Http Response
+include::{snippets}/create-review/fail-by-no-access-token/http-response.adoc[]
+include::{snippets}/create-review/fail-by-no-access-token/response-fields.adoc[]
+
+== 리뷰 삭제 API
+=== 1. 성공
+Http Request
+include::{snippets}/delete-review/success/http-request.adoc[]
+include::{snippets}/delete-review/success/path-parameters.adoc[]
+include::{snippets}/delete-review/success/request-headers.adoc[]
+
+Http Response
+include::{snippets}/delete-review/success/http-response.adoc[]
+include::{snippets}/delete-review/success/response-fields.adoc[]
+
+=== 2. 헤더에 토큰을 포함하지 않아 실패
+include::{snippets}/delete-review/fail-by-no-access-token/http-response.adoc[]
+include::{snippets}/delete-review/fail-by-no-access-token/response-fields.adoc[]
+
+=== 3. 삭제하려는 리뷰의 작성자가 아니라서 실패
+include::{snippets}/delete-review/fail-by-writer/http-response.adoc[]
+include::{snippets}/delete-review/fail-by-writer/response-fields.adoc[]
+

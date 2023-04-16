@@ -1,0 +1,43 @@
+= 검증 메일 전송, 메일 검증 API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+
+== 검증 메일 전송 API
+=== 1. 성공
+Http Request
+include::{snippets}/send-authorization-mail/success/http-request.adoc[]
+include::{snippets}/send-authorization-mail/success/request-fields.adoc[]
+
+Http Response
+include::{snippets}/send-authorization-mail/success/http-response.adoc[]
+include::{snippets}/send-authorization-mail/success/response-fields.adoc[]
+
+=== 2. 틀린 이메일 형식으로 실패
+Http Request
+include::{snippets}/send-authorization-mail/fail-by-wrong-email/http-request.adoc[]
+
+Http Response
+include::{snippets}/send-authorization-mail/fail-by-wrong-email/http-response.adoc[]
+include::{snippets}/send-authorization-mail/fail-by-wrong-email/response-fields.adoc[]
+
+== 메일 검증 API
+=== 1. 성공
+Http Request
+include::{snippets}/authorize-key/success/http-request.adoc[]
+include::{snippets}/authorize-key/success/request-fields.adoc[]
+
+Http Response
+include::{snippets}/authorize-key/success/http-response.adoc[]
+include::{snippets}/authorize-key/success/response-fields.adoc[]
+
+=== 2. 잘못된 인증 키로 실패한다
+Http Response
+include::{snippets}/authorize-key/fail-by-auth-key/http-response.adoc[]
+
+=== 3. 인증키가 만료되어 실패한다
+Http Response
+include::{snippets}/authorize-key/fail-by-expired/http-response.adoc[]
+

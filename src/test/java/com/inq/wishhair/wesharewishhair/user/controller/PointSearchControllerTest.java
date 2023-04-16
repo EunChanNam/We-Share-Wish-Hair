@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Pageable;
+import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -20,7 +21,10 @@ import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.PointFixture.values;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("User-PointSearchControllerTest - WebMvcTest")
@@ -50,17 +54,35 @@ public class PointSearchControllerTest extends ControllerTest {
         void success() throws Exception {
             //given
             Pageable pageable = DefaultPageableUtils.getDefualtPageable();
-            given(pointSearchService.findPointHistories(1L, pageable))
+            given(pointSearchService.findPointHistories(any(), any()))
                     .willReturn(assemblePagedResponse(values().length));
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                     .get(BASE_URL)
-                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                    .queryParams(generatePageableParams(pageable));
 
             //then
             mockMvc.perform(requestBuilder)
-                    .andExpect(status().isOk());
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    pageableParametersDocument(10, null),
+                                    responseFields(
+                                            fieldWithPath("result[]").optional().description("포인트 내역이 없을 수 있음"),
+                                            fieldWithPath("result[].pointType").description("포인트 타입"),
+                                            fieldWithPath("result[].dealAmount").description("거래 량"),
+                                            fieldWithPath("result[].point").description("잔여 포인트"),
+                                            fieldWithPath("result[].dealDate").description("거래 날짜"),
+
+                                            fieldWithPath("paging.contentSize").description("조회된 내역 개수"),
+                                            fieldWithPath("paging.page").description("현재 페이지"),
+                                            fieldWithPath("paging.hasNext").description("다음 페이지 존재 여부")
+                                    )
+                            )
+                    );
         }
     }
 

@@ -10,9 +10,11 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -29,7 +31,7 @@ public class MailControllerTest extends ControllerTest {
     class sendAuthorizationMail {
         @Test
         @DisplayName("올바르지 않은 형식의 이메일로 400 예외를 던진다")
-        void test1() throws Exception {
+        void failByWrongEmail() throws Exception {
             //given
             MailRequest request = new MailRequest(WRONG_EMAIL);
             ErrorCode expectedError = ErrorCode.USER_INVALID_EMAIL;
@@ -38,17 +40,12 @@ public class MailControllerTest extends ControllerTest {
             MockHttpServletRequestBuilder requestBuilder = generateMailSendRequest(request);
 
             //then
-            mockMvc.perform(requestBuilder)
-                    .andExpectAll(
-                            status().isBadRequest(),
-                            jsonPath("$").exists(),
-                            jsonPath("$.message").value(expectedError.getMessage())
-                    );
+            assertException(expectedError, requestBuilder, status().isBadRequest());
         }
 
         @Test
         @DisplayName("성공적으로 메일을 전송한다")
-        void test2() throws Exception {
+        void success() throws Exception {
             //given
             MailRequest request = new MailRequest(EMAIL);
 
@@ -59,8 +56,17 @@ public class MailControllerTest extends ControllerTest {
             mockMvc.perform(requestBuilder)
                     .andExpectAll(
                             status().isOk(),
-                            jsonPath("$").exists(),
-                            jsonPath("$.sessionId").exists()
+                            jsonPath("$").exists()
+                    ).andDo(
+                            restDocs.document(
+                                    requestFields(
+                                            fieldWithPath("email").description("이메일 (아이디)")
+                                                    .attributes(constraint("이메일 형식 준수"))
+                                    ),
+                                    responseFields(
+                                            fieldWithPath("sessionId").description("Session ID 유효기간 : 5분")
+                                    )
+                            )
                     );
         }
 
@@ -77,7 +83,7 @@ public class MailControllerTest extends ControllerTest {
     class authorizeKey {
         @Test
         @DisplayName("잘못된 인증 키로 검증에 실패한다")
-        void test3() throws Exception {
+        void failByAuthKey() throws Exception {
             //given
             AuthKeyRequest request = new AuthKeyRequest("1111");
             MockHttpSession session = new MockHttpSession();
@@ -92,17 +98,12 @@ public class MailControllerTest extends ControllerTest {
                     .session(session);
 
             //then
-            mockMvc.perform(requestBuilder)
-                    .andExpectAll(
-                            status().isUnauthorized(),
-                            jsonPath("$").exists(),
-                            jsonPath("$.message").value(expectedError.getMessage())
-                    );
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
         }
 
         @Test
         @DisplayName("인증키가 만료되어 검증에 실패한다")
-        void test4() throws Exception {
+        void failByExpired() throws Exception {
             //given
             AuthKeyRequest request = new AuthKeyRequest("1111");
 
@@ -115,17 +116,12 @@ public class MailControllerTest extends ControllerTest {
                     .contentType(MediaType.APPLICATION_JSON);
 
             //then
-            mockMvc.perform(requestBuilder)
-                    .andExpectAll(
-                            status().isUnauthorized(),
-                            jsonPath("$").exists(),
-                            jsonPath("$.message").value(expectedError.getMessage())
-                    );
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
         }
 
         @Test
         @DisplayName("올바른 인증키로 검증에 성공한다")
-        void test5() throws Exception {
+        void success() throws Exception {
             //given
             AuthKeyRequest request = new AuthKeyRequest("1111");
             MockHttpSession session = new MockHttpSession();
@@ -142,8 +138,15 @@ public class MailControllerTest extends ControllerTest {
             mockMvc.perform(requestBuilder)
                     .andExpectAll(
                             status().isOk(),
-                            jsonPath("$").exists(),
-                            jsonPath("$.success").value(true)
+                            jsonPath("$").exists()
+                    ).andDo(
+                            restDocs.document(
+                                    requestFields(
+                                            fieldWithPath("authKey").description("사용자 입력 인증 키")
+                                                    .attributes(constraint("4자리 숫자"))
+                                    ),
+                                    successResponseDocument()
+                            )
                     );
         }
     }

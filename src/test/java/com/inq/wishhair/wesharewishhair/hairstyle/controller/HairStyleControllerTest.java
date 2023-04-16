@@ -27,7 +27,7 @@ import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.queryParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -63,7 +63,7 @@ public class HairStyleControllerTest extends ControllerTest {
             List<Tag> tags = E.getTags();
             ResponseWrapper<HairStyleResponse> expectedResponse = assembleWrappedResponse(List.of(E, C, D));
 
-            given(hairStyleSearchService.findRecommendedHairStyle(tags, 1L, getDefaultPageable()))
+            given(hairStyleSearchService.findRecommendedHairStyle(tags, 1L))
                     .willReturn(expectedResponse);
 
             MultiValueMap<String, String> params = generateTagParams(tags);
@@ -82,7 +82,7 @@ public class HairStyleControllerTest extends ControllerTest {
                     ).andDo(
                             restDocs.document(
                                     accessTokenHeaderDocument(),
-                                    queryParameters(
+                                    requestParameters(
                                             parameterWithName("tags").description("검색 Tag")
                                                     .attributes(constraint("얼굴형 태그 포함 하나 이상 필요"))
                                     ),
@@ -115,7 +115,7 @@ public class HairStyleControllerTest extends ControllerTest {
             MultiValueMap<String, String> params = generateTagParams(tags);
 
             ErrorCode expectedError = ErrorCode.RUN_NO_FACE_SHAPE_TAG;
-            given(hairStyleSearchService.findRecommendedHairStyle(any(), any(), any()))
+            given(hairStyleSearchService.findRecommendedHairStyle(any(), any()))
                     .willThrow(new WishHairException(expectedError));
 
             //when

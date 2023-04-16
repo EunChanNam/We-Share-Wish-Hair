@@ -19,7 +19,7 @@ public class ReviewResponse {
 
     private String hairStyleName;
 
-    private String userNickName;
+    private String userNickname;
 
     private String score;
 
@@ -31,17 +31,17 @@ public class ReviewResponse {
 
     private int likes;
 
-    private List<HashTagResponse> hasTags;
+    private List<HashTagResponse> hashTags;
 
     public ReviewResponse(Review review) {
         this.reviewId = review.getId();
         this.hairStyleName = review.getHairStyle().getName();
-        this.userNickName = review.getUser().getName();
+        this.userNickname = review.getUser().getName();
         this.score = review.getScore().getValue();
         this.contents = review.getContentsValue();
         this.createdDate = review.getCreatedDate();
         this.likes = review.getLikes();
         this.photos = PhotoResponseAssembler.toPhotoResponses(review.getPhotos());
-        this.hasTags = HairStyleResponseAssembler.toHashTagResponses(review.getHairStyle().getHashTags());
+        this.hashTags = HairStyleResponseAssembler.toHashTagResponses(review.getHairStyle().getHashTags());
     }
 }
