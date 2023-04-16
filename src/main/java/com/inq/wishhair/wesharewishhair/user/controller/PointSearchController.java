@@ -21,8 +21,9 @@ public class PointSearchController {
 
     @GetMapping
     public ResponseEntity<PagedResponse<PointResponse>> findPointHistories(
-            @ExtractPayload Long userId) {
+            @ExtractPayload Long userId,
+            @PageableDefault Pageable pageable) {
 
-        return ResponseEntity.ok(pointSearchService.findPointHistories(userId));
+        return ResponseEntity.ok(pointSearchService.findPointHistories(userId, pageable));
     }
 }

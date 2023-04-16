@@ -55,9 +55,10 @@ public class PointSearchServiceTest extends ServiceTest {
     void test1() {
         //given
         savePointHistories(List.of(1, 3, 4), List.of(now().minusMonths(1), now().minusMinutes(1), now().minusDays(1)));
+        Pageable pageable = DefaultPageableUtils.getDefualtPageable();
 
         //when
-        PagedResponse<PointResponse> result = pointSearchService.findPointHistories(user.getId());
+        PagedResponse<PointResponse> result = pointSearchService.findPointHistories(user.getId(), pageable);
 
         //then
         assertThat(result.getPaging().hasNext()).isFalse();
