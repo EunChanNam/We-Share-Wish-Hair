@@ -49,8 +49,7 @@ public class PointSearchControllerTest extends ControllerTest {
         @DisplayName("사용자의 포인트 내역을 조회한다")
         void success() throws Exception {
             //given
-            Pageable pageable = DefaultPageableUtils.getDefualtPageable();
-            given(pointSearchService.findPointHistories(1L, pageable))
+            given(pointSearchService.findPointHistories(1L))
                     .willReturn(assemblePagedResponse(values().length));
 
             //when
