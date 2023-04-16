@@ -1,0 +1,52 @@
+= 회원가입, 회원탈퇴, 회원정보 수정 API
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 3
+
+== 회원가입 API
+=== 1. 성공
+Http Request
+include::{snippets}/create-user/success/http-request.adoc[]
+include::{snippets}/create-user/success/request-fields.adoc[]
+
+Http Response
+include::{snippets}/create-user/success/http-response.adoc[]
+include::{snippets}/create-user/success/response-fields.adoc[]
+
+=== 2. 중복된 닉네임으로 실패
+Http Response
+include::{snippets}/create-user/fail-by-duplicated-nickname/http-response.adoc[]
+
+== 회원 탈퇴 API
+=== 1. 성공
+Http Request
+include::{snippets}/delete-user/success/http-request.adoc[]
+include::{snippets}/delete-user/success/request-headers.adoc[]
+
+Http Response
+include::{snippets}/delete-user/success/http-response.adoc[]
+
+=== 2. 헤더에 토큰을 포함하지 않아 실패
+Http Response
+include::{snippets}/delete-user/fail-by-no-access-token/http-response.adoc[]
+
+
+== 회원 정보 수정 API
+=== 1. 성공
+Http Request
+include::{snippets}/update-user/success/http-request.adoc[]
+include::{snippets}/update-user/success/request-headers.adoc[]
+include::{snippets}/update-user/success/request-fields.adoc[]
+
+Http Response
+include::{snippets}/update-user/success/http-response.adoc[]
+
+=== 2. 중복된 닉네임으로 실패
+Http Response
+include::{snippets}/update-user/fail-by-duplicated-nickname/http-response.adoc[]
+
+=== 3. 헤더에 토큰을 포함하지 않아 실패
+Http Response
+include::{snippets}/update-user/fail-by-no-access-token/http-response.adoc[]

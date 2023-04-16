@@ -13,6 +13,7 @@ import com.inq.wishhair.wesharewishhair.user.controller.utils.UserUpdateRequestU
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -20,7 +21,9 @@ import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static com.inq.wishhair.wesharewishhair.user.controller.utils.UserCreateRequestUtils.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doThrow;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("UserControllerTest - Mock")
@@ -42,7 +45,23 @@ public class UserControllerTest extends ControllerTest {
             MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
 
             //then
-            assertSuccess(requestBuilder, status().isCreated());
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isCreated())
+                    .andDo(
+                            restDocs.document(
+                                    requestFields(
+                                            fieldWithPath("email").description("이메일 (아이디)")
+                                                    .attributes(constraint("이메일 형식 준수")),
+                                            fieldWithPath("pw").description("비밀 번호")
+                                                    .attributes(constraint("영어,숫자,특수문자 조합 8~20자")),
+                                            fieldWithPath("name").description("사용자 실명"),
+                                            fieldWithPath("nickname").description("닉네임")
+                                                    .attributes(constraint("영어,숫자,한글 조합 2~8자 (공백 불가능)")),
+                                            fieldWithPath("sex").description("사용자 성별")
+                                    ),
+                                    successResponseDocument()
+                            )
+                    );
         }
 
         @Test
@@ -96,7 +115,14 @@ public class UserControllerTest extends ControllerTest {
                     .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
 
             //then
-            assertSuccess(requestBuilder, status().isOk());
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    successResponseDocument()
+                            )
+                    );
         }
     }
 
@@ -121,6 +147,24 @@ public class UserControllerTest extends ControllerTest {
         }
 
         @Test
+        @DisplayName("중복된 닉네임으로 수정에 실패한다")
+        void failByDuplicatedNickname() throws Exception {
+            UserUpdateRequest request = UserUpdateRequestUtils.request(UserFixture.A);
+            ErrorCode expectedError = ErrorCode.USER_DUPLICATED_NICKNAME;
+            doThrow(new WishHairException(expectedError)).when(userService).updateUser(any(), any());
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .patch(BASE_URL)
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                    .content(toJson(request))
+                    .contentType(APPLICATION_JSON);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isBadRequest());
+        }
+
+        @Test
         @DisplayName("회원 정보 수정을 한다")
         void success() throws Exception {
             //given
@@ -134,7 +178,19 @@ public class UserControllerTest extends ControllerTest {
                     .contentType(APPLICATION_JSON);
 
             //then
-            assertSuccess(requestBuilder, status().isOk());
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    requestFields(
+                                            fieldWithPath("nickname").description("변경할 닉네임")
+                                                    .attributes(constraint("영어,숫자,한글 조합 2~8자 (공백 불가능)")),
+                                            fieldWithPath("sex").description("변경할 성별")
+                                    ),
+                                    successResponseDocument()
+                            )
+                    );
         }
     }
 
@@ -172,7 +228,20 @@ public class UserControllerTest extends ControllerTest {
                     .contentType(APPLICATION_JSON);
 
             //then
-            assertSuccess(requestBuilder, status().isOk());
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    requestFields(
+                                            fieldWithPath("oldPassword").description("기존 비밀번호")
+                                                    .attributes(constraint("기존 비밀번호와 같아야함")),
+                                            fieldWithPath("newPassword").description("새로운 비밀번호")
+                                                    .attributes(constraint("영어,숫자,특수문자 조합 8~20자"))
+                                    ),
+                                    successResponseDocument()
+                            )
+                    );
         }
     }
 
