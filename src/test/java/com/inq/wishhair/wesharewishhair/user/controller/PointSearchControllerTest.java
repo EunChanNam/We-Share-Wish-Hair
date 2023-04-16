@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Pageable;
+import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -21,6 +22,8 @@ import java.util.List;
 import static com.inq.wishhair.wesharewishhair.global.fixture.PointFixture.values;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.mockito.BDDMockito.given;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("User-PointSearchControllerTest - WebMvcTest")
@@ -50,7 +53,7 @@ public class PointSearchControllerTest extends ControllerTest {
         void success() throws Exception {
             //given
             given(pointSearchService.findPointHistories(1L))
-                    .willReturn(assemblePagedResponse(values().length));
+                    .willReturn(assemblePagedResponse(2));
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -59,7 +62,19 @@ public class PointSearchControllerTest extends ControllerTest {
 
             //then
             mockMvc.perform(requestBuilder)
-                    .andExpect(status().isOk());
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    responseFields(
+                                            fieldWithPath("result[]").optional(),
+                                            fieldWithPath("result[].pointType").description("포인트 타입"),
+                                            fieldWithPath("result[].dealAmount").description("거래 량"),
+                                            fieldWithPath("result[].point").description("잔여 포인트"),
+                                            fieldWithPath("result[].dealDate").description("거래 날짜")
+                                    )
+                            )
+                    );
         }
     }
 
