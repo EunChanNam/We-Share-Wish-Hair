@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -17,6 +18,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static com.inq.wishhair.wesharewishhair.user.controller.utils.UserCreateRequestUtils.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -34,7 +36,7 @@ public class UserControllerTest extends ControllerTest {
         void success() throws Exception {
             //given
             UserCreateRequest request = successRequest();
-            given(userService.createUser(request.toEntity())).willReturn(1L);
+            given(userService.createUser(any())).willReturn(1L);
 
             //when
             MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
@@ -44,42 +46,13 @@ public class UserControllerTest extends ControllerTest {
         }
 
         @Test
-        @DisplayName("올바르지 않은 이메일 형식으로 400 예외를 던진다")
-        void failByEmail() throws Exception {
+        @DisplayName("중복된 닉네임으로 400 예외를 던진다")
+        void failByDuplicatedNickname() throws Exception {
             //given
-            UserCreateRequest request = wrongEmailRequest();
-
-            ErrorCode expectedError = ErrorCode.USER_INVALID_EMAIL;
-
-            //when
-            MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
-
-            //then
-            assertException(expectedError, requestBuilder, status().isBadRequest());
-        }
-
-        @Test
-        @DisplayName("올바르지 않은 닉네임으로 400 예외를 던진다")
-        void failByNickname() throws Exception {
-            //given
-            UserCreateRequest request = wrongNicknameRequest();
-
-            ErrorCode expectedError = ErrorCode.USER_INVALID_NICKNAME;
-
-            //when
-            MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
-
-            //then
-            assertException(expectedError, requestBuilder, status().isBadRequest());
-        }
-
-        @Test
-        @DisplayName("올바르지 않은 비밀번호 형식으로 400 예외를 던진다")
-        void failByPassword() throws Exception {
-            //given
-            UserCreateRequest request = wrongPasswordRequest();
-
-            ErrorCode expectedError = ErrorCode.USER_INVALID_PASSWORD;
+            UserCreateRequest request = successRequest();
+            ErrorCode expectedError = ErrorCode.USER_DUPLICATED_NICKNAME;
+            given(userService.createUser(any()))
+                    .willThrow(new WishHairException(expectedError));
 
             //when
             MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
