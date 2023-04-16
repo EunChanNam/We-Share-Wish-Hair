@@ -4,3 +4,26 @@
 :source-highlighter: highlightjs
 :toc: left
 :toclevels: 3
+
+[[auth]]
+= Auth API
+include::auth/auth.adoc[]
+include::auth/token-reissue.adoc[]
+
+[[user]]
+= User API
+include::user/mail.adoc[]
+include::user/user.adoc[]
+include::user/my-page.adoc[]
+include::user/point.adoc[]
+include::user/point-search.adoc[]
+
+[[hairStyle]]
+= HairStyle API
+include::hairstyle/recommend.adoc[]
+
+[[review]]
+= Review API
+include::review/review.adoc[]
+include::review/review-search.adoc[]
+include::review/like-review.adoc[]

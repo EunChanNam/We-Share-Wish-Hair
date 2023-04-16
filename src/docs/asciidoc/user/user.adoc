@@ -1,4 +1,3 @@
-= 회원가입, 회원탈퇴, 회원정보 수정 API
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs

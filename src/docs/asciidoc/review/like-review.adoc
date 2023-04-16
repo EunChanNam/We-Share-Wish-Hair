@@ -1,4 +1,3 @@
-= 리뷰 - 좋아요 API
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs

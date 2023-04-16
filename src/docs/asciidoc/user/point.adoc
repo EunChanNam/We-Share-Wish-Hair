@@ -1,4 +1,3 @@
-= 포인트 사용 or 환급 API
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs

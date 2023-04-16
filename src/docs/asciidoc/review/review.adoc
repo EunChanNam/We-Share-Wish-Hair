@@ -1,4 +1,3 @@
-= 리뷰 생성, 수정, 삭제 API
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs

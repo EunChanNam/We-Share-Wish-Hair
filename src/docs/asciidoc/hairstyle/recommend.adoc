@@ -1,4 +1,3 @@
-= 헤어스타일 검색 API
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs

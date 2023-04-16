@@ -1,4 +1,3 @@
-= 검증 메일 전송, 메일 검증 API
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs
