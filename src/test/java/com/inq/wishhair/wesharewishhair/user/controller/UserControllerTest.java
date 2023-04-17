@@ -5,6 +5,8 @@ import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.FaceShapeUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserCreateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
@@ -245,6 +247,54 @@ public class UserControllerTest extends ControllerTest {
         }
     }
 
+    @Nested
+    @DisplayName("사용자 얼굴형 업데이트 API")
+    class updateFaceShape {
+        @Test
+        @DisplayName("헤더에 토큰을 포함하지 않아 실패")
+        void failByNoAccessToken() throws Exception {
+            //given
+            FaceShapeUpdateRequest request = new FaceShapeUpdateRequest(Tag.OBLONG);
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .patch(BASE_URL + "/face_shape")
+                    .contentType(APPLICATION_JSON)
+                    .content(toJson(request));
+
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
+        }
+
+        @Test
+        @DisplayName("사용자 얼굴형을 업데이트 한다")
+        void success() throws Exception {
+            //given
+            FaceShapeUpdateRequest request = new FaceShapeUpdateRequest(Tag.OBLONG);
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .patch(BASE_URL + "/face_shape")
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                    .contentType(APPLICATION_JSON)
+                    .content(toJson(request));
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    requestFields(
+                                            fieldWithPath("faceShapeTag").description("얼굴형 태그")
+                                                    .attributes(constraint("반드시 존재하는 얼굴형 태그"))
+                                    ),
+                                    successResponseDocument()
+                            )
+                    );
+        }
+    }
 }
 
 
