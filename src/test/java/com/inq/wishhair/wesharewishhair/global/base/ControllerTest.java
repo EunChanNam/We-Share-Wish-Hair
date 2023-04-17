@@ -180,7 +180,7 @@ public abstract class ControllerTest {
                         .attributes(constraint("첫 페이지는 0, default : 0"))
         );
         if (defaultSort != null) {
-            result.and(parameterWithName("sort").description("정렬 조건 정렬변수.direction")
+            result = result.and(parameterWithName("sort").description("정렬 조건 정렬변수.direction")
                     .attributes(constraint("첫 정렬 조건은 반드시 " + defaultSort + " default : " + defaultSort)));
         }
         return result;

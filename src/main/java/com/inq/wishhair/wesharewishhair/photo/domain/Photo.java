@@ -27,16 +27,16 @@ public class Photo {
     private String originalFilename;
 
     @Column(nullable = false, updatable = false, unique = true)
-    private String storeFilename;
+    private String storeUrl;
 
     //==생성 메서드==//
-    private Photo(String originalFilename, String storeFilename) {
+    private Photo(String originalFilename, String storeUrl) {
         this.originalFilename = originalFilename;
-        this.storeFilename = storeFilename;
+        this.storeUrl = storeUrl;
     }
 
-    public static Photo of(String originalFilename, String storeFilename) {
-        return new Photo(originalFilename, storeFilename);
+    public static Photo of(String originalFilename, String storeUrl) {
+        return new Photo(originalFilename, storeUrl);
     }
 
     //==편의 메서드==//

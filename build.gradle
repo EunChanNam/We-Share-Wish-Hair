@@ -69,6 +69,10 @@ dependencies {
 	// RestDocs
 	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
 	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
+	//네이버 클라우드
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
+
 }
 
 tasks.named('test') {
