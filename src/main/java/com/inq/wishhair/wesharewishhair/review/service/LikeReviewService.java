@@ -1,11 +1,8 @@
 package com.inq.wishhair.wesharewishhair.review.service;
 
-import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
-import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
-import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
-import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
+import com.inq.wishhair.wesharewishhair.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,24 +12,14 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class LikeReviewService {
 
-    private final ReviewRepository reviewRepository;
-    private final UserRepository userRepository;
+    private final ReviewFindService reviewFindService;
+    private final UserFindService userFindService;
 
     @Transactional
     public void likeReview(Long reviewId, Long userId) {
-        User user = findUser(userId);
-        Review review = findReview(reviewId);
+        User user = userFindService.findByUserId(userId);
+        Review review = reviewFindService.findWithLikeReviewsById(reviewId);
 
         review.executeLike(user);
-    }
-
-    private Review findReview(Long reviewId) {
-        return reviewRepository.findWithLikeReviewsById(reviewId)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
-    }
-
-    private User findUser(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 }

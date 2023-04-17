@@ -37,7 +37,7 @@ public class ReviewFindServiceTest extends ServiceTest {
     @DisplayName("아이디로 리뷰를 조회한다")
     void findById() {
         //when
-        Review result = reviewFindService.findById(review.getId());
+        Review result = reviewFindService.findWithUserById(review.getId());
 
         //then
         assertAll(

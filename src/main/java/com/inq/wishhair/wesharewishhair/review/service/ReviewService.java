@@ -50,7 +50,7 @@ public class ReviewService {
 
     @Transactional
     public void deleteReview(Long reviewId, Long userId) {
-        Review review = reviewFindService.findById(reviewId);
+        Review review = reviewFindService.findWithUserById(reviewId);
         validateIsWriter(userId, review);
         likeReviewRepository.deleteAllByReview(reviewId);
         photoRepository.deleteAllByReview(reviewId);
