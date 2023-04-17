@@ -50,6 +50,10 @@ public class ReviewSearchService {
         return toWrappedSimpleResponse(result);
     }
 
+    public ReviewResponse findReviewById(Long reviewId) {
+        
+    }
+
     private LocalDateTime generateStartDate() {
         return LocalDateTime.now().minusMonths(1).withDayOfMonth(1).withHour(0).withMinute(0);
     }
