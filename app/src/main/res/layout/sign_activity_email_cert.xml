@@ -130,12 +130,14 @@
                     android:layout_height="match_parent"
                     android:layout_marginEnd="10dp"
                     android:paddingStart="10dp"
+                    android:paddingEnd="7dp"
                     android:background="@drawable/border_sign_text"
                     android:maxLength="6"
                     android:inputType="number"
                     android:hint="@string/cert_hint_submit"
                     android:autofillHints="password"
-                    tools:ignore="RtlSymmetry" />
+                    tools:ignore="RtlSymmetry"
+                    android:drawableEnd="@drawable/sign_check_success" />
                 <Button
                     android:id="@+id/sign_cert_btn_confirmCode"
                     android:layout_weight="2"
@@ -145,7 +147,7 @@
                     android:text="@string/cert_message_btn_submit"
                     android:textColor="@color/text_ivory"
                     android:textStyle="bold"
-                    android:background="@drawable/border_sign_button"/>
+                    android:background="@drawable/border_sign_button" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

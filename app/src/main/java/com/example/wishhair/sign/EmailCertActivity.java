@@ -1,10 +1,12 @@
 package com.example.wishhair.sign;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.preference.PreferenceManager;
@@ -15,7 +17,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -39,6 +40,7 @@ public class EmailCertActivity extends AppCompatActivity {
     private EditText ed_email, ed_code;
     private Button btn_intent;
     private TextView remainTime;
+    private Drawable check_success, check_fail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,12 +70,16 @@ public class EmailCertActivity extends AppCompatActivity {
         Button btn_send = findViewById(R.id.sign_cert_btn_requestSend);
         btn_send.setOnClickListener(view -> {
             timer.start();
+//            TODO : 타이머 테스트 용 이메일 인증 일시정지
 //            String inputEmail = String.valueOf(ed_email.getText());
 //            emailSendRequest(inputEmail);
         });
 
 //        confirmCode request
         ed_code = findViewById(R.id.sign_cert_et_code);
+        check_success = ContextCompat.getDrawable(this, R.drawable.sign_check_success);
+        check_fail = ContextCompat.getDrawable(this, R.drawable.sign_check_fail);
+        ed_code.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
         Button btn_submit = findViewById(R.id.sign_cert_btn_confirmCode);
         btn_submit.setOnClickListener(view -> {
             String inputCode = String.valueOf(ed_code.getText());
@@ -149,11 +155,13 @@ public class EmailCertActivity extends AppCompatActivity {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL_VALIDATE, jsonObject, response -> {
             Log.d("validate success", response.toString());
-            Toast.makeText(this, "인증에 성공했습니다.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "vali succ", Toast.LENGTH_SHORT).show();
+            ed_code.setCompoundDrawablesWithIntrinsicBounds(null, null, check_success, null);
             btn_intent.setVisibility(View.VISIBLE);
         }, error -> {
             String message = getErrorMessage(error);
             Log.e("validate error message", message);
+            ed_code.setCompoundDrawablesWithIntrinsicBounds(null, null, check_fail, null);
             Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
         }) {
             @Override
