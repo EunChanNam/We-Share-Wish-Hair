@@ -4,39 +4,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.example.wishhair.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator3;
 
 public class ReviewDetailActivity extends AppCompatActivity {
 
-    private final String[] images = new String[] {
-            "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg",
-            "https://cdn.pixabay.com/photo/2020/11/04/15/29/coffee-beans-5712780_1280.jpg",
-            "https://cdn.pixabay.com/photo/2020/03/08/21/41/landscape-4913841_1280.jpg",
-            "https://cdn.pixabay.com/photo/2020/09/02/18/03/girl-5539094_1280.jpg",
-            "https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg"
-    };
-
     private Button btn_back;
+
     //    content
     private TextView hairStyleName, tags, score, likes, date, content;
-    private List<Bitmap> photos;
+
 
 
     @Override
@@ -51,9 +40,12 @@ public class ReviewDetailActivity extends AppCompatActivity {
         CircleIndicator3 circleIndicator = findViewById(R.id.review_detail_indicator);
 
         sliderViewPager.setOffscreenPageLimit(1);
-//        sliderViewPager.setAdapter(new ImageSliderAdapter(this, images));
+
+        ArrayList<String> imageUrls = getIntent().getStringArrayListExtra("imageUrls");
+        sliderViewPager.setAdapter(new ImageSliderAdapter(this, imageUrls));
 
         circleIndicator.setViewPager(sliderViewPager);
+
 
 //        content
         hairStyleName = findViewById(R.id.review_detail_hairStyleName);
@@ -73,20 +65,7 @@ public class ReviewDetailActivity extends AppCompatActivity {
 
         content = findViewById(R.id.review_detail_tv_content);
         content.setText(getIntent().getStringExtra("content"));
-
-        /*for (int i = 0; i < getIntent().getIntExtra("listSize", 0); i++) {
-            byte[] byteArray = getIntent().getByteArrayExtra("photo" + i);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
-            photos.add(bitmap);
-        }*/
-
-        List<Uri> images = new ArrayList<>();
-        images.add(Uri.parse(getIntent().getStringExtra("image_uri")));
-//        TODO 테스트용 이미지 뷰 제거
-        ImageView testImageView = findViewById(R.id.test_image_view);
-        testImageView.setImageURI(images.get(0));
-
-    }
+        }
 
     public void showMenu(View view) {
         PopupMenu menu = new PopupMenu(this, view);

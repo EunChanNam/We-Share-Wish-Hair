@@ -1,7 +1,6 @@
 package com.example.wishhair.review.recent;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,7 +16,6 @@ import com.example.wishhair.R;
 import com.example.wishhair.review.ReviewItem;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder> {
 
@@ -54,17 +52,12 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
 
         holder.profileImage.setImageResource(item.getProfileImage());
 
-        List<Bitmap> photoBitmaps = item.getBitmapImages();
-        if (photoBitmaps.size() == 1) {
-            holder.bindContentImage1(item.getBitmapImages().get(0));
-        } else if (photoBitmaps.size() > 1) {
-            holder.bindContentImage1(item.getBitmapImages().get(0));
-            holder.bindContentImage2(item.getBitmapImages().get(1));
+        if (item.getImageUrls().size() > 0) {
+            holder.bindContentImage(item.getImageUrls().get(0));
         }
 
         holder.hairStyleName.setText(item.getHairStyleName());
         holder.tags.setText(item.getTags());
-
         holder.nickname.setText(item.getUserNickName());
         holder.content.setText(item.getContents());
         holder.grade.setText(item.getScore());
@@ -109,11 +102,8 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
             this.tags = itemView.findViewById(R.id.review_recent_tv_tags);
         }
 
-        public void bindContentImage1(Bitmap imageBitmap) {
-            Glide.with(context).load(imageBitmap).into(contentImage1);
-        }
-        public void bindContentImage2(Bitmap imageBitmap) {
-            Glide.with(context).load(imageBitmap).into(contentImage2);
+        public void bindContentImage(String imageUrl) {
+            Glide.with(context).load(imageUrl).into(contentImage1);
         }
 
     }

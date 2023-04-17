@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -24,10 +25,10 @@ public class ReviewItem {
     private int profileImage;
     private String userNickName;
     private boolean isHeart;
-    private List<Bitmap> bitmapImages;
+    private ArrayList<String> imageUrls;
 
     //사진이 있을 때
-    public ReviewItem(int profileImage, String userNickName,String hairStyleName, String tags, String createdDate, String score, int likes, boolean isHeart, List<Bitmap> bitmapImages, String contents) {
+    public ReviewItem(int profileImage, String userNickName,String hairStyleName, String tags, String createdDate, String score, int likes, boolean isHeart, ArrayList<String> imageUrls, String contents) {
         this.contents = contents;
         this.createdDate = createdDate;
         this.likes = likes;
@@ -37,7 +38,7 @@ public class ReviewItem {
         this.profileImage = profileImage;
         this.userNickName = userNickName;
         this.isHeart = isHeart;
-        this.bitmapImages = bitmapImages;
+        this.imageUrls = imageUrls;
     }
 
     //사진이 없을 때
@@ -100,12 +101,12 @@ public class ReviewItem {
         this.score = score;
     }
 
-    public List<Bitmap> getBitmapImages() {
-        return bitmapImages;
+    public ArrayList<String> getImageUrls() {
+        return imageUrls;
     }
 
-    public void setBitmapImages(List<Bitmap> bitmapImages) {
-        this.bitmapImages = bitmapImages;
+    public void setImageUrls(ArrayList<String> imageUrls) {
+        this.imageUrls = imageUrls;
     }
 
     public boolean getIsHeart() {
