@@ -20,12 +20,12 @@ Http Response
 include::{snippets}/recommend-hair-style/fail-by-no-tag/http-response.adoc[]
 include::{snippets}/recommend-hair-style/fail-by-no-tag/response-fields.adoc[]
 
-=== 3. 태그에 얼굴형 태그가 없어서 실패
+=== 3. 얼굴형 태그가 없는 사용자로 실패
 Http Request
-include::{snippets}/recommend-hair-style/fail-by-no-face-shape-tag/http-request.adoc[]
+include::{snippets}/recommend-hair-style/fail-by-no-face-shape/http-request.adoc[]
 Http Response
-include::{snippets}/recommend-hair-style/fail-by-no-face-shape-tag/http-response.adoc[]
-include::{snippets}/recommend-hair-style/fail-by-no-face-shape-tag/response-fields.adoc[]
+include::{snippets}/recommend-hair-style/fail-by-no-face-shape/http-response.adoc[]
+include::{snippets}/recommend-hair-style/fail-by-no-face-shape/response-fields.adoc[]
 
 === 4. 헤더에 토큰을 포함하지 않아 실패
 Http Response

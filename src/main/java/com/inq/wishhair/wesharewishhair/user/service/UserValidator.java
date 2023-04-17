@@ -22,7 +22,7 @@ public class UserValidator {
 
     public void validateEmailIsNotDuplicated(Email email) {
         if (userRepository.existsByEmail(email)) {
-            throw new WishHairException(ErrorCode.USER_DUPLICATED_EMIAL);
+            throw new WishHairException(ErrorCode.USER_DUPLICATED_EMAIL);
         }
     }
 }

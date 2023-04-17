@@ -49,3 +49,33 @@ include::{snippets}/update-user/fail-by-duplicated-nickname/http-response.adoc[]
 === 3. 헤더에 토큰을 포함하지 않아 실패
 Http Response
 include::{snippets}/update-user/fail-by-no-access-token/http-response.adoc[]
+
+== 비밀번호 변경 API
+=== 1. 성공
+Http Request
+include::{snippets}/update-password/success-update-password/http-request.adoc[]
+include::{snippets}/update-password/success-update-password/request-headers.adoc[]
+include::{snippets}/update-password/success-update-password/request-fields.adoc[]
+
+=== 2. 기존 비밀번호가 틀려 실패
+Http Response
+include::{snippets}/update-password/fail-by-old-password/http-response.adoc[]
+
+=== 3. 헤더에 토큰을 포함하지 않아 실패
+Http Response
+include::{snippets}/update-password/fail-by-no-access-token/http-response.adoc[]
+
+== 사용자 얼굴형 업데이트 API
+=== 1. 성공
+Http Request
+include::{snippets}/update-face-shape/success/http-request.adoc[]
+include::{snippets}/update-face-shape/success/request-headers.adoc[]
+include::{snippets}/update-face-shape/success/request-fields.adoc[]
+
+Http Response
+include::{snippets}/update-face-shape/success/http-response.adoc[]
+include::{snippets}/update-face-shape/success/response-fields.adoc[]
+
+=== 2. 헤더에 토큰을 포함하지 않아 실패
+Http Response
+include::{snippets}/update-face-shape/fail-by-no-access-token/http-response.adoc[]

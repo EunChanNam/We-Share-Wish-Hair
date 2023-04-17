@@ -78,7 +78,7 @@ public class MyPageControllerTest extends ControllerTest {
                                             fieldWithPath("reviews[].contents").description("리뷰 내용"),
                                             fieldWithPath("reviews[].createdDate").description("리뷰 작성 일"),
                                             fieldWithPath("reviews[].photos").optional().description("사진이 없을 수 있음"),
-                                            fieldWithPath("reviews[].photos[].resource").description("리뷰 사진 URI"),
+                                            fieldWithPath("reviews[].photos[].storeUrl").description("리뷰 사진 URI"),
                                             fieldWithPath("reviews[].likes").description("좋아요 수"),
                                             fieldWithPath("reviews[].hashTags[].tag").description("해시 태그")
                                     )
