@@ -129,13 +129,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="내용"/>
-
-<!--        TODO test image View 제거 -->
-        <ImageView
-            android:id="@+id/test_image_view"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:scaleType="fitCenter"/>
     </LinearLayout>
 
 </LinearLayout>
