@@ -20,7 +20,7 @@ public abstract class ReviewResponseAssembler {
         return slice.map(ReviewResponseAssembler::toReviewResponse);
     }
 
-    private static ReviewResponse toReviewResponse(Review review) {
+    public static ReviewResponse toReviewResponse(Review review) {
         return new ReviewResponse(review);
     }
 
