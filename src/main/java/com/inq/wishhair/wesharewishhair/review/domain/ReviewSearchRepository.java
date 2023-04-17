@@ -51,9 +51,4 @@ public interface ReviewSearchRepository extends JpaRepository<Review, Long> {
     List<Review> findReviewByCreatedDate(@Param("startDate") LocalDateTime startDate,
                                          @Param("endDate") LocalDateTime endDate,
                                          Pageable pageable);
-
-    //likeReview Service
-    @Query("select distinct r from Review r " +
-            "left outer join fetch r.likeReviews.likeReviews")
-    Optional<Review> findWithLikeReviewsById(@Param("id") Long id);
 }

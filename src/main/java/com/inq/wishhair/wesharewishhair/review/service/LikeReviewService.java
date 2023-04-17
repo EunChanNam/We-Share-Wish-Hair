@@ -3,7 +3,7 @@ package com.inq.wishhair.wesharewishhair.review.service;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
-import com.inq.wishhair.wesharewishhair.review.domain.ReviewSearchRepository;
+import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class LikeReviewService {
 
-    private final ReviewSearchRepository reviewSearchRepository;
+    private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
 
     @Transactional
@@ -27,7 +27,7 @@ public class LikeReviewService {
     }
 
     private Review findReview(Long reviewId) {
-        return reviewSearchRepository.findWithLikeReviewsById(reviewId)
+        return reviewRepository.findWithLikeReviewsById(reviewId)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 
