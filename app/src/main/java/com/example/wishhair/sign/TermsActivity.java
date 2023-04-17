@@ -11,6 +11,6 @@ public class TermsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_terms);
+        setContentView(R.layout.sign_activity_terms);
     }
 }
