@@ -7,6 +7,7 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,6 +18,7 @@ import java.io.InputStream;
 import java.util.*;
 
 @Component
+@Slf4j
 public class PhotoStore {
 
     private final AmazonS3Client amazonS3Client;
@@ -28,8 +30,8 @@ public class PhotoStore {
         this.buketName = buketName;
     }
 
-    public Set<Photo> uploadFiles(List<MultipartFile> files) {
-        Set<Photo> photos = new HashSet<>();
+    public List<Photo> uploadFiles(List<MultipartFile> files) {
+        List<Photo> photos = new ArrayList<>();
         files.forEach(file -> photos.add(uploadFile(file)));
         return photos;
     }
@@ -55,6 +57,7 @@ public class PhotoStore {
             amazonS3Client.putObject(putObjectRequest);
 
             String storeUrl = amazonS3Client.getUrl(buketName, storeFilename).toString();
+            log.info("storeUrl = {}", storeUrl);
             return Photo.of(originalFilename, storeUrl);
         } catch (IOException e) {
             throw new WishHairException(ErrorCode.FILE_TRANSFER_EX);

@@ -38,7 +38,7 @@ public class ReviewService {
     @Transactional
     public Long createReview(ReviewCreateRequest request, Long userId) {
 
-        List<Photo> photos = photoStore.storePhotos(request.getFiles());
+        List<Photo> photos = photoStore.uploadFiles(request.getFiles());
         User user = userFindService.findByUserId(userId);
         HairStyle hairStyle = hairStyleFindService.findById(request.getHairStyleId());
 
