@@ -15,7 +15,7 @@ public class PhotoResponse {
     private final String resource;
 
     public PhotoResponse(Photo photo) {
-        String fullPath = FilePath.VALUE + photo.getStoreFilename();
+        String fullPath = FilePath.VALUE + photo.getStoreUrl();
         Path path = Path.of(fullPath);
 
         try {
