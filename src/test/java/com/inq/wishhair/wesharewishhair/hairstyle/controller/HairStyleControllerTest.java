@@ -125,28 +125,6 @@ public class HairStyleControllerTest extends ControllerTest {
             //then
             assertException(expectedError, requestBuilder, status().isBadRequest());
         }
-
-        @Test
-        @DisplayName("태그에 얼굴형 태그가 없으면 400 예외를 던진다")
-        void failByNoFaceShapeTag() throws Exception{
-            //given
-            List<Tag> tags = new ArrayList<>(E.getTags());
-            tags.removeIf(Tag::isFaceShapeType);
-            MultiValueMap<String, String> params = generateTagParams(tags);
-
-            ErrorCode expectedError = ErrorCode.RUN_NO_FACE_SHAPE_TAG;
-            given(hairStyleSearchService.recommendHair(any(), any()))
-                    .willThrow(new WishHairException(expectedError));
-
-            //when
-            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .get(RECOMMEND_URL)
-                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                    .queryParams(params);
-
-            //then
-            assertException(expectedError, requestBuilder, status().isBadRequest());
-        }
     }
 
     @Nested

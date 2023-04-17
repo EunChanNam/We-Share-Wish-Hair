@@ -217,6 +217,25 @@ public class UserControllerTest extends ControllerTest {
         }
 
         @Test
+        @DisplayName("기존 비밀번호가 일치하지 않아 실패한다")
+        void failByOldPassword() throws Exception {
+            //given
+            PasswordUpdateRequest request = PasswordUpdateRequestUtils.request(UserFixture.A);
+            ErrorCode expectedError = ErrorCode.USER_WRONG_PASSWORD;
+            doThrow(new WishHairException(expectedError)).when(userService).updatePassword(any(), any());
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .patch(BASE_URL + "/password")
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                    .content(toJson(request))
+                    .contentType(APPLICATION_JSON);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isBadRequest());
+        }
+
+        @Test
         @DisplayName("비밀번호 변경을 한다")
         void successUpdatePassword() throws Exception {
             //given
