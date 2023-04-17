@@ -1,9 +1,12 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.FaceShapeUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.UserUpdateRequestUtils;
+import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
@@ -147,8 +150,24 @@ class UserServiceTest extends ServiceTest {
             userService.updatePassword(user.getId(), request);
 
             //then
-            User result = userRepository.findById(user.getId()).get();
-            assertThat(result.getPasswordValue()).isEqualTo(request.getNewPassword());
+            assertThat(user.getPasswordValue()).isEqualTo(request.getNewPassword());
         }
+    }
+
+    @Test
+    @DisplayName("사용자 얼굴형 업데이트 서비스")
+    void updateFaceShape() {
+        //given
+        User user = userRepository.save(A.toEntity());
+        FaceShapeUpdateRequest request = new FaceShapeUpdateRequest(Tag.OBLONG);
+
+        //when
+        userService.updateFaceShape(user.getId(), request.getFaceShapeTag());
+
+        //then
+        assertAll(
+                () -> assertThat(user.existFaceShape()).isTrue(),
+                () -> assertThat(user.getFaceShape()).isEqualTo(request.getFaceShapeTag())
+        );
     }
 }
