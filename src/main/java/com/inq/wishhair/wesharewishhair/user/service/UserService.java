@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.user.service;
 
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.domain.*;
@@ -41,6 +42,13 @@ public class UserService {
 
         user.updateNickname(newNickname);
         user.updateSex(request.getSex());
+    }
+
+    @Transactional
+    public void updateFaceShape(Long userId, Tag faceShapeTag) {
+        User user = userFindService.findByUserId(userId);
+
+        user.updateFaceShape(new FaceShape(faceShapeTag));
     }
 
     @Transactional
