@@ -92,11 +92,12 @@ public class EmailCertActivity extends AppCompatActivity {
 
 //        intent Page
         btn_intent = findViewById(R.id.botBar_btn_next);
+        btn_intent.setVisibility(View.INVISIBLE);
         btn_intent.setOnClickListener(view -> {
             Intent intent = new Intent(EmailCertActivity.this, RegisterActivity.class);
             intent.putExtra("inputEmail", ed_email.getText().toString());
             startActivity(intent);
-            finish();
+//            finish();
         });
     }
 

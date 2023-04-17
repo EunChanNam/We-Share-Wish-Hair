@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
 //        register
         Button login_registerBtn = findViewById(R.id.btn_register);
         login_registerBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(LoginActivity.this, EmailCertActivity.class);
+            Intent intent = new Intent(LoginActivity.this, TermsActivity.class);
             LoginActivity.this.startActivity(intent);
         });
 

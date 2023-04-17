@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="• 이름"
+            android:text="@string/register_message_2"
             android:textColor="@color/black"
             android:textSize="12sp"
             android:textStyle="bold"/>
@@ -68,7 +68,7 @@
             android:layout_height="33dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:hint="한글 또는 영문으로 입력해주세요"
+            android:hint="@string/register_condition_name"
             android:autofillHints="name"
             android:background="@drawable/border_sign_text"
             android:inputType="textPersonName"
@@ -89,7 +89,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="• 닉네임"
+            android:text="@string/register_message_3"
             android:textColor="@color/black"
             android:textSize="12sp"
             android:textStyle="bold"/>
@@ -107,7 +107,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="공백없이 2~8자리의 영문/한글/숫자를 입력해주세요"
+            android:text="@string/register_condition_nickname"
             android:textColor="@color/black"
             android:textSize="11sp" />
     </LinearLayout>
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="• 비밀번호"
+            android:text="@string/register_message_4"
             android:textColor="@color/black"
             android:textSize="12sp"
             android:textStyle="bold"/>
@@ -144,7 +144,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="8~20자리의 영문/한글/특수문자를 함께 입력해주세요"
+            android:text="@string/register_condition_password"
             android:textColor="@color/black"
             android:textSize="11sp" />
     </LinearLayout>
@@ -163,7 +163,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="• 성별"
+            android:text="@string/register_message_5"
             android:textColor="@color/black"
             android:textSize="12sp"
             android:textStyle="bold"/>

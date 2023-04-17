@@ -11,25 +11,32 @@
     <!--    cert -->
     <string name="cert_message_1">이메일 인증</string>
     <string name="cert_message_2">• 이메일 주소</string>
+    <string name="cert_hint_email">InqInq@email.com</string>
     <string name="cert_message_btn_send">메일 발송</string>
     <string name="cert_message_3">• 인증번호</string>
     <string name="cert_timer">남은 시간</string>
     <string name="cert_hint_submit">인증번호를 입력해주세요</string>
     <string name="cert_message_btn_submit">인증확인</string>
     <!--    terms -->
+    <string name="sign_term_message1">필수 약관에 동의해주세요 :)</string>
+    <string name="sign_term_message2">약관</string>
     <string name="register_term_1">WSWH 회원약관 (필수)</string>
     <string name="register_term_2">개인정보의 필수적인 사항에 대한 수집 이용 동의 (필수)</string>
     <string name="register_term_3">개인정보의 필수적인 제3자 제공에 대한 동의 (필수)</string>
     <!--    register -->
     <string name="sign_title">회원가입</string>
-    <string name="register_hint_id">InQInQ@email.com</string>
-    <string name="register_hint_name">name</string>
-    <string name="register_hint_nickname">nickname</string>
+    <string name="register_message_1">회원정보</string>
+    <string name="register_message_2">• 이름</string>
+    <string name="register_condition_name">한글 또는 영문으로 입력해주세요</string>
+    <string name="register_message_3">• 닉네임</string>
+    <string name="register_condition_nickname">공백없이 2~8자리의 영문/한글/숫자를 입력해주세요</string>
+    <string name="register_message_4">• 비밀번호</string>
+    <string name="register_condition_password">8~20자리의 영문/한글/특수문자를 함께 입력해주세요</string>
+    <string name="register_message_5">• 성별</string>
+
     <string name="register_message_sex">성별 :</string>
     <string name="register_text_sex_man">남성</string>
     <string name="register_text_sex_woman">여성</string>
-    <string name="register_message_1">회원정보</string>
-    <string name="register_message_2">서비스 약관에 동의해주세요</string>
 
     <!--    review -->
     <string name="review_recent_item_btn"><![CDATA[전체보기 >]]></string>
@@ -54,4 +61,7 @@
     <string name="home_message_7">님 만을 위한 추천</string>
 
     <string name="xmlDisplay_username">userName</string>
+
+
+
 </resources>
