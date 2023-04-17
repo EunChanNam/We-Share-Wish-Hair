@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,7 +27,6 @@ public class RegisterActivity extends AppCompatActivity {
 
     final static private String URL = UrlConst.URL + "/api/user";
 
-    private TextView tv_id;
     private EditText ed_pw, ed_name, ed_nickname;
     private RadioButton radioButton_man, radioButton_woman;
     private String select_sex;
@@ -39,15 +37,12 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_activity_register);
 
-        Button btn_back = findViewById(R.id.toolbar_btn_back);
-        btn_back.setOnClickListener(View -> finish());
+        Button btn_back = findViewById(R.id.botBar_btn_back);
+        btn_back.setOnClickListener(view -> finish());
 
-        tv_id = findViewById(R.id.sign_register_tv_id);
-        tv_id.setText(getIntent().getStringExtra("inputEmail"));
-
-        ed_pw = findViewById(R.id.sign_register_et_password);
         ed_name = findViewById(R.id.sign_register_et_name);
         ed_nickname = findViewById(R.id.sign_register_et_nickname);
+        ed_pw = findViewById(R.id.sign_register_et_password);
 
         RadioGroup radioGroup_sex = findViewById(R.id.radioGroupSEX);
         radioButton_man = findViewById(R.id.radio_sex_man);
@@ -66,12 +61,12 @@ public class RegisterActivity extends AppCompatActivity {
 
 //        Button btn_id_dup_check = findViewById(R.id.btn_id_dup_check);
 
-        Button btn_join = findViewById(R.id.btn_join);
+        Button btn_join = findViewById(R.id.botBar_btn_next);
         btn_join.setOnClickListener(view -> registerRequest(select_sex));
     }
 
     private void registerRequest(String select_sex) {
-        String id = tv_id.getText().toString();
+        String id = getIntent().getStringExtra("inputEmail");
         String pw = ed_pw.getText().toString();
         String name = ed_name.getText().toString();
         String nickname = ed_nickname.getText().toString();

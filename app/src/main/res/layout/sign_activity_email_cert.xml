@@ -74,12 +74,12 @@
                 android:layout_height="match_parent"
                 android:layout_marginEnd="10dp"
                 android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:background="@drawable/border_sign_text"
                 android:ems="10"
                 android:hint="@string/register_hint_id"
                 android:inputType="textEmailAddress"
-                android:importantForAutofill="no"
-                tools:ignore="RtlSymmetry" />
+                android:importantForAutofill="no" />
             <Button
                 android:id="@+id/sign_cert_btn_requestSend"
                 android:layout_weight="2"
@@ -153,7 +153,6 @@
                     android:inputType="number"
                     android:hint="@string/cert_hint_submit"
                     android:autofillHints="password"
-                    tools:ignore="RtlSymmetry"
                     android:drawableEnd="@drawable/sign_check_success" />
                 <Button
                     android:id="@+id/sign_cert_btn_confirmCode"

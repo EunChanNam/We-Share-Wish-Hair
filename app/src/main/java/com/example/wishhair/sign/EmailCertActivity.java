@@ -47,6 +47,10 @@ public class EmailCertActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_activity_email_cert);
 
+//        back
+        Button btn_back = findViewById(R.id.botBar_btn_back);
+        btn_back.setOnClickListener(view -> finish());
+
 //        timer
         remainTime = findViewById(R.id.sign_cert_timer);
         CountDownTimer timer = new CountDownTimer(180000, 1000) {
