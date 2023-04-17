@@ -37,7 +37,7 @@ public class HairStyleControllerTest extends ControllerTest {
     private static final String FACE_RECOMMEND_URL = "/api/hair_style/home";
 
     @Nested
-    @DisplayName("헤어 추천 API")
+    @DisplayName("메인 헤어 추천 API")
     class recommendHairStyle {
         @Test
         @DisplayName("헤더에 Access 토큰을 포함하지 않아서 예외를 던진다")
@@ -83,11 +83,32 @@ public class HairStyleControllerTest extends ControllerTest {
                                     accessTokenHeaderDocument(),
                                     requestParameters(
                                             parameterWithName("tags").description("검색 Tag")
-                                                    .attributes(constraint("얼굴형 태그 포함 하나 이상 필요"))
+                                                    .attributes(constraint("하나 이상 필요"))
                                     ),
                                     hairStyleResponseDocument()
                             )
                     );
+        }
+
+        @Test
+        @DisplayName("얼굴형 데이터가 없는 사용자로 실패한다")
+        void failByNoFaceShape() throws Exception {
+            //given
+            List<Tag> tags = List.of(Tag.PERM, Tag.LONG);
+            MultiValueMap<String, String> params = generateTagParams(tags);
+
+            ErrorCode expectedError = ErrorCode.USER_NO_FACE_SHAPE_TAG;
+            given(hairStyleSearchService.recommendHair(tags, 1L))
+                    .willThrow(new WishHairException(expectedError));
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .get(RECOMMEND_URL)
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                    .queryParams(params);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isForbidden());
         }
 
         @Test
@@ -194,7 +215,7 @@ public class HairStyleControllerTest extends ControllerTest {
         return responseFields(
                 fieldWithPath("result[].hairStyleId").description("헤어스타일 ID(PK)"),
                 fieldWithPath("result[].name").description("헤어스타일 이름"),
-                fieldWithPath("result[].photos[].resource").description("사진 URI 리소스"),
+                fieldWithPath("result[].photos[].storeUrl").description("사진 URI 리소스"),
                 fieldWithPath("result[].hashTags[].tag").description("헤어스타일 해시태그")
         );
     }
