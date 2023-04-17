@@ -2,8 +2,6 @@ package com.example.wishhair.review.recent;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -12,7 +10,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Handler;
-import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -124,9 +121,7 @@ public class ReviewListFragment extends Fragment {
                 intent.putExtra("likes", selectedItem.getLikes());
                 intent.putExtra("date", selectedItem.getCreatedDate());
                 intent.putExtra("content", selectedItem.getContents());
-
-//                TODO 04.10 : 이미지 넘기기
-                Bitmap bitmapImage = selectedItem.getBitmapImages().get(0);
+                intent.putStringArrayListExtra("imageUrls", selectedItem.getImageUrls());
                 startActivity(intent);
             }
 
@@ -163,15 +158,14 @@ public class ReviewListFragment extends Fragment {
                         ReviewItem receivedData = new ReviewItem();
                         JSONObject resultObject = resultArray.getJSONObject(i);
 //                        Log.d("resultObject", resultObject.toString());
-                        String userNickName = resultObject.getString("userNickName");
-
+                        String userNickName = resultObject.getString("userNickname");
                         String score = resultObject.getString("score");
                         int likes = resultObject.getInt("likes");
                         String content = resultObject.getString("contents");
                         String createDate = resultObject.getString("createdDate");
                         String hairStyleName = resultObject.getString("hairStyleName");
 
-                        JSONArray hasTagsArray = resultObject.getJSONArray("hasTags");
+                        JSONArray hasTagsArray = resultObject.getJSONArray("hashTags");
 //                        TODO : 일단 태그 하나만 넣는데 나중에 태그 갯수 따로 처리 합시다
                         JSONObject hasTagObject = hasTagsArray.getJSONObject(0);
                         String tag = hasTagObject.getString("tag");
@@ -185,22 +179,20 @@ public class ReviewListFragment extends Fragment {
                         receivedData.setTags("#" + tag);
 
                         JSONArray photosArray = resultObject.getJSONArray("photos");
-                        List<Bitmap> receivedBitmaps = new ArrayList<>();
+                        ArrayList<String> receivedUrls = new ArrayList<>();
                         for (int j = 0; j < photosArray.length(); j++) {
                             JSONObject photoObject = photosArray.getJSONObject(j);
-                            String encodedImage = photoObject.getString("encodedImage");
+                            String imageUrl = photoObject.getString("storeUrl");
 
-                            Bitmap imageBitmap = decodeImage(encodedImage);
-                            Log.d("size", "encoded : " + encodedImage.length());
-                            receivedBitmaps.add(imageBitmap);
+                            receivedUrls.add(imageUrl);
                         }
-                        receivedData.setBitmapImages(receivedBitmaps);
+                        receivedData.setImageUrls(receivedUrls);
 
 //                       set review data
-                        if (receivedBitmaps.size() > 0) {
+                        if (receivedUrls.size() > 0) {
                             ReviewItem itemB = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(),
                                     receivedData.getHairStyleName(), receivedData.getTags(), receivedData.getCreatedDate(),
-                                    receivedData.getScore(), receivedData.getLikes(), false, receivedData.getBitmapImages(),  receivedData.getContents());
+                                    receivedData.getScore(), receivedData.getLikes(), false, receivedData.getImageUrls(),  receivedData.getContents());
                             requestItems.add(itemB);
                         } else {
                             ReviewItem itemB = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(),
@@ -234,12 +226,6 @@ public class ReviewListFragment extends Fragment {
 
         RequestQueue requestQueue = Volley.newRequestQueue(requireContext());
         requestQueue.add(jsonObjectRequest);
-    }
-
-    public static Bitmap decodeImage(String encodedImage) {
-        byte[] decodedString = Base64.decode(encodedImage, Base64.DEFAULT);
-        Log.d("byte size", "byte " + decodedString.length);
-        return BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
     }
 
     private void sort_select(Spinner spinner_sort) {
