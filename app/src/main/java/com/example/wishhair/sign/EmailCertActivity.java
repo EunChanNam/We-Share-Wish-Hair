@@ -45,12 +45,6 @@ public class EmailCertActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_activity_email_cert);
 
-//        topBar
-        Button btn_back = findViewById(R.id.toolbar_btn_back);
-        btn_back.setOnClickListener(view -> finish());
-        TextView pageTitle = findViewById(R.id.toolbar_textView_title);
-        pageTitle.setText("");
-
 //        timer
         remainTime = findViewById(R.id.sign_cert_timer);
         CountDownTimer timer = new CountDownTimer(180000, 1000) {
@@ -87,7 +81,7 @@ public class EmailCertActivity extends AppCompatActivity {
         });
 
 //        intent Page
-        btn_intent = findViewById(R.id.sign_cert_btn_intent);
+        btn_intent = findViewById(R.id.botBar_btn_next);
         btn_intent.setOnClickListener(view -> {
             Intent intent = new Intent(EmailCertActivity.this, RegisterActivity.class);
             intent.putExtra("inputEmail", ed_email.getText().toString());

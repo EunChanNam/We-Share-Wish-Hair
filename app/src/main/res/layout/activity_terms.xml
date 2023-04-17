@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".sign.TermsActivity">
+
+<!-- title -->
+    <TextView
+        android:id="@+id/sign_terms_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/sign_title"
+        android:textStyle="bold"
+        android:textColor="@color/default_blue"
+        android:textSize="25sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/sign_terms_processBar"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:src="@drawable/process_bar_1"
+        app:layout_constraintTop_toBottomOf="@id/sign_terms_title"
+        app:layout_constraintStart_toStartOf="@id/sign_terms_title"
+        app:layout_constraintEnd_toEndOf="@id/sign_terms_title"/>
+
+    <TextView
+        android:id="@+id/sign_terms_message1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="필수 약관에 동의해주세요 :)"
+        android:textStyle="bold"
+        android:textColor="@color/default_blue"
+        android:textSize="18sp"
+        app:layout_constraintTop_toBottomOf="@id/sign_terms_processBar"
+        app:layout_constraintStart_toStartOf="@id/sign_terms_processBar"
+        app:layout_constraintEnd_toEndOf="@id/sign_terms_processBar"/>
+
+    <TextView
+        android:id="@+id/sign_terms_message2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:text="약관"
+        android:textStyle="bold"
+        android:textColor="@color/default_blue"
+        android:textSize="11sp"
+        app:layout_constraintTop_toBottomOf="@id/sign_terms_message1"
+        app:layout_constraintStart_toStartOf="parent" />
+<!--    hr -->
+    <LinearLayout
+        android:id="@+id/sign_terms_hr"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/default_blue"
+        app:layout_constraintTop_toBottomOf="@id/sign_terms_message2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:orientation="horizontal" />
+
+<!--    terms -->
+
+    <CheckBox
+        android:id="@+id/sign_terms_check1"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:text="@string/register_term_1"
+        android:textColor="@color/default_blue"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/sign_terms_hr"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <CheckBox
+        android:id="@+id/sign_terms_check2"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="30dp"
+        android:text="@string/register_term_2"
+        android:textColor="@color/default_blue"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/sign_terms_check1"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <CheckBox
+        android:id="@+id/sign_terms_check3"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="@string/register_term_3"
+        android:textColor="@color/default_blue"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/sign_terms_check2"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <include layout="@layout/sign_bottom_bar" />
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

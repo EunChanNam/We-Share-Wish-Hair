@@ -9,6 +9,7 @@
     <string name="sign_button_register"><![CDATA[회원가입 >]]></string>
     <string name="sign_button_findPassword"><![CDATA[비밀번호 찾기 >]]></string>
     <!--    register -->
+    <string name="sign_title">회원가입</string>
     <string name="register_hint_id">InQInQ@email.com</string>
     <string name="register_hint_name">name</string>
     <string name="register_hint_nickname">nickname</string>
@@ -17,9 +18,9 @@
     <string name="register_text_sex_woman">여</string>
     <string name="register_message_1">회원정보를 입력해 주세요</string>
     <string name="register_message_2">서비스 약관에 동의해주세요</string>
-    <string name="register_term_1">[필수] 만 14세 이상입니다.</string>
-    <string name="register_term_2">[필수] 이용약관 동의</string>
-    <string name="register_term_3">[필수] 개인정보 수집 및 이용 동의</string>
+    <string name="register_term_1">WSWH 회원약관 (필수)</string>
+    <string name="register_term_2">개인정보의 필수적인 사항에 대한 수집 이용 동의 (필수)</string>
+    <string name="register_term_3">개인정보의 필수적인 제3자 제공에 대한 동의 (필수)</string>
     <string name="register_term_4">[필수] 개인정보 제공 동의</string>
     <string name="register_button_submit">동의하고 가입하기</string>
     <!--    review -->
@@ -28,7 +29,7 @@
     <string name="review_filter_whole">전체</string>
     <string name="review_filter_man">남성</string>
     <string name="review_filter_woman">여성</string>
-<!--        review detail -->
+    <!--        review detail -->
     <string name="review_detail_menu_modify">리뷰 수정</string>
     <string name="review_detail_menu_delete">리뷰 삭제</string>
     <!--    write review -->
@@ -46,12 +47,14 @@
     <string name="home_message_7">님 만을 위한 추천</string>
 
     <string name="xmlDisplay_username">userName</string>
-    <string name="cert_message_1">이메일을 인증해주세요!</string>
-    <string name="cert_message_2">이메일을 입력해주세요</string>
-    <string name="cert_message_btn_send">인증번호 전송</string>
+
+    <string name="cert_message_1">이메일 인증</string>
+    <string name="cert_message_2">• 이메일 주소</string>
+    <string name="cert_message_btn_send">메일 발송</string>
+    <string name="cert_message_3">• 인증번호</string>
     <string name="cert_timer">남은 시간</string>
     <string name="cert_hint_submit">인증번호를 입력해주세요</string>
-    <string name="cert_message_btn_submit">인증번호 제출</string>
-    <string name="cert_message_btn_intent">확인</string>
+    <string name="cert_message_btn_submit">인증확인</string>
+
 
 </resources>

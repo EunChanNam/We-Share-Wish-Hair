@@ -8,8 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="default_blue">#FF2880B9</color>
+    <color name="default_blue">#FF86A3B8</color>
     <color name="unselect_blue">#FFA9CAE2</color>
     <color name="signBox_gray">#FFD6D6D6</color>
     <color name="timer_red">#FFC0392B</color>
+    <color name="text_ivory">#FFEEE9DA</color>
 </resources>
