@@ -11,7 +11,6 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
-import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
@@ -20,7 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture.*;
-import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.getDefaultPageable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -54,7 +52,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
 
             //when
             ResponseWrapper<HairStyleResponse> result =
-                    hairStyleSearchService.findRecommendedHairStyle(tags, userId);
+                    hairStyleSearchService.recommendHair(tags, userId);
 
             //then
             List<HairStyleResponse> actual = result.getResult();
@@ -70,7 +68,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
             ErrorCode expectedError = ErrorCode.RUN_NO_FACE_SHAPE_TAG;
 
             //when, then
-            assertThatThrownBy(() -> hairStyleSearchService.findRecommendedHairStyle(tags, userId))
+            assertThatThrownBy(() -> hairStyleSearchService.recommendHair(tags, userId))
                     .isInstanceOf(WishHairException.class)
                     .hasMessageContaining(expectedError.getMessage());
         }
@@ -84,7 +82,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
 
             //when
             ResponseWrapper<HairStyleResponse> result =
-                    hairStyleSearchService.findRecommendedHairStyle(tags, userId);
+                    hairStyleSearchService.recommendHair(tags, userId);
 
             //then
             List<HairStyleResponse> actual = result.getResult();
@@ -103,7 +101,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
             assertThat(user.existFaceShape()).isFalse();
 
             //when
-            hairStyleSearchService.findRecommendedHairStyle(tags, user.getId());
+            hairStyleSearchService.recommendHair(tags, user.getId());
 
             //then
             assertAll(
@@ -125,7 +123,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
             user.updateFaceShape(new FaceShape(Tag.OBLONG));
 
             //when
-            ResponseWrapper<HairStyleResponse> result = hairStyleSearchService.findHairStyleByFaceShape(user.getId());
+            ResponseWrapper<HairStyleResponse> result = hairStyleSearchService.recommendHairByFaceShape(user.getId());
 
             //then
             List<HairStyleResponse> actual = result.getResult();
@@ -141,7 +139,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
 
             //when
             ResponseWrapper<HairStyleResponse> result =
-                    hairStyleSearchService.findHairStyleByFaceShape(user.getId());
+                    hairStyleSearchService.recommendHairByFaceShape(user.getId());
 
             //then
             List<HairStyleResponse> actual = result.getResult();

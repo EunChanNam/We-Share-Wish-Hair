@@ -54,14 +54,6 @@ public class HairStyle {
     }
 
     //==편의 메서드--//
-
-    public Tag findFaceShapeTag() {
-        return hashTags.stream()
-                .map(HashTag::getTag)
-                .filter(Tag::isFaceShapeType)
-                .findAny()
-                .orElseThrow(() -> new WishHairException(ErrorCode.HAIR_STYLE_NO_FACE_SHAPE_TAG));
-    }
     public void plusWishListCount() {
         wishListCount.plusWishListCount();
     }

@@ -8,8 +8,6 @@ import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleSearchService
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,14 +26,14 @@ public class HairStyleController {
 
         validateHasTag(tags);
 
-        return hairStyleSearchService.findRecommendedHairStyle(tags, userId);
+        return hairStyleSearchService.recommendHair(tags, userId);
     }
 
     @GetMapping("/home")
     public ResponseWrapper<HairStyleResponse> findHairStyleByFaceShape(
             @ExtractPayload Long userId) {
 
-        return hairStyleSearchService.findHairStyleByFaceShape(userId);
+        return hairStyleSearchService.recommendHairByFaceShape(userId);
     }
 
     private void validateHasTag(List<Tag> tags) {

@@ -42,7 +42,7 @@ public class MailSendServiceTest extends ServiceTest {
             //when, then
             assertThatThrownBy(() -> mailSendService.sendMail(mailDto))
                     .isInstanceOf(WishHairException.class)
-                    .hasMessageContaining(ErrorCode.USER_DUPLICATED_EMIAL.getMessage());
+                    .hasMessageContaining(ErrorCode.USER_DUPLICATED_EMAIL.getMessage());
         }
     }
 }

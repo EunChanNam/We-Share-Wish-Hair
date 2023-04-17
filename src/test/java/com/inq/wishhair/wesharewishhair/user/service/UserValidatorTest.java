@@ -47,7 +47,7 @@ public class UserValidatorTest extends ServiceTest {
         //when, then
         assertThatThrownBy(() -> userValidator.validateEmailIsNotDuplicated(user.getEmail()))
                 .isInstanceOf(WishHairException.class)
-                .hasMessageContaining(ErrorCode.USER_DUPLICATED_EMIAL.getMessage());
+                .hasMessageContaining(ErrorCode.USER_DUPLICATED_EMAIL.getMessage());
 
         Email ableEmail = new Email("email@naver.com");
         assertDoesNotThrow(() -> userValidator.validateEmailIsNotDuplicated(ableEmail));

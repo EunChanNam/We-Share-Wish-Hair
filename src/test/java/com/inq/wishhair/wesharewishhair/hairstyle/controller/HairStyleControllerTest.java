@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture.*;
-import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.getDefaultPageable;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -63,7 +62,7 @@ public class HairStyleControllerTest extends ControllerTest {
             List<Tag> tags = E.getTags();
             ResponseWrapper<HairStyleResponse> expectedResponse = assembleWrappedResponse(List.of(E, C, D));
 
-            given(hairStyleSearchService.findRecommendedHairStyle(tags, 1L))
+            given(hairStyleSearchService.recommendHair(tags, 1L))
                     .willReturn(expectedResponse);
 
             MultiValueMap<String, String> params = generateTagParams(tags);
@@ -115,7 +114,7 @@ public class HairStyleControllerTest extends ControllerTest {
             MultiValueMap<String, String> params = generateTagParams(tags);
 
             ErrorCode expectedError = ErrorCode.RUN_NO_FACE_SHAPE_TAG;
-            given(hairStyleSearchService.findRecommendedHairStyle(any(), any()))
+            given(hairStyleSearchService.recommendHair(any(), any()))
                     .willThrow(new WishHairException(expectedError));
 
             //when
@@ -150,7 +149,7 @@ public class HairStyleControllerTest extends ControllerTest {
         @DisplayName("사용자 얼굴형 기반 헤어추천 서비스 로직의 결과를 헤어스타일 응답으로 변환해 응답한다")
         void success() throws Exception {
             //given
-            given(hairStyleSearchService.findHairStyleByFaceShape(1L))
+            given(hairStyleSearchService.recommendHairByFaceShape(1L))
                     .willReturn(assembleWrappedResponse(List.of(C, E, D)));
 
             //when
