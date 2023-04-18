@@ -46,18 +46,12 @@ public class ReviewRepositoryTest extends RepositoryTest {
     }
 
     @Test
-    @DisplayName("리뷰를 아이디로 좋아요 정보와 함께 조회한다")
+    @DisplayName("리뷰를 아이디로 락을 걸며 조회한다")
     void findWithLikeReviewsById() {
-        //given
-        review.executeLike(user);
-
         //when
         Review result = reviewRepository.findWithLockById(review.getId()).orElseThrow();
 
         //then
-        assertAll(
-                () -> assertThat(result).isEqualTo(review),
-                () -> assertThat(result.getLikeReviews()).hasSize(1)
-        );
+        assertThat(result).isEqualTo(review);
     }
 }
