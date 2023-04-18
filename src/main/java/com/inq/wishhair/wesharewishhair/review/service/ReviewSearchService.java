@@ -29,30 +29,30 @@ public class ReviewSearchService {
     private final ReviewSearchRepository reviewSearchRepository;
 
     /*리뷰 단건 조회*/
-    public ReviewResponse findReviewById(Long reviewId) {
+    public ReviewResponse findReviewById(Long reviewId, Long userId) {
         Review findReview = reviewSearchRepository.findReviewById(reviewId)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
 
-        return toReviewResponse(findReview);
+        return toReviewResponse(findReview, userId);
     }
 
     /*전체 리뷰 조회*/
-    public PagedResponse<ReviewResponse> findPagedReviews(Pageable pageable) {
+    public PagedResponse<ReviewResponse> findPagedReviews(Pageable pageable, Long userId) {
         Slice<Review> sliceResult = reviewSearchRepository.findReviewByPaging(pageable);
-        return toPagedReviewResponse(sliceResult);
+        return toPagedReviewResponse(sliceResult, userId);
     }
 
     /*좋아요한 리뷰 조회*/
     public PagedResponse<ReviewResponse> findLikingReviews(Long userId, Pageable pageable) {
         Slice<Review> sliceResult = reviewSearchRepository.findReviewByLike(userId, pageable);
-        return toPagedReviewResponse(sliceResult);
+        return toPagedReviewResponse(sliceResult, userId);
     }
 
     /*나의 리뷰 조회*/
     public PagedResponse<ReviewResponse> findMyReviews(Long userId, Pageable pageable) {
         Slice<Review> sliceResult = reviewSearchRepository.findReviewByUser(userId, pageable);
 
-        return toPagedReviewResponse(sliceResult);
+        return toPagedReviewResponse(sliceResult, userId);
     }
 
     /*이달의 추천 리뷰 조회*/

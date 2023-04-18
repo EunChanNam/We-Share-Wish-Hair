@@ -33,7 +33,9 @@ public class ReviewResponse {
 
     private List<HashTagResponse> hashTags;
 
-    public ReviewResponse(Review review) {
+    private boolean isWriter;
+
+    public ReviewResponse(Review review, Long userId) {
         this.reviewId = review.getId();
         this.hairStyleName = review.getHairStyle().getName();
         this.userNickname = review.getUser().getName();
@@ -43,5 +45,6 @@ public class ReviewResponse {
         this.likes = review.getLikes();
         this.photos = PhotoResponseAssembler.toPhotoResponses(review.getPhotos());
         this.hashTags = HairStyleResponseAssembler.toHashTagResponses(review.getHairStyle().getHashTags());
+        this.isWriter = review.isWriter(userId);
     }
 }

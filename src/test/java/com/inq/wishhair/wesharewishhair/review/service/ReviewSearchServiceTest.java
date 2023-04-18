@@ -66,7 +66,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getLikeDescPageable(3);
 
             //when
-            PagedResponse<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable);
+            PagedResponse<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable, user.getId());
 
             //then
             assertThat(result.getPaging().hasNext()).isFalse();
@@ -84,7 +84,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(5);
 
             //when
-            PagedResponse<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable);
+            PagedResponse<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable, user.getId());
 
             //then
             assertThat(result.getPaging().hasNext()).isFalse();

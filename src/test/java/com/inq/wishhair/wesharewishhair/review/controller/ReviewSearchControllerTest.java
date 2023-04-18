@@ -21,8 +21,6 @@ import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +33,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -67,7 +64,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
             //given
             PagedResponse<ReviewResponse> expectedResponse = assemblePagedResponse(2);
 
-            given(reviewSearchService.findPagedReviews(any()))
+            given(reviewSearchService.findPagedReviews(any(), any()))
                     .willReturn(expectedResponse);
 
             //when
@@ -202,7 +199,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
 
             Review review = fixture.toEntity(user, hairStyle);
             ReflectionTestUtils.setField(review, "id", 1L + index);
-            result.add(new ReviewResponse(review));
+            result.add(new ReviewResponse(review, 1L));
         }
 
         return result;
