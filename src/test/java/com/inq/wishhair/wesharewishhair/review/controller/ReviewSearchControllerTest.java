@@ -17,12 +17,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Pageable;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +34,8 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -43,6 +43,51 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ReviewSearchControllerTest extends ControllerTest {
 
     private static final String BASE_URL = "/api/review";
+
+    @Nested
+    @DisplayName("리뷰 단건 조회 API 테스트")
+    class findReviewById {
+        @Test
+        @DisplayName("리뷰의 아이디를 통해 단건으로 조회한다")
+        void success() throws Exception {
+            //given
+            ReviewResponse expectedResponse = generateReviewResponses(1).get(0);
+            given(reviewSearchService.findReviewById(1L, 1L))
+                    .willReturn(expectedResponse);
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
+                    .get(BASE_URL + "/{reviewId}", 1L)
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    pathParameters(
+                                            parameterWithName("reviewId").description("조회할 리뷰 아이디")
+                                    ),
+                                    reviewResponseDocument(false)
+                            )
+                    );
+        }
+
+        @Test
+        @DisplayName("헤더에 Access 토큰을 포함하지 않아서 예외를 던진다")
+        void fialByNoAccessToken() throws Exception {
+            //given
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
+                    .get(BASE_URL + "/{reviewId}", 1L);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
+        }
+    }
 
     @Nested
     @DisplayName("전체 리뷰 조회 API 테스트")
@@ -67,7 +112,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
             //given
             PagedResponse<ReviewResponse> expectedResponse = assemblePagedResponse(2);
 
-            given(reviewSearchService.findPagedReviews(any()))
+            given(reviewSearchService.findPagedReviews(any(), any()))
                     .willReturn(expectedResponse);
 
             //when
@@ -192,6 +237,8 @@ public class ReviewSearchControllerTest extends ControllerTest {
 
     private List<ReviewResponse> generateReviewResponses(int count) {
         User user = UserFixture.B.toEntity();
+        ReflectionTestUtils.setField(user, "id", 1L);
+
         HairStyle hairStyle = HairStyleFixture.A.toEntity();
 
         List<ReviewResponse> result = new ArrayList<>();
@@ -202,7 +249,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
 
             Review review = fixture.toEntity(user, hairStyle);
             ReflectionTestUtils.setField(review, "id", 1L + index);
-            result.add(new ReviewResponse(review));
+            result.add(new ReviewResponse(review, 1L));
         }
 
         return result;
@@ -226,19 +273,25 @@ public class ReviewSearchControllerTest extends ControllerTest {
         return result;
     }
 
-    public static ResponseFieldsSnippet pagedReviewResponseDocument() {
+    private ResponseFieldsSnippet reviewResponseDocument(boolean hasResultWrapper) {
+        String resultWrapper = hasResultWrapper ? "result[]." : "";
         return responseFields(
-                fieldWithPath("result[].reviewId").description("리뷰 아이디"),
-                fieldWithPath("result[].hairStyleName").description("헤어스타일 이름"),
-                fieldWithPath("result[].userNickname").description("작성자 닉네임"),
-                fieldWithPath("result[].score").description("리뷰 점수"),
-                fieldWithPath("result[].contents").description("리뷰 내용"),
-                fieldWithPath("result[].createdDate").description("리뷰 작성 일"),
-                fieldWithPath("result[].photos").optional().description("사진이 없을 수 있음"),
-                fieldWithPath("result[].photos[].storeUrl").description("리뷰 사진 URI"),
-                fieldWithPath("result[].likes").description("좋아요 수"),
-                fieldWithPath("result[].hashTags[].tag").description("해시 태그"),
+                fieldWithPath(resultWrapper + "reviewId").description("리뷰 아이디"),
+                fieldWithPath(resultWrapper + "hairStyleName").description("헤어스타일 이름"),
+                fieldWithPath(resultWrapper + "userNickname").description("작성자 닉네임"),
+                fieldWithPath(resultWrapper + "score").description("리뷰 점수"),
+                fieldWithPath(resultWrapper + "contents").description("리뷰 내용"),
+                fieldWithPath(resultWrapper + "createdDate").description("리뷰 작성 일"),
+                fieldWithPath(resultWrapper + "photos").optional().description("사진이 없을 수 있음"),
+                fieldWithPath(resultWrapper + "photos[].storeUrl").description("리뷰 사진 URI"),
+                fieldWithPath(resultWrapper + "likes").description("좋아요 수"),
+                fieldWithPath(resultWrapper + "hashTags[].tag").description("해시 태그"),
+                fieldWithPath(resultWrapper + "writer").description("작성자 여부")
+        );
+    }
 
+    private ResponseFieldsSnippet pagedReviewResponseDocument() {
+        return reviewResponseDocument(true).and(
                 fieldWithPath("paging.contentSize").description("조회된 리뷰 개수"),
                 fieldWithPath("paging.page").description("현재 페이지"),
                 fieldWithPath("paging.hasNext").description("다음 페이지 존재 여부")

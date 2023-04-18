@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -24,11 +25,21 @@ public class ReviewSearchController {
 
     private final ReviewSearchService reviewSearchService;
 
+    @GetMapping("/{reviewId}")
+    public ResponseEntity<ReviewResponse> findReview(@PathVariable Long reviewId,
+                                                     @ExtractPayload Long userId) {
+
+        ReviewResponse result = reviewSearchService.findReviewById(reviewId, userId);
+
+        return ResponseEntity.ok(result);
+    }
+
     @GetMapping
     public ResponseEntity<PagedResponse<ReviewResponse>> findPagingReviews(
-            @PageableDefault(sort = LIKES, direction = Sort.Direction.DESC) Pageable pageable) {
+            @PageableDefault(sort = LIKES, direction = Sort.Direction.DESC) Pageable pageable,
+            @ExtractPayload Long userId) {
 
-        PagedResponse<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable);
+        PagedResponse<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable, userId);
 
         return ResponseEntity.ok(result);
     }

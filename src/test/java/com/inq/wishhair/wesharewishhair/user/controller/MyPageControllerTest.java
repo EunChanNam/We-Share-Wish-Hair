@@ -13,7 +13,6 @@ import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -104,6 +103,6 @@ public class MyPageControllerTest extends ControllerTest {
         Review review = ReviewFixture.values()[index].toEntity(user, hairStyle);
         ReflectionTestUtils.setField(review, "id", index + 1L);
 
-        return new ReviewResponse(review);
+        return new ReviewResponse(review, user.getId());
     }
 }

@@ -13,8 +13,13 @@ public class ReviewFindService {
 
     private final ReviewRepository reviewRepository;
 
-    public Review findById(Long id) {
+    public Review findWithUserById(Long id) {
         return reviewRepository.findById(id)
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+    }
+
+    public Review findWithLikeReviewsById(Long id) {
+        return reviewRepository.findWithLikeReviewsById(id)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 }

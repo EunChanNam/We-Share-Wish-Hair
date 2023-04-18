@@ -12,16 +12,16 @@ import java.util.List;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class ReviewResponseAssembler {
 
-    public static PagedResponse<ReviewResponse> toPagedReviewResponse(Slice<Review> slice) {
-        return new PagedResponse<>(transferContentToResponse(slice));
+    public static PagedResponse<ReviewResponse> toPagedReviewResponse(Slice<Review> slice, Long userId) {
+        return new PagedResponse<>(transferContentToResponse(slice, userId));
     }
 
-    private static Slice<ReviewResponse> transferContentToResponse(Slice<Review> slice) {
-        return slice.map(ReviewResponseAssembler::toReviewResponse);
+    private static Slice<ReviewResponse> transferContentToResponse(Slice<Review> slice, Long userId) {
+        return slice.map(review -> toReviewResponse(review, userId));
     }
 
-    private static ReviewResponse toReviewResponse(Review review) {
-        return new ReviewResponse(review);
+    public static ReviewResponse toReviewResponse(Review review, Long userId) {
+        return new ReviewResponse(review, userId);
     }
 
     public static ResponseWrapper<ReviewSimpleResponse> toWrappedSimpleResponse(List<Review> reviews) {

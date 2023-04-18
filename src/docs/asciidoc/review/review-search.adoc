@@ -4,6 +4,19 @@
 :toc: left
 :toclevels: 3
 
+== 리뷰 단건 검색 API
+=== 1. 성공
+Http Request
+include::{snippets}/find-review-by-id/success/http-request.adoc[]
+include::{snippets}/find-review-by-id/success/request-headers.adoc[]
+include::{snippets}/find-review-by-id/success/path-parameters.adoc[]
+
+Http Response
+include::{snippets}/find-review-by-id/success/http-response.adoc[]
+include::{snippets}/find-review-by-id/success/response-fields.adoc[]
+
+
+
 == 전체 리뷰 검색 API
 === 1. 성공
 Http Request
