@@ -19,7 +19,7 @@ public class ReviewFindService {
     }
 
     public Review findWithLikeReviewsById(Long id) {
-        return reviewRepository.findWithLikeReviewsById(id)
+        return reviewRepository.findWithLockById(id)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 }

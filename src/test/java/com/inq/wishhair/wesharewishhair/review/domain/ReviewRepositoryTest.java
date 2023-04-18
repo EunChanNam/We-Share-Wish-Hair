@@ -52,7 +52,7 @@ public class ReviewRepositoryTest extends RepositoryTest {
         review.executeLike(user);
 
         //when
-        Review result = reviewRepository.findWithLikeReviewsById(review.getId()).orElseThrow();
+        Review result = reviewRepository.findWithLockById(review.getId()).orElseThrow();
 
         //then
         assertAll(
