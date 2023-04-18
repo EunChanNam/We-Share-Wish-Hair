@@ -59,7 +59,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(value =
         {UserController.class, HairStyleController.class, AuthController.class, TokenReissueController.class,
         HairStyleController.class, MailController.class, ReviewController.class, ReviewSearchController.class,
-        LikeReviewController.class, MyPageController.class, PointController.class, PointSearchController.class})
+        LikeReviewController.class, UserInfoController.class, PointController.class, PointSearchController.class})
 @ExtendWith(RestDocumentationExtension.class)
 @Import(RestDocsConfig.class)
 @AutoConfigureRestDocs

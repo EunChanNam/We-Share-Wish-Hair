@@ -19,7 +19,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @RestControllerAdvice(assignableTypes = {
         UserController.class, AuthController.class, HairStyleController.class,
         ReviewController.class, WishListController.class, AuthController.class,
-        TokenReissueController.class, MailController.class, MyPageController.class,
+        TokenReissueController.class, MailController.class, UserInfoController.class,
         LikeReviewController.class, ReviewSearchController.class, PointSearchController.class,
         PointController.class
 })

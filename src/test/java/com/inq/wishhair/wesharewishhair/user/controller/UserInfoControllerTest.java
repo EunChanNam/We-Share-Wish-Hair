@@ -27,9 +27,9 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("User-MyPageControllerTest - WebMvcTest")
-public class MyPageControllerTest extends ControllerTest {
+public class UserInfoControllerTest extends ControllerTest {
 
-    private static final String BASE_URL = "/api/my_page";
+    private static final String BASE_URL = "/api/user";
 
     @Nested
     @DisplayName("마이 페이지 조회 API 테스트")
@@ -42,7 +42,7 @@ public class MyPageControllerTest extends ControllerTest {
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .get(BASE_URL);
+                    .get(BASE_URL + "/my_page");
 
             //then
             assertException(expectedError, requestBuilder, status().isUnauthorized());
@@ -57,7 +57,7 @@ public class MyPageControllerTest extends ControllerTest {
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .get(BASE_URL)
+                    .get(BASE_URL + "/my_page")
                     .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
 
             //when
