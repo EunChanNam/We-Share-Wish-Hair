@@ -189,6 +189,8 @@ public class ReviewSearchControllerTest extends ControllerTest {
 
     private List<ReviewResponse> generateReviewResponses(int count) {
         User user = UserFixture.B.toEntity();
+        ReflectionTestUtils.setField(user, "id", 1L);
+
         HairStyle hairStyle = HairStyleFixture.A.toEntity();
 
         List<ReviewResponse> result = new ArrayList<>();
@@ -235,6 +237,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
                 fieldWithPath("result[].photos[].storeUrl").description("리뷰 사진 URI"),
                 fieldWithPath("result[].likes").description("좋아요 수"),
                 fieldWithPath("result[].hashTags[].tag").description("해시 태그"),
+                fieldWithPath("result[].writer").description("작성자 여부"),
 
                 fieldWithPath("paging.contentSize").description("조회된 리뷰 개수"),
                 fieldWithPath("paging.page").description("현재 페이지"),

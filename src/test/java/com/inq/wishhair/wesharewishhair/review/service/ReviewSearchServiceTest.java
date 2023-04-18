@@ -236,7 +236,8 @@ public class ReviewSearchServiceTest extends ServiceTest {
 
                         expectedTags.forEach(tag -> assertThat(resultTags).contains(tag));
                     },
-                    () -> assertThat(response.getPhotos()).hasSize(expected.getPhotos().size())
+                    () -> assertThat(response.getPhotos()).hasSize(expected.getPhotos().size()),
+                    () -> assertThat(response.isWriter()).isTrue()
             );
         }
     }
