@@ -13,10 +13,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("User-MyPageServiceTest - SpringBootTest")
-public class MyPageServiceTest extends ServiceTest {
+public class UserInfoServiceTest extends ServiceTest {
     //todo 리뷰에 대한 검증을 한번 더 해야되는지
     @Autowired
-    private MyPageService myPageService;
+    private UserInfoService userInfoService;
 
     private User user;
 
@@ -30,7 +30,7 @@ public class MyPageServiceTest extends ServiceTest {
     @DisplayName("사용자의 마이페이지 정보를 조회한다")
     void getMyPageInfo() {
         //when
-        MyPageResponse result = myPageService.getMyPageInfo(user.getId());
+        MyPageResponse result = userInfoService.getMyPageInfo(user.getId());
 
         //then
         assertAll(

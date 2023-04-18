@@ -53,7 +53,7 @@ public class MyPageControllerTest extends ControllerTest {
         void success() throws Exception {
             //given
             MyPageResponse expectedResponse = generateMyPageResponse();
-            given(myPageService.getMyPageInfo(1L)).willReturn(expectedResponse);
+            given(userInfoService.getMyPageInfo(1L)).willReturn(expectedResponse);
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders

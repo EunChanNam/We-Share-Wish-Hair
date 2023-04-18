@@ -27,7 +27,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.headers.RequestHeadersSnippet;
@@ -103,7 +102,7 @@ public abstract class ControllerTest {
     protected LikeReviewService likeReviewService;
 
     @MockBean
-    protected MyPageService myPageService;
+    protected UserInfoService userInfoService;
 
     @MockBean
     protected PointService pointService;

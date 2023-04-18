@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class MyPageService {
+public class UserInfoService {
 
     private final UserFindService userFindService;
     private final ReviewSearchService reviewSearchService;
