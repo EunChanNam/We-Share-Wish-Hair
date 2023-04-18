@@ -79,7 +79,8 @@ public class MyPageControllerTest extends ControllerTest {
                                             fieldWithPath("reviews[].photos").optional().description("사진이 없을 수 있음"),
                                             fieldWithPath("reviews[].photos[].storeUrl").description("리뷰 사진 URI"),
                                             fieldWithPath("reviews[].likes").description("좋아요 수"),
-                                            fieldWithPath("reviews[].hashTags[].tag").description("해시 태그")
+                                            fieldWithPath("reviews[].hashTags[].tag").description("해시 태그"),
+                                            fieldWithPath("reviews[].writer").description("작성자 여부")
                                     )
                             )
                     );
@@ -88,6 +89,8 @@ public class MyPageControllerTest extends ControllerTest {
 
     private MyPageResponse generateMyPageResponse() {
         User user = UserFixture.A.toEntity();
+        ReflectionTestUtils.setField(user, "id", 1L);
+
         List<ReviewResponse> reviewResponses = new ArrayList<>();
 
         for (int index = 0; index < 3; index++) {
@@ -98,9 +101,11 @@ public class MyPageControllerTest extends ControllerTest {
 
     private ReviewResponse generateReviewResponse(int index) {
         User user = UserFixture.B.toEntity();
+        ReflectionTestUtils.setField(user, "id", 2L);
         HairStyle hairStyle = HairStyleFixture.A.toEntity();
 
         Review review = ReviewFixture.values()[index].toEntity(user, hairStyle);
+
         ReflectionTestUtils.setField(review, "id", index + 1L);
 
         return new ReviewResponse(review, user.getId());
