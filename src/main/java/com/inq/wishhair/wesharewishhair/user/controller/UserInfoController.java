@@ -3,6 +3,7 @@ package com.inq.wishhair.wesharewishhair.user.controller;
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse;
 import com.inq.wishhair.wesharewishhair.user.service.UserInfoService;
+import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserInformation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,11 +18,18 @@ public class UserInfoController {
     private final UserInfoService userInfoService;
 
     @GetMapping("/my_page")
-    public ResponseEntity<MyPageResponse> getMyPageInfo(
-            @ExtractPayload Long userId) {
+    public ResponseEntity<MyPageResponse> getMyPageInfo(@ExtractPayload Long userId) {
 
-        MyPageResponse response = userInfoService.getMyPageInfo(userId);
+        MyPageResponse result = userInfoService.getMyPageInfo(userId);
 
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/info")
+    public ResponseEntity<UserInformation> getUserInformation(@ExtractPayload Long userId) {
+
+        UserInformation result = userInfoService.getUserInformation(userId);
+
+        return ResponseEntity.ok(result);
     }
 }
