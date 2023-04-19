@@ -4,6 +4,20 @@
 :toc: left
 :toclevels: 3
 
+== 사용자 정보 조회 API
+=== 1. 성공
+Http Request
+include::{snippets}/get-user-information/success/http-request.adoc[]
+include::{snippets}/get-user-information/success/request-headers.adoc[]
+
+Http Response
+include::{snippets}/get-user-information/success/http-response.adoc[]
+include::{snippets}/get-user-information/success/response-fields.adoc[]
+
+=== 2. 헤더에 토큰을 포함하지 않아 실패
+Http Response
+include::{snippets}/get-user-information/fail-by-no-access-token/http-response.adoc[]
+
 == 마이페이지 조회 API
 === 1. 성공
 Http Request

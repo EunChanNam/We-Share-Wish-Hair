@@ -27,7 +27,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.restdocs.headers.RequestHeadersSnippet;
@@ -60,7 +59,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(value =
         {UserController.class, HairStyleController.class, AuthController.class, TokenReissueController.class,
         HairStyleController.class, MailController.class, ReviewController.class, ReviewSearchController.class,
-        LikeReviewController.class, MyPageController.class, PointController.class, PointSearchController.class})
+        LikeReviewController.class, UserInfoController.class, PointController.class, PointSearchController.class})
 @ExtendWith(RestDocumentationExtension.class)
 @Import(RestDocsConfig.class)
 @AutoConfigureRestDocs
@@ -103,7 +102,7 @@ public abstract class ControllerTest {
     protected LikeReviewService likeReviewService;
 
     @MockBean
-    protected MyPageService myPageService;
+    protected UserInfoService userInfoService;
 
     @MockBean
     protected PointService pointService;
@@ -184,15 +183,6 @@ public abstract class ControllerTest {
                     .attributes(constraint("첫 정렬 조건은 반드시 " + defaultSort + " default : " + defaultSort)));
         }
         return result;
-    }
-
-    protected void assertSuccess(MockHttpServletRequestBuilder requestBuilder, ResultMatcher status) throws Exception {
-        mockMvc.perform(requestBuilder)
-                .andExpectAll(
-                        status,
-                        jsonPath("$").exists(),
-                        jsonPath("$.success").value(true)
-                );
     }
 
     protected MultiValueMap<String, String> generatePageableParams(Pageable pageable) {
