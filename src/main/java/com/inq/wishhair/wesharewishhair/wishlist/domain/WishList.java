@@ -8,6 +8,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -26,11 +28,14 @@ public class WishList extends BaseEntity {
     private User user;
 
     //==생성 메서드==//
+    private WishList(HairStyle hairStyle, User user) {
+        this.hairStyle = hairStyle;
+        this.user = user;
+        this.createdDate = LocalDateTime.now();
+    }
+
     public static WishList createWishList(User user, HairStyle hairStyle) {
-        WishList wishList = new WishList();
-        wishList.hairStyle = hairStyle;
-        wishList.user = user;
-        return wishList;
+        return new WishList(hairStyle, user);
     }
 
     //==편의 메서드==//
