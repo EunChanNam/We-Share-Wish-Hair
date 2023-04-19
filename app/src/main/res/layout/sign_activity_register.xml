@@ -38,7 +38,7 @@
         android:text="@string/register_message_1"
         android:textStyle="bold"
         android:textColor="@color/default_blue"
-        android:textSize="18sp"
+        android:textSize="24sp"
         app:layout_constraintTop_toBottomOf="@id/sign_register_processBar"
         app:layout_constraintStart_toStartOf="@id/sign_register_processBar"
         app:layout_constraintEnd_toEndOf="@id/sign_register_processBar"
@@ -203,4 +203,46 @@
         <include layout="@layout/sign_bottom_bar" />
     </LinearLayout>
 
+    <FrameLayout
+        android:id="@+id/sign_register_view_done"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#40000000"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="invisible">
+        <LinearLayout
+            android:layout_width="235dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/border_sign_register_done"
+            android:layout_gravity="center"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:src="@drawable/sign_register_done"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register_message_6"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="@color/default_blue"/>
+            <Button
+                android:id="@+id/sign_register_btn_done"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="17dp"
+                android:background="@drawable/border_sign_button"
+                android:text="@string/register_message_7"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_ivory" />
+        </LinearLayout>
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

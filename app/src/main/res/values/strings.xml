@@ -31,7 +31,7 @@
     <string name="register_message_2">• 이름</string>
     <string name="register_condition_name">한글 또는 영문으로 입력해주세요</string>
     <string name="register_message_3">• 닉네임</string>
-    <string name="register_condition_nickname">공백없이 2~8자리의 영문/한글/숫자를 입력해주세요</string>
+    <string name="register_condition_nickname">2~8자리의 공백을 제외한 영문/한글/숫자를 입력해주세요</string>
     <string name="register_message_4">• 비밀번호</string>
     <string name="register_condition_password">8~20자리의 영문/한글/특수문자를 함께 입력해주세요</string>
     <string name="register_message_5">• 성별</string>
@@ -62,7 +62,8 @@
     <string name="home_message_7">님 만을 위한 추천</string>
 
     <string name="xmlDisplay_username">userName</string>
-
+    <string name="register_message_6">회원가입완료</string>
+    <string name="register_message_7">확인</string>
 
 
 </resources>
