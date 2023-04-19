@@ -33,6 +33,7 @@
         android:id="@+id/sign_register_message1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center_vertical"
         android:text="@string/register_message_1"
         android:textStyle="bold"
@@ -68,11 +69,17 @@
             android:layout_height="33dp"
             android:paddingStart="10dp"
             android:paddingEnd="10dp"
-            android:hint="@string/register_condition_name"
             android:autofillHints="name"
             android:background="@drawable/border_sign_text"
             android:inputType="textPersonName"
             android:drawableEnd="@drawable/sign_check_success"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/register_condition_name"
+            android:textColor="@color/black"
+            android:textSize="11sp" />
     </LinearLayout>
 <!--    nickname -->
     <LinearLayout
