@@ -19,6 +19,10 @@ import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.user.controller.*;
 import com.inq.wishhair.wesharewishhair.user.service.*;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleController;
+import com.inq.wishhair.wesharewishhair.wishlist.controller.WishListController;
+import com.inq.wishhair.wesharewishhair.wishlist.controller.WishListSearchController;
+import com.inq.wishhair.wesharewishhair.wishlist.service.WishListSearchService;
+import com.inq.wishhair.wesharewishhair.wishlist.service.WishListService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +63,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(value =
         {UserController.class, HairStyleController.class, AuthController.class, TokenReissueController.class,
         HairStyleController.class, MailController.class, ReviewController.class, ReviewSearchController.class,
-        LikeReviewController.class, UserInfoController.class, PointController.class, PointSearchController.class})
+        LikeReviewController.class, UserInfoController.class, PointController.class, PointSearchController.class,
+        WishListController.class, WishListSearchController.class})
 @ExtendWith(RestDocumentationExtension.class)
 @Import(RestDocsConfig.class)
 @AutoConfigureRestDocs
@@ -73,6 +78,12 @@ public abstract class ControllerTest {
 
     @Autowired
     protected ObjectMapper objectMapper;
+
+    @MockBean
+    protected WishListService wishListService;
+
+    @MockBean
+    protected WishListSearchService wishListSearchService;
 
     @MockBean
     protected UserService userService;
