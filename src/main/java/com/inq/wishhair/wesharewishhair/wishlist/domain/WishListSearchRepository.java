@@ -10,7 +10,6 @@ public interface WishListSearchRepository extends JpaRepository<WishList, Long> 
 
     @Query("select distinct w from WishList w " +
             "join fetch w.hairStyle h " +
-            "left outer join fetch h.photos " +
             "where w.user.id = :userId " +
             "order by w.createdDate desc")
     Slice<WishList> findByUser(@Param("userId") Long userId, Pageable pageable);
