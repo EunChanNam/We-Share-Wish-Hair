@@ -14,8 +14,4 @@ public abstract class PasswordUpdateRequestUtils {
     public static PasswordUpdateRequest wrongOldPwRequest() {
         return new PasswordUpdateRequest("gogo9999!", NEW_PW);
     }
-
-    public static PasswordUpdateRequest wrongNewPwRequest(UserFixture fixture) {
-        return new PasswordUpdateRequest(fixture.getPassword(), "gogo");
-    }
 }

@@ -4,6 +4,7 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -19,6 +20,8 @@ public class PasswordTest {
     private static final String WRONG_PASSWORD4 = "a2@";
     private static final String WRONG_PASSWORD5 = "asdf";
 
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+
     @Test
     @DisplayName("잘못된 비밀번호 형식으로 생성에 실패한다")
     void test1() {
@@ -27,19 +30,19 @@ public class PasswordTest {
 
         //when, then
         assertAll(
-                () -> assertThatThrownBy(() -> new Password(WRONG_PASSWORD1))
+                () -> assertThatThrownBy(() -> Password.encrypt(WRONG_PASSWORD1, passwordEncoder))
                         .isInstanceOf(WishHairException.class)
                         .hasMessageContaining(expectedError.getMessage()),
-                () -> assertThatThrownBy(() -> new Password(WRONG_PASSWORD2))
+                () -> assertThatThrownBy(() -> Password.encrypt(WRONG_PASSWORD2, passwordEncoder))
                         .isInstanceOf(WishHairException.class)
                         .hasMessageContaining(expectedError.getMessage()),
-                () -> assertThatThrownBy(() -> new Password(WRONG_PASSWORD3))
+                () -> assertThatThrownBy(() -> Password.encrypt(WRONG_PASSWORD3, passwordEncoder))
                         .isInstanceOf(WishHairException.class)
                         .hasMessageContaining(expectedError.getMessage()),
-                () -> assertThatThrownBy(() -> new Password(WRONG_PASSWORD4))
+                () -> assertThatThrownBy(() -> Password.encrypt(WRONG_PASSWORD4, passwordEncoder))
                         .isInstanceOf(WishHairException.class)
                         .hasMessageContaining(expectedError.getMessage()),
-                () -> assertThatThrownBy(() -> new Password(WRONG_PASSWORD5))
+                () -> assertThatThrownBy(() -> Password.encrypt(WRONG_PASSWORD5, passwordEncoder))
                         .isInstanceOf(WishHairException.class)
                         .hasMessageContaining(expectedError.getMessage())
         );
@@ -49,9 +52,9 @@ public class PasswordTest {
     @DisplayName("올바른 비밀번호 형식으로 생성에 성공한다")
     void test2() {
         //when
-        Password result = new Password(CORRECT_PASSWORD);
+        Password result = Password.encrypt(CORRECT_PASSWORD, passwordEncoder);
 
         //then
-        assertThat(result.getValue()).isEqualTo(CORRECT_PASSWORD);
+        assertThat(passwordEncoder.matches(CORRECT_PASSWORD, result.getValue())).isTrue();
     }
 }

@@ -8,6 +8,7 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,11 +20,12 @@ public class AuthService {
     private final TokenManager tokenManager;
     private final UserRepository userRepository;
     private final JwtTokenProvider provider;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public TokenResponse login(String email, String pw) {
         User user = userRepository.findByEmail(new Email(email))
-                .filter(findUser -> findUser.getPasswordValue().equals(pw))
+                .filter(findUser -> passwordEncoder.matches(pw, findUser.getPasswordValue()))
                 .orElseThrow(() -> new WishHairException(ErrorCode.LOGIN_FAIL));
 
         return issueAndSynchronizeToken(user);

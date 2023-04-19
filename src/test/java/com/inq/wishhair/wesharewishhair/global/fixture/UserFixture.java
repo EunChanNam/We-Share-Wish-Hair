@@ -7,6 +7,7 @@ import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Getter
 @AllArgsConstructor
@@ -27,12 +28,13 @@ public enum UserFixture {
     private final Sex sex;
 
     public User toEntity() {
-        return User.builder()
-                .email(new Email(email))
-                .password(new Password(password))
-                .name(getName())
-                .nickname(new Nickname(nickname))
-                .sex(getSex())
-                .build();
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        return User.createUser(
+                email,
+                Password.encrypt(password, passwordEncoder),
+                name,
+                nickname,
+                sex
+        );
     }
 }

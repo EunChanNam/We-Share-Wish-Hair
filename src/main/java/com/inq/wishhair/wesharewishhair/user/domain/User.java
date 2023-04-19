@@ -5,7 +5,6 @@ import com.inq.wishhair.wesharewishhair.user.domain.point.PointType;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import javax.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -41,8 +40,7 @@ public class User {
     private AvailablePoint availablePoint;
 
     //=생성 메서드=//
-    @Builder
-    public User(Email email, Password password, String name, Nickname nickname, Sex sex) {
+    private User(Email email, Password password, String name, Nickname nickname, Sex sex) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -50,6 +48,10 @@ public class User {
         this.sex = sex;
         this.faceShape = new FaceShape();
         this.availablePoint = new AvailablePoint();
+    }
+
+    public static User createUser(String email, Password password, String name, String nickname, Sex sex) {
+        return new User(new Email(email), password, name, new Nickname(nickname), sex);
     }
 
     public String getEmailValue() {
