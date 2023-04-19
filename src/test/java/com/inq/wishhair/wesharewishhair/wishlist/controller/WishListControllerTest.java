@@ -57,4 +57,45 @@ public class WishListControllerTest extends ControllerTest {
             assertException(expectedError, requestBuilder, status().isUnauthorized());
         }
     }
+
+    @Nested
+    @DisplayName("찜 목록 삭제 API")
+    class deleteWishList {
+        @Test
+        @DisplayName("찜 목록을 삭제한다")
+        void success() throws Exception {
+            //when
+            MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
+                    .delete(BASE_URL + "/{wishListId}", 1L)
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    pathParameters(
+                                            parameterWithName("wishListId").description("삭제할 찜 목록 아이디")
+                                    ),
+                                    successResponseDocument()
+                            )
+                    );
+        }
+
+        @Test
+        @DisplayName("헤더에 토큰을 포함하지 않아 실패한다")
+        void failByNoAccessToken() throws Exception {
+            //given
+            //given
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
+                    .delete(BASE_URL + "/{wishListId}", 1L);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
+        }
+    }
 }
