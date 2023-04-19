@@ -3,9 +3,7 @@ package com.inq.wishhair.wesharewishhair.wishlist.domain;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -38,8 +36,7 @@ public class WishListSearchRepositoryTest extends RepositoryTest {
         wishLists = new WishList[hairStyleFixtures.length];
 
         for (int index = 0; index < hairStyleFixtures.length; index++) {
-            HairStyle hairStyle = hairStyleRepository.save(hairStyleFixtures[index].toEntity());
-            wishLists[index] = WishList.createWishList(user, hairStyle);
+            wishLists[index] = WishList.createWishList(user, hairStyleFixtures[index].toEntity());
         }
     }
 
@@ -64,6 +61,7 @@ public class WishListSearchRepositoryTest extends RepositoryTest {
 
             ReflectionTestUtils.setField(wishLists[index], "createdDate", time);
 
+            hairStyleRepository.save(wishLists[index].getHairStyle());
             wishListSearchRepository.save(wishLists[index]);
         }
     }
