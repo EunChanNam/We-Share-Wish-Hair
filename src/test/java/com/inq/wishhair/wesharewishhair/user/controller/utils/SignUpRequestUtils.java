@@ -1,13 +1,13 @@
 package com.inq.wishhair.wesharewishhair.user.controller.utils;
 
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserCreateRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.SignUpRequest;
 
-public abstract class UserCreateRequestUtils {
+public abstract class SignUpRequestUtils {
     private static final UserFixture a = UserFixture.A;
 
-    public static UserCreateRequest successRequest() {
-        return new UserCreateRequest(
+    public static SignUpRequest successRequest() {
+        return new SignUpRequest(
                 a.getEmail(),
                 a.getPassword(),
                 a.getName(),
@@ -16,8 +16,8 @@ public abstract class UserCreateRequestUtils {
         );
     }
 
-    public static UserCreateRequest wrongEmailRequest() {
-        return new UserCreateRequest(
+    public static SignUpRequest wrongEmailRequest() {
+        return new SignUpRequest(
                 "wrongEmail121",
                 a.getPassword(),
                 a.getName(),
@@ -26,8 +26,8 @@ public abstract class UserCreateRequestUtils {
         );
     }
 
-    public static UserCreateRequest wrongPasswordRequest() {
-        return new UserCreateRequest(
+    public static SignUpRequest wrongPasswordRequest() {
+        return new SignUpRequest(
                 a.getEmail(),
                 "12341234",
                 a.getName(),
@@ -36,8 +36,8 @@ public abstract class UserCreateRequestUtils {
         );
     }
 
-    public static UserCreateRequest wrongNicknameRequest() {
-        return new UserCreateRequest(
+    public static SignUpRequest wrongNicknameRequest() {
+        return new SignUpRequest(
                 a.getEmail(),
                 a.getPassword(),
                 a.getName(),

@@ -6,7 +6,7 @@ import com.inq.wishhair.wesharewishhair.user.controller.dto.request.FaceShapeUpd
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserCreateRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.SignUpRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +21,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<Success> createUser(@RequestBody UserCreateRequest createRequest) {
-        Long userId = userService.createUser(createRequest.toEntity());
+    public ResponseEntity<Success> createUser(@RequestBody SignUpRequest createRequest) {
+        Long userId = userService.createUser(createRequest);
 
         return ResponseEntity
                 .created(URI.create("/api/user/" + userId))

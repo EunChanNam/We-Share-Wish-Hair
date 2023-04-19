@@ -4,9 +4,11 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.SignUpRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.domain.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,11 +20,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserFindService userFindService;
     private final UserValidator userValidator;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public Long createUser(User user) {
+    public Long createUser(SignUpRequest request) {
 
+        User user = generateUser(request);
         userValidator.validateNicknameIsNotDuplicated(user.getNickname());
+
         User saveUser = userRepository.save(user);
 
         return saveUser.getId();
@@ -54,13 +59,22 @@ public class UserService {
     @Transactional
     public void updatePassword(Long userId, PasswordUpdateRequest request) {
         User user = userFindService.findByUserId(userId);
-        confirmPassword(user, new Password(request.getOldPassword()));
+        confirmPassword(user, request.getOldPassword());
 
-        user.updatePassword(new Password(request.getNewPassword()));
+        user.updatePassword(Password.encrypt(request.getNewPassword(), passwordEncoder));
     }
 
-    private void confirmPassword(User user, Password password) {
-        if (user.isNotSamePassword(password)) {
+    private User generateUser(SignUpRequest request) {
+        return User.createUser(
+                request.getEmail(),
+                Password.encrypt(request.getPw(), passwordEncoder),
+                request.getName(),
+                request.getNickname(),
+                request.getSex());
+    }
+
+    private void confirmPassword(User user, String password) {
+        if (!passwordEncoder.matches(password, user.getPasswordValue())) {
             throw new WishHairException(ErrorCode.USER_WRONG_PASSWORD);
         }
     }

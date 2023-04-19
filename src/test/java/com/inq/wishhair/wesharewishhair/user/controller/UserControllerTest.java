@@ -8,19 +8,18 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.FaceShapeUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserCreateRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.SignUpRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.PasswordUpdateRequestUtils;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.UserUpdateRequestUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
-import static com.inq.wishhair.wesharewishhair.user.controller.utils.UserCreateRequestUtils.*;
+import static com.inq.wishhair.wesharewishhair.user.controller.utils.SignUpRequestUtils.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
@@ -40,7 +39,7 @@ public class UserControllerTest extends ControllerTest {
         @DisplayName("성공적인 회원가입 테스트")
         void success() throws Exception {
             //given
-            UserCreateRequest request = successRequest();
+            SignUpRequest request = successRequest();
             given(userService.createUser(any())).willReturn(1L);
 
             //when
@@ -70,7 +69,7 @@ public class UserControllerTest extends ControllerTest {
         @DisplayName("중복된 닉네임으로 400 예외를 던진다")
         void failByDuplicatedNickname() throws Exception {
             //given
-            UserCreateRequest request = successRequest();
+            SignUpRequest request = successRequest();
             ErrorCode expectedError = ErrorCode.USER_DUPLICATED_NICKNAME;
             given(userService.createUser(any()))
                     .willThrow(new WishHairException(expectedError));
@@ -82,7 +81,7 @@ public class UserControllerTest extends ControllerTest {
             assertException(expectedError, requestBuilder, status().isBadRequest());
         }
 
-        private MockHttpServletRequestBuilder buildJoinRequest(UserCreateRequest request) throws JsonProcessingException {
+        private MockHttpServletRequestBuilder buildJoinRequest(SignUpRequest request) throws JsonProcessingException {
             return MockMvcRequestBuilders
                     .post(BASE_URL)
                     .content(toJson(request))

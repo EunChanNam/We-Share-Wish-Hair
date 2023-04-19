@@ -4,9 +4,10 @@ import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.FaceShapeUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.SignUpRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.utils.SignUpRequestUtils;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.UserUpdateRequestUtils;
-import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
@@ -15,8 +16,11 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.UserFixture.*;
 import static com.inq.wishhair.wesharewishhair.user.controller.utils.PasswordUpdateRequestUtils.*;
@@ -30,6 +34,9 @@ class UserServiceTest extends ServiceTest {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @Nested
     @DisplayName("회원가입 서비스 테스트")
     class createUser {
@@ -37,22 +44,36 @@ class UserServiceTest extends ServiceTest {
         @DisplayName("회원가입에 성공한다")
         void success() {
             //given
-            User user = A.toEntity();
+            SignUpRequest request = SignUpRequestUtils.successRequest();
 
             //when
-            Long result = userService.createUser(user);
+            Long result = userService.createUser(request);
 
-            assertThat(result).isEqualTo(user.getId());
+            //then
+            Optional<User> actual = userRepository.findById(result);
+            assertAll(
+                    () -> assertThat(actual).isPresent(),
+                    () -> {
+                        User user = actual.orElseThrow();
+                        assertThat(user.getName()).isEqualTo(request.getName());
+                        assertThat(user.getAvailablePoint()).isZero();
+                        assertThat(user.getSex()).isEqualTo(request.getSex());
+                        assertThat(user.getEmailValue()).isEqualTo(request.getEmail());
+                        assertThat(passwordEncoder.matches(request.getPw(), user.getPasswordValue())).isTrue();
+                        assertThat(user.getNicknameValue()).isEqualTo(request.getNickname());
+                    }
+            );
         }
 
         @Test
         @DisplayName("중복된 닉네임으로 실패한다")
         void failByDuplicatedNickname() {
             //given
+            SignUpRequest request = SignUpRequestUtils.successRequest();
             userRepository.save(A.toEntity());
 
             //when, then
-            assertThatThrownBy(() -> userService.createUser(A.toEntity()))
+            assertThatThrownBy(() -> userService.createUser(request))
                     .isInstanceOf(WishHairException.class)
                     .hasMessageContaining(ErrorCode.USER_DUPLICATED_NICKNAME.getMessage());
         }
@@ -150,7 +171,7 @@ class UserServiceTest extends ServiceTest {
             userService.updatePassword(user.getId(), request);
 
             //then
-            assertThat(user.getPasswordValue()).isEqualTo(request.getNewPassword());
+            assertThat(passwordEncoder.matches(request.getNewPassword(), user.getPasswordValue())).isTrue();
         }
     }
 
