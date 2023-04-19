@@ -23,7 +23,7 @@ public class Password {
     @Column(name = "pw", nullable = false)
     private String value;
 
-    public Password(String pw) {
+    private Password(String pw) {
         this.value = pw;
     }
 
