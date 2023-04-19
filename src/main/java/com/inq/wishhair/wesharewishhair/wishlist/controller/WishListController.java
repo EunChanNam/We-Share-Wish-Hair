@@ -28,10 +28,11 @@ public class WishListController {
                 .body(new Success());
     }
 
-    @DeleteMapping("/wish_list/{id}")
-    public ResponseEntity<Success> deleteWishList(@PathVariable Long id) {
+    @DeleteMapping("/wish_list/{reviewId}")
+    public ResponseEntity<Success> deleteWishList(@PathVariable Long reviewId,
+                                                  @ExtractPayload Long userId) {
 
-        wishListService.deleteWishList(id);
+        wishListService.deleteWishList(reviewId, userId);
         return ResponseEntity.ok(new Success());
     }
 }

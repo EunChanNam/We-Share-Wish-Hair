@@ -32,4 +32,9 @@ public class WishList extends BaseEntity {
         wishList.user = user;
         return wishList;
     }
+
+    //==편의 메서드==//
+    public boolean isHost(Long userId) {
+        return user.getId().equals(userId);
+    }
 }
