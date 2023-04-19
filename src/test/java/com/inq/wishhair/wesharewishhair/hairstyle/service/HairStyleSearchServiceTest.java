@@ -16,6 +16,7 @@ import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture.*;
@@ -50,7 +51,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
         @DisplayName("사용자의 얼굴형 태그가 포함되지 않은 헤어스타일은 조회되지 않는다")
         void test1() {
             //given
-            List<Tag> tags = A.getTags();
+            List<Tag> tags = new ArrayList<>(A.getTags());
             user.updateFaceShape(new FaceShape(Tag.SQUARE));
 
             //when
@@ -66,7 +67,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
         @DisplayName("사용자가 얼굴형 태그가 없는 사용자면 403 예외를 던진다")
         void test2() {
             //given
-            List<Tag> tags = List.of(Tag.PERM);
+            List<Tag> tags = new ArrayList<>(List.of(Tag.PERM));
             ErrorCode expectedError = ErrorCode.USER_NO_FACE_SHAPE_TAG;
 
             //when, then
@@ -79,7 +80,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
         @DisplayName("조회된 헤어스타일은 일치하는 해시태그 수, 찜수, 이름으로 정렬된다")
         void test3() {
             //given
-            List<Tag> tags = E.getTags();
+            List<Tag> tags = new ArrayList<>(List.of(Tag.PERM, Tag.LIGHT));
             user.updateFaceShape(new FaceShape(Tag.OBLONG));
 
             //when

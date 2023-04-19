@@ -92,12 +92,8 @@ public class HairStyleSearchRepositoryTest extends RepositoryTest {
             Tag faceShapeTag = Tag.OBLONG;
             Pageable pageable = getDefaultPageable();
 
-            E.getTags().forEach(System.out::println);
-
             //when
             List<HairStyle> result = hairStyleSearchRepository.findByFaceShapeTag(faceShapeTag, A.getSex(), pageable);
-
-            result.forEach(a -> System.out.println(a.getName()));
 
             //then
             assertHairStylesMatch(result, List.of(2, 4, 3));
