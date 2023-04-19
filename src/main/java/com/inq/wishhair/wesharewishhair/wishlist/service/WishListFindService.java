@@ -14,7 +14,7 @@ public class WishListFindService {
     private final WishListRepository wishListRepository;
 
     public WishList findByIdWithHairStyle(Long id) {
-        return wishListRepository.findById(id)
+        return wishListRepository.findWithHairStyleById(id)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 }
