@@ -24,7 +24,7 @@
         android:id="@+id/sign_register_processBar"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:src="@drawable/process_bar_3"
+        android:src="@drawable/sign_process_bar_3"
         app:layout_constraintTop_toBottomOf="@id/sign_register_title"
         app:layout_constraintStart_toStartOf="@id/sign_register_title"
         app:layout_constraintEnd_toEndOf="@id/sign_register_title"/>
