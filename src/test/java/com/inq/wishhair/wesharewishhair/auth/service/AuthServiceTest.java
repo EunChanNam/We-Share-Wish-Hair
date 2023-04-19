@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Optional;
 
+import static com.inq.wishhair.wesharewishhair.global.fixture.UserFixture.A;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -22,7 +23,7 @@ public class AuthServiceTest extends ServiceTest {
     @Autowired
     private AuthService authService;
 
-    private final User user = UserFixture.A.toEntity();
+    private final User user = A.toEntity();
 
     @BeforeEach
     void setUp() {
@@ -37,7 +38,7 @@ public class AuthServiceTest extends ServiceTest {
         @DisplayName("로그인에 성공한다")
         void test1() {
             //when
-            TokenResponse result = authService.login(user.getEmailValue(), user.getPasswordValue());
+            TokenResponse result = authService.login(user.getEmailValue(), A.getPassword());
 
             //then
             assertAll(
@@ -70,7 +71,7 @@ public class AuthServiceTest extends ServiceTest {
     @DisplayName("로그아웃을 한다")
     void test4() {
         //given
-        authService.login(user.getEmailValue(), user.getPasswordValue());
+        authService.login(user.getEmailValue(), A.getPassword());
 
         //when
         authService.logout(user.getId());
