@@ -7,6 +7,7 @@ import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.regex.Pattern;
 
@@ -23,17 +24,22 @@ public class Password {
     private String value;
 
     public Password(String pw) {
-        validatePasswordPattern(pw);
         this.value = pw;
     }
 
-    private void validatePasswordPattern(String pw) {
+    //암호화
+    public static Password encrypt(String pw, PasswordEncoder encoder) {
+        validatePasswordPattern(pw);
+        return new Password(encoder.encode(pw));
+    }
+
+    private static void validatePasswordPattern(String pw) {
         if (isNotValidPattern(pw)) {
             throw new WishHairException(ErrorCode.USER_INVALID_PASSWORD);
         }
     }
 
-    private static boolean isNotValidPattern(String email) {
-        return !PASSWORD_MATCHER.matcher(email).matches();
+    private static boolean isNotValidPattern(String pw) {
+        return !PASSWORD_MATCHER.matcher(pw).matches();
     }
 }
