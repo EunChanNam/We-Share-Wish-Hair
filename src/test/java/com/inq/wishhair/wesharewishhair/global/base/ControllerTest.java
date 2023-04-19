@@ -185,15 +185,6 @@ public abstract class ControllerTest {
         return result;
     }
 
-    protected void assertSuccess(MockHttpServletRequestBuilder requestBuilder, ResultMatcher status) throws Exception {
-        mockMvc.perform(requestBuilder)
-                .andExpectAll(
-                        status,
-                        jsonPath("$").exists(),
-                        jsonPath("$.success").value(true)
-                );
-    }
-
     protected MultiValueMap<String, String> generatePageableParams(Pageable pageable) {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 

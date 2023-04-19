@@ -14,7 +14,7 @@ include::auth/token-reissue.adoc[]
 = User API
 include::user/mail.adoc[]
 include::user/user.adoc[]
-include::user/my-page.adoc[]
+include::user/user-info.adoc[]
 include::user/point.adoc[]
 include::user/point-search.adoc[]
 

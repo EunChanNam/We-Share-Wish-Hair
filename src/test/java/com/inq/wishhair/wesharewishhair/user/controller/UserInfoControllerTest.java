@@ -6,10 +6,13 @@ import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
+import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse;
+import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserInformation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -85,6 +88,59 @@ public class UserInfoControllerTest extends ControllerTest {
                             )
                     );
         }
+    }
+
+    @Nested
+    @DisplayName("사용자 정보 조회 API")
+    class getUserInformation {
+        @Test
+        @DisplayName("헤더에 토큰을 포함하지 않아 실패")
+        void failByNoAccessToken() throws Exception {
+            //given
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .get(BASE_URL + "/info");
+
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
+        }
+
+        @Test
+        @DisplayName("사용자의 정보를 조회한다")
+        void success() throws Exception {
+            //given
+            UserInformation expectedResponse = generateUserInformation();
+            given(userInfoService.getUserInformation(1L))
+                    .willReturn(expectedResponse);
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .get(BASE_URL + "/info")
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    responseFields(
+                                            fieldWithPath("nickname").description("사용자 닉네임"),
+                                            fieldWithPath("hasFaceShape").description("얼굴형 보유 여부"),
+                                            fieldWithPath("faceShapeTag").description("사용자 얼굴형, 얼굴형을 보유하지 않을 시 null")
+                                    )
+                            )
+                    );
+        }
+    }
+
+    private UserInformation generateUserInformation() {
+        User user = UserFixture.A.toEntity();
+        user.updateFaceShape(new FaceShape(Tag.ROUND));
+
+        return new UserInformation(user);
     }
 
     private MyPageResponse generateMyPageResponse() {
