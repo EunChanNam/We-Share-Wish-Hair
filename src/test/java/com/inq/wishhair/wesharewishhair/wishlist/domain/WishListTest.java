@@ -17,15 +17,15 @@ public class WishListTest {
     @DisplayName("WishList 를 생성한다")
     void createWishList() {
         //given
-        User user = UserFixture.B.toEntity();
+        Long userId = 1L;
         HairStyle hairStyle = HairStyleFixture.A.toEntity();
 
         //when
-        WishList wishList = WishList.createWishList(user, hairStyle);
+        WishList wishList = WishList.createWishList(userId, hairStyle);
 
         //then
         assertAll(
-                () -> assertThat(wishList.getUser()).isEqualTo(user),
+                () -> assertThat(wishList.getUserId()).isEqualTo(userId),
                 () -> assertThat(wishList.getHairStyle()).isEqualTo(hairStyle)
         );
     }

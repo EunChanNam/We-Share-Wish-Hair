@@ -3,10 +3,8 @@ package com.inq.wishhair.wesharewishhair.wishlist.service;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
-import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponse;
-import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.wishlist.domain.WishList;
 import com.inq.wishhair.wesharewishhair.wishlist.service.dto.response.WishListResponse;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,19 +27,19 @@ public class WishListSearchServiceTest extends ServiceTest {
     @Autowired
     private WishListSearchService wishListSearchService;
 
-    private User user;
+    private Long userId;
     private WishList[] wishLists;
 
     @BeforeEach
     void setUp() {
         //given
-        user = userRepository.save(UserFixture.B.toEntity());
+        userId = 1L;
 
         HairStyleFixture[] hairStyleFixtures = HairStyleFixture.values();
         wishLists = new WishList[hairStyleFixtures.length];
 
         for (int index = 0; index < hairStyleFixtures.length; index++) {
-            wishLists[index] = WishList.createWishList(user, hairStyleFixtures[index].toEntity());
+            wishLists[index] = WishList.createWishList(userId, hairStyleFixtures[index].toEntity());
         }
     }
 
@@ -52,7 +50,7 @@ public class WishListSearchServiceTest extends ServiceTest {
         saveWishLists(List.of(0, 1, 2, 3), List.of(now(), now().minusMonths(1), now().minusMinutes(10), now().plusHours(3)));
 
         //when
-        PagedResponse<WishListResponse> result = wishListSearchService.findWishList(user.getId(), getDefaultPageable());
+        PagedResponse<WishListResponse> result = wishListSearchService.findWishList(userId, getDefaultPageable());
 
         //then
         assertThat(result.getPaging().hasNext()).isFalse();

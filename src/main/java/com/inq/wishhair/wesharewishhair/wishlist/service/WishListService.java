@@ -18,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class WishListService {
 
     private final WishListRepository wishListRepository;
-    private final UserFindService userFindService;
     private final HairStyleFindService hairStyleFindService;
     private final WishListFindService wishListFindService;
 
@@ -26,9 +25,8 @@ public class WishListService {
     public Long createWishList(Long hairStyleId, Long userId) {
 
         HairStyle hairStyle = hairStyleFindService.findWithLockById(hairStyleId);
-        User user = userFindService.findByUserId(userId);
 
-        WishList wishList = WishList.createWishList(user, hairStyle);
+        WishList wishList = WishList.createWishList(userId, hairStyle);
 
         hairStyle.plusWishListCount();
 

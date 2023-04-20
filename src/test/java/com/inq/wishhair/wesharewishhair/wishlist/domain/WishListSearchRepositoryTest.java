@@ -2,8 +2,6 @@ package com.inq.wishhair.wesharewishhair.wishlist.domain;
 
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
-import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
-import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -24,19 +22,19 @@ public class WishListSearchRepositoryTest extends RepositoryTest {
     @Autowired
     private WishListSearchRepository wishListSearchRepository;
 
-    private User user;
+    private Long userId;
     private WishList[] wishLists;
 
     @BeforeEach
     void setUp() {
         //given
-        user = userRepository.save(UserFixture.B.toEntity());
+        userId = 1L;
 
         HairStyleFixture[] hairStyleFixtures = HairStyleFixture.values();
         wishLists = new WishList[hairStyleFixtures.length];
 
         for (int index = 0; index < hairStyleFixtures.length; index++) {
-            wishLists[index] = WishList.createWishList(user, hairStyleFixtures[index].toEntity());
+            wishLists[index] = WishList.createWishList(userId, hairStyleFixtures[index].toEntity());
         }
     }
 
@@ -47,7 +45,7 @@ public class WishListSearchRepositoryTest extends RepositoryTest {
         saveWishLists(List.of(0, 1, 2, 3), List.of(now(), now().minusMinutes(10), now().minusHours(3), now().plusHours(3)));
 
         //when
-        Slice<WishList> result = wishListSearchRepository.findByUser(user.getId(), getDefaultPageable());
+        Slice<WishList> result = wishListSearchRepository.findByUser(userId, getDefaultPageable());
 
         //then
         assertThat(result.hasNext()).isFalse();
