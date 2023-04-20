@@ -25,7 +25,7 @@ public class WishListService {
     @Transactional
     public Long createWishList(Long hairStyleId, Long userId) {
 
-        HairStyle hairStyle = hairStyleFindService.findById(hairStyleId);
+        HairStyle hairStyle = hairStyleFindService.findWithLockById(hairStyleId);
         User user = userFindService.findByUserId(userId);
 
         WishList wishList = WishList.createWishList(user, hairStyle);

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface WishListRepository extends JpaRepository<WishList, Long> {
 
-    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select wl from WishList wl " +
             "join fetch wl.hairStyle " +
             "where wl.id = :id")

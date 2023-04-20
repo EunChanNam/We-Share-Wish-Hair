@@ -40,7 +40,7 @@ public class ReviewService {
 
         List<Photo> photos = photoStore.uploadFiles(request.getFiles());
         User user = userFindService.findByUserId(userId);
-        HairStyle hairStyle = hairStyleFindService.findById(request.getHairStyleId());
+        HairStyle hairStyle = hairStyleFindService.findWithLockById(request.getHairStyleId());
 
         Review review = generateReview(request, photos, user, hairStyle);
         eventPublisher.publishEvent(new PointChargeEvent(100, userId));
