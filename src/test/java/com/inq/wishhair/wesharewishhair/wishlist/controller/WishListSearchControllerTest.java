@@ -55,7 +55,7 @@ public class WishListSearchControllerTest extends ControllerTest {
                                     responseFields(
                                             fieldWithPath("result[].hairStyleId").description("헤어스타일 아이디"),
                                             fieldWithPath("result[].hairStyleName").description("헤어스타일 이름"),
-                                            fieldWithPath("result[].photoResponse.storeUrl").description("헤어스타일 사진 URL"),
+                                            fieldWithPath("result[].photos[].storeUrl").description("헤어스타일 사진 URL"),
 
                                             fieldWithPath("paging.contentSize").description("조회된 찜 목록 개수"),
                                             fieldWithPath("paging.page").description("현재 페이지"),

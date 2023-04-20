@@ -4,6 +4,8 @@ import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
+import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
+import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.wishlist.domain.WishList;
 import com.inq.wishhair.wesharewishhair.wishlist.service.dto.response.WishListResponse;
@@ -79,8 +81,12 @@ public class WishListSearchServiceTest extends ServiceTest {
             assertAll(
                     () -> assertThat(actual.getHairStyleId()).isEqualTo(expected.getHairStyle().getId()),
                     () -> assertThat(actual.getHairStyleName()).isEqualTo(expected.getHairStyle().getName()),
-                    () -> assertThat(actual.getPhotoResponse().getStoreUrl())
-                            .isEqualTo(expected.getHairStyle().getPhotos().get(0).getStoreUrl())
+                    () -> {
+                        List<String> actualPhotos = actual.getPhotos().stream().map(PhotoResponse::getStoreUrl).toList();
+                        List<String> expectedPhotos = expected.getHairStyle().getPhotos().stream()
+                                .map(Photo::getStoreUrl).toList();
+                        assertThat(actualPhotos).containsAll(expectedPhotos);
+                    }
             );
         }
     }

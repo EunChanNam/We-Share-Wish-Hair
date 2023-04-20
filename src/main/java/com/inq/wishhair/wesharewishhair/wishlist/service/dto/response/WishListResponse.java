@@ -6,7 +6,9 @@ import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import javax.persistence.Persistence;
+import java.util.List;
+
+import static com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponseAssembler.toPhotoResponses;
 
 @Getter
 @AllArgsConstructor
@@ -16,13 +18,11 @@ public class WishListResponse {
 
     private String hairStyleName;
 
-    private PhotoResponse photoResponse;
+    private List<PhotoResponse> photos;
 
     public WishListResponse(HairStyle hairStyle) {
         this.hairStyleId = hairStyle.getId();
         this.hairStyleName = hairStyle.getName();
-        if (!hairStyle.getPhotos().isEmpty()) {
-            this.photoResponse = new PhotoResponse(hairStyle.getPhotos().get(0));
-        }
+        this.photos = toPhotoResponses(hairStyle.getPhotos());
     }
 }
