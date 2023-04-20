@@ -1,5 +1,7 @@
 package com.inq.wishhair.wesharewishhair.wishlist.service;
 
+import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleFindService;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
@@ -34,10 +36,18 @@ public class WishListService {
     }
 
     @Transactional
-    public void deleteWishList(Long wishListId) {
+    public void deleteWishList(Long wishListId, Long userId) {
         WishList wishList = wishListFindService.findByIdWithHairStyle(wishListId);
+        validateIsHost(wishList, userId);
+
         wishList.getHairStyle().minusWishListCount();
 
         wishListRepository.deleteById(wishListId);
+    }
+
+    private void validateIsHost(WishList wishList, Long userId) {
+        if (!wishList.isHost(userId)) {
+            throw new WishHairException(ErrorCode.WISH_LIST_NOT_HOST);
+        }
     }
 }
