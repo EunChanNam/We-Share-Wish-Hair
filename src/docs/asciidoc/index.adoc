@@ -27,3 +27,8 @@ include::hairstyle/recommend.adoc[]
 include::review/review.adoc[]
 include::review/review-search.adoc[]
 include::review/like-review.adoc[]
+
+[[wishList]]
+= WishList API
+include::wishlist/wish-list.adoc[]
+include::wishlist/wish-list-search.adoc[]
