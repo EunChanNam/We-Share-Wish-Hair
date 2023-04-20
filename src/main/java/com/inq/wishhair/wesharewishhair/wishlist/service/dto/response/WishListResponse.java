@@ -21,7 +21,7 @@ public class WishListResponse {
     public WishListResponse(HairStyle hairStyle) {
         this.hairStyleId = hairStyle.getId();
         this.hairStyleName = hairStyle.getName();
-        if (Persistence.getPersistenceUtil().isLoaded(hairStyle.getPhotos())) {
+        if (!hairStyle.getPhotos().isEmpty()) {
             this.photoResponse = new PhotoResponse(hairStyle.getPhotos().get(0));
         }
     }
