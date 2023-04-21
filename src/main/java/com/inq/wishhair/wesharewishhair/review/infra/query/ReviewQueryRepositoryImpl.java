@@ -35,15 +35,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
                 .leftJoin(review.user)
                 .fetchJoin();
 
-        String sort = pageable.getSort().toString();
-        switch (sort) {
-            case LIKES -> query
-                    .leftJoin(review.likeReviews.likeReviews)
-                    .groupBy(review.id)
-                    .orderBy(review.count().desc());
-            case DATE_DESC -> query.orderBy(review.id.desc());
-            case DATE_ASC -> query.orderBy(review.id.asc());
-        }
+        applyOrderBy(query, pageable);
         List<Review> result = query
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize() + 1L)
@@ -54,7 +46,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
 
     @Override
     public Slice<Review> findReviewByLike(Long userId, Pageable pageable) {
-        List<Review> result = factory
+        JPAQuery<Review> query = factory
                 .select(review)
                 .from(review)
                 .innerJoin(review.likeReviews.likeReviews, like)
@@ -63,22 +55,49 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
                 .fetchJoin()
                 .leftJoin(review.hairStyle)
                 .fetchJoin()
-                .orderBy(review.id.desc())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
+                .orderBy(review.id.desc());
+        applyPaging(query, pageable);
+        List<Review> result = query.fetch();
 
         return new SliceImpl<>(result, pageable, validateHasNext(pageable, result));
     }
 
     @Override
     public Slice<Review> findReviewByUser(Long userId, Pageable pageable) {
-        return null;
+        JPAQuery<Review> query = factory
+                .select(review)
+                .from(review)
+                .leftJoin(review.hairStyle)
+                .fetchJoin()
+                .leftJoin(review.user)
+                .fetchJoin()
+                .where(review.id.eq(userId));
+        applyOrderBy(query, pageable);
+        applyPaging(query, pageable);
+
+        List<Review> result = query.fetch();
+        return new SliceImpl<>(result, pageable, validateHasNext(pageable, result));
     }
 
     @Override
     public List<Review> findReviewByCreatedDate(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable) {
         return null;
+    }
+
+    private void applyPaging(JPAQuery<Review> query, Pageable pageable) {
+        query.offset(pageable.getOffset()).limit(pageable.getPageSize());
+    }
+
+    private void applyOrderBy(JPAQuery<Review> query, Pageable pageable) {
+        String sort = pageable.getSort().toString();
+        switch (sort) {
+            case LIKES -> query
+                    .leftJoin(review.likeReviews.likeReviews)
+                    .groupBy(review.id)
+                    .orderBy(review.count().desc());
+            case DATE_DESC -> query.orderBy(review.id.desc());
+            case DATE_ASC -> query.orderBy(review.id.asc());
+        }
     }
 
     private boolean validateHasNext(Pageable pageable, List<Review> result) {
