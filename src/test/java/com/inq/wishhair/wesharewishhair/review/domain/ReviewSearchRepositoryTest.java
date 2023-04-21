@@ -45,8 +45,9 @@ public class ReviewSearchRepositoryTest extends RepositoryTest {
         //given
         user = userRepository.save(UserFixture.B.toEntity());
         hairStyle = hairStyleSearchRepository.save(HairStyleFixture.A.toEntity());
-        review = reviewSearchRepository.save(A.toEntity(user, hairStyle));
-        ReflectionTestUtils.setField(review, "createdDate", LocalDateTime.now().minusDays(4));
+        review = A.toEntity(user, hairStyle);
+        ReflectionTestUtils.setField(review, "createdDate", LocalDateTime.now().minusMonths(1));
+        review = reviewSearchRepository.save(review);
     }
 
     @Test
@@ -102,12 +103,8 @@ public class ReviewSearchRepositoryTest extends RepositoryTest {
     }
 
     @Test
-    @DisplayName("입력된 두 날짜 사이에 작성된 리뷰를 조회한다")
+    @DisplayName("지난달에 작성된 리뷰를 조회한다")
     void findReviewByCreatedDate() {
-        //given
-        LocalDateTime startDate = LocalDateTime.now().minusMonths(1);
-        LocalDateTime endDate = LocalDateTime.now();
-
         //when
         List<Review> result = reviewSearchRepository.findReviewByCreatedDate();
 

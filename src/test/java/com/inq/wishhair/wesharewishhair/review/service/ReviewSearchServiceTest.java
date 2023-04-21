@@ -78,7 +78,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
         @DisplayName("전체 리뷰를 최신 날짜 순으로 정렬해서 조회한다")
         void orderByDate() {
             //given
-            saveReview(List.of(1, 2, 3, 4, 5), List.of(now().minusMonths(2), now().minusMinutes(1), now().minusHours(1),
+            saveReview(List.of(2, 3, 4, 5, 1), List.of(now().minusMonths(2), now().minusMinutes(1), now().minusHours(1),
                     now().minusDays(1), now().minusMonths(1)));
 
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(5);
@@ -89,7 +89,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
             //then
             assertThat(result.getPaging().hasNext()).isFalse();
             assertReviewResponseMatch(result.getResult(),
-                    List.of(reviews.get(2), reviews.get(3), reviews.get(4), reviews.get(5), reviews.get(1)));
+                    List.of(reviews.get(1), reviews.get(5), reviews.get(4), reviews.get(3), reviews.get(2)));
 
         }
     }
@@ -117,7 +117,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
         @DisplayName("좋아요한 리뷰를 최신 날짜 순으로 조회한다")
         void orderByDate() {
             //given
-            saveReview(List.of(1, 2, 3, 4), List.of(now().minusMonths(1), now().minusMinutes(1), now(),
+            saveReview(List.of(3, 2, 4, 1), List.of(now().minusMonths(1), now().minusMinutes(1), now(),
                     now().minusDays(1)));
 
             addLikes(user, List.of(1, 2, 3, 4));
@@ -130,7 +130,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
             //then
             assertThat(result.getPaging().hasNext()).isFalse();
             assertReviewResponseMatch(result.getResult(),
-                    List.of(reviews.get(3), reviews.get(2), reviews.get(4), reviews.get(1)));
+                    List.of(reviews.get(1), reviews.get(4), reviews.get(2), reviews.get(3)));
         }
 
     }
@@ -157,11 +157,13 @@ public class ReviewSearchServiceTest extends ServiceTest {
         @Test
         @DisplayName("작성한 리뷰를 최신 날짜 순으로 조회한다")
         void orderByDate() {
-            //given
-            saveReview(List.of(1, 2, 3, 4), List.of(now().minusMonths(1), now().minusMinutes(1), now(),
+            //given -
+            saveReview(List.of(3, 2, 4, 1), List.of(now().minusMonths(1), now().minusMinutes(1), now(),
                     now().minusDays(1)));
 
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(4);
+
+            System.out.println(pageable.getSort());
 
             //when
             PagedResponse<ReviewResponse> result = reviewSearchService.findMyReviews(user.getId(), pageable);
@@ -169,7 +171,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
             //then
             assertThat(result.getPaging().hasNext()).isFalse();
             assertReviewResponseMatch(result.getResult(),
-                    List.of(reviews.get(3), reviews.get(2), reviews.get(4), reviews.get(1)));
+                    List.of(reviews.get(1), reviews.get(4), reviews.get(2), reviews.get(3)));
         }
     }
 
