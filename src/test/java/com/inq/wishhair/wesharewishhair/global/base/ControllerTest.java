@@ -84,6 +84,9 @@ public abstract class ControllerTest {
     protected ObjectMapper objectMapper;
 
     @MockBean
+    protected UserValidator userValidator;
+
+    @MockBean
     protected WishListService wishListService;
 
     @MockBean
