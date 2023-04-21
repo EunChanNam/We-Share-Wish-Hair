@@ -63,7 +63,10 @@
 
     <string name="xmlDisplay_username">userName</string>
     <string name="register_message_6">회원가입완료</string>
-    <string name="register_message_7">확인</string>
+    <string name="message_confirm">확인</string>
+    <string name="find_password_message1">비밀번호 찾기</string>
+    <string name="find_password_message2">아이디 확인 후 비밀번호를 \n 확인할 수 있습니다.</string>
+    <string name="message_cancel">취소</string>
 
 
 </resources>

@@ -240,7 +240,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="17dp"
                 android:background="@drawable/border_sign_button"
-                android:text="@string/register_message_7"
+                android:text="@string/message_confirm"
                 android:textSize="17sp"
                 android:textStyle="bold"
                 android:textColor="@color/text_ivory" />

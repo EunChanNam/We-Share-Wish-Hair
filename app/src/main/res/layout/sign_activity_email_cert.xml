@@ -78,7 +78,7 @@
                 android:paddingStart="10dp"
                 android:paddingEnd="10dp"
                 android:background="@drawable/border_sign_text"
-                android:ems="10"
+                android:ems="30"
                 android:hint="@string/cert_hint_email"
                 android:inputType="textEmailAddress"
                 android:importantForAutofill="no" />
