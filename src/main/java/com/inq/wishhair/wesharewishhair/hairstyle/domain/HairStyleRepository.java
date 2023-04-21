@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface HairStyleRepository extends JpaRepository<HairStyle, Long> {
 
-    @Lock(LockModeType.PESSIMISTIC_READ)
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
     Optional<HairStyle> findWithLockById(Long id);
 }

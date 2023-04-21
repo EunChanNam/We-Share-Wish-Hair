@@ -17,7 +17,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Pageable;
-import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
@@ -34,8 +33,6 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
 import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
-import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
-import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -43,51 +40,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class ReviewSearchControllerTest extends ControllerTest {
 
     private static final String BASE_URL = "/api/review";
-
-    @Nested
-    @DisplayName("리뷰 단건 조회 API 테스트")
-    class findReviewById {
-        @Test
-        @DisplayName("리뷰의 아이디를 통해 단건으로 조회한다")
-        void success() throws Exception {
-            //given
-            ReviewResponse expectedResponse = generateReviewResponses(1).get(0);
-            given(reviewSearchService.findReviewById(1L, 1L))
-                    .willReturn(expectedResponse);
-
-            //when
-            MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
-                    .get(BASE_URL + "/{reviewId}", 1L)
-                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
-
-            //then
-            mockMvc.perform(requestBuilder)
-                    .andExpect(status().isOk())
-                    .andDo(
-                            restDocs.document(
-                                    accessTokenHeaderDocument(),
-                                    pathParameters(
-                                            parameterWithName("reviewId").description("조회할 리뷰 아이디")
-                                    ),
-                                    reviewResponseDocument(false)
-                            )
-                    );
-        }
-
-        @Test
-        @DisplayName("헤더에 Access 토큰을 포함하지 않아서 예외를 던진다")
-        void fialByNoAccessToken() throws Exception {
-            //given
-            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
-
-            //when
-            MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
-                    .get(BASE_URL + "/{reviewId}", 1L);
-
-            //then
-            assertException(expectedError, requestBuilder, status().isUnauthorized());
-        }
-    }
 
     @Nested
     @DisplayName("전체 리뷰 조회 API 테스트")

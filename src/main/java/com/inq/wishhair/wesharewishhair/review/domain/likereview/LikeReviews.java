@@ -15,8 +15,6 @@ import java.util.List;
 @Embeddable
 public class LikeReviews {
 
-    private int likes = 0;
-
     @OneToMany(mappedBy = "review", cascade = CascadeType.PERSIST, orphanRemoval = true)
     private List<LikeReview> likeReviews = new ArrayList<>();
 
@@ -37,11 +35,13 @@ public class LikeReviews {
 
     private void addLike(LikeReview likeReview) {
         likeReviews.add(likeReview);
-        likes++;
     }
 
     private void cancelLike(LikeReview likeReview) {
         likeReviews.remove(likeReview);
-        likes--;
+    }
+
+    public int getLikes() {
+        return likeReviews.size();
     }
 }

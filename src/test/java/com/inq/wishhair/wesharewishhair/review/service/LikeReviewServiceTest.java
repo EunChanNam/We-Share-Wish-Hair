@@ -58,6 +58,7 @@ public class LikeReviewServiceTest extends ServiceTest {
             likeReviewService.likeReview(review.getId(), user.getId());
 
             //when
+            em.flush();
             likeReviewService.likeReview(review.getId(), user.getId());
 
             //then

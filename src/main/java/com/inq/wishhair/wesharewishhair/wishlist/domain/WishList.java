@@ -2,7 +2,6 @@ package com.inq.wishhair.wesharewishhair.wishlist.domain;
 
 import com.inq.wishhair.wesharewishhair.auditing.BaseEntity;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.user.domain.User;
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -23,23 +22,22 @@ public class WishList extends BaseEntity {
     @JoinColumn(name = "hair_style_id")
     private HairStyle hairStyle;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn
+    private Long userId;
 
     //==생성 메서드==//
-    private WishList(HairStyle hairStyle, User user) {
+    private WishList(HairStyle hairStyle, Long userId) {
         this.hairStyle = hairStyle;
-        this.user = user;
+        this.userId = userId;
         this.createdDate = LocalDateTime.now();
     }
 
-    public static WishList createWishList(User user, HairStyle hairStyle) {
-        return new WishList(hairStyle, user);
+    public static WishList createWishList(Long userId, HairStyle hairStyle) {
+        return new WishList(hairStyle, userId);
     }
 
     //==편의 메서드==//
     public boolean isHost(Long userId) {
-        return user.getId().equals(userId);
+        return this.userId.equals(userId);
     }
 }
