@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.review.infra.query;
 
 import com.inq.wishhair.wesharewishhair.review.domain.QReview;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.review.domain.likereview.QLikeReview;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -21,24 +22,27 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
 
     private final JPAQueryFactory factory;
 
-    private final QReview r = new QReview("r");
+    private final QReview review = new QReview("r");
+    private final QLikeReview like = new QLikeReview("l");
 
     @Override
     public Slice<Review> findReviewByPaging(Pageable pageable) {
         JPAQuery<Review> query = factory
-                .select(r)
-                .from(r)
-                .leftJoin(r.hairStyle)
-                .leftJoin(r.user);
+                .select(review)
+                .from(review)
+                .leftJoin(review.hairStyle)
+                .fetchJoin()
+                .leftJoin(review.user)
+                .fetchJoin();
 
         String sort = pageable.getSort().toString();
         switch (sort) {
             case LIKES -> query
-                    .join(r.likeReviews.likeReviews)
-                    .groupBy(r.id)
-                    .orderBy(r.count().desc());
-            case DATE_DESC -> query.orderBy(r.id.desc());
-            case DATE_ASC -> query.orderBy(r.id.asc());
+                    .leftJoin(review.likeReviews.likeReviews)
+                    .groupBy(review.id)
+                    .orderBy(review.count().desc());
+            case DATE_DESC -> query.orderBy(review.id.desc());
+            case DATE_ASC -> query.orderBy(review.id.asc());
         }
         List<Review> result = query
                 .offset(pageable.getOffset())
@@ -50,7 +54,21 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
 
     @Override
     public Slice<Review> findReviewByLike(Long userId, Pageable pageable) {
-        return null;
+        List<Review> result = factory
+                .select(review)
+                .from(review)
+                .innerJoin(review.likeReviews.likeReviews, like)
+                .on(like.user.id.eq(review.id))
+                .leftJoin(review.user)
+                .fetchJoin()
+                .leftJoin(review.hairStyle)
+                .fetchJoin()
+                .orderBy(review.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        return new SliceImpl<>(result, pageable, validateHasNext(pageable, result));
     }
 
     @Override
