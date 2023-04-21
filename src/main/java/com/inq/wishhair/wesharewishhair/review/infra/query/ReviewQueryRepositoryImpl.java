@@ -71,7 +71,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
                 .fetchJoin()
                 .leftJoin(review.user)
                 .fetchJoin()
-                .where(review.id.eq(userId));
+                .where(review.user.id.eq(userId));
         applyOrderBy(query, pageable);
         applyPaging(query, pageable);
 
@@ -105,7 +105,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
     }
 
     private void applyOrderBy(JPAQuery<Review> query, Pageable pageable) {
-        String sort = pageable.getSort().toString().replace(": ", ",");
+        String sort = pageable.getSort().toString().replace(": ", ".");
         switch (sort) {
             case LIKES -> query
                     .leftJoin(review.likeReviews.likeReviews)

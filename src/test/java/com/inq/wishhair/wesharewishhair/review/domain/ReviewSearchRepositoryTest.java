@@ -109,7 +109,7 @@ public class ReviewSearchRepositoryTest extends RepositoryTest {
         LocalDateTime endDate = LocalDateTime.now();
 
         //when
-        List<Review> result = reviewSearchRepository.findReviewByCreatedDate(startDate, endDate, pageable);
+        List<Review> result = reviewSearchRepository.findReviewByCreatedDate();
 
         //then
         assertAll(

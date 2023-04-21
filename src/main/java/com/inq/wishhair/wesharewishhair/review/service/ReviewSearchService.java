@@ -2,9 +2,6 @@ package com.inq.wishhair.wesharewishhair.review.service;
 
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
-import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
-import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewSearchRepository;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
@@ -15,7 +12,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler.*;
@@ -48,19 +44,7 @@ public class ReviewSearchService {
 
     /*이달의 추천 리뷰 조회*/
     public ResponseWrapper<ReviewSimpleResponse> findReviewOfMonth() {
-        LocalDateTime startDate = generateStartDate();
-        LocalDateTime endDate = generateEndDate();
-        Pageable pageable = PageableUtils.generateSimplePageable(5);
-
-        List<Review> result = reviewSearchRepository.findReviewByCreatedDate(startDate, endDate, pageable);
+        List<Review> result = reviewSearchRepository.findReviewByCreatedDate();
         return toWrappedSimpleResponse(result);
-    }
-
-    private LocalDateTime generateStartDate() {
-        return LocalDateTime.now().minusMonths(1).withDayOfMonth(1).withHour(0).withMinute(0);
-    }
-
-    private LocalDateTime generateEndDate() {
-        return LocalDateTime.now().withDayOfMonth(1).withHour(0).withMinute(0);
     }
 }
