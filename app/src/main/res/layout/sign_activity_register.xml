@@ -22,8 +22,9 @@
 
     <ImageView
         android:id="@+id/sign_register_processBar"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:src="@drawable/sign_process_bar_3"
         app:layout_constraintTop_toBottomOf="@id/sign_register_title"
         app:layout_constraintStart_toStartOf="@id/sign_register_title"
@@ -33,7 +34,7 @@
         android:id="@+id/sign_register_message1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="25dp"
         android:layout_gravity="center_vertical"
         android:text="@string/register_message_1"
         android:textStyle="bold"

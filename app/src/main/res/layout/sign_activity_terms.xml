@@ -22,8 +22,9 @@
 
     <ImageView
         android:id="@+id/sign_terms_processBar"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:src="@drawable/sign_process_bar_1"
         app:layout_constraintTop_toBottomOf="@id/sign_terms_title"
         app:layout_constraintStart_toStartOf="@id/sign_terms_title"
@@ -33,6 +34,7 @@
         android:id="@+id/sign_terms_message1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="@string/sign_term_message1"
         android:textStyle="bold"
         android:textColor="@color/default_blue"
