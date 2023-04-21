@@ -50,8 +50,6 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ReviewItem item = reviewItems.get(position);
 
-        holder.profileImage.setImageResource(item.getProfileImage());
-
         if (item.getImageUrls().size() > 0) {
             holder.bindContentImage(item.getImageUrls().get(0));
         }
@@ -82,28 +80,26 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView profileImage, contentImage1, contentImage2, isHeart;
-        TextView nickname, content, grade, date, heartCount, hairStyleName, tags;
+        ImageView contentImage, isHeart;
+        TextView nickname, hairStyleName, tags, content, grade, date, heartCount;
         Button viewContent;
 
         ViewHolder(View itemView) {
             super(itemView);
-            this.profileImage = itemView.findViewById(R.id.review_recent_profile_image);
-            this.contentImage1 = itemView.findViewById(R.id.review_recent_contentImage1);
-            this.contentImage2 = itemView.findViewById(R.id.review_recent_contentImage2);
-            this.nickname = itemView.findViewById(R.id.review_recent_tv_name);
+            this.contentImage = itemView.findViewById(R.id.review_recent_contentImage);
+            this.nickname = itemView.findViewById(R.id.review_recent_tv_nickname);
+            this.hairStyleName = itemView.findViewById(R.id.review_recent_tv_hairStyleName);
+            this.tags = itemView.findViewById(R.id.review_recent_tv_tags);
             this.content = itemView.findViewById(R.id.review_recent_tv_content);
             this.grade = itemView.findViewById(R.id.review_recent_tv_grade);
             this.isHeart = itemView.findViewById(R.id.review_recent_imageView_isHeart);
             this.heartCount = itemView.findViewById(R.id.review_recent_tv_heartCount);
             this.date = itemView.findViewById(R.id.review_recent_tv_date);
-            this.viewContent = itemView.findViewById(R.id.review_recent_Button_viewContent);
-            this.hairStyleName = itemView.findViewById(R.id.review_recent_tv_hairStyleName);
-            this.tags = itemView.findViewById(R.id.review_recent_tv_tags);
+            this.viewContent = itemView.findViewById(R.id.review_recent_btn_viewContent);
         }
 
         public void bindContentImage(String imageUrl) {
-            Glide.with(context).load(imageUrl).into(contentImage1);
+            Glide.with(context).load(imageUrl).into(contentImage);
         }
 
     }
