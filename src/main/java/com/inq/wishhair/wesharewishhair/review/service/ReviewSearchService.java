@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 import static com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler.*;
 
@@ -27,14 +26,6 @@ import static com.inq.wishhair.wesharewishhair.review.service.dto.response.Revie
 public class ReviewSearchService {
 
     private final ReviewSearchRepository reviewSearchRepository;
-
-    /*리뷰 단건 조회*/
-    public ReviewResponse findReviewById(Long reviewId, Long userId) {
-        Review findReview = reviewSearchRepository.findReviewById(reviewId)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
-
-        return toReviewResponse(findReview, userId);
-    }
 
     /*전체 리뷰 조회*/
     public PagedResponse<ReviewResponse> findPagedReviews(Pageable pageable, Long userId) {

@@ -12,14 +12,6 @@ import java.util.Optional;
 
 public interface ReviewSearchRepository extends JpaRepository<Review, Long> {
 
-    //review 단건 조회
-    @Query("select distinct r from Review r " +
-            "left outer join fetch r.photos " +
-            "join fetch r.hairStyle " +
-            "join fetch r.user " +
-            "where r.id = :id")
-    Optional<Review> findReviewById(@Param("id") Long id);
-
     //전체 리뷰 조회
     @Query("select r from Review r " +
             "join fetch r.hairStyle " +

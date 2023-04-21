@@ -12,8 +12,10 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleSearchService;
 import com.inq.wishhair.wesharewishhair.review.controller.LikeReviewController;
 import com.inq.wishhair.wesharewishhair.review.controller.ReviewController;
+import com.inq.wishhair.wesharewishhair.review.controller.ReviewFindController;
 import com.inq.wishhair.wesharewishhair.review.controller.ReviewSearchController;
 import com.inq.wishhair.wesharewishhair.review.service.LikeReviewService;
+import com.inq.wishhair.wesharewishhair.review.service.ReviewFindService;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewSearchService;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.user.controller.*;
@@ -64,7 +66,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         {UserController.class, HairStyleController.class, AuthController.class, TokenReissueController.class,
         HairStyleController.class, MailController.class, ReviewController.class, ReviewSearchController.class,
         LikeReviewController.class, UserInfoController.class, PointController.class, PointSearchController.class,
-        WishListController.class, WishListSearchController.class})
+        WishListController.class, WishListSearchController.class, ReviewFindController.class})
 @ExtendWith(RestDocumentationExtension.class)
 @Import(RestDocsConfig.class)
 @AutoConfigureRestDocs
@@ -108,6 +110,9 @@ public abstract class ControllerTest {
 
     @MockBean
     protected ReviewSearchService reviewSearchService;
+
+    @MockBean
+    protected ReviewFindService reviewFindService;
 
     @MockBean
     protected LikeReviewService likeReviewService;

@@ -25,15 +25,6 @@ public class ReviewSearchController {
 
     private final ReviewSearchService reviewSearchService;
 
-    @GetMapping("/{reviewId}")
-    public ResponseEntity<ReviewResponse> findReview(@PathVariable Long reviewId,
-                                                     @ExtractPayload Long userId) {
-
-        ReviewResponse result = reviewSearchService.findReviewById(reviewId, userId);
-
-        return ResponseEntity.ok(result);
-    }
-
     @GetMapping
     public ResponseEntity<PagedResponse<ReviewResponse>> findPagingReviews(
             @PageableDefault(sort = LIKES, direction = Sort.Direction.DESC) Pageable pageable,
