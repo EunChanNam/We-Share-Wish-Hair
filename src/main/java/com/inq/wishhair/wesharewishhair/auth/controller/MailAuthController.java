@@ -1,11 +1,13 @@
-package com.inq.wishhair.wesharewishhair.user.controller;
+package com.inq.wishhair.wesharewishhair.auth.controller;
 
 import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.AuthKeyRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.MailRequest;
-import com.inq.wishhair.wesharewishhair.user.event.AuthMailSendEvent;
+import com.inq.wishhair.wesharewishhair.auth.event.AuthMailSendEvent;
+import com.inq.wishhair.wesharewishhair.user.domain.Email;
+import com.inq.wishhair.wesharewishhair.user.service.UserValidator;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.SessionIdResponse;
 
 import lombok.RequiredArgsConstructor;
@@ -21,15 +23,19 @@ import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.MAIL_I
 @RestController
 @RequestMapping("/api/email")
 @RequiredArgsConstructor
-public class MailController {
+public class MailAuthController {
 
     private static final String AUTH_KEY = "KEY";
 
     private final ApplicationEventPublisher eventPublisher;
 
+    private final UserValidator userValidator;
+
     @PostMapping("/send")
     public ResponseEntity<SessionIdResponse> sendAuthorizationMail(@RequestBody MailRequest mailRequest,
                                                                    HttpServletRequest request) {
+
+        userValidator.validateEmailIsNotDuplicated(new Email(mailRequest.getEmail()));
 
         String authKey = createAuthKey();
         String sessionId = registerAuthKey(request, authKey);

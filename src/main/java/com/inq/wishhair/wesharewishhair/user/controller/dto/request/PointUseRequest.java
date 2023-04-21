@@ -1,5 +1,7 @@
 package com.inq.wishhair.wesharewishhair.user.controller.dto.request;
 
+import com.inq.wishhair.wesharewishhair.global.mail.dto.RefundMailDto;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,4 +17,12 @@ public class PointUseRequest {
     private String accountNumber;
 
     private int dealAmount;
+
+    public RefundMailDto refundMailDto(User user) {
+        return RefundMailDto.of(user.getEmailValue(),
+                user.getName(),
+                bankName,
+                accountNumber,
+                dealAmount);
+    }
 }

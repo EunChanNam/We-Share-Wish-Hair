@@ -18,7 +18,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class MailControllerTest extends ControllerTest {
+public class MailAuthControllerTest extends ControllerTest {
     private static final String WRONG_EMAIL = "email@navercom";
     private static final String EMAIL = "email@naver.com";
     private static final String AUTH_KEY = "KEY";
