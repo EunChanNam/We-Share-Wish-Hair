@@ -1,6 +1,8 @@
 package com.inq.wishhair.wesharewishhair.review.common;
 
 public interface ReviewSortCondition {
-    String LIKES = "likeReviews.likes";
+    String LIKES = "likes";
     String DATE = "createdDate";
+    String DATE_DESC = "createdDate.desc";
+    String DATE_ASC = "createdDate.asc";
 }
