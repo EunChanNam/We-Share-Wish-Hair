@@ -20,13 +20,13 @@ public interface ReviewSearchRepository extends JpaRepository<Review, Long> {
             "where r.id = :id")
     Optional<Review> findReviewById(@Param("id") Long id);
 
-    //review find service - 전체 리뷰 조회
+    //전체 리뷰 조회
     @Query("select r from Review r " +
             "join fetch r.hairStyle " +
             "join fetch r.user")
     Slice<Review> findReviewByPaging(Pageable pageable);
 
-    //review find service - 좋아요한 리뷰 조회
+    //좋아요한 리뷰 조회
     @Query("select r from Review r " +
             "join LikeReview l " +
             "on r.id = l.review.id " +
@@ -35,14 +35,14 @@ public interface ReviewSearchRepository extends JpaRepository<Review, Long> {
             "where l.user.id = :userId")
     Slice<Review> findReviewByLike(@Param("userId") Long userId, Pageable pageable);
 
-    //review find service
+    //나의 리뷰 조회
     @Query("select r from Review r " +
             "join fetch r.hairStyle " +
             "join fetch r.user " +
             "where r.user.id = :userId ")
     Slice<Review> findReviewByUser(@Param("userId") Long userId, Pageable pageable);
 
-    //review find service
+    //이달의 리뷰 조회
     @Query("select r from Review r " +
             "join fetch r.hairStyle " +
             "join fetch r.user " +

@@ -5,6 +5,9 @@ plugins {
 
 	//RestDocs - Asciidoctor 플러그인 적용
 	id "org.asciidoctor.jvm.convert" version "3.3.2"
+
+	//querydsl 추가
+	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10"
 }
 
 group = 'com.inq.wish-hair'
@@ -54,7 +57,7 @@ dependencies {
 
 	//mail
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-	compileOnly 'com.sun.mail:javax.mail'
+//	compileOnly 'com.sun.mail:javax.mail'
 
 	//lombok
 	compileOnly 'org.projectlombok:lombok'
@@ -75,6 +78,10 @@ dependencies {
 
 	//Spring Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	//Query Dsl
+	implementation "com.querydsl:querydsl-jpa:5.0.0"
+	implementation "com.querydsl:querydsl-apt:5.0.0"
 }
 
 tasks.named('test') {
@@ -108,4 +115,24 @@ bootJar {
 	from ("${asciidoctor.outputDir}/html5") {
 		into 'static/docs'
 	}
+}
+
+//querydsl 추가
+def querydslDir = "$buildDir/generated/querydsl"
+
+querydsl {
+	jpa = true
+	querydslSourcesDir = querydslDir
+}
+sourceSets {
+	main.java.srcDir querydslDir
+}
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	querydsl.extendsFrom compileClasspath
+}
+compileQuerydsl{
+	options.annotationProcessorPath = configurations.querydsl
 }
