@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.review.domain;
+package com.inq.wishhair.wesharewishhair.review.infra.query;
 
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
@@ -6,6 +6,8 @@ import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleSearchRepository;
+import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -24,10 +26,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("ReviewFindRepository DataJpaTest")
-public class ReviewSearchRepositoryTest extends RepositoryTest {
+public class ReviewQueryRepositoryTest extends RepositoryTest {
 
     @Autowired
-    private ReviewSearchRepository reviewSearchRepository;
+    private ReviewRepository reviewRepository;
 
     @Autowired
     private UserRepository userRepository;
@@ -47,14 +49,14 @@ public class ReviewSearchRepositoryTest extends RepositoryTest {
         hairStyle = hairStyleSearchRepository.save(HairStyleFixture.A.toEntity());
         review = A.toEntity(user, hairStyle);
         ReflectionTestUtils.setField(review, "createdDate", LocalDateTime.now().minusMonths(1));
-        review = reviewSearchRepository.save(review);
+        review = reviewRepository.save(review);
     }
 
     @Test
     @DisplayName("전체리뷰를 조회한다")
     void findReviewByPaging() {
         //when
-        Slice<Review> result = reviewSearchRepository.findReviewByPaging(pageable);
+        Slice<Review> result = reviewRepository.findReviewByPaging(pageable);
 
         //then
         assertAll(
@@ -72,10 +74,10 @@ public class ReviewSearchRepositoryTest extends RepositoryTest {
         //given
         Review review2 = B.toEntity(user, hairStyle);
         review2.executeLike(user);
-        reviewSearchRepository.save(review2);
+        reviewRepository.save(review2);
 
         //when
-        Slice<Review> result = reviewSearchRepository.findReviewByLike(user.getId(), pageable);
+        Slice<Review> result = reviewRepository.findReviewByLike(user.getId(), pageable);
 
         //then
         assertAll(
@@ -90,7 +92,7 @@ public class ReviewSearchRepositoryTest extends RepositoryTest {
     @DisplayName("사용자가 작성한 리뷰를 조회한다")
     void findReviewByUser() {
         //when
-        Slice<Review> result = reviewSearchRepository.findReviewByUser(user.getId(), pageable);
+        Slice<Review> result = reviewRepository.findReviewByUser(user.getId(), pageable);
 
         //then
         assertAll(
@@ -106,7 +108,7 @@ public class ReviewSearchRepositoryTest extends RepositoryTest {
     @DisplayName("지난달에 작성된 리뷰를 조회한다")
     void findReviewByCreatedDate() {
         //when
-        List<Review> result = reviewSearchRepository.findReviewByCreatedDate();
+        List<Review> result = reviewRepository.findReviewByCreatedDate();
 
         //then
         assertAll(

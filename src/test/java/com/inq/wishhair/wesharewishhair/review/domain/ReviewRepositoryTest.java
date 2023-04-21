@@ -1,14 +1,19 @@
 package com.inq.wishhair.wesharewishhair.review.domain;
 
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
+import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -22,6 +27,9 @@ public class ReviewRepositoryTest extends RepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private HairStyleRepository hairStyleRepository;
+
     private User user;
     private Review review;
 
@@ -29,7 +37,8 @@ public class ReviewRepositoryTest extends RepositoryTest {
     void setUp() {
         //given
         user = userRepository.save(UserFixture.A.toEntity());
-        review = reviewRepository.save(ReviewFixture.A.toEntity(user, null));
+        HairStyle hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
+        review = reviewRepository.save(ReviewFixture.A.toEntity(user, hairStyle));
     }
 
     @Test
@@ -53,5 +62,21 @@ public class ReviewRepositoryTest extends RepositoryTest {
 
         //then
         assertThat(result).isEqualTo(review);
+    }
+
+    @Test
+    @DisplayName("리뷰를 아이디로 유저, 헤어스타일, 사진 정보와 함께 조회한다")
+    void findReviewById() {
+        //when
+        Optional<Review> result = reviewRepository.findReviewById(review.getId());
+
+        //then
+        assertAll(
+                () -> assertThat(result).isPresent(),
+                () -> {
+                    Review actual = result.orElseThrow();
+                    assertThat(actual).isEqualTo(review);
+                }
+        );
     }
 }
