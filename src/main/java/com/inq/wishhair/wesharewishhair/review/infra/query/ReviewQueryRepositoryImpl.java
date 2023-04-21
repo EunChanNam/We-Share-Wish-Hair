@@ -80,8 +80,24 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
     }
 
     @Override
-    public List<Review> findReviewByCreatedDate(LocalDateTime startDate, LocalDateTime endDate, Pageable pageable) {
-        return null;
+    public List<Review> findReviewByCreatedDate() {
+        LocalDateTime startDate = generateStartDate();
+        LocalDateTime endDate = generateEndDate();
+
+        return factory
+                .select(review)
+                .from(review)
+                .leftJoin(review.hairStyle)
+                .fetchJoin()
+                .leftJoin(review.user)
+                .fetchJoin()
+                .leftJoin(review.likeReviews.likeReviews)
+                .where(review.createdDate.between(startDate, endDate))
+                .groupBy(review.id)
+                .orderBy(review.count().desc())
+                .offset(0)
+                .limit(4)
+                .fetch();
     }
 
     private void applyPaging(JPAQuery<Review> query, Pageable pageable) {
@@ -89,7 +105,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
     }
 
     private void applyOrderBy(JPAQuery<Review> query, Pageable pageable) {
-        String sort = pageable.getSort().toString();
+        String sort = pageable.getSort().toString().replace(": ", ",");
         switch (sort) {
             case LIKES -> query
                     .leftJoin(review.likeReviews.likeReviews)
@@ -106,5 +122,13 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
             return true;
         }
         return false;
+    }
+
+    private LocalDateTime generateStartDate() {
+        return LocalDateTime.now().minusMonths(1).withDayOfMonth(1).withHour(0).withMinute(0);
+    }
+
+    private LocalDateTime generateEndDate() {
+        return LocalDateTime.now().withDayOfMonth(1).withHour(0).withMinute(0);
     }
 }

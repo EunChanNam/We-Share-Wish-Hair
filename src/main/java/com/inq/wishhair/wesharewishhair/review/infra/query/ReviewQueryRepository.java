@@ -15,7 +15,5 @@ public interface ReviewQueryRepository {
 
     Slice<Review> findReviewByUser(Long userId, Pageable pageable);
 
-    List<Review> findReviewByCreatedDate(LocalDateTime startDate,
-                                         LocalDateTime endDate,
-                                         Pageable pageable);
+    List<Review> findReviewByCreatedDate();
 }

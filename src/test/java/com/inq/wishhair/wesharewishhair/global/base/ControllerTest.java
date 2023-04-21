@@ -200,11 +200,8 @@ public abstract class ControllerTest {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 
         if (!pageable.getSort().isEmpty()) {
-            String[] splitSort = pageable.getSort().toString().split(":");
-            String variable = splitSort[0];
-            String direction = splitSort[1].trim();
-
-            params.add("sort", variable + "." + direction);
+            String sort = pageable.getSort().toString().replace(": ", ",");
+            params.add("sort", sort);
         }
 
         params.add("size", String.valueOf(pageable.getPageSize()));
