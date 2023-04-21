@@ -1,222 +1,249 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".sign.RegisterActivity"
-    android:orientation="vertical">
+    tools:context=".sign.RegisterActivity">
 
-    <include layout="@layout/top_bar_title" />
-    <LinearLayout
+    <!-- title -->
+    <TextView
+        android:id="@+id/sign_register_title"
         android:layout_width="wrap_content"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/sign_title"
+        android:textStyle="bold"
+        android:textColor="@color/default_blue"
+        android:textSize="25sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/sign_register_processBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/sign_process_bar_3"
+        app:layout_constraintTop_toBottomOf="@id/sign_register_title"
+        app:layout_constraintStart_toStartOf="@id/sign_register_title"
+        app:layout_constraintEnd_toEndOf="@id/sign_register_title"/>
+
+    <TextView
+        android:id="@+id/sign_register_message1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_gravity="center_vertical"
+        android:text="@string/register_message_1"
+        android:textStyle="bold"
+        android:textColor="@color/default_blue"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@id/sign_register_processBar"
+        app:layout_constraintStart_toStartOf="@id/sign_register_processBar"
+        app:layout_constraintEnd_toEndOf="@id/sign_register_processBar"
+        app:drawableStartCompat="@drawable/sign_name"
+        android:drawablePadding="15dp" />
+<!--    name -->
+    <LinearLayout
+        android:id="@+id/sign_register_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
         android:orientation="vertical"
-        android:layout_gravity="center">
+        app:layout_constraintTop_toBottomOf="@id/sign_register_message1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
         <TextView
-            android:id="@+id/login_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/App_title_name"
+            android:layout_marginBottom="10dp"
+            android:text="@string/register_message_2"
             android:textColor="@color/black"
-            android:textSize="37sp"
-            android:textStyle="bold" />
-        <!--    user info -->
+            android:textSize="12sp"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/sign_register_et_name"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:autofillHints="name"
+            android:background="@drawable/border_sign_text"
+            android:inputType="textPersonName"
+            android:drawableEnd="@drawable/sign_check_success"/>
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="5dp"
+            android:text="@string/register_condition_name"
+            android:textColor="@color/black"
+            android:textSize="11sp" />
+    </LinearLayout>
+<!--    nickname -->
+    <LinearLayout
+        android:id="@+id/sign_register_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/sign_register_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:text="@string/register_message_1"
-            android:textColor="@color/black"/>
-        <!--    id-->
-        <LinearLayout
+            android:text="@string/register_message_3"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/sign_register_et_nickname"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:weightSum="5">
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="3dp"
-                android:src="@drawable/sign_email"
-                android:background="@drawable/border_sign_image"
-                android:contentDescription="@string/login_hint_id" />
-
-            <TextView
-                android:id="@+id/sign_register_tv_id"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:textColor="#FFA3A3A3"
-                android:autoSizeTextType="uniform"
-                android:padding="6dp"
-                android:background="@drawable/border_sign_text" />
-        </LinearLayout>
-        <!--    pw-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:weightSum="5">
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/sign_pw"
-                android:background="@drawable/border_sign_image"
-                android:contentDescription="@string/login_hint_id" />
-            <EditText
-                android:id="@+id/sign_register_et_password"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:paddingStart="5dp"
-                android:layout_weight="4"
-                android:background="@drawable/border_sign_text"
-                android:ems="10"
-                android:hint="@string/login_hint_pw"
-                android:inputType="textPassword"
-                android:importantForAutofill="no"
-                tools:ignore="RtlSymmetry"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:weightSum="5">
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:src="@drawable/sign_name"
-                android:background="@drawable/border_sign_image"
-                android:contentDescription="@string/login_hint_id" />
-            <EditText
-                android:id="@+id/sign_register_et_name"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:paddingStart="5dp"
-                android:layout_weight="4"
-                android:background="@drawable/border_sign_text"
-                android:ems="10"
-                android:hint="@string/register_hint_name"
-                android:inputType="textPersonName"
-                android:importantForAutofill="no"
-                tools:ignore="RtlSymmetry" />
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginTop="10dp"
-            android:weightSum="5">
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:padding="5dp"
-                android:src="@drawable/sign_star"
-                android:background="@drawable/border_sign_image"
-                android:contentDescription="@string/login_hint_id" />
-            <EditText
-                android:id="@+id/sign_register_et_nickname"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="4"
-                android:background="@drawable/border_sign_text"
-                android:ems="10"
-                android:hint="@string/register_hint_nickname"
-                android:importantForAutofill="no"
-                android:inputType="text"
-                android:paddingStart="5dp"
-                tools:ignore="RtlSymmetry" />
-        </LinearLayout>
-        <!--    sex-->
-        <LinearLayout
-            android:id="@+id/linearLayoutSEX"
-            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/border_sign_text"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            android:drawableEnd="@drawable/sign_check_success"/>
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-            <TextView
-                android:id="@+id/textViewSEX"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/register_message_sex"
-                android:textSize="20sp"
-                android:textColor="@color/black"
-                android:layout_gravity="center_vertical"/>
-            <RadioGroup
-                android:id="@+id/radioGroupSEX"
-                android:layout_height="wrap_content"
-                android:layout_width="wrap_content"
-                android:orientation="horizontal">
-                <RadioButton
-                    android:id="@+id/radio_sex_man"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register_text_sex_man"
-                    android:tag="MAN"
-                    android:textSize="17sp" />
-                <RadioButton
-                    android:id="@+id/radio_sex_woman"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/register_text_sex_woman"
-                    android:tag="WOMAN"
-                    android:textSize="17sp" />
-            </RadioGroup>
-        </LinearLayout>
-
-        <!--    terms-->
-        <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_marginTop="5dp"
+            android:text="@string/register_condition_nickname"
+            android:textColor="@color/black"
+            android:textSize="11sp" />
+    </LinearLayout>
+    <!--    nickname -->
+    <LinearLayout
+        android:id="@+id/sign_register_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/sign_register_nickname"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/register_message_2"
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
-
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="@string/register_term_1" />
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="@string/register_term_2" />
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="@string/register_term_3" />
-            <CheckBox
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:text="@string/register_term_4" />
-        </LinearLayout>
-        <!--    submit-->
-        <!-- View : 버튼을 부모의 최하단에 위치시키기 위해 중간 공간을 만든 것임 -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-        <Button
-            android:id="@+id/btn_join"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
-            android:layout_weight="0"
-            android:background="@drawable/border_sign_button"
-            android:text="@string/register_button_submit" />
+            android:text="@string/register_message_4"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"/>
+        <EditText
+            android:id="@+id/sign_register_et_password"
+            android:layout_width="match_parent"
+            android:layout_height="33dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:background="@drawable/border_sign_text"
+            android:importantForAutofill="no"
+            android:inputType="textPassword"
+            android:drawableEnd="@drawable/sign_check_success"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="@string/register_condition_password"
+            android:textColor="@color/black"
+            android:textSize="11sp" />
+    </LinearLayout>
+<!--    sex -->
+    <LinearLayout
+        android:id="@+id/sign_register_sex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical"
+        app:layout_constraintTop_toBottomOf="@id/sign_register_password"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:text="@string/register_message_5"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            android:textStyle="bold"/>
+        <RadioGroup
+            android:id="@+id/radioGroupSEX"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/radio_sex_man"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register_text_sex_man"/>
+            <RadioButton
+                android:id="@+id/radio_sex_woman"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="52dp"
+                android:text="@string/register_text_sex_woman"/>
+        </RadioGroup>
+    </LinearLayout>
+    <!--    bottom -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+        <include layout="@layout/sign_bottom_bar" />
     </LinearLayout>
 
-<!--    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btn_id_dup_check"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:background="@color/white"
-        android:text="중복체크"/>-->
-
-</LinearLayout>
+    <FrameLayout
+        android:id="@+id/sign_register_view_done"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#40000000"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="invisible">
+        <LinearLayout
+            android:layout_width="235dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/border_sign_register_done"
+            android:layout_gravity="center"
+            android:gravity="center">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:src="@drawable/sign_register_done"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/register_message_6"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="@color/default_blue"/>
+            <Button
+                android:id="@+id/sign_register_btn_done"
+                android:layout_width="100dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="17dp"
+                android:background="@drawable/border_sign_button"
+                android:text="@string/message_confirm"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/text_ivory" />
+        </LinearLayout>
+    </FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

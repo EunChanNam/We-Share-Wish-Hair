@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item
-        android:left="-2dp">
+    <item>
         <shape android:shape="rectangle">
             <stroke
                 android:width="2dp"
-                android:color="@color/signBox_gray" />
+                android:color="@color/default_blue" />
             <solid android:color="@color/white" />
             <corners
-                android:topRightRadius="3dp"
-                android:bottomRightRadius="3dp" />
+                android:radius="12dp"/>
         </shape>
     </item>
 </layer-list>
