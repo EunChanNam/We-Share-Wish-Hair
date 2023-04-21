@@ -52,7 +52,7 @@ public class RecyclerViewAdapterMy extends RecyclerView.Adapter<RecyclerViewAdap
         holder.tags.setText(item.getTags());
         holder.grade.setText(item.getScore());
         holder.heartCount.setText(String.valueOf(item.getLikes()));
-        holder.content.setText(item.getContents());
+        holder.content.setText(item.getContent());
         holder.date.setText(item.getCreatedDate());
     }
 

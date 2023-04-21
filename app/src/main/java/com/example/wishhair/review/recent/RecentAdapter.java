@@ -57,7 +57,6 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
         holder.hairStyleName.setText(item.getHairStyleName());
         holder.tags.setText(item.getTags());
         holder.nickname.setText(item.getUserNickName());
-        holder.content.setText(item.getContents());
         holder.grade.setText(item.getScore());
         holder.date.setText(item.getCreatedDate());
         if (item.getIsHeart()){
@@ -81,7 +80,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView contentImage, isHeart;
-        TextView nickname, hairStyleName, tags, content, grade, date, heartCount;
+        TextView nickname, hairStyleName, tags,grade, date, heartCount;
         Button viewContent;
 
         ViewHolder(View itemView) {
@@ -90,7 +89,6 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
             this.nickname = itemView.findViewById(R.id.review_recent_tv_nickname);
             this.hairStyleName = itemView.findViewById(R.id.review_recent_tv_hairStyleName);
             this.tags = itemView.findViewById(R.id.review_recent_tv_tags);
-            this.content = itemView.findViewById(R.id.review_recent_tv_content);
             this.grade = itemView.findViewById(R.id.review_recent_tv_grade);
             this.isHeart = itemView.findViewById(R.id.review_recent_imageView_isHeart);
             this.heartCount = itemView.findViewById(R.id.review_recent_tv_heartCount);

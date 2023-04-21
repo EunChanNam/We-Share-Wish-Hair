@@ -12,44 +12,39 @@ import java.util.Locale;
 public class ReviewItem {
 
     // common
-    private String contents;
-    private String createdDate;
-    private int likes;
-    private String score;
     private String hairStyleName;
     private String tags;
+    private int likes;
+    private String score;
+    private String createdDate;
+    private String content;
 
     public ReviewItem() {}
 
     // recent
-    private int profileImage;
+    private ArrayList<String> imageUrls;
     private String userNickName;
     private boolean isHeart;
-    private ArrayList<String> imageUrls;
 
     //사진이 있을 때
-    public ReviewItem(int profileImage, String userNickName,String hairStyleName, String tags, String createdDate, String score, int likes, boolean isHeart, ArrayList<String> imageUrls, String contents) {
-        this.contents = contents;
+    public ReviewItem(String userNickName,String hairStyleName, String tags, String createdDate, String score, int likes, boolean isHeart, ArrayList<String> imageUrls) {
+        this.userNickName = userNickName;
+        this.hairStyleName = hairStyleName;
+        this.tags = tags;
         this.createdDate = createdDate;
         this.likes = likes;
         this.score = score;
-        this.hairStyleName = hairStyleName;
-        this.tags = tags;
-        this.profileImage = profileImage;
-        this.userNickName = userNickName;
         this.isHeart = isHeart;
         this.imageUrls = imageUrls;
     }
 
     //사진이 없을 때
-    public ReviewItem(int profileImage, String userNickName,String hairStyleName, String tags, String createdDate, String score, int likes, boolean isHeart, String contents) {
-        this.contents = contents;
+    public ReviewItem(String userNickName,String hairStyleName, String tags, String createdDate, String score, int likes, boolean isHeart) {
         this.createdDate = createdDate;
         this.likes = likes;
         this.score = score;
         this.hairStyleName = hairStyleName;
         this.tags = tags;
-        this.profileImage = profileImage;
         this.userNickName = userNickName;
         this.isHeart = isHeart;
     }
@@ -64,17 +59,8 @@ public class ReviewItem {
         this.tags = tags;
         this.score = score;
         this.likes = likes;
-        this.contents = contents;
         this.createdDate = createdDate;
         this.isPoint = isPoint;
-    }
-
-    public int getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImage(int profileImage) {
-        this.profileImage = profileImage;
     }
 
     public String getUserNickName() {
@@ -83,14 +69,6 @@ public class ReviewItem {
 
     public void setUserNickName(String userNickName) {
         this.userNickName = userNickName;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents;
     }
 
     public String getScore() {
@@ -176,5 +154,13 @@ public class ReviewItem {
 
     public void setPoint(boolean point) {
         isPoint = point;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

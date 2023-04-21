@@ -120,7 +120,7 @@ public class ReviewListFragment extends Fragment {
                 intent.putExtra("score", selectedItem.getScore());
                 intent.putExtra("likes", selectedItem.getLikes());
                 intent.putExtra("date", selectedItem.getCreatedDate());
-                intent.putExtra("content", selectedItem.getContents());
+                intent.putExtra("content", selectedItem.getContent());
                 intent.putStringArrayListExtra("imageUrls", selectedItem.getImageUrls());
                 startActivity(intent);
             }
@@ -173,10 +173,10 @@ public class ReviewListFragment extends Fragment {
                         receivedData.setUserNickName(userNickName);
                         receivedData.setScore(score);
                         receivedData.setLikes(likes);
-                        receivedData.setContents(content);
                         receivedData.setCreatedDate(createDate);
                         receivedData.setHairStyleName(hairStyleName);
                         receivedData.setTags("#" + tag);
+                        receivedData.setContent(content);
 
                         JSONArray photosArray = resultObject.getJSONArray("photos");
                         ArrayList<String> receivedUrls = new ArrayList<>();
@@ -190,14 +190,14 @@ public class ReviewListFragment extends Fragment {
 
 //                       set review data
                         if (receivedUrls.size() > 0) {
-                            ReviewItem itemB = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(),
+                            ReviewItem itemB = new ReviewItem(receivedData.getUserNickName(),
                                     receivedData.getHairStyleName(), receivedData.getTags(), receivedData.getCreatedDate(),
-                                    receivedData.getScore(), receivedData.getLikes(), false, receivedData.getImageUrls(),  receivedData.getContents());
+                                    receivedData.getScore(), receivedData.getLikes(), false, receivedData.getImageUrls());
                             requestItems.add(itemB);
                         } else {
-                            ReviewItem itemB = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(),
+                            ReviewItem itemB = new ReviewItem(receivedData.getUserNickName(),
                                     receivedData.getHairStyleName(), receivedData.getTags(), receivedData.getCreatedDate(),
-                                    receivedData.getScore(), receivedData.getLikes(), false, new ArrayList<>(), receivedData.getContents());
+                                    receivedData.getScore(), receivedData.getLikes(), false);
                             requestItems.add(itemB);
                         }
                     }
