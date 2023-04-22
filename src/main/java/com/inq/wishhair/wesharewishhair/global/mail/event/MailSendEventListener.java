@@ -2,7 +2,6 @@ package com.inq.wishhair.wesharewishhair.global.mail.event;
 
 import com.inq.wishhair.wesharewishhair.auth.event.AuthMailSendEvent;
 import com.inq.wishhair.wesharewishhair.global.mail.utils.EmailSender;
-import com.inq.wishhair.wesharewishhair.review.event.PointChargeEvent;
 import com.inq.wishhair.wesharewishhair.user.event.RefundMailSendEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.event.EventListener;
@@ -19,13 +18,13 @@ public class MailSendEventListener {
 
     @Async("mailAsyncExecutor")
     @EventListener
-    public void sendAuthMail(AuthMailSendEvent event) {
+    public void sendAuthMail(AuthMailSendEvent event) throws Exception {
         emailSender.sendAuthMail(event.address(), event.authKey());
     }
 
     @Async("mailAsyncExecutor")
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void sendPointChargeRequestMail(RefundMailSendEvent event) {
+    public void sendPointChargeRequestMail(RefundMailSendEvent event) throws Exception {
         emailSender.sendRefundRequestMail(event.dto());
     }
 }
