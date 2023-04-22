@@ -20,8 +20,8 @@ public enum ErrorCode {
     USER_INVALID_EMAIL("USER_002", "이메일 형식이 맞지 않습니다.", HttpStatus.BAD_REQUEST),
     USER_INVALID_PASSWORD("USER_003", "비밀번호 형식이 맞지 않습니다.", HttpStatus.BAD_REQUEST),
     USER_INVALID_NICKNAME("USER_004", "닉네임 형식이 맞지 않습니다.", HttpStatus.BAD_REQUEST),
-    USER_DUPLICATED_NICKNAME("USER_005", "이미 존재하는 닉네임 입니다.", HttpStatus.BAD_REQUEST),
-    USER_DUPLICATED_EMAIL("USER_006", "이미 존재하는 이메일 입니다.", HttpStatus.BAD_REQUEST),
+    USER_DUPLICATED_NICKNAME("USER_005", "이미 존재하는 닉네임 입니다.", HttpStatus.CONFLICT),
+    USER_DUPLICATED_EMAIL("USER_006", "이미 존재하는 이메일 입니다.", HttpStatus.CONFLICT),
     USER_WRONG_PASSWORD("USER_006", "일치하지 않는 비밀번호 입니다.", HttpStatus.BAD_REQUEST),
     USER_NO_FACE_SHAPE_TAG("USER__007", "얼굴형 분석을 시도하세요", HttpStatus.FORBIDDEN),
 

@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.user.event.listener;
+package com.inq.wishhair.wesharewishhair.user.domain.point.event;
 
 import com.inq.wishhair.wesharewishhair.review.event.PointChargeEvent;
 import com.inq.wishhair.wesharewishhair.user.service.PointService;

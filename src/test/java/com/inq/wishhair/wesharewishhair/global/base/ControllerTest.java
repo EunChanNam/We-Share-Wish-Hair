@@ -3,12 +3,14 @@ package com.inq.wishhair.wesharewishhair.global.base;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inq.wishhair.wesharewishhair.auth.controller.AuthController;
+import com.inq.wishhair.wesharewishhair.auth.controller.MailAuthController;
 import com.inq.wishhair.wesharewishhair.auth.controller.TokenReissueController;
 import com.inq.wishhair.wesharewishhair.auth.service.AuthService;
 import com.inq.wishhair.wesharewishhair.auth.service.TokenReissueService;
 import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
 import com.inq.wishhair.wesharewishhair.global.config.RestDocsConfig;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.global.mail.utils.EmailSender;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleSearchService;
 import com.inq.wishhair.wesharewishhair.review.controller.LikeReviewController;
 import com.inq.wishhair.wesharewishhair.review.controller.ReviewController;
@@ -64,7 +66,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(value =
         {UserController.class, HairStyleController.class, AuthController.class, TokenReissueController.class,
-        HairStyleController.class, MailController.class, ReviewController.class, ReviewSearchController.class,
+        HairStyleController.class, MailAuthController.class, ReviewController.class, ReviewSearchController.class,
         LikeReviewController.class, UserInfoController.class, PointController.class, PointSearchController.class,
         WishListController.class, WishListSearchController.class, ReviewFindController.class})
 @ExtendWith(RestDocumentationExtension.class)
@@ -80,6 +82,9 @@ public abstract class ControllerTest {
 
     @Autowired
     protected ObjectMapper objectMapper;
+
+    @MockBean
+    protected UserValidator userValidator;
 
     @MockBean
     protected WishListService wishListService;
@@ -103,7 +108,7 @@ public abstract class ControllerTest {
     protected TokenReissueService tokenReissueService;
 
     @MockBean
-    protected MailSendService mailSendService;
+    protected EmailSender emailSender;
 
     @MockBean
     protected ReviewService reviewService;

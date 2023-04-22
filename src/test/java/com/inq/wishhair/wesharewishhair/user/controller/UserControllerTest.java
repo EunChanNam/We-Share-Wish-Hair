@@ -78,7 +78,7 @@ public class UserControllerTest extends ControllerTest {
             MockHttpServletRequestBuilder requestBuilder = buildJoinRequest(request);
 
             //then
-            assertException(expectedError, requestBuilder, status().isBadRequest());
+            assertException(expectedError, requestBuilder, status().isConflict());
         }
 
         private MockHttpServletRequestBuilder buildJoinRequest(SignUpRequest request) throws JsonProcessingException {
@@ -162,7 +162,7 @@ public class UserControllerTest extends ControllerTest {
                     .contentType(APPLICATION_JSON);
 
             //then
-            assertException(expectedError, requestBuilder, status().isBadRequest());
+            assertException(expectedError, requestBuilder, status().isConflict());
         }
 
         @Test

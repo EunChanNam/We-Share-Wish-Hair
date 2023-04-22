@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.global.exception;
 
+import com.inq.wishhair.wesharewishhair.auth.controller.MailAuthController;
 import com.inq.wishhair.wesharewishhair.auth.controller.TokenReissueController;
 import com.inq.wishhair.wesharewishhair.auth.controller.AuthController;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleController;
@@ -21,7 +22,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @RestControllerAdvice(assignableTypes = {
         UserController.class, AuthController.class, HairStyleController.class,
         ReviewController.class, WishListController.class, AuthController.class,
-        TokenReissueController.class, MailController.class, UserInfoController.class,
+        TokenReissueController.class, MailAuthController.class, UserInfoController.class,
         LikeReviewController.class, ReviewSearchController.class, PointSearchController.class,
         PointController.class, WishListSearchController.class, ReviewFindController.class
 })

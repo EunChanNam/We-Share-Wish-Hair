@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>We Share Wish Hair</title>
+</head>
+<body>
+  <div class="container">
+    <h1>We Share Wish Hair 포인트 환급 요청 메일</h1>
+    <p>사용자 이름 : <strong th:text="${username}"></strong></p>
+    <p>은행 명 : <strong th:text="${bankName}"></strong></p>
+    <p>계좌 번호 : <strong th:text="${accountNumber}"></strong></p>
+    <p>환급 금액 : <strong th:text="${dealAmount}"></strong></p>
+  </div>
+</body>
+</html>

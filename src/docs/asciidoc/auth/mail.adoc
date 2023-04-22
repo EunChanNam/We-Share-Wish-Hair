@@ -22,6 +22,11 @@ Http Response
 include::{snippets}/send-authorization-mail/fail-by-wrong-email/http-response.adoc[]
 include::{snippets}/send-authorization-mail/fail-by-wrong-email/response-fields.adoc[]
 
+=== 3. 중복된 이메일로 실패
+Http Response
+include::{snippets}/send-authorization-mail/fail-by-duplicated-email/http-response.adoc[]
+
+
 == 메일 검증 API
 === 1. 성공
 Http Request
