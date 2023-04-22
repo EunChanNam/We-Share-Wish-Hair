@@ -47,23 +47,18 @@ public class WishListSearchServiceTest extends ServiceTest {
     @DisplayName("사용자의 찜 목록을 최신 날짜 순으로 조회한다")
     void findWishList() {
         //given
-        saveWishLists(List.of(0, 1, 2, 3), List.of(now(), now().minusMonths(1), now().minusMinutes(10), now().plusHours(3)));
+        saveWishLists(List.of(2, 1, 3, 0));
 
         //when
         PagedResponse<WishListResponse> result = wishListSearchService.findWishList(userId, getDefaultPageable());
 
         //then
         assertThat(result.getPaging().hasNext()).isFalse();
-        assertResponsesMatch(result.getResult(), List.of(3, 0, 2, 1));
+        assertResponsesMatch(result.getResult(), List.of(0, 3, 1, 2));
     }
 
-    private void saveWishLists(List<Integer> indexes, List<LocalDateTime> times) {
-        for (int i = 0; i < indexes.size(); i++) {
-            int index = indexes.get(i);
-            LocalDateTime time = times.get(i);
-
-            ReflectionTestUtils.setField(wishLists[index], "createdDate", time);
-
+    private void saveWishLists(List<Integer> indexes) {
+        for (int index : indexes) {
             hairStyleRepository.save(wishLists[index].getHairStyle());
             wishListRepository.save(wishLists[index]);
         }

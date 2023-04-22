@@ -11,7 +11,7 @@ public interface PointSearchRepository extends JpaRepository<PointHistory, Long>
 
     @Query("select p from PointHistory p " +
             "where p.user.id = :userId " +
-            "order by p.createdDate desc")
+            "order by p.id desc")
     Slice<PointHistory> findByUserIdOrderByNew(@Param("userId") Long userId,
                                                Pageable pageable);
 }

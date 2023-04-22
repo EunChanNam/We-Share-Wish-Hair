@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.inq.wishhair.wesharewishhair.user.domain.point.PointType.CHARGE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -30,34 +33,31 @@ public class PointSearchRepositoryTest extends RepositoryTest {
     private PointRepository pointRepository;
 
     private final User user = UserFixture.A.toEntity();
+    private final List<PointHistory> pointHistories = new ArrayList<>();
 
     @BeforeEach
     void setUp() {
         userRepository.save(user);
 
         //given
-        pointRepository.save(PointHistory.createPointHistory(user, CHARGE, 1000, 1000));
-        pointRepository.save(PointHistory.createPointHistory(user, CHARGE, 1000, 2000));
+        pointHistories.add(pointRepository.save(PointHistory.createPointHistory(user, CHARGE, 1000, 1000)));
+        pointHistories.add(pointRepository.save(PointHistory.createPointHistory(user, CHARGE, 1000, 2000)));
     }
 
     @Test
     @DisplayName("유저의 아이디와 페이징 정보로 포인트 내역을 조회한다")
     void test1() {
         //given
-        Pageable pageable1 = PageableUtils.generateSimplePageable(1);
-        Pageable pageable2 = PageableUtils.generateSimplePageable(2);
+        Pageable pageable = PageableUtils.generateSimplePageable(2);
 
         //when
-        Slice<PointHistory> result1 = pointSearchRepository.findByUserIdOrderByNew(user.getId(), pageable1);
-        Slice<PointHistory> result2 = pointSearchRepository.findByUserIdOrderByNew(user.getId(), pageable2);
+        Slice<PointHistory> result = pointSearchRepository.findByUserIdOrderByNew(user.getId(), pageable);
 
         //then
         assertAll(
-                () -> assertThat(result1).isNotEmpty(),
-                () -> assertThat(result1.getContent()).hasSize(1),
-                () -> assertThat(result2).isNotEmpty(),
-                () -> assertThat(result2.getContent()).hasSize(2)
+                () -> assertThat(result.hasNext()).isFalse(),
+                () -> assertThat(result).hasSize(2),
+                () -> assertThat(result.getContent()).containsAll(pointHistories)
         );
-
     }
 }

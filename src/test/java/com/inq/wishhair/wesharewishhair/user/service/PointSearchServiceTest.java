@@ -54,7 +54,7 @@ public class PointSearchServiceTest extends ServiceTest {
     @DisplayName("사용자의 포인트 내역을 최신 날짜 순으로 정렬하여 조회한다")
     void test1() {
         //given
-        savePointHistories(List.of(1, 3, 4), List.of(now().minusMonths(1), now().minusMinutes(1), now().minusDays(1)));
+        savePointHistories(List.of(1, 4, 2));
         Pageable pageable = DefaultPageableUtils.getDefualtPageable();
 
         //when
@@ -63,7 +63,7 @@ public class PointSearchServiceTest extends ServiceTest {
         //then
         assertThat(result.getPaging().hasNext()).isFalse();
         assertPointResponseMatch(result.getResult(),
-                List.of(pointHistories[3], pointHistories[4], pointHistories[1]));
+                List.of(pointHistories[2], pointHistories[4], pointHistories[1]));
     }
 
     private void assertPointResponseMatch(List<PointResponse> responses, List<PointHistory> expectedList) {
@@ -82,11 +82,9 @@ public class PointSearchServiceTest extends ServiceTest {
         }
     }
 
-    private void savePointHistories(List<Integer> indexes, List<LocalDateTime> times) {
-        for (int i = 0; i < indexes.size(); i++) {
-            int index = indexes.get(i);
+    private void savePointHistories(List<Integer> indexes) {
+        for (int index : indexes) {
             PointHistory pointHistory = pointHistories[index];
-            ReflectionTestUtils.setField(pointHistory, "createdDate", times.get(i));
 
             pointRepository.save(pointHistory);
         }
