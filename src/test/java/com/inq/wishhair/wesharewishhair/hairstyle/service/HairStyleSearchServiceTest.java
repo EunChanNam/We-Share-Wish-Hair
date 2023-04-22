@@ -40,7 +40,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
 
         HairStyleFixture[] fixtures = values();
         for (int i = 0; i < values().length; i++) {
-            hairStyles[i] = hairStyleSearchRepository.save(fixtures[i].toEntity());
+            hairStyles[i] = hairStyleRepository.save(fixtures[i].toEntity());
         }
     }
 

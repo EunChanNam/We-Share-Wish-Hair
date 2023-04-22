@@ -34,7 +34,7 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
                 .leftJoin(hairStyle.hashTags, hashTag)
                 .where(hashTag.tag.in(tags))
                 .where(hairStyle.sex.eq(sex))
-                .groupBy(hashTag.id)
+                .groupBy(hairStyle.id)
                 .orderBy(mainQueryOrderBy().toArray(OrderSpecifier[]::new))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())

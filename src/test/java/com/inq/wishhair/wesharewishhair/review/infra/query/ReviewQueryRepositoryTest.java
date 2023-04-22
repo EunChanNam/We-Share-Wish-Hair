@@ -5,7 +5,6 @@ import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleSearchRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
@@ -34,9 +33,6 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    @Autowired
-    private HairStyleSearchRepository hairStyleSearchRepository;
-
     private User user;
     private HairStyle hairStyle;
     private Review review;
@@ -46,7 +42,7 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
     void setUp() {
         //given
         user = userRepository.save(UserFixture.B.toEntity());
-        hairStyle = hairStyleSearchRepository.save(HairStyleFixture.A.toEntity());
+        hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
         review = A.toEntity(user, hairStyle);
         ReflectionTestUtils.setField(review, "createdDate", LocalDateTime.now().minusMonths(1));
         review = reviewRepository.save(review);

@@ -1,13 +1,11 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
-import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleSearchRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
-import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
@@ -29,7 +27,7 @@ import static com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.Ha
 @Slf4j
 public class HairStyleSearchService {
 
-    private final HairStyleSearchRepository hairStyleSearchRepository;
+    private final HairStyleRepository hairStyleRepository;
     private final UserFindService userFindService;
 
     @Transactional
@@ -39,10 +37,10 @@ public class HairStyleSearchService {
 
         validateUserHasFaceShapeTag(user);
 
-        Tag faceShapeTag = user.getFaceShape();
+        Tag faceShapeTag = user.getFaceShapeTag();
         tags.add(faceShapeTag);
 
-        List<HairStyle> hairStyles = hairStyleSearchRepository.findByHashTags(tags, user.getSex(), getDefaultPageable());
+        List<HairStyle> hairStyles = hairStyleRepository.findByHashTags(tags, user.getSex(), getDefaultPageable());
         filterHasFaceShapeTag(hairStyles, faceShapeTag);
 
         return toWrappedHairStyleResponse(hairStyles);
@@ -52,13 +50,8 @@ public class HairStyleSearchService {
         User user = userFindService.findByUserId(userId);
         Pageable pageable = generateSimplePageable(4);
 
-        if (user.existFaceShape()) {
-            List<HairStyle> hairStyles = hairStyleSearchRepository.findByFaceShapeTag(user.getFaceShape(), user.getSex(), pageable);
-            return toWrappedHairStyleResponse(hairStyles);
-        } else {
-            List<HairStyle> hairStyles = hairStyleSearchRepository.findByNoFaceShapeTag(user.getSex(), pageable);
-            return toWrappedHairStyleResponse(hairStyles);
-        }
+        List<HairStyle> hairStyles = hairStyleRepository.findByFaceShapeTag(user.getFaceShape(), user.getSex(), pageable);
+        return toWrappedHairStyleResponse(hairStyles);
     }
 
     private void validateUserHasFaceShapeTag(User user) {

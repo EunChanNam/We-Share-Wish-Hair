@@ -1,16 +1,17 @@
-package com.inq.wishhair.wesharewishhair.hairstyle.domain;
+package com.inq.wishhair.wesharewishhair.hairstyle.infra.query;
 
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
+import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 
 import java.util.ArrayList;
@@ -21,10 +22,7 @@ import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.getDef
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-public class HairStyleSearchRepositoryTest extends RepositoryTest {
-
-    @Autowired
-    private HairStyleSearchRepository hairStyleSearchRepository;
+public class HairStyleQueryRepositoryTest extends RepositoryTest {
 
     private final HairStyle[] hairStyles = new HairStyle[values().length];
 
@@ -33,7 +31,7 @@ public class HairStyleSearchRepositoryTest extends RepositoryTest {
         //given
         HairStyleFixture[] fixtures = values();
         for (int i = 0; i < values().length; i++) {
-            hairStyles[i] = hairStyleSearchRepository.save(fixtures[i].toEntity());
+            hairStyles[i] = hairStyleRepository.save(fixtures[i].toEntity());
         }
     }
 
@@ -48,7 +46,7 @@ public class HairStyleSearchRepositoryTest extends RepositoryTest {
             Sex sex = B.getSex();
 
             //when
-            List<HairStyle> result = hairStyleSearchRepository.findByHashTags(tags, sex, getDefaultPageable());
+            List<HairStyle> result = hairStyleRepository.findByHashTags(tags, sex, getDefaultPageable());
 
             //then
             assertHairStylesMatch(result, List.of(1));
@@ -62,7 +60,7 @@ public class HairStyleSearchRepositoryTest extends RepositoryTest {
             Pageable pageable = getDefaultPageable();
 
             //when
-            List<HairStyle> result = hairStyleSearchRepository.findByHashTags(tags, A.getSex(), pageable);
+            List<HairStyle> result = hairStyleRepository.findByHashTags(tags, A.getSex(), pageable);
 
             //then
             assertHairStylesMatch(result, List.of(2, 0, 4, 3));
@@ -75,7 +73,7 @@ public class HairStyleSearchRepositoryTest extends RepositoryTest {
             List<Tag> tags = D.getTags();
 
             //when
-            List<HairStyle> result = hairStyleSearchRepository.findByHashTags(tags, D.getSex(), getDefaultPageable());
+            List<HairStyle> result = hairStyleRepository.findByHashTags(tags, D.getSex(), getDefaultPageable());
 
             //then
             assertHairStylesMatch(result, List.of(3, 4, 2, 0));
@@ -89,11 +87,11 @@ public class HairStyleSearchRepositoryTest extends RepositoryTest {
         @DisplayName("얼굴형 태그로 헤어를 검색하고, 찜 수와 이름으로 정렬한다")
         void test4() {
             //given
-            Tag faceShapeTag = Tag.OBLONG;
+            FaceShape faceShape = new FaceShape(Tag.OBLONG);
             Pageable pageable = getDefaultPageable();
 
             //when
-            List<HairStyle> result = hairStyleSearchRepository.findByFaceShapeTag(faceShapeTag, A.getSex(), pageable);
+            List<HairStyle> result = hairStyleRepository.findByFaceShapeTag(faceShape, A.getSex(), pageable);
 
             //then
             assertHairStylesMatch(result, List.of(2, 4, 3));
@@ -106,7 +104,7 @@ public class HairStyleSearchRepositoryTest extends RepositoryTest {
             Pageable pageable = getDefaultPageable();
 
             //when
-            List<HairStyle> result = hairStyleSearchRepository.findByNoFaceShapeTag(A.getSex(), pageable);
+            List<HairStyle> result = hairStyleRepository.findByFaceShapeTag(null, A.getSex(), pageable);
 
             //then
             assertHairStylesMatch(result, List.of(2, 0, 4, 3));

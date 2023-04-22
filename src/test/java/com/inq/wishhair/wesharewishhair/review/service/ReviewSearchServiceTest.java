@@ -40,7 +40,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
     void setUp() {
         //given
         user = userRepository.save(UserFixture.A.toEntity());
-        HairStyle hairStyle = hairStyleSearchRepository.save(HairStyleFixture.A.toEntity());
+        HairStyle hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
 
         for (ReviewFixture fixture : ReviewFixture.values()) {
             reviews.add(fixture.toEntity(user, hairStyle));
