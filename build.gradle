@@ -57,7 +57,9 @@ dependencies {
 
 	//mail
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
-//	compileOnly 'com.sun.mail:javax.mail'
+
+	//thymeleaf
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 	//lombok
 	compileOnly 'org.projectlombok:lombok'
