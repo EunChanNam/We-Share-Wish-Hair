@@ -16,7 +16,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
@@ -188,7 +187,7 @@ class UserServiceTest extends ServiceTest {
         //then
         assertAll(
                 () -> assertThat(user.existFaceShape()).isTrue(),
-                () -> assertThat(user.getFaceShape()).isEqualTo(request.getFaceShapeTag())
+                () -> assertThat(user.getFaceShapeTag()).isEqualTo(request.getFaceShapeTag())
         );
     }
 }

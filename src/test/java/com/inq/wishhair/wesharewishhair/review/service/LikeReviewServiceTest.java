@@ -29,7 +29,7 @@ public class LikeReviewServiceTest extends ServiceTest {
     void setUp() {
         //given
         user = userRepository.save(UserFixture.B.toEntity());
-        HairStyle hairStyle = hairStyleSearchRepository.save(HairStyleFixture.A.toEntity());
+        HairStyle hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
         review = reviewRepository.save(ReviewFixture.A.toEntity(user, hairStyle));
     }
 

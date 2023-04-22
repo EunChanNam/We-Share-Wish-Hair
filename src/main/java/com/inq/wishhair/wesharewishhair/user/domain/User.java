@@ -58,7 +58,7 @@ public class User {
         return email.getValue();
     }
 
-    public Tag getFaceShape() {
+    public Tag getFaceShapeTag() {
         return faceShape.getTag();
     }
 

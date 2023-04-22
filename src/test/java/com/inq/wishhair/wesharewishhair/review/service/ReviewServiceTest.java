@@ -12,11 +12,9 @@ import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.transaction.TestTransaction;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture.*;
 import static org.assertj.core.api.Assertions.*;
@@ -34,7 +32,7 @@ public class ReviewServiceTest extends ServiceTest {
     @BeforeEach
     void setUp() {
         user = userRepository.save(UserFixture.B.toEntity());
-        hairStyle = hairStyleSearchRepository.save(HairStyleFixture.A.toEntity());
+        hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
     }
 
     @Test
