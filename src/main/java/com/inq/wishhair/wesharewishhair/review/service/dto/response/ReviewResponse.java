@@ -5,6 +5,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagRe
 import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponseAssembler;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponse;
+import com.inq.wishhair.wesharewishhair.review.infra.query.dto.response.ReviewQueryResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -35,16 +36,16 @@ public class ReviewResponse {
 
     private boolean isWriter;
 
-    public ReviewResponse(Review review, Long userId) {
-        this.reviewId = review.getId();
-        this.hairStyleName = review.getHairStyle().getName();
-        this.userNickname = review.getUser().getName();
-        this.score = review.getScore().getValue();
-        this.contents = review.getContentsValue();
-        this.createdDate = review.getCreatedDate();
-        this.likes = review.getLikes();
-        this.photos = PhotoResponseAssembler.toPhotoResponses(review.getPhotos());
-        this.hashTags = HairStyleResponseAssembler.toHashTagResponses(review.getHairStyle().getHashTags());
-        this.isWriter = review.isWriter(userId);
+    public ReviewResponse(ReviewQueryResponse queryResponse, Long userId) {
+        this.reviewId = queryResponse.getReview().getId();
+        this.hairStyleName = queryResponse.getReview().getHairStyle().getName();
+        this.userNickname = queryResponse.getReview().getUser().getName();
+        this.score = queryResponse.getReview().getScore().getValue();
+        this.contents = queryResponse.getReview().getContentsValue();
+        this.createdDate = queryResponse.getReview().getCreatedDate();
+        this.likes = queryResponse.getReview().getLikes();
+        this.photos = PhotoResponseAssembler.toPhotoResponses(queryResponse.getReview().getPhotos());
+        this.hashTags = HairStyleResponseAssembler.toHashTagResponses(queryResponse.getReview().getHairStyle().getHashTags());
+        this.isWriter = queryResponse.getReview().isWriter(userId);
     }
 }
