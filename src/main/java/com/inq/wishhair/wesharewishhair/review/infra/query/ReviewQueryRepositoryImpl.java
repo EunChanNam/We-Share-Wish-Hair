@@ -33,10 +33,12 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
         JPAQuery<ReviewQueryResponse> query = factory
                 .select(assembleReviewProjection())
                 .from(review)
+                .leftJoin(review.likeReviews.likeReviews)
                 .leftJoin(review.hairStyle)
                 .fetchJoin()
                 .leftJoin(review.user)
-                .fetchJoin();
+                .fetchJoin()
+                .groupBy(review.id);
 
         applyOrderBy(query, pageable);
         List<ReviewQueryResponse> result = query
@@ -53,11 +55,12 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
                 .select(assembleReviewProjection())
                 .from(review)
                 .innerJoin(review.likeReviews.likeReviews, like)
-                .on(like.user.id.eq(userId))
                 .leftJoin(review.user)
                 .fetchJoin()
                 .leftJoin(review.hairStyle)
                 .fetchJoin()
+                .where(like.user.id.eq(userId))
+                .groupBy(review.id)
                 .orderBy(review.id.desc());
         applyPaging(query, pageable);
         List<ReviewQueryResponse> result = query.fetch();
@@ -70,10 +73,12 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
         JPAQuery<ReviewQueryResponse> query = factory
                 .select(assembleReviewProjection())
                 .from(review)
+                .leftJoin(review.likeReviews.likeReviews)
                 .leftJoin(review.hairStyle)
                 .fetchJoin()
                 .leftJoin(review.user)
                 .fetchJoin()
+                .groupBy(review.id)
                 .where(review.user.id.eq(userId));
         applyOrderBy(query, pageable);
         applyPaging(query, pageable);
@@ -115,8 +120,6 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
         String sort = pageable.getSort().toString().replace(": ", ".");
         switch (sort) {
             case LIKES_DESC -> query
-                    .leftJoin(review.likeReviews.likeReviews)
-                    .groupBy(review.id)
                     .orderBy(review.count().desc());
             case DATE_DESC -> query.orderBy(review.id.desc());
             case DATE_ASC -> query.orderBy(review.id.asc());
