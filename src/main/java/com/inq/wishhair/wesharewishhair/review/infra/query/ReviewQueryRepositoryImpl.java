@@ -33,7 +33,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
         JPAQuery<ReviewQueryResponse> query = factory
                 .select(assembleReviewProjection())
                 .from(review)
-                .leftJoin(review.likeReviews.likeReviews)
+                .leftJoin(review.likeReviews.likeReviews, like)
                 .leftJoin(review.hairStyle)
                 .fetchJoin()
                 .leftJoin(review.user)
@@ -73,7 +73,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
         JPAQuery<ReviewQueryResponse> query = factory
                 .select(assembleReviewProjection())
                 .from(review)
-                .leftJoin(review.likeReviews.likeReviews)
+                .leftJoin(review.likeReviews.likeReviews, like)
                 .leftJoin(review.hairStyle)
                 .fetchJoin()
                 .leftJoin(review.user)
@@ -109,7 +109,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
     }
 
     private ConstructorExpression<ReviewQueryResponse> assembleReviewProjection() {
-        return new QReviewQueryResponse(review, review.count());
+        return new QReviewQueryResponse(review, review.count(), like.id.sum());
     }
 
     private void applyPaging(JPAQuery<ReviewQueryResponse> query, Pageable pageable) {

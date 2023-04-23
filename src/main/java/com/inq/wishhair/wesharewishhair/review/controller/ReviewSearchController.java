@@ -4,6 +4,7 @@ import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewSearchService;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewDetailResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewSimpleResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +25,15 @@ import static com.inq.wishhair.wesharewishhair.review.common.ReviewSortCondition
 public class ReviewSearchController {
 
     private final ReviewSearchService reviewSearchService;
+
+    @GetMapping("/{reviewId}")
+    public ResponseEntity<ReviewDetailResponse> findReview(@PathVariable Long reviewId,
+                                                           @ExtractPayload Long userId) {
+
+        ReviewDetailResponse result = reviewSearchService.findReviewById(reviewId, userId);
+
+        return ResponseEntity.ok(result);
+    }
 
     @GetMapping
     public ResponseEntity<PagedResponse<ReviewResponse>> findPagingReviews(

@@ -48,7 +48,7 @@ public class ReviewTest {
         Review review = ReviewFixture.A.toEntity(user, hairStyle);
 
         //when
-        int likes = review.getLikes();
+        long likes = review.getLikes();
 
         //then
         assertThat(likes).isZero();

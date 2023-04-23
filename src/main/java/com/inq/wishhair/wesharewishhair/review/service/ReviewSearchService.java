@@ -2,9 +2,12 @@ package com.inq.wishhair.wesharewishhair.review.service;
 
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
+import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.infra.query.dto.response.ReviewQueryResponse;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewDetailResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewSimpleResponse;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,14 @@ import static com.inq.wishhair.wesharewishhair.review.service.dto.response.Revie
 public class ReviewSearchService {
 
     private final ReviewRepository reviewRepository;
+
+    /*리뷰 단건 조회*/
+    public ReviewDetailResponse findReviewById(Long reviewId, Long userId) {
+        Review findReview = reviewRepository.findReviewById(reviewId)
+                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+
+        return toReviewDetailResponse(findReview, userId);
+    }
 
     /*전체 리뷰 조회*/
     public PagedResponse<ReviewResponse> findPagedReviews(Pageable pageable, Long userId) {

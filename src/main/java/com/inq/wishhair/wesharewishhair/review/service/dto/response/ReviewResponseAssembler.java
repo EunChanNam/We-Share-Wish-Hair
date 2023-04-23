@@ -10,6 +10,9 @@ import org.springframework.data.domain.Slice;
 
 import java.util.List;
 
+import static com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponseAssembler.*;
+import static com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponseAssembler.*;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class ReviewResponseAssembler {
 
@@ -21,8 +24,39 @@ public abstract class ReviewResponseAssembler {
         return slice.map(review -> toReviewResponse(review, userId));
     }
 
-    public static ReviewResponse toReviewResponse(ReviewQueryResponse review, Long userId) {
-        return new ReviewResponse(review, userId);
+    public static ReviewResponse toReviewResponse(ReviewQueryResponse queryResponse, Long userId) {
+        Review review = queryResponse.getReview();
+        return new ReviewResponse(
+                review.getId(),
+                review.getHairStyle().getName(),
+                review.getUser().getNicknameValue(),
+                review.getScore().getValue(),
+                review.getContents().getValue(),
+                review.getCreatedDate(),
+                toPhotoResponses(review.getPhotos()),
+                queryResponse.getLikes(),
+                toHashTagResponses(review.getHairStyle().getHashTags()),
+                review.isWriter(userId)
+        );
+    }
+
+    public static ReviewResponse toReviewResponse(Review review, Long userId) {
+        return new ReviewResponse(
+                review.getId(),
+                review.getHairStyle().getName(),
+                review.getUser().getNicknameValue(),
+                review.getScore().getValue(),
+                review.getContents().getValue(),
+                review.getCreatedDate(),
+                toPhotoResponses(review.getPhotos()),
+                review.getLikes(),
+                toHashTagResponses(review.getHairStyle().getHashTags()),
+                review.isWriter(userId)
+        );
+    }
+
+    public static ReviewDetailResponse toReviewDetailResponse(Review review, Long userId) {
+        return new ReviewDetailResponse(toReviewResponse(review, userId), review.isLikingUSer(userId));
     }
 
     public static ResponseWrapper<ReviewSimpleResponse> toWrappedSimpleResponse(List<Review> reviews) {

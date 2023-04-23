@@ -41,7 +41,12 @@ public class LikeReviews {
         likeReviews.remove(likeReview);
     }
 
-    public int getLikes() {
+    public long getLikes() {
         return likeReviews.size();
+    }
+
+    public boolean isLikingUser(Long userId) {
+        return likeReviews.stream()
+                .anyMatch(likeReview -> likeReview.isSameUser(userId));
     }
 }

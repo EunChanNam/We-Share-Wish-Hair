@@ -3,10 +3,12 @@ package com.inq.wishhair.wesharewishhair.review.infra.query;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
+import com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
+import com.inq.wishhair.wesharewishhair.review.infra.query.dto.response.ReviewQueryResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +23,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture.*;
+import static com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils.getLikeDescPageable;
+import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.getDefaultPageable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -36,7 +40,7 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
     private User user;
     private HairStyle hairStyle;
     private Review review;
-    private final Pageable pageable = PageableUtils.getDefaultPageable();
+    private final Pageable pageable = getDefaultPageable();
 
     @BeforeEach
     void setUp() {
@@ -52,15 +56,18 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
     @DisplayName("전체리뷰를 조회한다")
     void findReviewByPaging() {
         //when
-        Slice<Review> result = reviewRepository.findReviewByPaging(pageable);
+        Slice<ReviewQueryResponse> result = reviewRepository.findReviewByPaging(getLikeDescPageable(3));
 
         //then
+        List<ReviewQueryResponse> content = result.getContent();
+        Review actual = content.get(0).getReview();
         assertAll(
-                () -> assertThat(result.getContent()).hasSize(1),
-                () -> assertThat(result.getContent().get(0)).isEqualTo(review),
-                () -> assertThat(result.getContent().get(0).getUser()).isEqualTo(user),
-                () -> assertThat(result.getContent().get(0).getHairStyle()).isEqualTo(hairStyle),
-                () -> assertThat(result.getContent().get(0).getPhotos()).hasSize(A.getOriginalFilenames().size())
+                () -> assertThat(content).hasSize(1),
+                () -> assertThat(actual).isEqualTo(review),
+                () -> assertThat(actual.getUser()).isEqualTo(user),
+                () -> assertThat(actual.getHairStyle()).isEqualTo(hairStyle),
+                () -> assertThat(actual.getPhotos()).hasSize(A.getOriginalFilenames().size()),
+                () -> assertThat(content.get(0).getLikes()).isZero()
         );
     }
 
@@ -73,14 +80,18 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
         reviewRepository.save(review2);
 
         //when
-        Slice<Review> result = reviewRepository.findReviewByLike(user.getId(), pageable);
+        Slice<ReviewQueryResponse> result = reviewRepository.findReviewByLike(user.getId(), pageable);
 
         //then
+        List<ReviewQueryResponse> content = result.getContent();
+        Review actual = content.get(0).getReview();
         assertAll(
-                () -> assertThat(result.getContent()).hasSize(1),
-                () -> assertThat(result.getContent().get(0)).isEqualTo(review2),
-                () -> assertThat(result.getContent().get(0).getUser()).isEqualTo(user),
-                () -> assertThat(result.getContent().get(0).getHairStyle()).isEqualTo(hairStyle)
+                () -> assertThat(content).hasSize(1),
+                () -> assertThat(actual).isEqualTo(review2),
+                () -> assertThat(actual.getUser()).isEqualTo(user),
+                () -> assertThat(actual.getHairStyle()).isEqualTo(hairStyle),
+                () -> assertThat(actual.getPhotos()).hasSize(B.getOriginalFilenames().size()),
+                () -> assertThat(content.get(0).getLikes()).isEqualTo(1)
         );
     }
 
@@ -88,15 +99,18 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
     @DisplayName("사용자가 작성한 리뷰를 조회한다")
     void findReviewByUser() {
         //when
-        Slice<Review> result = reviewRepository.findReviewByUser(user.getId(), pageable);
+        Slice<ReviewQueryResponse> result = reviewRepository.findReviewByUser(user.getId(), pageable);
 
         //then
+        List<ReviewQueryResponse> content = result.getContent();
+        Review actual = content.get(0).getReview();
         assertAll(
-                () -> assertThat(result.getContent()).hasSize(1),
-                () -> assertThat(result.getContent().get(0)).isEqualTo(review),
-                () -> assertThat(result.getContent().get(0).getUser()).isEqualTo(user),
-                () -> assertThat(result.getContent().get(0).getHairStyle()).isEqualTo(hairStyle),
-                () -> assertThat(result.getContent().get(0).getPhotos()).hasSize(A.getOriginalFilenames().size())
+                () -> assertThat(content).hasSize(1),
+                () -> assertThat(actual).isEqualTo(review),
+                () -> assertThat(actual.getUser()).isEqualTo(user),
+                () -> assertThat(actual.getHairStyle()).isEqualTo(hairStyle),
+                () -> assertThat(actual.getPhotos()).hasSize(A.getOriginalFilenames().size()),
+                () -> assertThat(content.get(0).getLikes()).isZero()
         );
     }
 
