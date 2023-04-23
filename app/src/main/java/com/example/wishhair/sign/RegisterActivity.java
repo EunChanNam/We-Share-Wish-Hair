@@ -51,10 +51,10 @@ public class RegisterActivity extends AppCompatActivity {
         radioGroup_sex.setOnCheckedChangeListener((radioGroup, checkedId) -> {
             switch (checkedId) {
                 case R.id.radio_sex_man:
-                    select_sex = radioButton_man.getTag().toString();
+                    select_sex = "MAN";
                     break;
                 case R.id.radio_sex_woman:
-                    select_sex = radioButton_woman.getTag().toString();
+                    select_sex = "WOMAN";
                     break;
             }
         });

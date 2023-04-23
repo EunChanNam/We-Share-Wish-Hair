@@ -75,8 +75,8 @@ public class EmailCertActivity extends AppCompatActivity {
         btn_send.setOnClickListener(view -> {
             timer.start();
 //            TODO : 타이머 테스트 용 이메일 인증 일시정지
-//            String inputEmail = String.valueOf(ed_email.getText());
-//            emailSendRequest(inputEmail);
+            String inputEmail = String.valueOf(ed_email.getText());
+            emailSendRequest(inputEmail);
         });
 
 //        confirmCode request
@@ -160,7 +160,7 @@ public class EmailCertActivity extends AppCompatActivity {
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, URL_VALIDATE, jsonObject, response -> {
             Log.d("validate success", response.toString());
-            Toast.makeText(this, "vali succ", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "이메일 인증 성공", Toast.LENGTH_SHORT).show();
             ed_code.setCompoundDrawablesWithIntrinsicBounds(null, null, check_success, null);
             btn_intent.setVisibility(View.VISIBLE);
         }, error -> {
