@@ -24,20 +24,16 @@ public class ReviewItem {
     private String userNickName;
     private boolean isHeart;
 
-    // my
-    private int hairImage;
-    private boolean isPoint;
-
     public ReviewItem() {}
 
-    public ReviewItem(int hairImage, String hairStyleName, ArrayList<String> tags, String contents, String score, int likes, String createdDate, boolean isPoint) {
-        this.hairImage = hairImage;
+    public ReviewItem(ArrayList<String> imageUrls, String hairStyleName, ArrayList<String> tags, String contents, String score, int likes, String createdDate) {
+        this.imageUrls = imageUrls;
         this.hairStyleName = hairStyleName;
         this.tags = tags;
         this.score = score;
         this.likes = likes;
         this.createdDate = createdDate;
-        this.isPoint = isPoint;
+        this.content = contents;
     }
 
     public String getUserNickName() {
@@ -101,14 +97,6 @@ public class ReviewItem {
         return "failParseDate";
     }
 
-    public int getHairImage() {
-        return hairImage;
-    }
-
-    public void setHairImage(int hairImage) {
-        this.hairImage = hairImage;
-    }
-
     public String getHairStyleName() {
         return hairStyleName;
     }
@@ -123,14 +111,6 @@ public class ReviewItem {
 
     public void setTags(ArrayList<String> tags) {
         this.tags = tags;
-    }
-
-    public boolean getIsPoint() {
-        return isPoint;
-    }
-
-    public void setPoint(boolean point) {
-        isPoint = point;
     }
 
     public String getContent() {

@@ -116,7 +116,7 @@ public class ReviewListFragment extends Fragment {
             intent.putExtra("date", selectedItem.getCreatedDate());
             intent.putExtra("content", selectedItem.getContent());
             intent.putStringArrayListExtra("imageUrls", selectedItem.getImageUrls());
-            startActivity(intent);
+            ReviewListFragment.this.startActivity(intent);
         });
 
 //        sort

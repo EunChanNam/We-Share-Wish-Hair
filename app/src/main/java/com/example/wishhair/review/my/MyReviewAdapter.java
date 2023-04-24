@@ -4,22 +4,21 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.wishhair.R;
-import com.example.wishhair.review.recent.RecentAdapter;
 import com.example.wishhair.review.ReviewItem;
 
 import java.util.ArrayList;
 
-public class RecyclerViewAdapterMy extends RecyclerView.Adapter<RecyclerViewAdapterMy.ViewHolder> {
-    private ArrayList<ReviewItem> reviewItems;
+public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.ViewHolder> {
+    private final ArrayList<ReviewItem> reviewItems;
 
-    public RecyclerViewAdapterMy(ArrayList<ReviewItem> reviewItems) {
+    public MyReviewAdapter(ArrayList<ReviewItem> reviewItems) {
         this.reviewItems = reviewItems;
     }
 
@@ -27,8 +26,8 @@ public class RecyclerViewAdapterMy extends RecyclerView.Adapter<RecyclerViewAdap
     public interface OnItemClickListener {
         void onItemClick(View v, int position);
     }
-    private RecentAdapter.OnItemClickListener mListener = null;
-    public void setOnItemClickListener(RecentAdapter.OnItemClickListener listener) {
+    private OnItemClickListener mListener = null;
+    public void setOnItemClickListener(OnItemClickListener listener) {
         this.mListener = listener;
     }
 
@@ -56,10 +55,19 @@ public class RecyclerViewAdapterMy extends RecyclerView.Adapter<RecyclerViewAdap
         holder.grade.setText(item.getScore());
         holder.heartCount.setText(String.valueOf(item.getLikes()));
         holder.date.setText(item.getCreatedDate());
+        holder.viewContent.setOnClickListener(view -> {
+            int position1 = holder.getAdapterPosition();
+            if (position1 != RecyclerView.NO_POSITION) {
+                if (mListener != null) {
+                    mListener.onItemClick(view, position1);
+                }
+            }
+        });
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView hairStyle, tags, grade, heartCount, date, isPoint;
+        TextView hairStyle, tags, grade, heartCount, date;
+        Button viewContent;
 
         ViewHolder(View itemView) {
             super(itemView);
@@ -68,7 +76,7 @@ public class RecyclerViewAdapterMy extends RecyclerView.Adapter<RecyclerViewAdap
             this.grade = itemView.findViewById(R.id.review_my_tv_grade);
             this.heartCount = itemView.findViewById(R.id.review_my_tv_heartCount);
             this.date = itemView.findViewById(R.id.review_my_tv_date);
-//            this.isPoint = itemView.findViewById(R.id.review_my_tv_isPoint);
+            this.viewContent = itemView.findViewById(R.id.review_my_btn_viewContent);
         }
     }
 

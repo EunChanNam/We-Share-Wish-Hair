@@ -26,25 +26,7 @@
                         android:clipToPadding="false" />
 
                     <!--        top bar-->
-                    <androidx.appcompat.widget.Toolbar
-                        android:layout_width="match_parent"
-                        android:layout_height="?attr/actionBarSize">
-
-                        <Button
-                            android:id="@+id/toolbar_btn_back"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="center_vertical"
-                            android:background="@drawable/back" />
-
-                        <androidx.appcompat.widget.AppCompatImageButton
-                            android:id="@+id/review_detail_menu"
-                            android:layout_width="50dp"
-                            android:layout_height="50dp"
-                            android:layout_gravity="end"
-                            android:background="@drawable/write_menu"
-                            android:onClick="showMenu" />
-                    </androidx.appcompat.widget.Toolbar>
+                    <include layout="@layout/top_bar_title" />
 
                     <me.relex.circleindicator.CircleIndicator3
                         android:id="@+id/review_detail_indicator"

@@ -26,8 +26,6 @@ public class RecentReviewDetailActivity extends AppCompatActivity {
     //    content
     private TextView userNickname, hairStyleName, tags, score, likes, date, content;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,6 +33,8 @@ public class RecentReviewDetailActivity extends AppCompatActivity {
 
         btn_back = findViewById(R.id.toolbar_btn_back);
         btn_back.setOnClickListener(view -> finish());
+        TextView title = findViewById(R.id.toolbar_textView_title);
+        title.setText("");
 
         ViewPager2 sliderViewPager = findViewById(R.id.review_detail_viewPager);
         CircleIndicator3 circleIndicator = findViewById(R.id.review_detail_indicator);
@@ -45,7 +45,6 @@ public class RecentReviewDetailActivity extends AppCompatActivity {
         sliderViewPager.setAdapter(new ImageSliderAdapter(this, imageUrls));
 
         circleIndicator.setViewPager(sliderViewPager);
-
 
 //        content
         userNickname = findViewById(R.id.review_detail_userNickname);
