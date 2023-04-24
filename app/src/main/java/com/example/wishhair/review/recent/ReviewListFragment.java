@@ -117,7 +117,7 @@ public class ReviewListFragment extends Fragment {
                 ReviewItem selectedItem = recentReviewItems.get(position);
                 intent.putExtra("userNickname", selectedItem.getUserNickName());
                 intent.putExtra("hairStyleName", selectedItem.getHairStyleName());
-                intent.putExtra("tags", selectedItem.getTags());
+                intent.putStringArrayListExtra("tags", selectedItem.getTags());
                 intent.putExtra("score", selectedItem.getScore());
                 intent.putExtra("likes", selectedItem.getLikes());
                 intent.putExtra("date", selectedItem.getCreatedDate());
@@ -166,17 +166,19 @@ public class ReviewListFragment extends Fragment {
                         String createDate = resultObject.getString("createdDate");
                         String hairStyleName = resultObject.getString("hairStyleName");
 
-                        JSONArray hasTagsArray = resultObject.getJSONArray("hashTags");
-//                        TODO : 일단 태그 하나만 넣는데 나중에 태그 갯수 따로 처리 합시다
-                        JSONObject hasTagObject = hasTagsArray.getJSONObject(0);
-                        String tag = hasTagObject.getString("tag");
+                        JSONArray hashTagsArray = resultObject.getJSONArray("hashTags");
+                        ArrayList<String> tags = new ArrayList<>();
+                        for (int j = 0; j < hashTagsArray.length(); j++) {
+                            JSONObject hasTagObject = hashTagsArray.getJSONObject(j);
+                            tags.add(hasTagObject.getString("tag"));
+                        }
+                        receivedData.setTags(tags);
 
                         receivedData.setUserNickName(userNickName);
                         receivedData.setScore(score);
                         receivedData.setLikes(likes);
                         receivedData.setCreatedDate(createDate);
                         receivedData.setHairStyleName(hairStyleName);
-                        receivedData.setTags("#" + tag);
                         receivedData.setContent(content);
 
                         JSONArray photosArray = resultObject.getJSONArray("photos");

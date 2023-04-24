@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.example.wishhair.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator3;
 
@@ -55,7 +56,12 @@ public class ReviewDetailActivity extends AppCompatActivity {
         hairStyleName.setText(getIntent().getStringExtra("hairStyleName"));
 
         tags = findViewById(R.id.review_detail_tags);
-        tags.setText(getIntent().getStringExtra("tags"));
+        ArrayList<String> hashTags = getIntent().getStringArrayListExtra("tags");
+        StringBuilder stringTags = new StringBuilder();
+        for (int i = 0; i < hashTags.size(); i++) {
+            stringTags.append("#").append(hashTags.get(i)).append(" ");
+        }
+        tags.setText(stringTags);
 
         score = findViewById(R.id.review_detail_tv_score);
         score.setText(getIntent().getStringExtra("score"));

@@ -55,7 +55,11 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
         }
 
         holder.hairStyleName.setText(item.getHairStyleName());
-        holder.tags.setText(item.getTags());
+        StringBuilder tags = new StringBuilder();
+        for (int i = 0; i < item.getTags().size(); i++) {
+            tags.append("#").append(item.getTags().get(i)).append(" ");
+        }
+        holder.tags.setText(tags);
         holder.nickname.setText(item.getUserNickName());
         holder.grade.setText(item.getScore());
         holder.date.setText(item.getCreatedDate());

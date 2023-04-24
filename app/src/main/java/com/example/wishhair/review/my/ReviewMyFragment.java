@@ -40,7 +40,7 @@ public class ReviewMyFragment extends Fragment {
         //===============================dummy data===============================
 
         for (int i = 0; i < 4; i++) {
-            ReviewItem newItem = new ReviewItem(R.drawable.user_sample, "무슨무슨" + "펌", "#태그",
+            ReviewItem newItem = new ReviewItem(R.drawable.user_sample, "무슨무슨" + "펌", new ArrayList<>(),
                     "is a root vegetable, typically orange in color, though purple, black, red, white, and yellow cultivars exist,[2][3][4] all of which are domesticated forms of the wild carrot, Daucus carota, native to Europe and Southwestern Asia. The plant probably originated in Persia and was originally cultivated for its leaves and seeds. The most commonly eaten part of the plant is the taproot, although the stems and leaves are also eaten. The domestic carrot has been selectively bred for its enlarged, more palatable, less woody-textured taproot.",
                     "3.4", 500, "22.03.12", false);
             myReviewItems.add(newItem);

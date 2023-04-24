@@ -49,7 +49,11 @@ public class RecyclerViewAdapterMy extends RecyclerView.Adapter<RecyclerViewAdap
 
         holder.hairImage.setImageResource(item.getHairImage());
         holder.hairStyle.setText(item.getHairStyleName());
-        holder.tags.setText(item.getTags());
+        StringBuilder tags = new StringBuilder();
+        for (int i = 0; i < item.getTags().size(); i++) {
+            tags.append(item.getTags().get(i));
+        }
+        holder.tags.setText(tags);
         holder.grade.setText(item.getScore());
         holder.heartCount.setText(String.valueOf(item.getLikes()));
         holder.content.setText(item.getContent());

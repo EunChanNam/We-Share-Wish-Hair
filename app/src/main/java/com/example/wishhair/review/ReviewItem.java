@@ -13,7 +13,7 @@ public class ReviewItem {
 
     // common
     private String hairStyleName;
-    private String tags;
+    private ArrayList<String> tags;
     private int likes;
     private String score;
     private String createdDate;
@@ -30,7 +30,7 @@ public class ReviewItem {
 
     public ReviewItem() {}
 
-    public ReviewItem(int hairImage, String hairStyleName, String tags, String contents, String score, int likes, String createdDate, boolean isPoint) {
+    public ReviewItem(int hairImage, String hairStyleName, ArrayList<String> tags, String contents, String score, int likes, String createdDate, boolean isPoint) {
         this.hairImage = hairImage;
         this.hairStyleName = hairStyleName;
         this.tags = tags;
@@ -117,11 +117,11 @@ public class ReviewItem {
         this.hairStyleName = hairStyleName;
     }
 
-    public String getTags() {
+    public ArrayList<String> getTags() {
         return tags;
     }
 
-    public void setTags(String tags) {
+    public void setTags(ArrayList<String> tags) {
         this.tags = tags;
     }
 
