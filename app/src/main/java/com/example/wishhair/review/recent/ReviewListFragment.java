@@ -77,14 +77,14 @@ public class ReviewListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.review_fragment_list, container, false);
+        View v = inflater.inflate(R.layout.review_fragment_recent, container, false);
 
         CustomTokenHandler customTokenHandler = new CustomTokenHandler(requireActivity());
         accessToken = customTokenHandler.getAccessToken();
 
 //        temp write button
 //        TODO 임시 글쓰기 버튼, 나중에 삭제해야댐
-        btn_temp_write = v.findViewById(R.id.temp_write_btn);
+        btn_temp_write = v.findViewById(R.id.review_fragment_btn_write);
         btn_temp_write.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

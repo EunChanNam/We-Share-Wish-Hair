@@ -38,13 +38,15 @@
     <string name="register_message_sex">성별 :</string>
     <string name="register_text_sex_man">남성</string>
     <string name="register_text_sex_woman">여성</string>
+    <string name="register_message_6">회원가입완료</string>
 
     <!--    review -->
     <string name="review_recent_item_btn"><![CDATA[전체보기 >]]></string>
     <string name="review_filter_whole">전체</string>
     <string name="review_filter_man">남성</string>
     <string name="review_filter_woman">여성</string>
-    <!--        review detail -->
+    <string name="review_recent_btn_write">리뷰 작성하기</string>
+    <!--    review detail -->
     <string name="review_detail_menu_modify">리뷰 수정</string>
     <string name="review_detail_menu_delete">리뷰 삭제</string>
     <string name="review_detail_nicknameText">님</string>
@@ -54,7 +56,6 @@
     <string name="write_review_massage_2">시술에 대한 별점을 매겨주세요</string>
     <string name="write_review_massage_3">최소 15자 이상 작성해주세요</string>
     <string name="write_review_submit">등록하기</string>
-
 
     <!--    home -->
     <string name="home_icon_notification">home_icon_notification</string>
@@ -66,13 +67,12 @@
     <string name="home_message_6">이달의 추천 리뷰</string>
     <string name="home_message_7">님 만을 위한 추천</string>
 
-    <string name="xmlDisplay_username">userName</string>
-    <string name="register_message_6">회원가입완료</string>
-    <string name="message_confirm">확인</string>
     <string name="find_password_message1">비밀번호 찾기</string>
     <string name="find_password_message2">아이디 확인 후 비밀번호를 \n 확인할 수 있습니다.</string>
-    <string name="message_cancel">취소</string>
 
+    <string name="xmlDisplay_username">userName</string>
+    <string name="message_confirm">확인</string>
+    <string name="message_cancel">취소</string>
 
 
 </resources>

@@ -18,9 +18,7 @@ import java.util.ArrayList;
 
 public class ReviewMyFragment extends Fragment {
 
-    public ReviewMyFragment() {
-        // Required empty public constructor
-    }
+    public ReviewMyFragment() {}
 
     ArrayList<ReviewItem> myReviewItems;
 
