@@ -38,11 +38,11 @@ public class ReviewService {
     @Transactional
     public Long createReview(ReviewCreateRequest request, Long userId) {
 
-        List<Photo> photos = photoStore.uploadFiles(request.getFiles());
+        List<String> photoUrls = photoStore.uploadFiles(request.getFiles());
         User user = userFindService.findByUserId(userId);
         HairStyle hairStyle = hairStyleFindService.findById(request.getHairStyleId());
 
-        Review review = generateReview(request, photos, user, hairStyle);
+        Review review = generateReview(request, photoUrls, user, hairStyle);
         eventPublisher.publishEvent(new PointChargeEvent(100, userId));
 
         return reviewRepository.save(review).getId();
@@ -63,7 +63,7 @@ public class ReviewService {
         }
     }
 
-    private Review generateReview(ReviewCreateRequest request, List<Photo> photos, User user, HairStyle hairStyle) {
+    private Review generateReview(ReviewCreateRequest request, List<String> photos, User user, HairStyle hairStyle) {
         return Review.createReview(
                 user,
                 request.getContents(),

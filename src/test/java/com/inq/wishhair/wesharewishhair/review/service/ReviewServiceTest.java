@@ -52,7 +52,7 @@ public class ReviewServiceTest extends ServiceTest {
                 () -> assertThat(result.getHairStyle()).isEqualTo(hairStyle),
                 () -> assertThat(result.getContentsValue()).isEqualTo(A.getContents()),
                 () -> assertThat(result.getScore()).isEqualTo(A.getScore()),
-                () -> assertThat(result.getPhotos()).hasSize(A.getOriginalFilenames().size())
+                () -> assertThat(result.getPhotos()).hasSize(A.getStoreUrls().size())
         );
 
         //이벤트 리스너 강제 실행 <- 다른 테스트가 깨지므로 중단

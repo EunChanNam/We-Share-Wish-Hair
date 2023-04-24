@@ -23,28 +23,23 @@ public class Photo {
     @JoinColumn(name = "review_id")
     private Review review;
 
-    @Column(nullable = false, updatable = false)
-    private String originalFilename;
-
     @Column(nullable = false, updatable = false, unique = true)
     private String storeUrl;
 
     //==생성 메서드==//
-    private Photo(String originalFilename, String storeUrl) {
-        this.originalFilename = originalFilename;
+    private Photo(String storeUrl) {
         this.storeUrl = storeUrl;
     }
 
-    public static Photo of(String originalFilename, String storeUrl) {
-        return new Photo(originalFilename, storeUrl);
+    public static Photo createReviewPhoto(String storeUrl, Review review) {
+        Photo photo = new Photo(storeUrl);
+        photo.review = review;
+        return photo;
     }
 
-    //==편의 메서드==//
-    public void registerReview(Review review) {
-        this.review = review;
-    }
-
-    public void registerHairStyle(HairStyle hairStyle) {
-        this.hairStyle = hairStyle;
+    public static Photo createHairStylePhoto(String storeUrl, HairStyle hairStyle) {
+        Photo photo = new Photo(storeUrl);
+        photo.hairStyle = hairStyle;
+        return photo;
     }
 }

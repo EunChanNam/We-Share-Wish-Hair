@@ -127,9 +127,9 @@ public class HairStyleQueryRepositoryTest extends RepositoryTest {
                     },
                     () -> {
                         List<String> resultOriginalFilenames = result.getPhotos().stream()
-                                .map(Photo::getOriginalFilename).toList();
+                                .map(Photo::getStoreUrl).toList();
                         List<String> actualOriginalFilenames = actual.getPhotos().stream()
-                                .map(Photo::getOriginalFilename).toList();
+                                .map(Photo::getStoreUrl).toList();
                         assertThat(resultOriginalFilenames).containsAll(actualOriginalFilenames);
                     },
                     () -> assertThat(result.getWishListCount()).isEqualTo(actual.getWishListCount())
