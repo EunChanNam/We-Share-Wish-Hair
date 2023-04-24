@@ -1,5 +1,6 @@
 package com.example.wishhair.review.my;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.wishhair.R;
+import com.example.wishhair.review.detail.RecentReviewDetailActivity;
 import com.example.wishhair.review.recent.RecentAdapter;
 import com.example.wishhair.review.ReviewItem;
 
@@ -36,7 +38,6 @@ public class ReviewMyFragment extends Fragment {
         myReviewItems = new ArrayList<>();
 
         //===============================dummy data===============================
-
         for (int i = 0; i < 4; i++) {
             ArrayList<String> tempTags = new ArrayList<>();
             for (int j = 0; j < 4; j++) {
@@ -57,7 +58,16 @@ public class ReviewMyFragment extends Fragment {
         recyclerViewAdapterMy.setOnItemClickListener(new RecentAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View v, int position) {
-
+                Intent intent = new Intent(v.getContext(), RecentReviewDetailActivity.class);
+                ReviewItem selectedItem = myReviewItems.get(position);
+                intent.putExtra("hairStyleName", selectedItem.getHairStyleName());
+                intent.putStringArrayListExtra("tags", selectedItem.getTags());
+                intent.putExtra("score", selectedItem.getScore());
+                intent.putExtra("likes", selectedItem.getLikes());
+                intent.putExtra("date", selectedItem.getCreatedDate());
+                intent.putExtra("content", selectedItem.getContent());
+                intent.putStringArrayListExtra("imageUrls", selectedItem.getImageUrls());
+                startActivity(intent);
             }
         });
 

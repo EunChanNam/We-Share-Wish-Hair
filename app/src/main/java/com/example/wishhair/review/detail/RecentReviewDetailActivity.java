@@ -16,11 +16,10 @@ import android.widget.TextView;
 import com.example.wishhair.R;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import me.relex.circleindicator.CircleIndicator3;
 
-public class ReviewDetailActivity extends AppCompatActivity {
+public class RecentReviewDetailActivity extends AppCompatActivity {
 
     private Button btn_back;
 
@@ -32,7 +31,7 @@ public class ReviewDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.review_activity_detail);
+        setContentView(R.layout.review_activity_detail_recent);
 
         btn_back = findViewById(R.id.toolbar_btn_back);
         btn_back.setOnClickListener(view -> finish());

@@ -29,7 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.wishhair.CustomTokenHandler;
 import com.example.wishhair.R;
 import com.example.wishhair.review.ReviewItem;
-import com.example.wishhair.review.detail.ReviewDetailActivity;
+import com.example.wishhair.review.detail.RecentReviewDetailActivity;
 import com.example.wishhair.review.write.WriteReviewActivity;
 import com.example.wishhair.sign.UrlConst;
 
@@ -54,7 +54,6 @@ public class ReviewListFragment extends Fragment {
     private ArrayList<ReviewItem> recentReviewItems;
     private RadioGroup filter;
     private RadioButton filter_whole, filter_man, filter_woman;
-    private Button btn_temp_write;
     private RecyclerView recentRecyclerView;
     RecentAdapter recentAdapter;
 
@@ -82,15 +81,11 @@ public class ReviewListFragment extends Fragment {
         CustomTokenHandler customTokenHandler = new CustomTokenHandler(requireActivity());
         accessToken = customTokenHandler.getAccessToken();
 
-//        temp write button
-//        TODO 임시 글쓰기 버튼, 나중에 삭제해야댐
-        btn_temp_write = v.findViewById(R.id.review_fragment_btn_write);
-        btn_temp_write.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), WriteReviewActivity.class);
-                startActivity(intent);
-            }
+//       write
+        Button btn_write = v.findViewById(R.id.review_fragment_btn_write);
+        btn_write.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), WriteReviewActivity.class);
+            startActivity(intent);
         });
 
 //        review list
@@ -110,22 +105,18 @@ public class ReviewListFragment extends Fragment {
         });
 
         // TODO: 2023-03-12  해당 게시글 이동 리스너
-        recentAdapter.setOnItemClickListener(new RecentAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, int position) {
-                Intent intent = new Intent(v.getContext(), ReviewDetailActivity.class);
-                ReviewItem selectedItem = recentReviewItems.get(position);
-                intent.putExtra("userNickname", selectedItem.getUserNickName());
-                intent.putExtra("hairStyleName", selectedItem.getHairStyleName());
-                intent.putStringArrayListExtra("tags", selectedItem.getTags());
-                intent.putExtra("score", selectedItem.getScore());
-                intent.putExtra("likes", selectedItem.getLikes());
-                intent.putExtra("date", selectedItem.getCreatedDate());
-                intent.putExtra("content", selectedItem.getContent());
-                intent.putStringArrayListExtra("imageUrls", selectedItem.getImageUrls());
-                startActivity(intent);
-            }
-
+        recentAdapter.setOnItemClickListener((v1, position) -> {
+            Intent intent = new Intent(v1.getContext(), RecentReviewDetailActivity.class);
+            ReviewItem selectedItem = recentReviewItems.get(position);
+            intent.putExtra("userNickname", selectedItem.getUserNickName());
+            intent.putExtra("hairStyleName", selectedItem.getHairStyleName());
+            intent.putStringArrayListExtra("tags", selectedItem.getTags());
+            intent.putExtra("score", selectedItem.getScore());
+            intent.putExtra("likes", selectedItem.getLikes());
+            intent.putExtra("date", selectedItem.getCreatedDate());
+            intent.putExtra("content", selectedItem.getContent());
+            intent.putStringArrayListExtra("imageUrls", selectedItem.getImageUrls());
+            startActivity(intent);
         });
 
 //        sort
