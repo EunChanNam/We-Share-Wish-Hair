@@ -41,10 +41,10 @@
     <string name="register_message_6">회원가입완료</string>
 
     <!--    review -->
-    <string name="review_recent_item_btn"><![CDATA[전체보기 >]]></string>
     <string name="review_filter_whole">전체</string>
     <string name="review_filter_man">남성</string>
     <string name="review_filter_woman">여성</string>
+    <string name="review_item_btn_view"><![CDATA[전체보기 >]]></string>
     <string name="review_recent_btn_write">리뷰 작성하기</string>
     <!--    review detail -->
     <string name="review_detail_menu_modify">리뷰 수정</string>

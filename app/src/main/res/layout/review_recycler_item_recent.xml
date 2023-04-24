@@ -112,8 +112,9 @@
             android:layout_height="wrap_content"
             android:minHeight="0dp"
             android:includeFontPadding="false"
-            android:text="@string/review_recent_item_btn"
-            android:textSize="11sp"
+            android:text="@string/review_item_btn_view"
+            android:textSize="13sp"
+            android:textColor="@color/btnDetail_gray"
             style="?borderlessButtonStyle"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>

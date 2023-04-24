@@ -13,4 +13,5 @@
     <color name="signBox_gray">#FFD6D6D6</color>
     <color name="timer_red">#FFC0392B</color>
     <color name="text_ivory">#FFEEE9DA</color>
+    <color name="btnDetail_gray">#FF898A8D</color>
 </resources>

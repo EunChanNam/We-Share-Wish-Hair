@@ -1,70 +1,78 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    android:background="@drawable/border_recycler_item">
-<!--    headline-->
-    <RelativeLayout
-        android:id="@+id/review_my_item_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp">
-        <ImageView
-            android:id="@+id/hairStyleImage"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/user_sample"/>
-        <LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
+    android:padding="10dp"
+    android:weightSum="3">
+
+    <!--    profile-->
+    <ImageView
+        android:id="@+id/review_my_contentImage"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_weight="1"
+        android:src="@drawable/user_sample"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="17dp"
+        android:layout_weight="2">
+
+
+        <TextView
+            android:id="@+id/review_my_tv_hairStyleName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_toEndOf="@id/hairStyleImage"
-            android:layout_centerVertical="true">
+            android:layout_marginTop="5dp"
+            tools:text="hairStyle"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/review_my_tv_tags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            tools:text="#tags #tags #tags #tags"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/review_my_tv_hairStyleName"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+<!--        likes, grade -->
+        <LinearLayout
+            android:id="@+id/review_my_ll1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            app:layout_constraintTop_toBottomOf="@id/review_my_tv_tags"
+            app:layout_constraintStart_toStartOf="parent">
+            <ImageView
+                android:id="@+id/review_my_imageView_isHeart"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/heart_fill" />
 
             <TextView
-                android:id="@+id/review_my_tv_hairStyle"
+                android:id="@+id/review_my_tv_heartCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="헤어스타일 이름" />
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/review_my_tags"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="#태그들"/>
-            </LinearLayout>
-        </LinearLayout>
-    </RelativeLayout>
-<!--    line -->
-    <LinearLayout
-        android:id="@+id/review_my_line"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"
-        android:layout_below="@id/review_my_item_profile"
-        android:orientation="horizontal" />
-<!--    info, content-->
-    <LinearLayout
-        android:id="@+id/review_my_ll_info"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/review_my_line"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical">
-        <!--    info(grade, heart, point) -->
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+                android:layout_marginEnd="13dp"
+                tools:text="500"
+                android:textSize="13sp"
+                android:textColor="@color/black"/>
 
             <ImageView
-                android:id="@+id/review_my_imageView_gradeMark"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_marginEnd="5dp"
@@ -74,52 +82,36 @@
                 android:id="@+id/review_my_tv_grade"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/review_my_imageView_gradeMark"
-                android:text="3.04" />
+                tools:text="3.04"
+                android:textSize="13sp"
+                android:textColor="@color/black" />
+        </LinearLayout>
 
-            <ImageView
-                android:id="@+id/review_my_imageView_Heart"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="5dp"
-                android:layout_toEndOf="@id/review_my_tv_grade"
-                android:src="@drawable/heart_fill" />
-
-            <TextView
-                android:id="@+id/review_my_tv_heartCount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_toEndOf="@id/review_my_imageView_Heart"
-                android:text="500" />
-
-            <TextView
-                android:id="@+id/review_my_tv_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/review_my_imageView_gradeMark"
-                android:layout_marginTop="5dp"
-                android:text="날짜" />
-
-            <TextView
-                android:id="@+id/review_my_tv_isPoint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:background="@color/unselect_blue"
-                android:padding="5dp"
-                android:text="$P 지급 완료"
-                android:textSize="12sp" />
-        </RelativeLayout>
-        <!--        content -->
         <TextView
-            android:id="@+id/review_my_tv_content"
+            android:id="@+id/review_my_tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:ems="100"
-            android:maxLines="2"
-            android:text="내용" />
-    </LinearLayout>
-</RelativeLayout>
+            tools:text="yyyy.mm.dd"
+            android:textSize="10sp"
+            android:textColor="@color/black"
+            app:layout_constraintBaseline_toBaselineOf="@id/review_my_btn_viewContent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="SmallSp" />
+
+        <Button
+            android:id="@+id/review_my_btn_viewContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minHeight="0dp"
+            android:includeFontPadding="false"
+            android:text="@string/review_item_btn_view"
+            android:textSize="13sp"
+            android:textColor="@color/btnDetail_gray"
+            style="?borderlessButtonStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

@@ -47,7 +47,6 @@ public class RecyclerViewAdapterMy extends RecyclerView.Adapter<RecyclerViewAdap
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ReviewItem item = reviewItems.get(position);
 
-        holder.hairImage.setImageResource(item.getHairImage());
         holder.hairStyle.setText(item.getHairStyleName());
         StringBuilder tags = new StringBuilder();
         for (int i = 0; i < item.getTags().size(); i++) {
@@ -56,24 +55,20 @@ public class RecyclerViewAdapterMy extends RecyclerView.Adapter<RecyclerViewAdap
         holder.tags.setText(tags);
         holder.grade.setText(item.getScore());
         holder.heartCount.setText(String.valueOf(item.getLikes()));
-        holder.content.setText(item.getContent());
         holder.date.setText(item.getCreatedDate());
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView hairImage;
-        TextView hairStyle, tags, grade, heartCount, content, date, isPoint;
+        TextView hairStyle, tags, grade, heartCount, date, isPoint;
 
         ViewHolder(View itemView) {
             super(itemView);
-            this.hairImage = itemView.findViewById(R.id.hairStyleImage);
-            this.hairStyle = itemView.findViewById(R.id.review_my_tv_hairStyle);
-            this.tags = itemView.findViewById(R.id.review_my_tags);
+            this.hairStyle = itemView.findViewById(R.id.review_my_tv_hairStyleName);
+            this.tags = itemView.findViewById(R.id.review_my_tv_tags);
             this.grade = itemView.findViewById(R.id.review_my_tv_grade);
             this.heartCount = itemView.findViewById(R.id.review_my_tv_heartCount);
-            this.content = itemView.findViewById(R.id.review_my_tv_content);
             this.date = itemView.findViewById(R.id.review_my_tv_date);
-            this.isPoint = itemView.findViewById(R.id.review_my_tv_isPoint);
+//            this.isPoint = itemView.findViewById(R.id.review_my_tv_isPoint);
         }
     }
 
@@ -82,4 +77,3 @@ public class RecyclerViewAdapterMy extends RecyclerView.Adapter<RecyclerViewAdap
         return reviewItems.size();
     }
 }
-
