@@ -6,7 +6,6 @@ import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,6 +55,16 @@ public class PhotoStore {
         } catch (IOException e) {
             throw new WishHairException(ErrorCode.FILE_TRANSFER_EX);
         }
+    }
+
+    public void deleteFiles(List<String> storeUrls) {
+        storeUrls.forEach(this::deleteFile);
+    }
+
+    private void deleteFile(String storeUrl) {
+        int point = storeUrl.indexOf('/', 10) + 1;
+        String fileKey = storeUrl.substring(point);
+        amazonS3Client.deleteObject(buketName, fileKey);
     }
 
     private void validateFileExist(MultipartFile file) {

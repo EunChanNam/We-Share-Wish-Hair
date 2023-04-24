@@ -45,7 +45,7 @@ public class ReviewServiceTest extends ServiceTest {
         Long reviewId = reviewService.createReview(request, user.getId());
 
         //then
-        Review result = reviewRepository.findById(reviewId).orElseThrow();
+        Review result = reviewRepository.findWithPhotosById(reviewId).orElseThrow();
         assertAll(
                 () -> assertThat(result.getUser()).isEqualTo(user),
                 () -> assertThat(result.getUser()).isEqualTo(user),
