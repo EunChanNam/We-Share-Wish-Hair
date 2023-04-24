@@ -1,134 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".review.detail.ReviewDetailActivity"
-    android:orientation="vertical">
-
-<!--    image-->
-    <FrameLayout
-        android:layout_weight="1"
-        android:layout_width="match_parent"
-        android:layout_height="0dp">
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/review_detail_viewPager"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:clipChildren="false" />
-
-<!--        top bar-->
-        <androidx.appcompat.widget.Toolbar
+            android:layout_marginBottom="65dp">
+            <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize">
-            <Button
-                android:id="@+id/toolbar_btn_back"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/back"
-                android:layout_gravity="center_vertical"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:scrollbars="vertical">
+                <!--    image-->
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="360dp">
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/review_detail_viewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:clipChildren="false"
+                        android:clipToPadding="false" />
 
-            <androidx.appcompat.widget.AppCompatImageButton
-                android:id="@+id/review_detail_menu"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/write_menu"
-                android:layout_gravity="end"
-                android:onClick="showMenu" />
-        </androidx.appcompat.widget.Toolbar>
+                    <!--        top bar-->
+                    <androidx.appcompat.widget.Toolbar
+                        android:layout_width="match_parent"
+                        android:layout_height="?attr/actionBarSize">
 
-        <me.relex.circleindicator.CircleIndicator3
-            android:id="@+id/review_detail_indicator"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_marginBottom="10dp"
-            android:layout_gravity="bottom"/>
-    </FrameLayout>
+                        <Button
+                            android:id="@+id/toolbar_btn_back"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/back" />
 
+                        <androidx.appcompat.widget.AppCompatImageButton
+                            android:id="@+id/review_detail_menu"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
+                            android:layout_gravity="end"
+                            android:background="@drawable/write_menu"
+                            android:onClick="showMenu" />
+                    </androidx.appcompat.widget.Toolbar>
+
+                    <me.relex.circleindicator.CircleIndicator3
+                        android:id="@+id/review_detail_indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:layout_gravity="bottom"
+                        android:layout_marginBottom="10dp" />
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:orientation="vertical">
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp">
+                        <TextView
+                            android:id="@+id/review_detail_userNickname"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            tools:text="username"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@id/review_detail_userNickname"
+                            android:textSize="18sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            android:text="@string/review_detail_nicknameText"/>
+                        <!--    date -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginTop="10dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="작성일 : "
+                                android:textColor="@color/black"
+                                android:textSize="11sp"/>
+
+                            <TextView
+                                android:id="@+id/review_detail_tv_date"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="yyyy. mm. dd"
+                                android:textColor="@color/black"
+                                android:textSize="11sp"/>
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" >
+                        <!--    title -->
+                        <TextView
+                            android:id="@+id/review_detail_hairStyleName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:textColor="@color/black"
+                            tools:text="헤어스타일 이름" />
+
+                        <!--    grade -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true">
+
+                            <ImageView
+                                android:id="@+id/review_detail_imageView_gradeMark"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginEnd="5dp"
+                                android:background="@drawable/star_fill"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:id="@+id/review_detail_tv_score"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="3.04"
+                                android:textSize="15sp"
+                                android:textColor="@color/black"/>
+                        </LinearLayout>
+                    </RelativeLayout>
+
+                    <!--    tags -->
+                    <TextView
+                        android:id="@+id/review_detail_tags"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="7dp"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        tools:text="#태그들" />
+
+                    <!--    content -->
+                    <TextView
+                        android:id="@+id/review_detail_tv_content"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        tools:text="내용"
+                        android:textSize="12sp"
+                        android:textColor="@color/black"/>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+
+<!--    bottom-->
     <LinearLayout
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
         android:orientation="vertical"
-        android:padding="20dp">
-        <!--    title -->
-        <TextView
-            android:id="@+id/review_detail_hairStyleName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="헤어스타일 이름"
-            android:textSize="30sp"
-            android:textStyle="bold"/>
+        android:layout_gravity="bottom"
+        android:gravity="center_vertical">
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <TextView
-                android:id="@+id/review_detail_tags"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/default_blue"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:padding="5dp">
+<!--            likes -->
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="#태그들"
+                android:orientation="vertical">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/review_detail_btn_like"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/heart_fill" />
+                <TextView
+                    android:id="@+id/review_detail_tv_likes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    tools:text="9k"
+                    android:textSize="13sp"
+                    android:textColor="@color/black" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:background="@color/default_blue"/>
+<!--            헤어스타일 바로보기 -->
+            <Button
+                android:id="@+id/review_detail_btn_goHair"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/write_detail_btn_goHair"
+                android:textColor="@color/text_ivory"
                 android:textStyle="bold"/>
         </LinearLayout>
-        <!--    grade, heart -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-            <ImageView
-                android:id="@+id/review_detail_imageView_gradeMark"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginEnd="5dp"
-                android:background="@drawable/star_fill"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/review_detail_tv_score"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="3.04" />
-
-            <ImageView
-                android:id="@+id/review_detail_imageView_Heart"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginStart="25dp"
-                android:layout_marginEnd="5dp"
-                android:src="@drawable/heart_fill"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/review_detail_tv_likes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="500" />
-
-        </LinearLayout>
-        <!--    date -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="작성일 "/>
-
-            <TextView
-                android:id="@+id/review_detail_tv_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="yyyy. mm. dd" />
-        </LinearLayout>
-<!--        content -->
-        <TextView
-            android:id="@+id/review_detail_tv_content"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="내용"/>
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

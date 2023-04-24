@@ -24,7 +24,7 @@ public class ReviewDetailActivity extends AppCompatActivity {
     private Button btn_back;
 
     //    content
-    private TextView hairStyleName, tags, score, likes, date, content;
+    private TextView userNickname, hairStyleName, tags, score, likes, date, content;
 
 
 
@@ -48,6 +48,9 @@ public class ReviewDetailActivity extends AppCompatActivity {
 
 
 //        content
+        userNickname = findViewById(R.id.review_detail_userNickname);
+        userNickname.setText(getIntent().getStringExtra("userNickname"));
+
         hairStyleName = findViewById(R.id.review_detail_hairStyleName);
         hairStyleName.setText(getIntent().getStringExtra("hairStyleName"));
 

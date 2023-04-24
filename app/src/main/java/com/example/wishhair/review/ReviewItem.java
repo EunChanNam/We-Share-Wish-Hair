@@ -19,39 +19,16 @@ public class ReviewItem {
     private String createdDate;
     private String content;
 
-    public ReviewItem() {}
-
     // recent
     private ArrayList<String> imageUrls;
     private String userNickName;
     private boolean isHeart;
 
-    //사진이 있을 때
-    public ReviewItem(String userNickName,String hairStyleName, String tags, String createdDate, String score, int likes, boolean isHeart, ArrayList<String> imageUrls) {
-        this.userNickName = userNickName;
-        this.hairStyleName = hairStyleName;
-        this.tags = tags;
-        this.createdDate = createdDate;
-        this.likes = likes;
-        this.score = score;
-        this.isHeart = isHeart;
-        this.imageUrls = imageUrls;
-    }
-
-    //사진이 없을 때
-    public ReviewItem(String userNickName,String hairStyleName, String tags, String createdDate, String score, int likes, boolean isHeart) {
-        this.createdDate = createdDate;
-        this.likes = likes;
-        this.score = score;
-        this.hairStyleName = hairStyleName;
-        this.tags = tags;
-        this.userNickName = userNickName;
-        this.isHeart = isHeart;
-    }
-
     // my
     private int hairImage;
     private boolean isPoint;
+
+    public ReviewItem() {}
 
     public ReviewItem(int hairImage, String hairStyleName, String tags, String contents, String score, int likes, String createdDate, boolean isPoint) {
         this.hairImage = hairImage;

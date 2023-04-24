@@ -47,11 +47,16 @@
     <!--        review detail -->
     <string name="review_detail_menu_modify">리뷰 수정</string>
     <string name="review_detail_menu_delete">리뷰 삭제</string>
+    <string name="review_detail_nicknameText">님</string>
+    <string name="write_detail_btn_goHair">헤어스타일 바로보기</string>
     <!--    write review -->
     <string name="write_review_message_1">시술은 만족스러우셨나요?</string>
     <string name="write_review_massage_2">시술에 대한 별점을 매겨주세요</string>
     <string name="write_review_massage_3">최소 15자 이상 작성해주세요</string>
     <string name="write_review_submit">등록하기</string>
+
+
+    <!--    home -->
     <string name="home_icon_notification">home_icon_notification</string>
     <string name="home_message_1">안녕하세요,</string>
     <string name="home_message_2">님!</string>
@@ -67,6 +72,7 @@
     <string name="find_password_message1">비밀번호 찾기</string>
     <string name="find_password_message2">아이디 확인 후 비밀번호를 \n 확인할 수 있습니다.</string>
     <string name="message_cancel">취소</string>
+
 
 
 </resources>

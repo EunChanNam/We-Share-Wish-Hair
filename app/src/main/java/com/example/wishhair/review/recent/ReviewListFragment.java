@@ -115,6 +115,7 @@ public class ReviewListFragment extends Fragment {
             public void onItemClick(View v, int position) {
                 Intent intent = new Intent(v.getContext(), ReviewDetailActivity.class);
                 ReviewItem selectedItem = recentReviewItems.get(position);
+                intent.putExtra("userNickname", selectedItem.getUserNickName());
                 intent.putExtra("hairStyleName", selectedItem.getHairStyleName());
                 intent.putExtra("tags", selectedItem.getTags());
                 intent.putExtra("score", selectedItem.getScore());
@@ -188,18 +189,7 @@ public class ReviewListFragment extends Fragment {
                         }
                         receivedData.setImageUrls(receivedUrls);
 
-//                       set review data
-                        if (receivedUrls.size() > 0) {
-                            ReviewItem itemB = new ReviewItem(receivedData.getUserNickName(),
-                                    receivedData.getHairStyleName(), receivedData.getTags(), receivedData.getCreatedDate(),
-                                    receivedData.getScore(), receivedData.getLikes(), false, receivedData.getImageUrls());
-                            requestItems.add(itemB);
-                        } else {
-                            ReviewItem itemB = new ReviewItem(receivedData.getUserNickName(),
-                                    receivedData.getHairStyleName(), receivedData.getTags(), receivedData.getCreatedDate(),
-                                    receivedData.getScore(), receivedData.getLikes(), false);
-                            requestItems.add(itemB);
-                        }
+                        requestItems.add(receivedData);
                     }
 
                     JSONObject pagingObject = jsonObject.getJSONObject("paging");
