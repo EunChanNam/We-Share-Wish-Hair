@@ -19,3 +19,18 @@ include::{snippets}/like-review/success/response-fields.adoc[]
 Http Response
 include::{snippets}/like-review/fail-by-no-access-token/http-response.adoc[]
 include::{snippets}/like-review/fail-by-no-access-token/response-fields.adoc[]
+
+== 좋아요 여부 확인 API
+=== 1. 성공
+Http Request
+include::{snippets}/check-is-liking/success/http-request.adoc[]
+include::{snippets}/check-is-liking/success/request-headers.adoc[]
+include::{snippets}/check-is-liking/success/path-parameters.adoc[]
+
+Http Response
+include::{snippets}/check-is-liking/success/http-response.adoc[]
+include::{snippets}/check-is-liking/success/response-fields.adoc[]
+
+=== 2. 헤더에 토큰을 포함하지 않아 실패
+Http Response
+include::{snippets}/check-is-liking/fail-by-no-access-token/http-response.adoc[]

@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.review.service;
 
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +15,7 @@ public class LikeReviewService {
 
     private final ReviewFindService reviewFindService;
     private final UserFindService userFindService;
+    private final LikeReviewRepository likeReviewRepository;
 
     @Transactional
     public void likeReview(Long reviewId, Long userId) {
@@ -21,5 +23,9 @@ public class LikeReviewService {
         Review review = reviewFindService.findWithLikeReviewsById(reviewId);
 
         review.executeLike(user);
+    }
+
+    public boolean checkIsLiking(Long userId, Long reviewId) {
+        return likeReviewRepository.existByUserAndReview(userId, reviewId);
     }
 }

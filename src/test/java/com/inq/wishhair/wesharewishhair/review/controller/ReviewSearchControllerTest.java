@@ -53,7 +53,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
         @DisplayName("리뷰의 아이디를 통해 단건으로 조회한다")
         void success() throws Exception {
             //given
-            ReviewDetailResponse expectedResponse = generateResponse();
+            ReviewDetailResponse expectedResponse = generateReviewDetailResponse();
             given(reviewSearchService.findReviewById(1L, 1L))
                     .willReturn(expectedResponse);
 
@@ -71,7 +71,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
                                     pathParameters(
                                             parameterWithName("reviewId").description("조회할 리뷰 아이디")
                                     ),
-                                    reviewResponseDocument("reviewResponse.")
+                                    reviewDetailResponseDocument()
                             )
                     );
         }
@@ -237,7 +237,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
         return new PagedResponse<>(generateReviewResponses(count), defaultPaging);
     }
 
-    private ReviewDetailResponse generateResponse() {
+    private ReviewDetailResponse generateReviewDetailResponse() {
         User user = UserFixture.B.toEntity();
         ReflectionTestUtils.setField(user, "id", 1L);
 
@@ -289,7 +289,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
 
     private ResponseFieldsSnippet reviewResponseDocument(String resultWrapper) {
 
-        ResponseFieldsSnippet snippet = responseFields(
+        return responseFields(
                 fieldWithPath(resultWrapper + "reviewId").description("리뷰 아이디"),
                 fieldWithPath(resultWrapper + "hairStyleName").description("헤어스타일 이름"),
                 fieldWithPath(resultWrapper + "userNickname").description("작성자 닉네임"),
@@ -302,10 +302,12 @@ public class ReviewSearchControllerTest extends ControllerTest {
                 fieldWithPath(resultWrapper + "hashTags[].tag").description("해시 태그"),
                 fieldWithPath(resultWrapper + "writer").description("작성자 여부")
         );
-        if (resultWrapper.equals("reviewResponse.")) {
-            snippet = snippet.and(fieldWithPath("liking").description("좋아요 여부"));
-        }
-        return snippet;
+    }
+
+    private ResponseFieldsSnippet reviewDetailResponseDocument() {
+        return reviewResponseDocument("reviewResponse.").and(
+                fieldWithPath("liking").description("좋아요 여부")
+        );
     }
 
     private ResponseFieldsSnippet pagedReviewResponseDocument() {
