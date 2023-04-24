@@ -29,8 +29,7 @@ public class LikeReviewServiceTest extends ServiceTest {
     void setUp() {
         //given
         user = userRepository.save(UserFixture.B.toEntity());
-        HairStyle hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
-        review = reviewRepository.save(ReviewFixture.A.toEntity(user, hairStyle));
+        review = reviewRepository.save(ReviewFixture.A.toEntity(user, null));
     }
 
     @Nested
@@ -68,6 +67,33 @@ public class LikeReviewServiceTest extends ServiceTest {
                     () -> assertThat(review.getLikes()).isZero(),
                     () -> assertThat(all).isEmpty()
             );
+        }
+    }
+
+    @Nested
+    @DisplayName("리뷰와 사용자 아이디로 좋아요 존재여부를 확인한다")
+    class checkIsLiking {
+        @Test
+        @DisplayName("좋아요가 존재하여 true 를 응답한다")
+        void exist() {
+            //given
+            likeReviewRepository.save(LikeReview.createLikeReview(user, review));
+
+            //when
+            boolean result = likeReviewService.checkIsLiking(user.getId(), review.getId());
+
+            //then
+            assertThat(result).isTrue();
+        }
+
+        @Test
+        @DisplayName("좋아요가 존재하지 않아 false 를 응답한다")
+        void notExist() {
+            //when
+            boolean result = likeReviewService.checkIsLiking(user.getId(), review.getId());
+
+            //then
+            assertThat(result).isFalse();
         }
     }
 }

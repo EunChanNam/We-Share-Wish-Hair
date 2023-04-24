@@ -1,9 +1,11 @@
-package com.inq.wishhair.wesharewishhair.review.domain.likereview;
+package com.inq.wishhair.wesharewishhair.review.domain.likereview.infra.query;
 
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
+import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
