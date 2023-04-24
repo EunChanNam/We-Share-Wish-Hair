@@ -67,7 +67,7 @@ public class Review extends BaseEntity {
         likeReviews.executeLike(user, this);
     }
 
-    public int getLikes() {
+    public long getLikes() {
         return likeReviews.getLikes();
     }
 
@@ -81,6 +81,10 @@ public class Review extends BaseEntity {
 
     public boolean isWriter(Long userId) {
         return this.user.getId().equals(userId);
+    }
+
+    public boolean isLikingUSer(Long userId) {
+        return likeReviews.isLikingUser(userId);
     }
 
     private void applyPhotos(List<Photo> photos) {

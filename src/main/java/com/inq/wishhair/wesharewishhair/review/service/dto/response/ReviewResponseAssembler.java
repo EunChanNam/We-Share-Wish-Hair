@@ -3,25 +3,60 @@ package com.inq.wishhair.wesharewishhair.review.service.dto.response;
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.review.infra.query.dto.response.ReviewQueryResponse;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Slice;
 
 import java.util.List;
 
+import static com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponseAssembler.*;
+import static com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponseAssembler.*;
+
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class ReviewResponseAssembler {
 
-    public static PagedResponse<ReviewResponse> toPagedReviewResponse(Slice<Review> slice, Long userId) {
+    public static PagedResponse<ReviewResponse> toPagedReviewResponse(Slice<ReviewQueryResponse> slice, Long userId) {
         return new PagedResponse<>(transferContentToResponse(slice, userId));
     }
 
-    private static Slice<ReviewResponse> transferContentToResponse(Slice<Review> slice, Long userId) {
+    private static Slice<ReviewResponse> transferContentToResponse(Slice<ReviewQueryResponse> slice, Long userId) {
         return slice.map(review -> toReviewResponse(review, userId));
     }
 
+    public static ReviewResponse toReviewResponse(ReviewQueryResponse queryResponse, Long userId) {
+        Review review = queryResponse.getReview();
+        return new ReviewResponse(
+                review.getId(),
+                review.getHairStyle().getName(),
+                review.getUser().getNicknameValue(),
+                review.getScore().getValue(),
+                review.getContents().getValue(),
+                review.getCreatedDate(),
+                toPhotoResponses(review.getPhotos()),
+                queryResponse.getLikes(),
+                toHashTagResponses(review.getHairStyle().getHashTags()),
+                review.isWriter(userId)
+        );
+    }
+
     public static ReviewResponse toReviewResponse(Review review, Long userId) {
-        return new ReviewResponse(review, userId);
+        return new ReviewResponse(
+                review.getId(),
+                review.getHairStyle().getName(),
+                review.getUser().getNicknameValue(),
+                review.getScore().getValue(),
+                review.getContents().getValue(),
+                review.getCreatedDate(),
+                toPhotoResponses(review.getPhotos()),
+                review.getLikes(),
+                toHashTagResponses(review.getHairStyle().getHashTags()),
+                review.isWriter(userId)
+        );
+    }
+
+    public static ReviewDetailResponse toReviewDetailResponse(Review review, Long userId) {
+        return new ReviewDetailResponse(toReviewResponse(review, userId), review.isLikingUSer(userId));
     }
 
     public static ResponseWrapper<ReviewSimpleResponse> toWrappedSimpleResponse(List<Review> reviews) {

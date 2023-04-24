@@ -40,7 +40,7 @@ public class ReviewFindServiceTest extends ServiceTest {
         Review result = reviewFindService.findWithUserById(review.getId());
 
         //then
-        assertReview(result);
+        assertThat(result).isEqualTo(review);
     }
 
     @Test
@@ -53,16 +53,6 @@ public class ReviewFindServiceTest extends ServiceTest {
         Review result = reviewFindService.findWithLikeReviewsById(review.getId());
 
         //then
-        assertReview(result);
-    }
-
-    private void assertReview(Review result) {
-        assertAll(
-                () -> assertThat(result.getUser()).isEqualTo(user),
-                () -> assertThat(result.getHairStyle()).isEqualTo(hairStyle),
-                () -> assertThat(result.getScore()).isEqualTo(review.getScore()),
-                () -> assertThat(result.getContents()).isEqualTo(review.getContents()),
-                () -> assertThat(result.getLikeReviews()).hasSize(review.getLikeReviews().size())
-        );
+        assertThat(result).isEqualTo(review);
     }
 }

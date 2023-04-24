@@ -9,6 +9,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse;
@@ -164,6 +165,6 @@ public class UserInfoControllerTest extends ControllerTest {
 
         ReflectionTestUtils.setField(review, "id", index + 1L);
 
-        return new ReviewResponse(review, user.getId());
+        return ReviewResponseAssembler.toReviewResponse(review, 1L);
     }
 }

@@ -1,9 +1,6 @@
 package com.inq.wishhair.wesharewishhair.review.service.dto.response;
 
-import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponseAssembler;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
-import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponseAssembler;
-import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,22 +26,9 @@ public class ReviewResponse {
 
     private List<PhotoResponse> photos;
 
-    private int likes;
+    private long likes;
 
     private List<HashTagResponse> hashTags;
 
     private boolean isWriter;
-
-    public ReviewResponse(Review review, Long userId) {
-        this.reviewId = review.getId();
-        this.hairStyleName = review.getHairStyle().getName();
-        this.userNickname = review.getUser().getName();
-        this.score = review.getScore().getValue();
-        this.contents = review.getContentsValue();
-        this.createdDate = review.getCreatedDate();
-        this.likes = review.getLikes();
-        this.photos = PhotoResponseAssembler.toPhotoResponses(review.getPhotos());
-        this.hashTags = HairStyleResponseAssembler.toHashTagResponses(review.getHairStyle().getHashTags());
-        this.isWriter = review.isWriter(userId);
-    }
 }
