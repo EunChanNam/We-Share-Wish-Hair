@@ -31,7 +31,7 @@ public class RecentReviewDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.review_activity_detail_recent);
+        setContentView(R.layout.review_detail_activity_recent);
 
         btn_back = findViewById(R.id.toolbar_btn_back);
         btn_back.setOnClickListener(view -> finish());

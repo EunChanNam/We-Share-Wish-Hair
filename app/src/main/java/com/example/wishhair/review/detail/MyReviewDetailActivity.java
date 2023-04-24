@@ -11,6 +11,6 @@ public class MyReviewDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_review_detail);
+        setContentView(R.layout.review_detail_activity_my);
     }
 }
