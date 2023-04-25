@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
+import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
@@ -38,8 +39,8 @@ public class HairStyleSearchController {
     }
 
     @GetMapping("/wish")
-    public ResponseWrapper<HairStyleResponse> findWishHairStyles(@ExtractPayload Long useId,
-                                                                 Pageable pageable) {
+    public PagedResponse<HairStyleResponse> findWishHairStyles(@ExtractPayload Long useId,
+                                                               Pageable pageable) {
 
         return hairStyleSearchService.findWishHairStyles(useId, pageable);
     }
