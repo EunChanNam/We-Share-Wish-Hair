@@ -13,4 +13,6 @@ public interface HairStyleQueryRepository {
     List<HairStyle> findByHashTags(List<Tag> tags, Sex sex, Pageable pageable);
 
     List<HairStyle> findByFaceShapeTag(FaceShape faceShape, Sex sex, Pageable pageable);
+
+    List<HairStyle> findByWish(Long userId, Pageable pageable);
 }

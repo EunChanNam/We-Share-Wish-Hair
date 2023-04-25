@@ -29,10 +29,10 @@ public class HairStyle {
     private String name;
 
     @OneToMany(mappedBy = "hairStyle", cascade = CascadeType.PERSIST)
-    private List<Photo> photos = new ArrayList<>();
+    private final List<Photo> photos = new ArrayList<>();
 
     @OneToMany(mappedBy = "hairStyle", cascade = CascadeType.PERSIST)
-    private List<HashTag> hashTags = new ArrayList<>();
+    private final List<HashTag> hashTags = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Sex sex;

@@ -4,7 +4,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.QHairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.QHashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
-import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.QWishHair;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import com.querydsl.core.types.OrderSpecifier;
@@ -25,6 +25,7 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
 
     private final QHairStyle hairStyle = new QHairStyle("h");
     private final QHashTag hashTag = new QHashTag("t");
+    private final QWishHair wish = new QWishHair("w");
 
     @Override
     public List<HairStyle> findByHashTags(List<Tag> tags, Sex sex, Pageable pageable) {
@@ -55,6 +56,20 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
 
         return query
                 .orderBy(hairStyle.wishListCount.value.desc(), hairStyle.name.asc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+    }
+
+    @Override
+    public List<HairStyle> findByWish(Long userId, Pageable pageable) {
+        return factory
+                .select(hairStyle)
+                .from(hairStyle)
+                .innerJoin(hairStyle.wishHairs.wishHairs, wish)
+                .where(wish.userId.eq(userId))
+                .groupBy(hairStyle.id)
+                .orderBy(wish.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
