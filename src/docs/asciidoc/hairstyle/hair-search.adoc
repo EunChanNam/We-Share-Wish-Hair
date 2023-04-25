@@ -45,3 +45,18 @@ include::{snippets}/recommend-hair-style-by-face-shape/success/response-fields.a
 Http Response
 include::{snippets}/recommend-hair-style-by-face-shape/fail-by-no-access-token/http-response.adoc[]
 include::{snippets}/recommend-hair-style-by-face-shape/fail-by-no-access-token/response-fields.adoc[]
+
+== 찜한 헤어스타일 조회 API
+=== 1. 성공
+Http Request
+include::{snippets}/find-wish-hair-styles/success/http-request.adoc[]
+include::{snippets}/find-wish-hair-styles/success/request-headers.adoc[]
+include::{snippets}/find-wish-hair-styles/success/request-parameters.adoc[]
+
+Http Response
+include::{snippets}/find-wish-hair-styles/success/http-response.adoc[]
+include::{snippets}/find-wish-hair-styles/success/response-fields.adoc[]
+
+=== 2. 헤더에 토큰을 포함하지 않아 실패
+include::{snippets}/find-wish-hair-styles/fail-by-no-access-token/http-response.adoc[]
+

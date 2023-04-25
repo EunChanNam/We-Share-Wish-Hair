@@ -20,7 +20,7 @@ include::user/point-search.adoc[]
 
 [[hairStyle]]
 = HairStyle API
-include::hairstyle/recommend.adoc[]
+include::hairstyle/hair-search.adoc[]
 
 [[review]]
 = Review API

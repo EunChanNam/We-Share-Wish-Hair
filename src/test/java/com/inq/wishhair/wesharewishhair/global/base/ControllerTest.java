@@ -65,7 +65,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         {UserController.class, HairStyleSearchController.class, AuthController.class, TokenReissueController.class,
         HairStyleSearchController.class, MailAuthController.class, ReviewController.class, ReviewSearchController.class,
         LikeReviewController.class, UserInfoController.class, PointController.class, PointSearchController.class,
-        WishHairController.class})
+        WishHairController.class, WishHairController.class})
 @ExtendWith(RestDocumentationExtension.class)
 @Import(RestDocsConfig.class)
 @AutoConfigureRestDocs
@@ -81,10 +81,10 @@ public abstract class ControllerTest {
     protected ObjectMapper objectMapper;
 
     @MockBean
-    protected UserValidator userValidator;
+    protected WishHairService wishHairService;
 
     @MockBean
-    protected WishHairService wishHairService;
+    protected UserValidator userValidator;
 
     @MockBean
     protected UserService userService;
@@ -204,7 +204,7 @@ public abstract class ControllerTest {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 
         if (!pageable.getSort().isEmpty()) {
-            String sort = pageable.getSort().toString().replace(": ", ",");
+            String sort = pageable.getSort().toString().replace(": ", ".");
             params.add("sort", sort);
         }
 
