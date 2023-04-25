@@ -5,6 +5,7 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHairs;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import javax.persistence.*;
@@ -39,6 +40,9 @@ public class HairStyle {
     @Embedded
     private WishListCount wishListCount;
 
+    @Embedded
+    private WishHairs wishHairs;
+
     //==생성 메서드==//
     private HairStyle(String name, Sex sex, List<Photo> photos, List<Tag> tags) {
         this.name = name;
@@ -46,6 +50,7 @@ public class HairStyle {
         applyPhotos(photos);
         applyHasTags(tags);
         wishListCount = new WishListCount();
+        wishHairs = new WishHairs();
     }
 
     public static HairStyle createHairStyle(

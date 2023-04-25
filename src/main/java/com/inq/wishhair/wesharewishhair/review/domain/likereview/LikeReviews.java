@@ -16,7 +16,7 @@ import java.util.List;
 public class LikeReviews {
 
     @OneToMany(mappedBy = "review", cascade = CascadeType.PERSIST, orphanRemoval = true)
-    private List<LikeReview> likeReviews = new ArrayList<>();
+    private final List<LikeReview> likeReviews = new ArrayList<>();
 
     public void executeLike(User user, Review review) {
         Long userId = user.getId();
