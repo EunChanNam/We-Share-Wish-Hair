@@ -65,10 +65,9 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
     public List<HairStyle> findByWish(Long userId, Pageable pageable) {
         return factory
                 .select(hairStyle)
-                .from(hairStyle)
-                .innerJoin(hairStyle.wishHairs.wishHairs, wish)
+                .from(wish)
+                .join(wish.hairStyle, hairStyle)
                 .where(wish.userId.eq(userId))
-                .groupBy(hairStyle.id)
                 .orderBy(wish.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
