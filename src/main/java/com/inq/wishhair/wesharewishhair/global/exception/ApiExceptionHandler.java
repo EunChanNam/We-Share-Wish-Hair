@@ -9,7 +9,6 @@ import com.inq.wishhair.wesharewishhair.review.controller.ReviewController;
 import com.inq.wishhair.wesharewishhair.review.controller.ReviewSearchController;
 import com.inq.wishhair.wesharewishhair.user.controller.*;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.WishHairController;
-import com.inq.wishhair.wesharewishhair.hairstyle.controller.WishHairSearchController;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -23,7 +22,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
         ReviewController.class, WishHairController.class, AuthController.class,
         TokenReissueController.class, MailAuthController.class, UserInfoController.class,
         LikeReviewController.class, ReviewSearchController.class, PointSearchController.class,
-        PointController.class, WishHairSearchController.class
+        PointController.class
 })
 public class ApiExceptionHandler {
 

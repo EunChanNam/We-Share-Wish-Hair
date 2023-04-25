@@ -23,8 +23,6 @@ import com.inq.wishhair.wesharewishhair.user.controller.*;
 import com.inq.wishhair.wesharewishhair.user.service.*;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleSearchController;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.WishHairController;
-import com.inq.wishhair.wesharewishhair.hairstyle.controller.WishHairSearchController;
-import com.inq.wishhair.wesharewishhair.hairstyle.service.WishHairSearchService;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.WishHairService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -67,7 +65,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         {UserController.class, HairStyleSearchController.class, AuthController.class, TokenReissueController.class,
         HairStyleSearchController.class, MailAuthController.class, ReviewController.class, ReviewSearchController.class,
         LikeReviewController.class, UserInfoController.class, PointController.class, PointSearchController.class,
-        WishHairController.class, WishHairSearchController.class})
+        WishHairController.class})
 @ExtendWith(RestDocumentationExtension.class)
 @Import(RestDocsConfig.class)
 @AutoConfigureRestDocs
@@ -87,9 +85,6 @@ public abstract class ControllerTest {
 
     @MockBean
     protected WishHairService wishHairService;
-
-    @MockBean
-    protected WishHairSearchService wishHairSearchService;
 
     @MockBean
     protected UserService userService;

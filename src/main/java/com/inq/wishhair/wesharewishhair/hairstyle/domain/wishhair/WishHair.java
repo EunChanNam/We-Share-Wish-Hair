@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair;
 
 import com.inq.wishhair.wesharewishhair.auditing.BaseEntity;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
+
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -31,7 +31,7 @@ public class WishHair extends BaseEntity {
         this.createdDate = LocalDateTime.now();
     }
 
-    public static WishHair createWishList(Long userId, Long hairStyleId) {
+    public static WishHair createWishHair(Long userId, Long hairStyleId) {
         return new WishHair(hairStyleId, userId);
     }
 }

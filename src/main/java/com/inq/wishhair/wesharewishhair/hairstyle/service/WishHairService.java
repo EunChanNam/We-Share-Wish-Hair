@@ -19,7 +19,7 @@ public class WishHairService {
     public void executeWish(Long hairStyleId, Long userId) {
         validateDoesNotExistWishHair(hairStyleId, userId);
 
-        wishHairRepository.save(WishHair.createWishList(userId, hairStyleId));
+        wishHairRepository.save(WishHair.createWishHair(userId, hairStyleId));
     }
 
     @Transactional
