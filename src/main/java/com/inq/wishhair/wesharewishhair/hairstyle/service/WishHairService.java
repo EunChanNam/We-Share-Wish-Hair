@@ -16,7 +16,6 @@ public class WishHairService {
 
     private final WishHairRepository wishHairRepository;
     private final HairStyleFindService hairStyleFindService;
-    private final WishHairFindService wishHairFindService;
 
     @Transactional
     public void executeWish(Long hairStyleId, Long userId) {
@@ -33,28 +32,6 @@ public class WishHairService {
          wishHairRepository.deleteByHairStyleAndUser(hairStyleId, userId);
     }
 
-    @Transactional
-    public Long createWishList(Long hairStyleId, Long userId) {
-
-        HairStyle hairStyle = hairStyleFindService.findWithLockById(hairStyleId);
-
-        WishHair wishHair = WishHair.createWishList(userId, hairStyle);
-
-        hairStyle.plusWishListCount();
-
-        return wishHairRepository.save(wishHair).getId();
-    }
-
-    @Transactional
-    public void deleteWishList(Long wishListId, Long userId) {
-        WishHair wishHair = wishHairFindService.findByIdWithHairStyle(wishListId);
-        validateIsHost(wishHair, userId);
-
-        wishHair.getHairStyle().minusWishListCount();
-
-        wishHairRepository.deleteById(wishListId);
-    }
-
     private void validateDoesWishHairExist(Long hairStyleId, Long userId) {
         if (!wishHairRepository.existByHairStyleIdAndUserId(hairStyleId, userId)) {
             throw new WishHairException(ErrorCode.WISH_HAIR_NOT_EXIST);
@@ -64,12 +41,6 @@ public class WishHairService {
     private void validateDoesNotExistWishHair(Long hairStyleId, Long userId) {
         if (wishHairRepository.existByHairStyleIdAndUserId(hairStyleId, userId)) {
             throw new WishHairException(ErrorCode.WISH_HAIR_ALREADY_EXIST);
-        }
-    }
-
-    private void validateIsHost(WishHair wishHair, Long userId) {
-        if (!wishHair.isHost(userId)) {
-            throw new WishHairException(ErrorCode.WISH_LIST_NOT_HOST);
         }
     }
 }
