@@ -19,6 +19,14 @@ public class WishHairService {
     private final WishHairFindService wishHairFindService;
 
     @Transactional
+    public void executeWish(Long hairStyleId, Long userId) {
+        validateDoesWishHairExist(hairStyleId, userId);
+
+        HairStyle hairStyle = hairStyleFindService.findById(hairStyleId);
+        wishHairRepository.save(WishHair.createWishList(userId, hairStyle));
+    }
+
+    @Transactional
     public Long createWishList(Long hairStyleId, Long userId) {
 
         HairStyle hairStyle = hairStyleFindService.findWithLockById(hairStyleId);
@@ -38,6 +46,13 @@ public class WishHairService {
         wishHair.getHairStyle().minusWishListCount();
 
         wishHairRepository.deleteById(wishListId);
+    }
+
+    private void validateDoesWishHairExist(Long hairStyleId, Long userId) {
+        boolean exist = wishHairRepository.existByHairStyleIdAndUserId(hairStyleId, userId);
+        if (!exist) {
+            throw new WishHairException(ErrorCode.WISH_HAIR_NOT_EXIST);
+        }
     }
 
     private void validateIsHost(WishHair wishHair, Long userId) {
