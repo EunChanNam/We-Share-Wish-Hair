@@ -5,7 +5,6 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
 import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponse;
-import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -39,10 +38,7 @@ public enum HairStyleFixture {
     private final int wishListCount;
 
     public HairStyle toEntity() {
-        List<Photo> photos = filenames.stream()
-                .map((originalFilename) -> Photo.of(originalFilename, originalFilename))
-                .toList();
-        HairStyle hairStyle = HairStyle.createHairStyle(name, sex, photos, tags);
+        HairStyle hairStyle = HairStyle.createHairStyle(name, sex, filenames, tags);
         for (int i = 0; i < wishListCount; i++) {
             hairStyle.plusWishListCount();
         }

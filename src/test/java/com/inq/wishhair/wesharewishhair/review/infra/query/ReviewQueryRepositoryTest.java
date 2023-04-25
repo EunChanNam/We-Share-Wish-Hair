@@ -3,8 +3,6 @@ package com.inq.wishhair.wesharewishhair.review.infra.query;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
-import com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils;
-import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
@@ -66,7 +64,7 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
                 () -> assertThat(actual).isEqualTo(review),
                 () -> assertThat(actual.getUser()).isEqualTo(user),
                 () -> assertThat(actual.getHairStyle()).isEqualTo(hairStyle),
-                () -> assertThat(actual.getPhotos()).hasSize(A.getOriginalFilenames().size()),
+                () -> assertThat(actual.getPhotos()).hasSize(A.getStoreUrls().size()),
                 () -> assertThat(content.get(0).getLikes()).isZero()
         );
     }
@@ -90,7 +88,7 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
                 () -> assertThat(actual).isEqualTo(review2),
                 () -> assertThat(actual.getUser()).isEqualTo(user),
                 () -> assertThat(actual.getHairStyle()).isEqualTo(hairStyle),
-                () -> assertThat(actual.getPhotos()).hasSize(B.getOriginalFilenames().size()),
+                () -> assertThat(actual.getPhotos()).hasSize(B.getStoreUrls().size()),
                 () -> assertThat(content.get(0).getLikes()).isEqualTo(1)
         );
     }
@@ -109,7 +107,7 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
                 () -> assertThat(actual).isEqualTo(review),
                 () -> assertThat(actual.getUser()).isEqualTo(user),
                 () -> assertThat(actual.getHairStyle()).isEqualTo(hairStyle),
-                () -> assertThat(actual.getPhotos()).hasSize(A.getOriginalFilenames().size()),
+                () -> assertThat(actual.getPhotos()).hasSize(A.getStoreUrls().size()),
                 () -> assertThat(content.get(0).getLikes()).isZero()
         );
     }
@@ -126,7 +124,7 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
                 () -> assertThat(result.get(0)).isEqualTo(review),
                 () -> assertThat(result.get(0).getUser()).isEqualTo(user),
                 () -> assertThat(result.get(0).getHairStyle()).isEqualTo(hairStyle),
-                () -> assertThat(result.get(0).getPhotos()).hasSize(A.getOriginalFilenames().size())
+                () -> assertThat(result.get(0).getPhotos()).hasSize(A.getStoreUrls().size())
         );
     }
 }

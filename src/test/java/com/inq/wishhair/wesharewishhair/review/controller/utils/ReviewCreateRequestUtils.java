@@ -25,7 +25,7 @@ public abstract class ReviewCreateRequestUtils {
 
     private static List<MultipartFile> generateFiles(ReviewFixture fixture) throws IOException {
         List<MultipartFile> files = new ArrayList<>();
-        for (String originalFilename : fixture.getOriginalFilenames()) {
+        for (String originalFilename : fixture.getStoreUrls()) {
             files.add(createMultipartFile(originalFilename));
         }
         return files;

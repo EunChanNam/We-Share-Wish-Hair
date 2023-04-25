@@ -155,6 +155,7 @@ public class HairStyleQueryRepositoryTest extends RepositoryTest {
             int index = indexes.get(i);
             HairStyle result = results.get(i);
             HairStyle actual = hairStyles[index];
+
             assertThat(result).isEqualTo(actual);
         }
     }

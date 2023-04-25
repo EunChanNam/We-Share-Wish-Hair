@@ -1,7 +1,6 @@
 package com.inq.wishhair.wesharewishhair.global.fixture;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.enums.Score;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
@@ -10,7 +9,6 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Getter
 @AllArgsConstructor
@@ -28,11 +26,10 @@ public enum ReviewFixture {
 
     private final String contents;
     private final Score score;
-    private final List<String> originalFilenames;
+    private final List<String> storeUrls;
 
     public Review toEntity(User user, HairStyle hairStyle) {
-        List<Photo> photos = originalFilenames.stream().
-                map(original -> Photo.of(original, original)).toList();
-        return Review.createReview(user, contents, score, photos, hairStyle);
+
+        return Review.createReview(user, contents, score, storeUrls, hairStyle);
     }
 }

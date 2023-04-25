@@ -45,23 +45,13 @@ public class ReviewRepositoryTest extends RepositoryTest {
     @DisplayName("리뷰를 아이디로 유저 정보와 함께 조회한다")
     void findWithUserById() {
         //when
-        Review result = reviewRepository.findById(review.getId()).orElseThrow();
+        Review result = reviewRepository.findWithPhotosById(review.getId()).orElseThrow();
 
         //then
         assertAll(
                 () -> assertThat(result).isEqualTo(review),
                 () -> assertThat(result.getUser()).isEqualTo(user)
         );
-    }
-
-    @Test
-    @DisplayName("리뷰를 아이디로 락을 걸며 조회한다")
-    void findWithLikeReviewsById() {
-        //when
-        Review result = reviewRepository.findWithLockById(review.getId()).orElseThrow();
-
-        //then
-        assertThat(result).isEqualTo(review);
     }
 
     @Test

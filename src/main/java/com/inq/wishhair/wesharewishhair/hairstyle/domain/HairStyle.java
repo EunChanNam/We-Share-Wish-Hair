@@ -38,7 +38,7 @@ public class HairStyle {
     private WishListCount wishListCount;
 
     //==생성 메서드==//
-    private HairStyle(String name, Sex sex, List<Photo> photos, List<Tag> tags) {
+    private HairStyle(String name, Sex sex, List<String> photos, List<Tag> tags) {
         this.name = name;
         this.sex = sex;
         applyPhotos(photos);
@@ -47,7 +47,7 @@ public class HairStyle {
     }
 
     public static HairStyle createHairStyle(
-            String name, Sex sex, List<Photo> photos, List<Tag> tags) {
+            String name, Sex sex, List<String> photos, List<Tag> tags) {
         return new HairStyle(name, sex, photos, tags);
     }
 
@@ -72,8 +72,7 @@ public class HairStyle {
                 });
     }
 
-    private void applyPhotos(List<Photo> photos) {
-        photos.forEach(photo -> photo.registerHairStyle(this));
-        this.photos.addAll(photos);
+    private void applyPhotos(List<String> storeUrls) {
+        storeUrls.forEach(storeUrl -> photos.add(Photo.createHairStylePhoto(storeUrl, this)));
     }
 }
