@@ -3,8 +3,8 @@ package com.inq.wishhair.wesharewishhair.hairstyle.service;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishList;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishListRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHairRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,36 +12,36 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class WishListService {
+public class WishHairService {
 
-    private final WishListRepository wishListRepository;
+    private final WishHairRepository wishHairRepository;
     private final HairStyleFindService hairStyleFindService;
-    private final WishListFindService wishListFindService;
+    private final WishHairFindService wishHairFindService;
 
     @Transactional
     public Long createWishList(Long hairStyleId, Long userId) {
 
         HairStyle hairStyle = hairStyleFindService.findWithLockById(hairStyleId);
 
-        WishList wishList = WishList.createWishList(userId, hairStyle);
+        WishHair wishHair = WishHair.createWishList(userId, hairStyle);
 
         hairStyle.plusWishListCount();
 
-        return wishListRepository.save(wishList).getId();
+        return wishHairRepository.save(wishHair).getId();
     }
 
     @Transactional
     public void deleteWishList(Long wishListId, Long userId) {
-        WishList wishList = wishListFindService.findByIdWithHairStyle(wishListId);
-        validateIsHost(wishList, userId);
+        WishHair wishHair = wishHairFindService.findByIdWithHairStyle(wishListId);
+        validateIsHost(wishHair, userId);
 
-        wishList.getHairStyle().minusWishListCount();
+        wishHair.getHairStyle().minusWishListCount();
 
-        wishListRepository.deleteById(wishListId);
+        wishHairRepository.deleteById(wishListId);
     }
 
-    private void validateIsHost(WishList wishList, Long userId) {
-        if (!wishList.isHost(userId)) {
+    private void validateIsHost(WishHair wishHair, Long userId) {
+        if (!wishHair.isHost(userId)) {
             throw new WishHairException(ErrorCode.WISH_LIST_NOT_HOST);
         }
     }

@@ -2,7 +2,7 @@ package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
-import com.inq.wishhair.wesharewishhair.hairstyle.service.WishListService;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.WishHairService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,16 +12,16 @@ import java.net.URI;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
-public class WishListController {
+public class WishHairController {
 
-    private final WishListService wishListService;
+    private final WishHairService wishHairService;
 
     @PostMapping("/wish_list/{hairStyleId}")
     public ResponseEntity<Success> createWishList(
             @PathVariable Long hairStyleId,
             @ExtractPayload Long userId) {
 
-        Long wishListId = wishListService.createWishList(hairStyleId, userId);
+        Long wishListId = wishHairService.createWishList(hairStyleId, userId);
 
         return ResponseEntity
                 .created(URI.create("/api/wish_list/" + wishListId))
@@ -32,7 +32,7 @@ public class WishListController {
     public ResponseEntity<Success> deleteWishList(@PathVariable Long wishListId,
                                                   @ExtractPayload Long userId) {
 
-        wishListService.deleteWishList(wishListId, userId);
+        wishHairService.deleteWishList(wishListId, userId);
         return ResponseEntity.ok(new Success());
     }
 }

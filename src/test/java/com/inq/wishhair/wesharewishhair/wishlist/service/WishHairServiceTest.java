@@ -5,8 +5,8 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishList;
-import com.inq.wishhair.wesharewishhair.hairstyle.service.WishListService;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.WishHairService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("WishListServiceTest - SpringBootTest")
-public class WishListServiceTest extends ServiceTest {
+public class WishHairServiceTest extends ServiceTest {
 
     private Long userId;
     private HairStyle hairStyle;
@@ -28,19 +28,19 @@ public class WishListServiceTest extends ServiceTest {
     }
 
     @Autowired
-    private WishListService wishListService;
+    private WishHairService wishHairService;
 
     @Test
     @DisplayName("찜목록 생성 서비스 테스트")
     void createWishList() {
         //when
-        Long result = wishListService.createWishList(hairStyle.getId(), userId);
+        Long result = wishHairService.createWishList(hairStyle.getId(), userId);
 
         //then
         assertAll(
-                () -> assertThat(wishListRepository.findById(result)).isPresent(),
+                () -> assertThat(wishHairRepository.findById(result)).isPresent(),
                 () -> {
-                    WishList actual = wishListRepository.findById(result).orElseThrow();
+                    WishHair actual = wishHairRepository.findById(result).orElseThrow();
                     assertThat(actual.getUserId()).isEqualTo(userId);
                     assertThat(actual.getHairStyle()).isEqualTo(hairStyle);
                 }
@@ -49,28 +49,28 @@ public class WishListServiceTest extends ServiceTest {
 
     @Nested
     @DisplayName("찜목록 삭제 서비스 테스트")
-    class deleteWishList {
+    class deleteWishHair {
         @Test
         @DisplayName("찜목록을 삭제한다")
         void success() {
             //given
-            Long wishListId = wishListRepository.save(WishList.createWishList(userId, hairStyle)).getId();
+            Long wishListId = wishHairRepository.save(WishHair.createWishList(userId, hairStyle)).getId();
 
             //when
-            wishListService.deleteWishList(wishListId, userId);
+            wishHairService.deleteWishList(wishListId, userId);
 
             //then
-            assertThat(wishListRepository.findAll()).isEmpty();
+            assertThat(wishHairRepository.findAll()).isEmpty();
         }
 
         @Test
         @DisplayName("찜 목록 소유자가 아니여서 실패한다")
         void failByNotHost() {
             //given
-            Long wishListId = wishListRepository.save(WishList.createWishList(userId, hairStyle)).getId();
+            Long wishListId = wishHairRepository.save(WishHair.createWishList(userId, hairStyle)).getId();
 
             //when, then
-            assertThatThrownBy(() -> wishListService.deleteWishList(wishListId, 99L))
+            assertThatThrownBy(() -> wishHairService.deleteWishList(wishListId, 99L))
                     .isInstanceOf(WishHairException.class)
                     .hasMessageContaining(ErrorCode.WISH_LIST_NOT_HOST.getMessage());
         }

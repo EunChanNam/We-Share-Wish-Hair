@@ -22,10 +22,10 @@ import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.user.controller.*;
 import com.inq.wishhair.wesharewishhair.user.service.*;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleController;
-import com.inq.wishhair.wesharewishhair.hairstyle.controller.WishListController;
-import com.inq.wishhair.wesharewishhair.hairstyle.controller.WishListSearchController;
-import com.inq.wishhair.wesharewishhair.hairstyle.service.WishListSearchService;
-import com.inq.wishhair.wesharewishhair.hairstyle.service.WishListService;
+import com.inq.wishhair.wesharewishhair.hairstyle.controller.WishHairController;
+import com.inq.wishhair.wesharewishhair.hairstyle.controller.WishHairSearchController;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.WishHairSearchService;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.WishHairService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +67,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         {UserController.class, HairStyleController.class, AuthController.class, TokenReissueController.class,
         HairStyleController.class, MailAuthController.class, ReviewController.class, ReviewSearchController.class,
         LikeReviewController.class, UserInfoController.class, PointController.class, PointSearchController.class,
-        WishListController.class, WishListSearchController.class})
+        WishHairController.class, WishHairSearchController.class})
 @ExtendWith(RestDocumentationExtension.class)
 @Import(RestDocsConfig.class)
 @AutoConfigureRestDocs
@@ -86,10 +86,10 @@ public abstract class ControllerTest {
     protected UserValidator userValidator;
 
     @MockBean
-    protected WishListService wishListService;
+    protected WishHairService wishHairService;
 
     @MockBean
-    protected WishListSearchService wishListSearchService;
+    protected WishHairSearchService wishHairSearchService;
 
     @MockBean
     protected UserService userService;

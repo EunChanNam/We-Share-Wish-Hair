@@ -2,7 +2,7 @@ package com.inq.wishhair.wesharewishhair.wishlist.domain;
 
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishList;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("WishList - 도매인 테스트")
-public class WishListTest {
+public class WishHairTest {
 
     @Test
     @DisplayName("WishList 를 생성한다")
@@ -20,12 +20,12 @@ public class WishListTest {
         HairStyle hairStyle = HairStyleFixture.A.toEntity();
 
         //when
-        WishList wishList = WishList.createWishList(userId, hairStyle);
+        WishHair wishHair = WishHair.createWishList(userId, hairStyle);
 
         //then
         assertAll(
-                () -> assertThat(wishList.getUserId()).isEqualTo(userId),
-                () -> assertThat(wishList.getHairStyle()).isEqualTo(hairStyle)
+                () -> assertThat(wishHair.getUserId()).isEqualTo(userId),
+                () -> assertThat(wishHair.getHairStyle()).isEqualTo(hairStyle)
         );
     }
 }

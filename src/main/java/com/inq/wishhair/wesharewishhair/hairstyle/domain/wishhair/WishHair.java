@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist;
+package com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair;
 
 import com.inq.wishhair.wesharewishhair.auditing.BaseEntity;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class WishList extends BaseEntity {
+public class WishHair extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,14 +26,14 @@ public class WishList extends BaseEntity {
     private Long userId;
 
     //==생성 메서드==//
-    private WishList(HairStyle hairStyle, Long userId) {
+    private WishHair(HairStyle hairStyle, Long userId) {
         this.hairStyle = hairStyle;
         this.userId = userId;
         this.createdDate = LocalDateTime.now();
     }
 
-    public static WishList createWishList(Long userId, HairStyle hairStyle) {
-        return new WishList(hairStyle, userId);
+    public static WishHair createWishList(Long userId, HairStyle hairStyle) {
+        return new WishHair(hairStyle, userId);
     }
 
     //==편의 메서드==//

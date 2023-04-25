@@ -2,8 +2,8 @@ package com.inq.wishhair.wesharewishhair.wishlist.domain;
 
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishList;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishListSearchRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHairSearchRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,13 +17,13 @@ import static java.time.LocalDateTime.now;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("WishListSearchRepositoryTest - DataJpaTest")
-public class WishListSearchRepositoryTest extends RepositoryTest {
+public class WishHairSearchRepositoryTest extends RepositoryTest {
 
     @Autowired
-    private WishListSearchRepository wishListSearchRepository;
+    private WishHairSearchRepository wishHairSearchRepository;
 
     private Long userId;
-    private WishList[] wishLists;
+    private WishHair[] wishHairs;
 
     @BeforeEach
     void setUp() {
@@ -31,10 +31,10 @@ public class WishListSearchRepositoryTest extends RepositoryTest {
         userId = 1L;
 
         HairStyleFixture[] hairStyleFixtures = HairStyleFixture.values();
-        wishLists = new WishList[hairStyleFixtures.length];
+        wishHairs = new WishHair[hairStyleFixtures.length];
 
         for (int index = 0; index < hairStyleFixtures.length; index++) {
-            wishLists[index] = WishList.createWishList(userId, hairStyleFixtures[index].toEntity());
+            wishHairs[index] = WishHair.createWishList(userId, hairStyleFixtures[index].toEntity());
         }
     }
 
@@ -45,7 +45,7 @@ public class WishListSearchRepositoryTest extends RepositoryTest {
         saveWishLists(List.of(0, 1, 2, 3));
 
         //when
-        Slice<WishList> result = wishListSearchRepository.findByUser(userId, getDefaultPageable());
+        Slice<WishHair> result = wishHairSearchRepository.findByUser(userId, getDefaultPageable());
 
         //then
         assertThat(result.hasNext()).isFalse();
@@ -54,17 +54,17 @@ public class WishListSearchRepositoryTest extends RepositoryTest {
 
     private void saveWishLists(List<Integer> indexes) {
         for (int index : indexes) {
-            hairStyleRepository.save(wishLists[index].getHairStyle());
-            wishListSearchRepository.save(wishLists[index]);
+            hairStyleRepository.save(wishHairs[index].getHairStyle());
+            wishHairSearchRepository.save(wishHairs[index]);
         }
     }
 
-    private void assertWishListsMatch(List<WishList> results, List<Integer> indexes) {
+    private void assertWishListsMatch(List<WishHair> results, List<Integer> indexes) {
         assertThat(results).hasSize(indexes.size());
 
         for (int i = 0; i < results.size(); i++) {
-            WishList actual = results.get(i);
-            WishList expected = wishLists[indexes.get(i)];
+            WishHair actual = results.get(i);
+            WishHair expected = wishHairs[indexes.get(i)];
 
             assertThat(actual).isEqualTo(expected);
         }

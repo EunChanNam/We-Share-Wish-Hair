@@ -16,13 +16,13 @@ import static org.springframework.restdocs.request.RequestDocumentation.pathPara
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("WishListControllerTest - WebMvcTest")
-public class WishListControllerTest extends ControllerTest {
+public class WishHairControllerTest extends ControllerTest {
 
     private static final String BASE_URL = "/api/wish_list";
 
     @Nested
     @DisplayName("찜 목록 생성 API")
-    class createWishList {
+    class createWishHair {
         @Test
         @DisplayName("찜 목록을 생성한다")
         void success() throws Exception {
@@ -62,7 +62,7 @@ public class WishListControllerTest extends ControllerTest {
 
     @Nested
     @DisplayName("찜 목록 삭제 API")
-    class deleteWishList {
+    class deleteWishHair {
         @Test
         @DisplayName("찜 목록을 삭제한다")
         void success() throws Exception {
@@ -104,7 +104,7 @@ public class WishListControllerTest extends ControllerTest {
         void failByNotHost() throws Exception {
             //given
             ErrorCode expectedError = ErrorCode.WISH_LIST_NOT_HOST;
-            doThrow(new WishHairException(expectedError)).when(wishListService).deleteWishList(1L, 1L);
+            doThrow(new WishHairException(expectedError)).when(wishHairService).deleteWishList(1L, 1L);
 
             //when
             MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders

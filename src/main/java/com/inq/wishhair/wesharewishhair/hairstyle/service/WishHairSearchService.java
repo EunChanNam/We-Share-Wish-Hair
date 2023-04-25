@@ -1,8 +1,8 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishList;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishListSearchRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHairSearchRepository;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.WishListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -13,12 +13,12 @@ import static com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.Wi
 
 @Service
 @RequiredArgsConstructor
-public class WishListSearchService {
+public class WishHairSearchService {
 
-    private final WishListSearchRepository wishListSearchRepository;
+    private final WishHairSearchRepository wishHairSearchRepository;
 
     public PagedResponse<WishListResponse> findWishList(Long userId, Pageable pageable) {
-        Slice<WishList> wishLists = wishListSearchRepository.findByUser(userId, pageable);
+        Slice<WishHair> wishLists = wishHairSearchRepository.findByUser(userId, pageable);
         return toPagedWishListResponse(wishLists);
     }
 }

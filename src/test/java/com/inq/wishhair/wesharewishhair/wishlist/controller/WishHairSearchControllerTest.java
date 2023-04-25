@@ -25,18 +25,18 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("WishListSearchControllerTest - WebMvcTest")
-public class WishListSearchControllerTest extends ControllerTest {
+public class WishHairSearchControllerTest extends ControllerTest {
 
     private static final String BASE_URL = "/api/wish_list";
 
     @Nested
     @DisplayName("찜 목록 조회 API")
-    class getWishList {
+    class getWishHair {
         @Test
         @DisplayName("찜 목록을 조회한다")
         void success() throws Exception {
             //given
-            given(wishListSearchService.findWishList(any(), any()))
+            given(wishHairSearchService.findWishList(any(), any()))
                     .willReturn(generatePagedResponse(4));
 
             //when

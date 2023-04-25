@@ -4,8 +4,8 @@ import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishList;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishListRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHairRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,15 +17,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("WishListRepositoryTest - DataJpaTest")
-public class WishListRepositoryTest extends RepositoryTest {
+public class WishHairRepositoryTest extends RepositoryTest {
 
     @Autowired
-    private WishListRepository wishListRepository;
+    private WishHairRepository wishHairRepository;
 
     @Autowired
     private HairStyleRepository hairStyleRepository;
 
-    private WishList wishList;
+    private WishHair wishHair;
     private Long userId;
     private HairStyle hairStyle;
 
@@ -35,20 +35,20 @@ public class WishListRepositoryTest extends RepositoryTest {
         userId = 1L;
         hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
 
-        wishList = wishListRepository.save(WishList.createWishList(userId, hairStyle));
+        wishHair = wishHairRepository.save(WishHair.createWishList(userId, hairStyle));
     }
 
     @Test
     @DisplayName("찜항목을 아이디로 헤어스타일 정보와 함께 조회한다")
     void findWithHairStyleById() {
         //when
-        Optional<WishList> result = wishListRepository.findById(wishList.getId());
+        Optional<WishHair> result = wishHairRepository.findById(wishHair.getId());
 
         //then
         assertAll(
                 () -> assertThat(result).isPresent(),
                 () -> {
-                    WishList actual = result.orElseThrow();
+                    WishHair actual = result.orElseThrow();
                     assertThat(actual.getHairStyle()).isEqualTo(hairStyle);
                     assertThat(actual.getUserId()).isEqualTo(userId);
                 }

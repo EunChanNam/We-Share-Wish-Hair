@@ -7,8 +7,8 @@ import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointRepository;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishListRepository;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishListSearchRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHairRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHairSearchRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,10 +21,10 @@ import javax.persistence.PersistenceContext;
 public abstract class ServiceTest {
 
     @Autowired
-    protected WishListSearchRepository wishListSearchRepository;
+    protected WishHairSearchRepository wishHairSearchRepository;
 
     @Autowired
-    protected WishListRepository wishListRepository;
+    protected WishHairRepository wishHairRepository;
 
     @Autowired
     protected PointRepository pointRepository;
