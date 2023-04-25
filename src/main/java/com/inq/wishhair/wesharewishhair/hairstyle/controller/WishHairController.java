@@ -7,32 +7,30 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api")
+@RequestMapping("/api/hair_style")
 public class WishHairController {
 
     private final WishHairService wishHairService;
 
-    @PostMapping("/wish_list/{hairStyleId}")
+    @PostMapping("/wish/{hairStyleId}")
     public ResponseEntity<Success> createWishList(
             @PathVariable Long hairStyleId,
             @ExtractPayload Long userId) {
 
-        Long wishListId = wishHairService.createWishList(hairStyleId, userId);
+        wishHairService.executeWish(hairStyleId, userId);
 
-        return ResponseEntity
-                .created(URI.create("/api/wish_list/" + wishListId))
-                .body(new Success());
+        return ResponseEntity.ok(new Success());
     }
 
-    @DeleteMapping("/wish_list/{wishListId}")
-    public ResponseEntity<Success> deleteWishList(@PathVariable Long wishListId,
+    @DeleteMapping("/wish/{hairStyleId}")
+    public ResponseEntity<Success> deleteWishList(@PathVariable Long hairStyleId,
                                                   @ExtractPayload Long userId) {
 
-        wishHairService.deleteWishList(wishListId, userId);
+        wishHairService.cancelWish(hairStyleId, userId);
+
         return ResponseEntity.ok(new Success());
     }
 }
