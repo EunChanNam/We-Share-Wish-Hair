@@ -21,7 +21,7 @@ import com.inq.wishhair.wesharewishhair.review.service.ReviewSearchService;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.user.controller.*;
 import com.inq.wishhair.wesharewishhair.user.service.*;
-import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleController;
+import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleSearchController;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.WishHairController;
 import com.inq.wishhair.wesharewishhair.hairstyle.controller.WishHairSearchController;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.WishHairSearchService;
@@ -64,8 +64,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @WebMvcTest(value =
-        {UserController.class, HairStyleController.class, AuthController.class, TokenReissueController.class,
-        HairStyleController.class, MailAuthController.class, ReviewController.class, ReviewSearchController.class,
+        {UserController.class, HairStyleSearchController.class, AuthController.class, TokenReissueController.class,
+        HairStyleSearchController.class, MailAuthController.class, ReviewController.class, ReviewSearchController.class,
         LikeReviewController.class, UserInfoController.class, PointController.class, PointSearchController.class,
         WishHairController.class, WishHairSearchController.class})
 @ExtendWith(RestDocumentationExtension.class)

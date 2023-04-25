@@ -48,9 +48,13 @@ public class HairStyleSearchService {
 
     public ResponseWrapper<HairStyleResponse> recommendHairByFaceShape(Long userId) {
         User user = userFindService.findByUserId(userId);
-        Pageable pageable = generateSimplePageable(4);
 
-        List<HairStyle> hairStyles = hairStyleRepository.findByFaceShapeTag(user.getFaceShape(), user.getSex(), pageable);
+        List<HairStyle> hairStyles = hairStyleRepository.findByFaceShapeTag(user.getFaceShape(), user.getSex(), getDefaultPageable());
+        return toWrappedHairStyleResponse(hairStyles);
+    }
+
+    public ResponseWrapper<HairStyleResponse> findWishHairStyles(Long userId, Pageable pageable) {
+        List<HairStyle> hairStyles = hairStyleRepository.findByWish(userId, pageable);
         return toWrappedHairStyleResponse(hairStyles);
     }
 

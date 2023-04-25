@@ -3,7 +3,7 @@ package com.inq.wishhair.wesharewishhair.global.exception;
 import com.inq.wishhair.wesharewishhair.auth.controller.MailAuthController;
 import com.inq.wishhair.wesharewishhair.auth.controller.TokenReissueController;
 import com.inq.wishhair.wesharewishhair.auth.controller.AuthController;
-import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleController;
+import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleSearchController;
 import com.inq.wishhair.wesharewishhair.review.controller.LikeReviewController;
 import com.inq.wishhair.wesharewishhair.review.controller.ReviewController;
 import com.inq.wishhair.wesharewishhair.review.controller.ReviewSearchController;
@@ -19,7 +19,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 @RestControllerAdvice(assignableTypes = {
-        UserController.class, AuthController.class, HairStyleController.class,
+        UserController.class, AuthController.class, HairStyleSearchController.class,
         ReviewController.class, WishHairController.class, AuthController.class,
         TokenReissueController.class, MailAuthController.class, UserInfoController.class,
         LikeReviewController.class, ReviewSearchController.class, PointSearchController.class,

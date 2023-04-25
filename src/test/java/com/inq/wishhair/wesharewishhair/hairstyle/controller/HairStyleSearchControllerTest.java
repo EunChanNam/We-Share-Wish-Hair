@@ -31,7 +31,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("HairStyleControllerTest - WebMvcTest")
-public class HairStyleControllerTest extends ControllerTest {
+public class HairStyleSearchControllerTest extends ControllerTest {
 
     private static final String RECOMMEND_URL = "/api/hair_style/recommend";
     private static final String FACE_RECOMMEND_URL = "/api/hair_style/home";
