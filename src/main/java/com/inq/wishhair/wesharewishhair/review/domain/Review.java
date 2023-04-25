@@ -47,7 +47,7 @@ public class Review extends BaseEntity {
     private LikeReviews likeReviews;
 
     //==생성 메서드==//
-    private Review(User user, String contents, Score score, List<Photo> photos, HairStyle hairStyle) {
+    private Review(User user, String contents, Score score, List<String> photos, HairStyle hairStyle) {
         this.user = user;
         this.contents = new Contents(contents);
         this.score = score;
@@ -58,7 +58,7 @@ public class Review extends BaseEntity {
     }
 
     public static Review createReview(
-            User user, String contents, Score score, List<Photo> photos, HairStyle hairStyle) {
+            User user, String contents, Score score, List<String> photos, HairStyle hairStyle) {
         return new Review(user, contents, score, photos, hairStyle);
     }
 
@@ -87,10 +87,7 @@ public class Review extends BaseEntity {
         return likeReviews.isLikingUser(userId);
     }
 
-    private void applyPhotos(List<Photo> photos) {
-        photos.forEach(photo -> {
-            photo.registerReview(this);
-            this.photos.add(photo);
-        });
+    private void applyPhotos(List<String> storeUrls) {
+        storeUrls.forEach(storeUrl -> photos.add(Photo.createReviewPhoto(storeUrl, this)));
     }
 }
