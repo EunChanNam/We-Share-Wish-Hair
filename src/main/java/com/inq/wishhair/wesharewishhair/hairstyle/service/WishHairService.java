@@ -30,13 +30,13 @@ public class WishHairService {
     }
 
     private void validateDoesWishHairExist(Long hairStyleId, Long userId) {
-        if (!wishHairRepository.existByHairStyleIdAndUserId(hairStyleId, userId)) {
+        if (!wishHairRepository.existsByHairStyleIdAndUserId(hairStyleId, userId)) {
             throw new WishHairException(ErrorCode.WISH_HAIR_NOT_EXIST);
         }
     }
 
     private void validateDoesNotExistWishHair(Long hairStyleId, Long userId) {
-        if (wishHairRepository.existByHairStyleIdAndUserId(hairStyleId, userId)) {
+        if (wishHairRepository.existsByHairStyleIdAndUserId(hairStyleId, userId)) {
             throw new WishHairException(ErrorCode.WISH_HAIR_ALREADY_EXIST);
         }
     }

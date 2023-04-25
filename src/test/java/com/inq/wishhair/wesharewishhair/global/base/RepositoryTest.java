@@ -3,6 +3,7 @@ package com.inq.wishhair.wesharewishhair.global.base;
 import com.inq.wishhair.wesharewishhair.global.config.JpaAuditingConfig;
 import com.inq.wishhair.wesharewishhair.global.config.QueryDslConfig;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHairRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ import javax.persistence.PersistenceContext;
         classes = JpaAuditingConfig.class
 ))
 public abstract class RepositoryTest {
+
+    @Autowired
+    protected WishHairRepository wishHairRepository;
 
     @Autowired
     protected UserRepository userRepository;
