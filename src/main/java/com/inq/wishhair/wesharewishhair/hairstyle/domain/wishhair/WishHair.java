@@ -18,26 +18,20 @@ public class WishHair extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "hair_style_id")
-    private HairStyle hairStyle;
+    @JoinColumn
+    private Long hairStyleId;
 
     @JoinColumn
     private Long userId;
 
     //==생성 메서드==//
-    private WishHair(HairStyle hairStyle, Long userId) {
-        this.hairStyle = hairStyle;
+    private WishHair(Long hairStyleId, Long userId) {
+        this.hairStyleId = hairStyleId;
         this.userId = userId;
         this.createdDate = LocalDateTime.now();
     }
 
-    public static WishHair createWishList(Long userId, HairStyle hairStyle) {
-        return new WishHair(hairStyle, userId);
-    }
-
-    //==편의 메서드==//
-    public boolean isHost(Long userId) {
-        return this.userId.equals(userId);
+    public static WishHair createWishList(Long userId, Long hairStyleId) {
+        return new WishHair(hairStyleId, userId);
     }
 }

@@ -2,7 +2,6 @@ package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHairRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,21 +14,19 @@ import org.springframework.transaction.annotation.Transactional;
 public class WishHairService {
 
     private final WishHairRepository wishHairRepository;
-    private final HairStyleFindService hairStyleFindService;
 
     @Transactional
     public void executeWish(Long hairStyleId, Long userId) {
         validateDoesNotExistWishHair(hairStyleId, userId);
 
-        HairStyle hairStyle = hairStyleFindService.findById(hairStyleId);
-        wishHairRepository.save(WishHair.createWishList(userId, hairStyle));
+        wishHairRepository.save(WishHair.createWishList(userId, hairStyleId));
     }
 
     @Transactional
     public void cancelWish(Long hairStyleId, Long userId) {
          validateDoesWishHairExist(hairStyleId, userId);
 
-         wishHairRepository.deleteByHairStyleAndUser(hairStyleId, userId);
+         wishHairRepository.deleteByHairStyleIdAndUserId(hairStyleId, userId);
     }
 
     private void validateDoesWishHairExist(Long hairStyleId, Long userId) {
