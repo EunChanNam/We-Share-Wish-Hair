@@ -54,7 +54,7 @@
     <!--    write review -->
     <string name="write_review_message_1">시술은 만족스러우셨나요?</string>
     <string name="write_review_massage_2">시술에 대한 별점을 매겨주세요</string>
-    <string name="write_review_massage_3">최소 15자 이상 작성해주세요</string>
+    <string name="write_review_massage_3">최소 5자, 최대 200자 사이로 작성해주세요</string>
     <string name="write_review_submit">등록하기</string>
 
     <!--    home -->
@@ -73,6 +73,9 @@
     <string name="xmlDisplay_username">userName</string>
     <string name="message_confirm">확인</string>
     <string name="message_cancel">취소</string>
+    <string name="write_review_message_4">• 헤어스타일명</string>
+    <string name="write_review_message_5">• 사진</string>
+    <string name="write_review_message_6">• 내용</string>
 
 
 </resources>

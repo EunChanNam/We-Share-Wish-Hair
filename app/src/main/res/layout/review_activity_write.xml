@@ -12,45 +12,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp">
-<!--        ImageView.setClipToOutline(true) -->
-        <ImageView
-            android:id="@+id/hairStyleImage"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginEnd="10dp"
-            android:scaleType="fitCenter"
-            android:background="@drawable/border_hair_imageview_round"
-            android:backgroundTint="@color/unselect_blue"
-            tools:ignore="ContentDescription" />
-        <LinearLayout
+        android:layout_marginBottom="15dp"
+        android:padding="20dp"
+        android:orientation="vertical">
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center_vertical">
-            <TextView
-                android:id="@+id/write_tv_hairStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="헤어스타일 이름"
-                android:textSize="30sp"
-                android:textStyle="bold"/>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-                <TextView
-                    android:id="@+id/write_review_tags"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="#태그들"
-                    android:textStyle="bold"/>
-            </LinearLayout>
-        </LinearLayout>
+            android:layout_marginBottom="3dp"
+            android:text="@string/write_review_message_4"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 <!--    <hr> -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@color/black" />
 <!--    grade -->
     <LinearLayout
@@ -64,15 +46,19 @@
             android:layout_height="wrap_content"
             android:text="@string/write_review_message_1"
             android:textSize="20sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/write_review_massage_2" />
+            android:text="@string/write_review_massage_2"
+            android:textSize="14sp"
+            android:textColor="@color/black"/>
         <RatingBar
             android:id="@+id/write_review_ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
             android:isIndicator="false"
             android:numStars="5"
             android:stepSize="0.5"
@@ -83,12 +69,21 @@
 <!--    <hr> -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="1dp"
         android:background="@color/black" />
 <!--    image -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginStart="20dp"
+        android:text="@string/write_review_message_5"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="150dp"
         android:layout_margin="20dp">
 
         <androidx.appcompat.widget.AppCompatButton
@@ -104,17 +99,20 @@
             android:id="@+id/write_review_picture_recyclerView"
             android:layout_weight="2"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="match_parent"
+            tools:listitem="@layout/review_item_write_picture"/>
     </LinearLayout>
 
-<!--    <hr> -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/black" />
-
 <!--    content -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="@string/write_review_message_6"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"/>
+
     <EditText
         android:id="@+id/write_review_content"
         android:layout_weight="1"
@@ -123,8 +121,7 @@
         android:layout_margin="20dp"
         android:background="@drawable/border_write_review_content"
         android:inputType="textMultiLine"
-        android:hint="@string/write_review_massage_3"
-        />
+        android:hint="@string/write_review_massage_3" />
 
 <!--    submit -->
     <Button
