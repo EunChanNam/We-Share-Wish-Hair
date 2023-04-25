@@ -16,4 +16,10 @@ public interface WishHairRepository extends JpaRepository<WishHair, Long>, WishH
             "join fetch wl.hairStyle " +
             "where wl.id = :id")
     Optional<WishHair> findWithHairStyleById(@Param("id") Long id);
+
+    @Query("delete from WishHair w " +
+            "where w.hairStyle.id = :hairStyleId " +
+            "and w.userId = :userId")
+    void deleteByHairStyleAndUser(@Param("hairStyleId") Long hairStyleId,
+                                  @Param("userId") Long userId);
 }
