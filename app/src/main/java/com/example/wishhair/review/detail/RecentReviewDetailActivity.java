@@ -74,25 +74,4 @@ public class RecentReviewDetailActivity extends AppCompatActivity {
         content.setText(getIntent().getStringExtra("content"));
         }
 
-    public void showMenu(View view) {
-        PopupMenu menu = new PopupMenu(this, view);
-        MenuInflater inflater = menu.getMenuInflater();
-        menu.setOnMenuItemClickListener(this::onMenuItemClick);
-        inflater.inflate(R.menu.menu_review_detail, menu.getMenu());
-        menu.show();
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_detail_modify:
-                Log.d("menu selectd", "modify");
-                return true;
-            case R.id.menu_detail_delete:
-                Log.d("menu selectd", "delete");
-                return true;
-            default:
-                return false;
-        }
-    }
 }

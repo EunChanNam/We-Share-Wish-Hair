@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -93,10 +94,16 @@ public class ReviewListFragment extends Fragment {
         recentAdapter = new RecentAdapter(recentReviewItems, getContext());
         recentRecyclerView = v.findViewById(R.id.review_recent_recyclerView);
         recentRecyclerView.setAdapter(recentAdapter);
-        recentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+
+//        layout manager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        recentRecyclerView.setLayoutManager(layoutManager);
+
+        //        decorator
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), layoutManager.getOrientation());
+        recentRecyclerView.addItemDecoration(dividerItemDecoration);
 
         //        swipeRefreshLayout
-//        TODO 새로고침 제대로 구현 >>>> 지금 새로고침할때마다 똑같은거 다시 들어감
         SwipeRefreshLayout swipeRefreshLayout = v.findViewById(R.id.review_recent_swipeRefLayout);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             reviewListRequest(accessToken);
@@ -104,7 +111,6 @@ public class ReviewListFragment extends Fragment {
             handler.postDelayed(() -> swipeRefreshLayout.setRefreshing(false), 500);
         });
 
-        // TODO: 2023-03-12  해당 게시글 이동 리스너
         recentAdapter.setOnItemClickListener((v1, position) -> {
             Intent intent = new Intent(v1.getContext(), RecentReviewDetailActivity.class);
             ReviewItem selectedItem = recentReviewItems.get(position);

@@ -3,8 +3,15 @@ package com.example.wishhair.review.detail;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.example.wishhair.R;
@@ -21,6 +28,9 @@ public class MyReviewDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_detail_activity_my);
+
+        Button btn_back = findViewById(R.id.toolbar_btn_back);
+        btn_back.setOnClickListener(view -> finish());
 
 //        image
         ViewPager2 sliderViewPager = findViewById(R.id.review_detail_my_viewPager);
@@ -54,5 +64,27 @@ public class MyReviewDetailActivity extends AppCompatActivity {
         content = findViewById(R.id.review_detail_my_tv_content);
         content.setText(getIntent().getStringExtra("content"));
 
+    }
+
+    public void showMenu(View view) {
+        PopupMenu menu = new PopupMenu(this, view);
+        MenuInflater inflater = menu.getMenuInflater();
+        menu.setOnMenuItemClickListener(this::onMenuItemClick);
+        inflater.inflate(R.menu.menu_review_detail, menu.getMenu());
+        menu.show();
+    }
+
+    @SuppressLint("NonConstantResourceId")
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_detail_modify:
+                Log.d("menu selectd", "modify");
+                return true;
+            case R.id.menu_detail_delete:
+                Log.d("menu selectd", "delete");
+                return true;
+            default:
+                return false;
+        }
     }
 }

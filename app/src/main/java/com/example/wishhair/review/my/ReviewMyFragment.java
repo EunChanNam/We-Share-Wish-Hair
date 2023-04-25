@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -56,9 +57,15 @@ public class ReviewMyFragment extends Fragment {
 
         MyReviewAdapter myReviewAdapter = new MyReviewAdapter(myReviewItems);
         myRecyclerView.setAdapter(myReviewAdapter);
-        myRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
 
-        // TODO: 2023-03-13  나중에 아이템 클릭시 해당 게시글 이동 리스너로 활용
+//        layout manager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        myRecyclerView.setLayoutManager(layoutManager);
+
+//        decorator
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), layoutManager.getOrientation());
+        myRecyclerView.addItemDecoration(dividerItemDecoration);
+
         myReviewAdapter.setOnItemClickListener((v1, position) -> {
             Intent intent = new Intent(v1.getContext(), MyReviewDetailActivity.class);
             ReviewItem selectedItem = myReviewItems.get(position);
