@@ -11,6 +11,7 @@ import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
@@ -138,6 +139,27 @@ public class HairStyleSearchServiceTest extends ServiceTest {
             //then
             assertThat(result.getPaging().hasNext()).isFalse();
             assertThat(result.getResult()).isEmpty();
+        }
+
+        @Test
+        @DisplayName("찜한 헤어스타일을 최신 순으로 조회한다")
+        void success() {
+            //given
+            wishHairStyles(List.of(2, 0, 3));
+
+            //when
+            PagedResponse<HairStyleResponse> result = hairStyleSearchService.findWishHairStyles(user.getId(), getDefaultPageable());
+
+            //then
+            assertThat(result.getPaging().hasNext()).isFalse();
+            assertHairStyleResponseMatch(result.getResult(), List.of(3, 0, 2));
+        }
+    }
+
+    private void wishHairStyles(List<Integer> indexes) {
+        for (int index : indexes) {
+            Long hairStyleId = hairStyles[index].getId();
+            wishHairRepository.save(WishHair.createWishHair(user.getId(), hairStyleId));
         }
     }
 

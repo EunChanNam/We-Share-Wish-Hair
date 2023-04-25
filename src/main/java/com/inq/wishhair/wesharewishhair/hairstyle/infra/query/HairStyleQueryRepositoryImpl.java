@@ -68,7 +68,7 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
         List<HairStyle> hairStyles = factory
                 .select(hairStyle)
                 .from(wish)
-                .join(hairStyle, hairStyle).on(wish.hairStyleId.eq(hairStyle.id))
+                .innerJoin(hairStyle).on(wish.hairStyleId.eq(hairStyle.id))
                 .where(wish.userId.eq(userId))
                 .orderBy(wish.id.desc())
                 .offset(pageable.getOffset())
