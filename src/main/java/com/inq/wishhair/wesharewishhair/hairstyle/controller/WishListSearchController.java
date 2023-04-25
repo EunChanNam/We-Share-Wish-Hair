@@ -1,9 +1,9 @@
-package com.inq.wishhair.wesharewishhair.wishlist.controller;
+package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
-import com.inq.wishhair.wesharewishhair.wishlist.service.WishListSearchService;
-import com.inq.wishhair.wesharewishhair.wishlist.service.dto.response.WishListResponse;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.WishListSearchService;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.WishListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;

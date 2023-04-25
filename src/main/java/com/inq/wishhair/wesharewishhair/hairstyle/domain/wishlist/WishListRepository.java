@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.wishlist.domain;
+package com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Lock;

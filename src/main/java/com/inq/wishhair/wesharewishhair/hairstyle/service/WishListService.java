@@ -1,13 +1,10 @@
-package com.inq.wishhair.wesharewishhair.wishlist.service;
+package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleFindService;
-import com.inq.wishhair.wesharewishhair.user.domain.User;
-import com.inq.wishhair.wesharewishhair.user.service.UserFindService;
-import com.inq.wishhair.wesharewishhair.wishlist.domain.WishList;
-import com.inq.wishhair.wesharewishhair.wishlist.domain.WishListRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishList;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishListRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

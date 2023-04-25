@@ -4,6 +4,8 @@ import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishList;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishListRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

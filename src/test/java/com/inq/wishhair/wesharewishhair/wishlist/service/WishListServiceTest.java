@@ -5,7 +5,8 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.wishlist.domain.WishList;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishList;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.WishListService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 

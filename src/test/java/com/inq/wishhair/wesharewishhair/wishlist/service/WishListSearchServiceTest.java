@@ -3,17 +3,16 @@ package com.inq.wishhair.wesharewishhair.wishlist.service;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.WishListSearchService;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.photo.dto.response.PhotoResponse;
-import com.inq.wishhair.wesharewishhair.wishlist.domain.WishList;
-import com.inq.wishhair.wesharewishhair.wishlist.service.dto.response.WishListResponse;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishList;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.WishListResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.util.ReflectionTestUtils;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.getDefaultPageable;

@@ -1,8 +1,8 @@
-package com.inq.wishhair.wesharewishhair.wishlist.controller;
+package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
-import com.inq.wishhair.wesharewishhair.wishlist.service.WishListService;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.WishListService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

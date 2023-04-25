@@ -6,7 +6,7 @@ import com.inq.wishhair.wesharewishhair.global.dto.response.Paging;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.wishlist.service.dto.response.WishListResponse;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.WishListResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

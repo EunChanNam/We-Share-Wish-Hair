@@ -1,16 +1,15 @@
-package com.inq.wishhair.wesharewishhair.wishlist.service;
+package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
-import com.inq.wishhair.wesharewishhair.wishlist.domain.WishList;
-import com.inq.wishhair.wesharewishhair.wishlist.domain.WishListSearchRepository;
-import com.inq.wishhair.wesharewishhair.wishlist.service.dto.response.WishListResponse;
-import com.inq.wishhair.wesharewishhair.wishlist.service.dto.response.WishListResponseAssembler;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishList;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishListSearchRepository;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.WishListResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
-import static com.inq.wishhair.wesharewishhair.wishlist.service.dto.response.WishListResponseAssembler.toPagedWishListResponse;
+import static com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.WishListResponseAssembler.toPagedWishListResponse;
 
 @Service
 @RequiredArgsConstructor

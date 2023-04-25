@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.wishlist.domain;
+package com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist;
 
 import com.inq.wishhair.wesharewishhair.auditing.BaseEntity;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;

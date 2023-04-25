@@ -1,7 +1,7 @@
-package com.inq.wishhair.wesharewishhair.wishlist.service.dto.response;
+package com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response;
 
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
-import com.inq.wishhair.wesharewishhair.wishlist.domain.WishList;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishList;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Slice;

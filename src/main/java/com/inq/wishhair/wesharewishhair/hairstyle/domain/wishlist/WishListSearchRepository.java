@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.wishlist.domain;
+package com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;

@@ -1,9 +1,8 @@
 package com.inq.wishhair.wesharewishhair.wishlist.domain;
 
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
-import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.user.domain.User;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishlist.WishList;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
