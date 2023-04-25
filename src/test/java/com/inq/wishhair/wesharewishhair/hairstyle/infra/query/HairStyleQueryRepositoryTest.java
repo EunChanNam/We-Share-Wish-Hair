@@ -5,6 +5,7 @@ import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -111,29 +113,49 @@ public class HairStyleQueryRepositoryTest extends RepositoryTest {
         }
     }
 
+    @Nested
+    @DisplayName("사용자가 찜한 헤어스타일을 조회한다")
+    class findByWish {
+        @Test
+        @DisplayName("찜한 헤어스타일이 없어 아무것도 조회되지 않는다")
+        void noResult() {
+            //when
+            Slice<HairStyle> result = hairStyleRepository.findByWish(1L, getDefaultPageable());
+
+            //then
+            assertThat(result.hasNext()).isFalse();
+            assertThat(result.getContent()).isEmpty();
+        }
+
+        @Test
+        @DisplayName("찜한 헤어스타일을 생성된 순서로 조회한다")
+        void success() {
+            //given
+            wishHairStyles(List.of(3, 0, 1));
+
+            //when
+            Slice<HairStyle> result = hairStyleRepository.findByWish(1L, getDefaultPageable());
+
+            //then
+            assertThat(result.hasNext()).isFalse();
+            assertHairStylesMatch(result.getContent(), List.of(1, 0, 3));
+        }
+    }
+
+    private void wishHairStyles(List<Integer> indexes) {
+        for (int index : indexes) {
+            Long hairStyleId = hairStyles[index].getId();
+            wishHairRepository.save(WishHair.createWishHair(1L, hairStyleId));
+        }
+    }
+
     private void assertHairStylesMatch(List<HairStyle> results, List<Integer> indexes) {
         assertThat(results).hasSize(indexes.size());
         for (int i = 0; i < results.size(); i++) {
             int index = indexes.get(i);
             HairStyle result = results.get(i);
             HairStyle actual = hairStyles[index];
-            assertAll(
-                    () -> assertThat(result.getSex()).isEqualTo(actual.getSex()),
-                    () -> assertThat(result.getName()).isEqualTo(actual.getName()),
-                    () -> {
-                        List<Tag> resultTags = result.getHashTags().stream().map(HashTag::getTag).toList();
-                        List<Tag> actualTags = actual.getHashTags().stream().map(HashTag::getTag).toList();
-                        assertThat(resultTags).containsAll(actualTags);
-                    },
-                    () -> {
-                        List<String> resultOriginalFilenames = result.getPhotos().stream()
-                                .map(Photo::getOriginalFilename).toList();
-                        List<String> actualOriginalFilenames = actual.getPhotos().stream()
-                                .map(Photo::getOriginalFilename).toList();
-                        assertThat(resultOriginalFilenames).containsAll(actualOriginalFilenames);
-                    },
-                    () -> assertThat(result.getWishListCount()).isEqualTo(actual.getWishListCount())
-            );
+            assertThat(result).isEqualTo(actual);
         }
     }
 }
