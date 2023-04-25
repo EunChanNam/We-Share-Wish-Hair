@@ -1,6 +1,5 @@
 package com.inq.wishhair.wesharewishhair.global.utils;
 
-import com.inq.wishhair.wesharewishhair.review.common.ReviewSortCondition;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;

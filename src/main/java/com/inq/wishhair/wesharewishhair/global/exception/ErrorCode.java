@@ -41,6 +41,8 @@ public enum ErrorCode {
     SCORE_MISMATCH("SCORE_001", "정해진 형식의 입력이 아닙니다.", HttpStatus.BAD_REQUEST),
 
     WISH_LIST_NOT_HOST("Wish_LIST_001", "찜 목록 주인이 아닙니다", HttpStatus.FORBIDDEN),
+    WISH_HAIR_NOT_EXIST("WISH_HAIR_001", "찜한 헤어스타일이 아닙니다", HttpStatus.BAD_REQUEST),
+    WISH_HAIR_ALREADY_EXIST("WISH_HAIR_002", "이미 찜한 헤어스타일 입니다.", HttpStatus.BAD_REQUEST),
 
     GLOBAL_VALIDATION_ERROR("GLOBAL_001", "잘못된 요청입니다.", HttpStatus.BAD_REQUEST),
     GLOBAL_NOT_SUPPORTED_URI("GLOBAL_002", "지원하지 않는 URI 요청입니다.", HttpStatus.NOT_FOUND),

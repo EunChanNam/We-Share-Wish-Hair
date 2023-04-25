@@ -51,7 +51,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
 
     @Override
     public Slice<ReviewQueryResponse> findReviewByLike(Long userId, Pageable pageable) {
-        JPAQuery<ReviewQueryResponse> query = factory
+        List<ReviewQueryResponse> result = factory
                 .select(assembleReviewProjection())
                 .from(review)
                 .innerJoin(review.likeReviews.likeReviews, like)
@@ -61,9 +61,10 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
                 .fetchJoin()
                 .where(like.user.id.eq(userId))
                 .groupBy(review.id)
-                .orderBy(review.id.desc());
-        applyPaging(query, pageable);
-        List<ReviewQueryResponse> result = query.fetch();
+                .orderBy(review.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize() + 1L)
+                .fetch();
 
         return new SliceImpl<>(result, pageable, validateHasNext(pageable, result));
     }
@@ -79,9 +80,10 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
                 .leftJoin(review.user)
                 .fetchJoin()
                 .groupBy(review.id)
-                .where(review.user.id.eq(userId));
+                .where(review.user.id.eq(userId))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize() + 1L);
         applyOrderBy(query, pageable);
-        applyPaging(query, pageable);
 
         List<ReviewQueryResponse> result = query.fetch();
         return new SliceImpl<>(result, pageable, validateHasNext(pageable, result));
@@ -110,10 +112,6 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
 
     private ConstructorExpression<ReviewQueryResponse> assembleReviewProjection() {
         return new QReviewQueryResponse(review, review.count(), like.id.sum());
-    }
-
-    private void applyPaging(JPAQuery<ReviewQueryResponse> query, Pageable pageable) {
-        query.offset(pageable.getOffset()).limit(pageable.getPageSize());
     }
 
     private void applyOrderBy(JPAQuery<ReviewQueryResponse> query, Pageable pageable) {

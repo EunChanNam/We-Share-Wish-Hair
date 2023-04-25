@@ -1,14 +1,17 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
+import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture.*;
+import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.getDefaultPageable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -120,6 +124,42 @@ public class HairStyleSearchServiceTest extends ServiceTest {
             //then
             List<HairStyleResponse> actual = result.getResult();
             assertHairStyleResponseMatch(actual, List.of(2, 0, 4, 3));
+        }
+    }
+
+    @Nested
+    @DisplayName("사용자가 찜한 헤어스타일 조회 서비스 로직")
+    class findWishHairStyles {
+        @Test
+        @DisplayName("찜한 헤어스타일이 없으면 아무것도 조회되지 않는다")
+        void noResult() {
+            //when
+            PagedResponse<HairStyleResponse> result = hairStyleSearchService.findWishHairStyles(user.getId(), getDefaultPageable());
+
+            //then
+            assertThat(result.getPaging().hasNext()).isFalse();
+            assertThat(result.getResult()).isEmpty();
+        }
+
+        @Test
+        @DisplayName("찜한 헤어스타일을 최신 순으로 조회한다")
+        void success() {
+            //given
+            wishHairStyles(List.of(2, 0, 3));
+
+            //when
+            PagedResponse<HairStyleResponse> result = hairStyleSearchService.findWishHairStyles(user.getId(), getDefaultPageable());
+
+            //then
+            assertThat(result.getPaging().hasNext()).isFalse();
+            assertHairStyleResponseMatch(result.getResult(), List.of(3, 0, 2));
+        }
+    }
+
+    private void wishHairStyles(List<Integer> indexes) {
+        for (int index : indexes) {
+            Long hairStyleId = hairStyles[index].getId();
+            wishHairRepository.save(WishHair.createWishHair(user.getId(), hairStyleId));
         }
     }
 

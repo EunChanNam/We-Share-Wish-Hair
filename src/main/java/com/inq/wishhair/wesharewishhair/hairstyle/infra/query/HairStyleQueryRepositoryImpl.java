@@ -4,7 +4,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.QHairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.QHashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
-import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.QWishHair;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import com.querydsl.core.types.OrderSpecifier;
@@ -12,6 +12,8 @@ import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.SliceImpl;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.LinkedList;
@@ -25,6 +27,7 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
 
     private final QHairStyle hairStyle = new QHairStyle("h");
     private final QHashTag hashTag = new QHashTag("t");
+    private final QWishHair wish = new QWishHair("w");
 
     @Override
     public List<HairStyle> findByHashTags(List<Tag> tags, Sex sex, Pageable pageable) {
@@ -58,6 +61,29 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
+    }
+
+    @Override
+    public Slice<HairStyle> findByWish(Long userId, Pageable pageable) {
+        List<HairStyle> hairStyles = factory
+                .select(hairStyle)
+                .from(wish)
+                .innerJoin(hairStyle).on(wish.hairStyleId.eq(hairStyle.id))
+                .where(wish.userId.eq(userId))
+                .orderBy(wish.id.desc())
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize() + 1L)
+                .fetch();
+
+        return new SliceImpl<>(hairStyles, pageable, validateHasNext(pageable, hairStyles));
+    }
+
+    private boolean validateHasNext(Pageable pageable, List<HairStyle> result) {
+        if (result.size() > pageable.getPageSize()) {
+            result.remove(pageable.getPageSize());
+            return true;
+        }
+        return false;
     }
 
     private List<OrderSpecifier<?>> mainQueryOrderBy() {

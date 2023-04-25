@@ -1,8 +1,6 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.domain;
 
 
-import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
-import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;

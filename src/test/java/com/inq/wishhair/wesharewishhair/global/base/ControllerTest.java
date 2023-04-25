@@ -21,11 +21,9 @@ import com.inq.wishhair.wesharewishhair.review.service.ReviewSearchService;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.user.controller.*;
 import com.inq.wishhair.wesharewishhair.user.service.*;
-import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleController;
-import com.inq.wishhair.wesharewishhair.wishlist.controller.WishListController;
-import com.inq.wishhair.wesharewishhair.wishlist.controller.WishListSearchController;
-import com.inq.wishhair.wesharewishhair.wishlist.service.WishListSearchService;
-import com.inq.wishhair.wesharewishhair.wishlist.service.WishListService;
+import com.inq.wishhair.wesharewishhair.hairstyle.controller.HairStyleSearchController;
+import com.inq.wishhair.wesharewishhair.hairstyle.controller.WishHairController;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.WishHairService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,10 +62,10 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @WebMvcTest(value =
-        {UserController.class, HairStyleController.class, AuthController.class, TokenReissueController.class,
-        HairStyleController.class, MailAuthController.class, ReviewController.class, ReviewSearchController.class,
+        {UserController.class, HairStyleSearchController.class, AuthController.class, TokenReissueController.class,
+        HairStyleSearchController.class, MailAuthController.class, ReviewController.class, ReviewSearchController.class,
         LikeReviewController.class, UserInfoController.class, PointController.class, PointSearchController.class,
-        WishListController.class, WishListSearchController.class})
+        WishHairController.class, WishHairController.class})
 @ExtendWith(RestDocumentationExtension.class)
 @Import(RestDocsConfig.class)
 @AutoConfigureRestDocs
@@ -83,13 +81,10 @@ public abstract class ControllerTest {
     protected ObjectMapper objectMapper;
 
     @MockBean
+    protected WishHairService wishHairService;
+
+    @MockBean
     protected UserValidator userValidator;
-
-    @MockBean
-    protected WishListService wishListService;
-
-    @MockBean
-    protected WishListSearchService wishListSearchService;
 
     @MockBean
     protected UserService userService;
@@ -209,7 +204,7 @@ public abstract class ControllerTest {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
 
         if (!pageable.getSort().isEmpty()) {
-            String sort = pageable.getSort().toString().replace(": ", ",");
+            String sort = pageable.getSort().toString().replace(": ", ".");
             params.add("sort", sort);
         }
 

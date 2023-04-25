@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.service;
 
+import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
@@ -13,6 +14,7 @@ import com.inq.wishhair.wesharewishhair.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +32,6 @@ public class HairStyleSearchService {
     private final HairStyleRepository hairStyleRepository;
     private final UserFindService userFindService;
 
-    @Transactional
     public ResponseWrapper<HairStyleResponse> recommendHair(
             List<Tag> tags, Long userId) {
         User user = userFindService.findByUserId(userId);
@@ -48,10 +49,14 @@ public class HairStyleSearchService {
 
     public ResponseWrapper<HairStyleResponse> recommendHairByFaceShape(Long userId) {
         User user = userFindService.findByUserId(userId);
-        Pageable pageable = generateSimplePageable(4);
 
-        List<HairStyle> hairStyles = hairStyleRepository.findByFaceShapeTag(user.getFaceShape(), user.getSex(), pageable);
+        List<HairStyle> hairStyles = hairStyleRepository.findByFaceShapeTag(user.getFaceShape(), user.getSex(), getDefaultPageable());
         return toWrappedHairStyleResponse(hairStyles);
+    }
+
+    public PagedResponse<HairStyleResponse> findWishHairStyles(Long userId, Pageable pageable) {
+        Slice<HairStyle> sliceResult = hairStyleRepository.findByWish(userId, pageable);
+        return toPagedResponse(sliceResult);
     }
 
     private void validateUserHasFaceShapeTag(User user) {

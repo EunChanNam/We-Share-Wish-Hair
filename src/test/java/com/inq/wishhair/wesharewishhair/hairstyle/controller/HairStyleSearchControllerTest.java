@@ -1,15 +1,19 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 
+import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
+import com.inq.wishhair.wesharewishhair.global.dto.response.Paging;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -20,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture.*;
+import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.getDefaultPageable;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -31,10 +36,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("HairStyleControllerTest - WebMvcTest")
-public class HairStyleControllerTest extends ControllerTest {
+public class HairStyleSearchControllerTest extends ControllerTest {
 
-    private static final String RECOMMEND_URL = "/api/hair_style/recommend";
-    private static final String FACE_RECOMMEND_URL = "/api/hair_style/home";
+    private static final String BASE_URL = "/api/hair_style";
 
     @Nested
     @DisplayName("메인 헤어 추천 API")
@@ -48,7 +52,7 @@ public class HairStyleControllerTest extends ControllerTest {
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .get(RECOMMEND_URL)
+                    .get(BASE_URL + "/recommend")
                     .queryParams(params);
 
             //then
@@ -69,7 +73,7 @@ public class HairStyleControllerTest extends ControllerTest {
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .get(RECOMMEND_URL)
+                    .get(BASE_URL + "/recommend")
                     .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
                     .queryParams(params);
 
@@ -103,7 +107,7 @@ public class HairStyleControllerTest extends ControllerTest {
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .get(RECOMMEND_URL)
+                    .get(BASE_URL + "/recommend")
                     .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
                     .queryParams(params);
 
@@ -119,7 +123,7 @@ public class HairStyleControllerTest extends ControllerTest {
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .get(RECOMMEND_URL)
+                    .get(BASE_URL + "/recommend")
                     .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
 
             //then
@@ -138,9 +142,9 @@ public class HairStyleControllerTest extends ControllerTest {
             ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
 
             //when
-            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .get(RECOMMEND_URL);
 
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .get(BASE_URL + "/home");
             //then
             assertException(expectedError, requestBuilder, status().isUnauthorized());
         }
@@ -153,7 +157,7 @@ public class HairStyleControllerTest extends ControllerTest {
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .get(FACE_RECOMMEND_URL)
+                    .get(BASE_URL + "/home")
                     .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
 
             //then
@@ -170,6 +174,51 @@ public class HairStyleControllerTest extends ControllerTest {
         }
 
     }
+
+    @Nested
+    @DisplayName("찜한 헤어스타일 조회 API")
+    class findWishHairStyles {
+        @Test
+        @DisplayName("찜한 헤어스타일을 생성된 순으로 조회한다")
+        void success() throws Exception {
+            //given
+            given(hairStyleSearchService.findWishHairStyles(any(), any()))
+                    .willReturn(assemblePagedResponse(List.of(A, B, C)));
+
+            //when
+            MultiValueMap<String, String> pageableParams = generatePageableParams(PageableUtils.generateSimplePageable(10));
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .get(BASE_URL + "/wish")
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                    .params(pageableParams);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    pageableParametersDocument(10, null),
+                                    pagedHairStyleResponseDocument()
+                            )
+                    );
+        }
+
+        @Test
+        @DisplayName("헤더에 토큰을 포함하지 않아 실패")
+        void failByNoAccessToken() throws Exception {
+            //given
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .get(BASE_URL + "/wish");
+
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
+        }
+    }
+
     private MultiValueMap<String, String> generateTagParams(List<Tag> tags) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         tags.forEach(tag -> queryParams.add("tags", tag.toString()));
@@ -178,6 +227,11 @@ public class HairStyleControllerTest extends ControllerTest {
 
     private ResponseWrapper<HairStyleResponse> assembleWrappedResponse(List<HairStyleFixture> fixtures) {
         return new ResponseWrapper<>(generateExpectedResponse(fixtures));
+    }
+
+    private PagedResponse<HairStyleResponse> assemblePagedResponse(List<HairStyleFixture> fixtures) {
+        Paging defualtPaging = new Paging(4, 0, false);
+        return new PagedResponse<>(generateExpectedResponse(fixtures), defualtPaging);
     }
 
     private List<HairStyleResponse> generateExpectedResponse(List<HairStyleFixture> fixtures) {
@@ -195,6 +249,14 @@ public class HairStyleControllerTest extends ControllerTest {
                 fieldWithPath("result[].name").description("헤어스타일 이름"),
                 fieldWithPath("result[].photos[].storeUrl").description("사진 URI 리소스"),
                 fieldWithPath("result[].hashTags[].tag").description("헤어스타일 해시태그")
+        );
+    }
+
+    private ResponseFieldsSnippet pagedHairStyleResponseDocument() {
+        return hairStyleResponseDocument().and(
+                fieldWithPath("paging.contentSize").description("조회된 리뷰 개수"),
+                fieldWithPath("paging.page").description("현재 페이지"),
+                fieldWithPath("paging.hasNext").description("다음 페이지 존재 여부")
         );
     }
 }
