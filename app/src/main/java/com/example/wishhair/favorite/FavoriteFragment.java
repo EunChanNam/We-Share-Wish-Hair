@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -51,9 +52,12 @@ public class FavoriteFragment extends Fragment {
 
     RecyclerView recyclerView;
     FavoriteAdapter adapter;
+    Button btn;
 
     private SharedPreferences loginSP;
-    final static private String url = UrlConst.URL + "/api/wish_list/wish_list";
+    final static private String url = UrlConst.URL + "/api/wish_list";
+    final static private String url2 = UrlConst.URL + "/api/wish_list/3";
+
     static private String accessToken;
 
     public static FavoriteFragment newInstance(String param1, String param2) {
@@ -83,6 +87,7 @@ public class FavoriteFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.favorite_fragment, container, false);
         recyclerView = v.findViewById(R.id.favorite_recyclerview);
+        btn = v.findViewById(R.id.favorite_modify);
         return v;
     }
 
@@ -91,6 +96,14 @@ public class FavoriteFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         loginSP = getActivity().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         String accessToken = loginSP.getString("accessToken", "fail acc");
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                testRequest(accessToken);
+            }
+        });
+
         GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
         recyclerView.setLayoutManager(layoutManager);
         adapter = new FavoriteAdapter();
@@ -99,6 +112,7 @@ public class FavoriteFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
     }
+
 
     public void FavoriteRequest(String accessToken) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url , null, new Response.Listener<JSONObject>() {
@@ -141,4 +155,28 @@ public class FavoriteFragment extends Fragment {
         queue.add(jsonObjectRequest);
     }
 
+    public void testRequest(String accessToken) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url2 , null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap();
+                params.put("Authorization", "bearer" + accessToken);
+                return params;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(jsonObjectRequest);
+    }
 }

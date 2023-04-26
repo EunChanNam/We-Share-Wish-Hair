@@ -25,7 +25,7 @@ public class FavoriteDetailAdapter extends RecyclerView.Adapter<FavoriteDetailAd
     @Override
     public FavoriteDetailAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.favoirte_detail_slider, parent, false);
+                .inflate(R.layout.favorite_detail_slider, parent, false);
         return new ViewHolder(view);
     }
 

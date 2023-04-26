@@ -57,7 +57,7 @@ public class MyPageFragment extends Fragment {
 
     private SharedPreferences loginSP;
     final static private String url = UrlConst.URL + "/api/logout";
-    final static private String url2 = UrlConst.URL + "/api/my_page";
+    final static private String url2 = UrlConst.URL + "/api/user/my_page";
     final static private String url_wishlist = UrlConst.URL + "/api/wish_list/wish_list";
 
     static String testName = null;
