@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -29,7 +30,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.wishhair.CustomTokenHandler;
 import com.example.wishhair.R;
 import com.example.wishhair.review.ReviewItem;
-import com.example.wishhair.review.detail.ReviewDetailActivity;
+import com.example.wishhair.review.detail.RecentReviewDetailActivity;
 import com.example.wishhair.review.write.WriteReviewActivity;
 import com.example.wishhair.sign.UrlConst;
 
@@ -54,7 +55,6 @@ public class ReviewListFragment extends Fragment {
     private ArrayList<ReviewItem> recentReviewItems;
     private RadioGroup filter;
     private RadioButton filter_whole, filter_man, filter_woman;
-    private Button btn_temp_write;
     private RecyclerView recentRecyclerView;
     RecentAdapter recentAdapter;
 
@@ -77,20 +77,16 @@ public class ReviewListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.review_fragment_list, container, false);
+        View v = inflater.inflate(R.layout.review_fragment_recent, container, false);
 
         CustomTokenHandler customTokenHandler = new CustomTokenHandler(requireActivity());
         accessToken = customTokenHandler.getAccessToken();
 
-//        temp write button
-//        TODO 임시 글쓰기 버튼, 나중에 삭제해야댐
-        btn_temp_write = v.findViewById(R.id.temp_write_btn);
-        btn_temp_write.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), WriteReviewActivity.class);
-                startActivity(intent);
-            }
+//       write
+        Button btn_write = v.findViewById(R.id.review_fragment_btn_write);
+        btn_write.setOnClickListener(view -> {
+            Intent intent = new Intent(getContext(), WriteReviewActivity.class);
+            startActivity(intent);
         });
 
 //        review list
@@ -98,10 +94,16 @@ public class ReviewListFragment extends Fragment {
         recentAdapter = new RecentAdapter(recentReviewItems, getContext());
         recentRecyclerView = v.findViewById(R.id.review_recent_recyclerView);
         recentRecyclerView.setAdapter(recentAdapter);
-        recentRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
+
+//        layout manager
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false);
+        recentRecyclerView.setLayoutManager(layoutManager);
+
+        //        decorator
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(requireContext(), layoutManager.getOrientation());
+        recentRecyclerView.addItemDecoration(dividerItemDecoration);
 
         //        swipeRefreshLayout
-//        TODO 새로고침 제대로 구현 >>>> 지금 새로고침할때마다 똑같은거 다시 들어감
         SwipeRefreshLayout swipeRefreshLayout = v.findViewById(R.id.review_recent_swipeRefLayout);
         swipeRefreshLayout.setOnRefreshListener(() -> {
             reviewListRequest(accessToken);
@@ -109,22 +111,18 @@ public class ReviewListFragment extends Fragment {
             handler.postDelayed(() -> swipeRefreshLayout.setRefreshing(false), 500);
         });
 
-        // TODO: 2023-03-12  해당 게시글 이동 리스너
-        recentAdapter.setOnItemClickListener(new RecentAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View v, int position) {
-                Intent intent = new Intent(v.getContext(), ReviewDetailActivity.class);
-                ReviewItem selectedItem = recentReviewItems.get(position);
-                intent.putExtra("hairStyleName", selectedItem.getHairStyleName());
-                intent.putExtra("tags", selectedItem.getTags());
-                intent.putExtra("score", selectedItem.getScore());
-                intent.putExtra("likes", selectedItem.getLikes());
-                intent.putExtra("date", selectedItem.getCreatedDate());
-                intent.putExtra("content", selectedItem.getContents());
-                intent.putStringArrayListExtra("imageUrls", selectedItem.getImageUrls());
-                startActivity(intent);
-            }
-
+        recentAdapter.setOnItemClickListener((v1, position) -> {
+            Intent intent = new Intent(v1.getContext(), RecentReviewDetailActivity.class);
+            ReviewItem selectedItem = recentReviewItems.get(position);
+            intent.putExtra("userNickname", selectedItem.getUserNickName());
+            intent.putExtra("hairStyleName", selectedItem.getHairStyleName());
+            intent.putStringArrayListExtra("tags", selectedItem.getTags());
+            intent.putExtra("score", selectedItem.getScore());
+            intent.putExtra("likes", selectedItem.getLikes());
+            intent.putExtra("date", selectedItem.getCreatedDate());
+            intent.putExtra("content", selectedItem.getContent());
+            intent.putStringArrayListExtra("imageUrls", selectedItem.getImageUrls());
+            ReviewListFragment.this.startActivity(intent);
         });
 
 //        sort
@@ -165,18 +163,20 @@ public class ReviewListFragment extends Fragment {
                         String createDate = resultObject.getString("createdDate");
                         String hairStyleName = resultObject.getString("hairStyleName");
 
-                        JSONArray hasTagsArray = resultObject.getJSONArray("hashTags");
-//                        TODO : 일단 태그 하나만 넣는데 나중에 태그 갯수 따로 처리 합시다
-                        JSONObject hasTagObject = hasTagsArray.getJSONObject(0);
-                        String tag = hasTagObject.getString("tag");
+                        JSONArray hashTagsArray = resultObject.getJSONArray("hashTags");
+                        ArrayList<String> tags = new ArrayList<>();
+                        for (int j = 0; j < hashTagsArray.length(); j++) {
+                            JSONObject hasTagObject = hashTagsArray.getJSONObject(j);
+                            tags.add(hasTagObject.getString("tag"));
+                        }
+                        receivedData.setTags(tags);
 
                         receivedData.setUserNickName(userNickName);
                         receivedData.setScore(score);
                         receivedData.setLikes(likes);
-                        receivedData.setContents(content);
                         receivedData.setCreatedDate(createDate);
                         receivedData.setHairStyleName(hairStyleName);
-                        receivedData.setTags("#" + tag);
+                        receivedData.setContent(content);
 
                         JSONArray photosArray = resultObject.getJSONArray("photos");
                         ArrayList<String> receivedUrls = new ArrayList<>();
@@ -188,18 +188,7 @@ public class ReviewListFragment extends Fragment {
                         }
                         receivedData.setImageUrls(receivedUrls);
 
-//                       set review data
-                        if (receivedUrls.size() > 0) {
-                            ReviewItem itemB = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(),
-                                    receivedData.getHairStyleName(), receivedData.getTags(), receivedData.getCreatedDate(),
-                                    receivedData.getScore(), receivedData.getLikes(), false, receivedData.getImageUrls(),  receivedData.getContents());
-                            requestItems.add(itemB);
-                        } else {
-                            ReviewItem itemB = new ReviewItem(R.drawable.user_sample, receivedData.getUserNickName(),
-                                    receivedData.getHairStyleName(), receivedData.getTags(), receivedData.getCreatedDate(),
-                                    receivedData.getScore(), receivedData.getLikes(), false, new ArrayList<>(), receivedData.getContents());
-                            requestItems.add(itemB);
-                        }
+                        requestItems.add(receivedData);
                     }
 
                     JSONObject pagingObject = jsonObject.getJSONObject("paging");

@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".review.recent.ReviewListFragment">
+    tools:context=".review.recent.ReviewListFragment"
+    android:id="@+id/review_parentLinearLayout"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/review_parentLinearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal" >
+<!--                filter -->
                 <RadioGroup
                     android:id="@+id/review_fragment_filter_radioGroup"
                     android:layout_width="wrap_content"
@@ -65,27 +58,38 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_marginStart="10dp"/>
-
-                <Button
-                    android:id="@+id/temp_write_btn"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="write"/>
-
             </LinearLayout>
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/review_recent_swipeRefLayout"
-                android:layout_width="wrap_content"
+    <FrameLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content" >
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/review_recent_recyclerView"
+                <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                    android:id="@+id/review_recent_swipeRefLayout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/review_recent_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/review_recycler_item_recent">
+                    </androidx.recyclerview.widget.RecyclerView>
+                </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+<!--                review write -->
+                <Button
+                    android:id="@+id/review_fragment_btn_write"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-                </androidx.recyclerview.widget.RecyclerView>
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+                    android:layout_height="40dp"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="bottom|center_horizontal"
+                    android:background="@drawable/border_sign_button"
+                    android:minHeight="0dp"
+                    android:text="@string/review_recent_btn_write"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_ivory"/>
+            </FrameLayout>
 
-        </LinearLayout>
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

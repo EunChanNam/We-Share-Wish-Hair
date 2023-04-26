@@ -19,22 +19,22 @@ import java.util.ArrayList;
 
 import me.relex.circleindicator.CircleIndicator3;
 
-public class ReviewDetailActivity extends AppCompatActivity {
+public class RecentReviewDetailActivity extends AppCompatActivity {
 
     private Button btn_back;
 
     //    content
-    private TextView hairStyleName, tags, score, likes, date, content;
-
-
+    private TextView userNickname, hairStyleName, tags, score, likes, date, content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.review_activity_detail);
+        setContentView(R.layout.review_detail_activity_recent);
 
         btn_back = findViewById(R.id.toolbar_btn_back);
         btn_back.setOnClickListener(view -> finish());
+        TextView title = findViewById(R.id.toolbar_textView_title);
+        title.setText("");
 
         ViewPager2 sliderViewPager = findViewById(R.id.review_detail_viewPager);
         CircleIndicator3 circleIndicator = findViewById(R.id.review_detail_indicator);
@@ -46,13 +46,20 @@ public class ReviewDetailActivity extends AppCompatActivity {
 
         circleIndicator.setViewPager(sliderViewPager);
 
-
 //        content
+        userNickname = findViewById(R.id.review_detail_userNickname);
+        userNickname.setText(getIntent().getStringExtra("userNickname"));
+
         hairStyleName = findViewById(R.id.review_detail_hairStyleName);
         hairStyleName.setText(getIntent().getStringExtra("hairStyleName"));
 
         tags = findViewById(R.id.review_detail_tags);
-        tags.setText(getIntent().getStringExtra("tags"));
+        ArrayList<String> hashTags = getIntent().getStringArrayListExtra("tags");
+        StringBuilder stringTags = new StringBuilder();
+        for (int i = 0; i < hashTags.size(); i++) {
+            stringTags.append("#").append(hashTags.get(i)).append(" ");
+        }
+        tags.setText(stringTags);
 
         score = findViewById(R.id.review_detail_tv_score);
         score.setText(getIntent().getStringExtra("score"));
@@ -67,25 +74,4 @@ public class ReviewDetailActivity extends AppCompatActivity {
         content.setText(getIntent().getStringExtra("content"));
         }
 
-    public void showMenu(View view) {
-        PopupMenu menu = new PopupMenu(this, view);
-        MenuInflater inflater = menu.getMenuInflater();
-        menu.setOnMenuItemClickListener(this::onMenuItemClick);
-        inflater.inflate(R.menu.menu_review_detail, menu.getMenu());
-        menu.show();
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_detail_modify:
-                Log.d("menu selectd", "modify");
-                return true;
-            case R.id.menu_detail_delete:
-                Log.d("menu selectd", "delete");
-                return true;
-            default:
-                return false;
-        }
-    }
 }

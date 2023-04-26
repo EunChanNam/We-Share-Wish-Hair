@@ -1,134 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="5dp"
     android:padding="10dp"
-    android:background="@drawable/border_recycler_item">
+    android:weightSum="3">
 
 <!--    profile-->
-    <RelativeLayout
-        android:id="@+id/review_recent_item_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageView
-            android:id="@+id/review_recent_profile_image"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginEnd="10dp"
-            android:src="@drawable/user_sample"/>
-        <RelativeLayout
+    <ImageView
+        android:id="@+id/review_recent_contentImage"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_weight="1"
+        android:src="@drawable/sample_woman"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="17dp"
+        android:layout_weight="2">
+
+        <TextView
+            android:id="@+id/review_recent_tv_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/review_recent_profile_image"
-            android:layout_centerVertical="true">
+            tools:text="userNickname"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/review_recent_tv_hairStyleName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            tools:text="hairStyle"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/review_recent_tv_nickname"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/review_recent_tv_tags"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            tools:text="#tags#tags#tags#tags"
+            android:textSize="12sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toBottomOf="@id/review_recent_tv_hairStyleName"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <LinearLayout
+            android:id="@+id/review_recent_ll1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/review_recent_btn_viewContent">
+            <ImageView
+                android:id="@+id/review_recent_imageView_isHeart"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/heart_fill" />
 
             <TextView
-                android:id="@+id/review_recent_tv_name"
+                android:id="@+id/review_recent_tv_heartCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="글쓴이 닉네임"
-                android:textStyle="bold"
+                android:layout_marginEnd="13dp"
+                tools:text="500"
+                android:textSize="13sp"
+                android:textColor="@color/black"/>
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginEnd="5dp"
+                android:background="@drawable/star_fill" />
+
+            <TextView
+                android:id="@+id/review_recent_tv_grade"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="3.04"
+                android:textSize="13sp"
                 android:textColor="@color/black" />
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/review_recent_tv_name">
-                <TextView
-                    android:id="@+id/review_recent_tv_hairStyleName"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="7dp"
-                    android:text="hairStyleName"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"/>
-                <TextView
-                    android:id="@+id/review_recent_tv_tags"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/review_recent_tv_hairStyleName"
-                    android:text="tags"
-                    android:textColor="@color/black"/>
-                <TextView
-                    android:id="@+id/review_recent_tv_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="날짜"
-                    android:layout_alignParentEnd="true"/>
-            </RelativeLayout>
+        </LinearLayout>
 
-        </RelativeLayout>
-
-    </RelativeLayout>
-<!--    image -->
-    <LinearLayout
-        android:id="@+id/review_recent_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:orientation="horizontal"
-        android:layout_below="@id/review_recent_item_profile">
-        <ImageView
-            android:id="@+id/review_recent_contentImage1"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginEnd="10dp" />
-        <ImageView
-            android:id="@+id/review_recent_contentImage2"
-            android:layout_width="100dp"
-            android:layout_height="100dp" />
-    </LinearLayout>
-<!--    grade, heart -->
-    <RelativeLayout
-        android:id="@+id/review_recent_rl_grade"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_below="@id/review_recent_image">
-        <ImageView
-            android:id="@+id/review_recent_imageView_gradeMark"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="5dp"
-            android:background="@drawable/star_fill" />
         <TextView
-            android:id="@+id/review_recent_tv_grade"
+            android:id="@+id/review_recent_tv_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@id/review_recent_imageView_gradeMark"
-            android:text="500"/>
-        <ImageView
-            android:id="@+id/review_recent_imageView_isHeart"
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_marginEnd="5dp"
-            android:layout_toStartOf="@id/review_recent_tv_heartCount"/>
-        <TextView
-            android:id="@+id/review_recent_tv_heartCount"
+            tools:text="yyyy.mm.dd"
+            android:textSize="10sp"
+            android:textColor="@color/black"
+            app:layout_constraintBaseline_toBaselineOf="@id/review_recent_btn_viewContent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="SmallSp" />
+
+        <Button
+            android:id="@+id/review_recent_btn_viewContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:text="500"/>
-    </RelativeLayout>
-<!--    content -->
-    <TextView
-        android:id="@+id/review_recent_tv_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/review_recent_rl_grade"
-        android:ems="100"
-        android:maxLines="2"
-        android:ellipsize="end"/>
-<!--    Button_view -->
-    <Button
-        android:id="@+id/review_recent_Button_viewContent"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@id/review_recent_tv_content"
-        android:text="@string/review_recent_item_btn"
-        style="?android:borderlessButtonStyle"
-        android:textColor="@color/black" />
+            android:minHeight="0dp"
+            android:includeFontPadding="false"
+            android:text="@string/review_item_btn_view"
+            android:textSize="13sp"
+            android:textColor="@color/btnDetail_gray"
+            style="?borderlessButtonStyle"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-</RelativeLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

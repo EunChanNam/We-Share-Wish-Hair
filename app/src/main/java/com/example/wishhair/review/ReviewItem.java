@@ -12,69 +12,28 @@ import java.util.Locale;
 public class ReviewItem {
 
     // common
-    private String contents;
-    private String createdDate;
+    private String hairStyleName;
+    private ArrayList<String> tags;
     private int likes;
     private String score;
-    private String hairStyleName;
-    private String tags;
+    private String createdDate;
+    private String content;
+
+    // recent
+    private ArrayList<String> imageUrls;
+    private String userNickName;
+    private boolean isHeart;
 
     public ReviewItem() {}
 
-    // recent
-    private int profileImage;
-    private String userNickName;
-    private boolean isHeart;
-    private ArrayList<String> imageUrls;
-
-    //사진이 있을 때
-    public ReviewItem(int profileImage, String userNickName,String hairStyleName, String tags, String createdDate, String score, int likes, boolean isHeart, ArrayList<String> imageUrls, String contents) {
-        this.contents = contents;
-        this.createdDate = createdDate;
-        this.likes = likes;
-        this.score = score;
-        this.hairStyleName = hairStyleName;
-        this.tags = tags;
-        this.profileImage = profileImage;
-        this.userNickName = userNickName;
-        this.isHeart = isHeart;
+    public ReviewItem(ArrayList<String> imageUrls, String hairStyleName, ArrayList<String> tags, String contents, String score, int likes, String createdDate) {
         this.imageUrls = imageUrls;
-    }
-
-    //사진이 없을 때
-    public ReviewItem(int profileImage, String userNickName,String hairStyleName, String tags, String createdDate, String score, int likes, boolean isHeart, String contents) {
-        this.contents = contents;
-        this.createdDate = createdDate;
-        this.likes = likes;
-        this.score = score;
-        this.hairStyleName = hairStyleName;
-        this.tags = tags;
-        this.profileImage = profileImage;
-        this.userNickName = userNickName;
-        this.isHeart = isHeart;
-    }
-
-    // my
-    private int hairImage;
-    private boolean isPoint;
-
-    public ReviewItem(int hairImage, String hairStyleName, String tags, String contents, String score, int likes, String createdDate, boolean isPoint) {
-        this.hairImage = hairImage;
         this.hairStyleName = hairStyleName;
         this.tags = tags;
         this.score = score;
         this.likes = likes;
-        this.contents = contents;
         this.createdDate = createdDate;
-        this.isPoint = isPoint;
-    }
-
-    public int getProfileImage() {
-        return profileImage;
-    }
-
-    public void setProfileImage(int profileImage) {
-        this.profileImage = profileImage;
+        this.content = contents;
     }
 
     public String getUserNickName() {
@@ -83,14 +42,6 @@ public class ReviewItem {
 
     public void setUserNickName(String userNickName) {
         this.userNickName = userNickName;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents;
     }
 
     public String getScore() {
@@ -146,14 +97,6 @@ public class ReviewItem {
         return "failParseDate";
     }
 
-    public int getHairImage() {
-        return hairImage;
-    }
-
-    public void setHairImage(int hairImage) {
-        this.hairImage = hairImage;
-    }
-
     public String getHairStyleName() {
         return hairStyleName;
     }
@@ -162,19 +105,19 @@ public class ReviewItem {
         this.hairStyleName = hairStyleName;
     }
 
-    public String getTags() {
+    public ArrayList<String> getTags() {
         return tags;
     }
 
-    public void setTags(String tags) {
+    public void setTags(ArrayList<String> tags) {
         this.tags = tags;
     }
 
-    public boolean getIsPoint() {
-        return isPoint;
+    public String getContent() {
+        return content;
     }
 
-    public void setPoint(boolean point) {
-        isPoint = point;
+    public void setContent(String content) {
+        this.content = content;
     }
 }
