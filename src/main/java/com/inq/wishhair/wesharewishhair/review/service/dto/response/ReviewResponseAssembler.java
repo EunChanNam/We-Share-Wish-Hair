@@ -40,23 +40,8 @@ public abstract class ReviewResponseAssembler {
         );
     }
 
-    public static ReviewResponse toReviewResponse(Review review, Long userId) {
-        return new ReviewResponse(
-                review.getId(),
-                review.getHairStyle().getName(),
-                review.getUser().getNicknameValue(),
-                review.getScore().getValue(),
-                review.getContents().getValue(),
-                review.getCreatedDate(),
-                toPhotoResponses(review.getPhotos()),
-                review.getLikes(),
-                toHashTagResponses(review.getHairStyle().getHashTags()),
-                review.isWriter(userId)
-        );
-    }
-
-    public static ReviewDetailResponse toReviewDetailResponse(Review review, Long userId, boolean isLiking) {
-        return new ReviewDetailResponse(toReviewResponse(review, userId), isLiking);
+    public static ReviewDetailResponse toReviewDetailResponse(ReviewQueryResponse queryResponse, Long userId, boolean isLiking) {
+        return new ReviewDetailResponse(toReviewResponse(queryResponse, userId), isLiking);
     }
 
     public static ResponseWrapper<ReviewSimpleResponse> toWrappedSimpleResponse(List<Review> reviews) {

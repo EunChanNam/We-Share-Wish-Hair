@@ -10,6 +10,7 @@ import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.review.infra.query.dto.response.ReviewQueryResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewDetailResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler;
@@ -244,9 +245,10 @@ public class ReviewSearchControllerTest extends ControllerTest {
         HairStyle hairStyle = HairStyleFixture.A.toEntity();
 
         Review review = ReviewFixture.A.toEntity(user, hairStyle);
+        ReviewQueryResponse queryResponse = new ReviewQueryResponse(review, 0);
         ReflectionTestUtils.setField(review, "id", 1L);
 
-        return ReviewResponseAssembler.toReviewDetailResponse(review, 1L);
+        return ReviewResponseAssembler.toReviewDetailResponse(queryResponse, 1L, false);
     }
 
     private List<ReviewResponse> generateReviewResponses(int count) {
@@ -262,8 +264,9 @@ public class ReviewSearchControllerTest extends ControllerTest {
             ReviewFixture fixture = reviewFixtures[index];
 
             Review review = fixture.toEntity(user, hairStyle);
+            ReviewQueryResponse queryResponse = new ReviewQueryResponse(review, 0);
             ReflectionTestUtils.setField(review, "id", 1L + index);
-            result.add(ReviewResponseAssembler.toReviewResponse(review, 1L));
+            result.add(ReviewResponseAssembler.toReviewResponse(queryResponse, 1L));
         }
 
         return result;

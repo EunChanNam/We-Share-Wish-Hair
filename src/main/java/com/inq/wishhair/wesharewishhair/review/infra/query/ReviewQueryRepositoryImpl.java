@@ -6,6 +6,9 @@ import com.inq.wishhair.wesharewishhair.review.domain.likereview.QLikeReview;
 import com.inq.wishhair.wesharewishhair.review.infra.query.dto.response.QReviewQueryResponse;
 import com.inq.wishhair.wesharewishhair.review.infra.query.dto.response.ReviewQueryResponse;
 import com.querydsl.core.types.ConstructorExpression;
+import com.querydsl.core.types.OrderSpecifier;
+import com.querydsl.core.types.dsl.CaseBuilder;
+import com.querydsl.core.types.dsl.NumberExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +18,9 @@ import org.springframework.data.domain.SliceImpl;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 import static com.inq.wishhair.wesharewishhair.review.common.ReviewSortCondition.*;
 
@@ -28,20 +33,41 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
     private final QReview review = new QReview("r");
     private final QLikeReview like = new QLikeReview("l");
 
+    private final NumberExpression<Long> likes = new CaseBuilder()
+            .when(like.id.sum().isNull())
+            .then(0L)
+            .otherwise(review.count())
+            .as("likes");
+
+    @Override
+    public Optional<ReviewQueryResponse> findReviewById(Long id) {
+        return Optional.ofNullable(
+                factory
+                        .select(assembleReviewProjection())
+                        .from(review)
+                        .leftJoin(like).on(review.id.eq(like.reviewId))
+                        .leftJoin(review.hairStyle)
+                        .fetchJoin()
+                        .leftJoin(review.user)
+                        .fetchJoin()
+                        .where(review.id.eq(id))
+                        .groupBy(review.id)
+                        .fetchOne()
+        );
+    }
+
     @Override
     public Slice<ReviewQueryResponse> findReviewByPaging(Pageable pageable) {
-        JPAQuery<ReviewQueryResponse> query = factory
+        List<ReviewQueryResponse> result = factory
                 .select(assembleReviewProjection())
                 .from(review)
-                .leftJoin(review.likeReviews.likeReviews, like)
+                .leftJoin(like).on(review.id.eq(like.reviewId))
                 .leftJoin(review.hairStyle)
                 .fetchJoin()
                 .leftJoin(review.user)
                 .fetchJoin()
-                .groupBy(review.id);
-
-        applyOrderBy(query, pageable);
-        List<ReviewQueryResponse> result = query
+                .groupBy(review.id)
+                .orderBy(applyOrderBy(pageable))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize() + 1L)
                 .fetch();
@@ -54,12 +80,12 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
         List<ReviewQueryResponse> result = factory
                 .select(assembleReviewProjection())
                 .from(review)
-                .innerJoin(review.likeReviews.likeReviews, like)
+                .leftJoin(like).on(review.id.eq(like.reviewId))
                 .leftJoin(review.user)
                 .fetchJoin()
                 .leftJoin(review.hairStyle)
                 .fetchJoin()
-                .where(like.user.id.eq(userId))
+                .where(like.userId.eq(userId))
                 .groupBy(review.id)
                 .orderBy(review.id.desc())
                 .offset(pageable.getOffset())
@@ -74,16 +100,16 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
         JPAQuery<ReviewQueryResponse> query = factory
                 .select(assembleReviewProjection())
                 .from(review)
-                .leftJoin(review.likeReviews.likeReviews, like)
+                .leftJoin(like).on(review.id.eq(like.reviewId))
                 .leftJoin(review.hairStyle)
                 .fetchJoin()
                 .leftJoin(review.user)
                 .fetchJoin()
                 .groupBy(review.id)
+                .orderBy(applyOrderBy(pageable))
                 .where(review.user.id.eq(userId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize() + 1L);
-        applyOrderBy(query, pageable);
 
         List<ReviewQueryResponse> result = query.fetch();
         return new SliceImpl<>(result, pageable, validateHasNext(pageable, result));
@@ -97,31 +123,36 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
         return factory
                 .select(review)
                 .from(review)
+                .leftJoin(like).on(review.id.eq(like.reviewId))
                 .leftJoin(review.hairStyle)
                 .fetchJoin()
                 .leftJoin(review.user)
                 .fetchJoin()
-                .leftJoin(review.likeReviews.likeReviews)
                 .where(review.createdDate.between(startDate, endDate))
                 .groupBy(review.id)
-                .orderBy(review.count().desc())
+                .orderBy(likes.desc())
                 .offset(0)
                 .limit(4)
                 .fetch();
     }
 
     private ConstructorExpression<ReviewQueryResponse> assembleReviewProjection() {
-        return new QReviewQueryResponse(review, review.count(), like.id.sum());
+        return new QReviewQueryResponse(review, likes);
     }
 
-    private void applyOrderBy(JPAQuery<ReviewQueryResponse> query, Pageable pageable) {
+    private OrderSpecifier<?>[] applyOrderBy(Pageable pageable) {
+        List<OrderSpecifier<?>> orderBy = new LinkedList<>();
         String sort = pageable.getSort().toString().replace(": ", ".");
+
         switch (sort) {
-            case LIKES_DESC -> query
-                    .orderBy(review.count().desc());
-            case DATE_DESC -> query.orderBy(review.id.desc());
-            case DATE_ASC -> query.orderBy(review.id.asc());
+            case LIKES_DESC -> {
+                orderBy.add(likes.desc());
+                orderBy.add(review.id.desc());
+            }
+            case DATE_DESC -> orderBy.add(review.id.desc());
+            case DATE_ASC -> orderBy.add(review.id.asc());
         }
+        return orderBy.toArray(OrderSpecifier[]::new);
     }
 
     private boolean validateHasNext(Pageable pageable, List<ReviewQueryResponse> result) {

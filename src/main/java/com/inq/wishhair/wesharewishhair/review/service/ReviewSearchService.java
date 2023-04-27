@@ -31,11 +31,12 @@ public class ReviewSearchService {
 
     /*리뷰 단건 조회*/
     public ReviewDetailResponse findReviewById(Long reviewId, Long userId) {
-        Review findReview = reviewRepository.findReviewById(reviewId)
+        ReviewQueryResponse queryResponse = reviewRepository.findReviewById(reviewId)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
 
+        boolean isLiking = likeReviewRepository.existByUserAndReview(userId, reviewId);
 
-        return toReviewDetailResponse(findReview, userId);
+        return toReviewDetailResponse(queryResponse, userId, isLiking);
     }
 
     /*전체 리뷰 조회*/
