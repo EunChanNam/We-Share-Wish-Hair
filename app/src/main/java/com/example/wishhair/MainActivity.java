@@ -19,6 +19,7 @@ import com.example.wishhair.MyPage.MyPointList;
 import com.example.wishhair.MyPage.MyHeartlistFragment;
 import com.example.wishhair.MyPage.MyStyleFragment;
 
+import com.example.wishhair.MyPage.RefundFragment;
 import com.example.wishhair.favorite.FavoriteFragment;
 import com.example.wishhair.home.HomeFragment;
 import com.example.wishhair.review.ReviewFragment;
@@ -41,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private final MyPointList myPointList = new MyPointList();
     private final ConfigFragment configFragment = new ConfigFragment();
     private final FavoriteFragment favoriteFragment = new FavoriteFragment();
+    private final RefundFragment refundFragment = new RefundFragment();
     public static Context context;
 
 
@@ -114,6 +116,10 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case 8:
                 transaction.replace(R.id.MainLayout, configFragment).commitAllowingStateLoss();
+                break;
+            case 9:
+                transaction.replace(R.id.MainLayout, refundFragment).commitAllowingStateLoss();
+                break;
         }
 
     }

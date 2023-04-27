@@ -12,5 +12,7 @@
     <color name="unselect_blue">#FFA9CAE2</color>
     <color name="signBox_gray">#FFD6D6D6</color>
 
+    <color name="mypage_border">#ADB3BC</color>
+
 
 </resources>

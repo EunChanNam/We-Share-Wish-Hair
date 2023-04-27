@@ -6,8 +6,8 @@
         <shape android:shape="rectangle">
             <size
                 android:width="400dp"
-                android:height="7dp"/>
-            <solid android:color="@color/unselect_blue"/>
+                android:height="1dp"/>
+            <solid android:color="@color/mypage_border"/>
         </shape>
     </item>
 </layer-list>

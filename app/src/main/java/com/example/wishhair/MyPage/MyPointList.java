@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -69,6 +70,7 @@ public class MyPointList extends Fragment {
 
     static private String accessToken;
     TextView mypointview;
+    Button toPointRefund;
     public MyPointList() {
         // Required empty public constructor
     }
@@ -130,6 +132,13 @@ public class MyPointList extends Fragment {
             }
         });
 
+        toPointRefund.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mainActivity.ChangeFragment(9);
+            }
+        });
+
         recyclerView = view.findViewById(R.id.pointlist_recyclerview);
         adapter = new PointAdapter();
         layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
@@ -150,7 +159,8 @@ public class MyPointList extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.my_point_list_fragment, container, false);
-        mypointview = view.findViewById(R.id.mypoint_pointsum);
+        mypointview = view.findViewById(R.id.point_pointview);
+        toPointRefund = view.findViewById(R.id.point_refund);
         return view;
     }
 
@@ -161,7 +171,7 @@ public class MyPointList extends Fragment {
             public void onResponse(JSONObject response) {
                 String mypoint = Integer.toString(response.optInt("point"));
                 Log.i("pointlist response ", mypoint);
-                mypointview.setText(mypoint+" P");
+                mypointview.setText("현재 포인트\n"+mypoint+"P");
 
             }
         }, new Response.ErrorListener() {
