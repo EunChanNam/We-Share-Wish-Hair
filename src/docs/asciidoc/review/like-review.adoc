@@ -7,18 +7,40 @@
 == 좋아요 실행 API
 === 1. 실행 성공
 Http Request
-include::{snippets}/like-review/success/http-request.adoc[]
-include::{snippets}/like-review/success/request-headers.adoc[]
-include::{snippets}/like-review/success/path-parameters.adoc[]
+include::{snippets}/execute-like/success/http-request.adoc[]
+include::{snippets}/execute-like/success/request-headers.adoc[]
+include::{snippets}/execute-like/success/path-parameters.adoc[]
 
 Http Response
-include::{snippets}/like-review/success/http-response.adoc[]
-include::{snippets}/like-review/success/response-fields.adoc[]
+include::{snippets}/execute-like/success/http-response.adoc[]
+include::{snippets}/execute-like/success/response-fields.adoc[]
 
 === 2. 헤더에 토큰을 포함하지 않아 실패
 Http Response
-include::{snippets}/like-review/fail-by-no-access-token/http-response.adoc[]
-include::{snippets}/like-review/fail-by-no-access-token/response-fields.adoc[]
+include::{snippets}/execute-like/fail-by-no-access-token/http-response.adoc[]
+
+=== 3. 이미 좋아요한 리뷰에 좋아요를 실행해 실패
+Http Response
+include::{snippets}/execute-like/fail-by-already-exist-like/http-response.adoc[]
+
+== 좋아요 취소 API
+=== 1. 성공
+Http Request
+include::{snippets}/cancel-like/success/http-request.adoc[]
+include::{snippets}/cancel-like/success/request-headers.adoc[]
+include::{snippets}/cancel-like/success/path-parameters.adoc[]
+
+Http Response
+include::{snippets}/cancel-like/success/http-response.adoc[]
+include::{snippets}/cancel-like/success/response-fields.adoc[]
+
+=== 2. 헤더에 토큰을 포함하지 않아 실패
+Http Response
+include::{snippets}/cancel-like/fail-by-no-access-token/http-response.adoc[]
+
+=== 3. 좋아요 하지 않은 리뷰에 좋아요 취소를 실행해 실패
+Http Response
+include::{snippets}/cancel-like/fail-by-like-is-not-exist/http-response.adoc[]
 
 == 좋아요 여부 확인 API
 === 1. 성공
