@@ -5,10 +5,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.QHairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.QHashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.QWishHair;
-import com.inq.wishhair.wesharewishhair.hairstyle.infra.query.dto.response.HairStyleQueryResponse;
-import com.inq.wishhair.wesharewishhair.hairstyle.infra.query.dto.response.QHairStyleQueryResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.utils.HairRecommendCondition;
-import com.querydsl.core.types.ConstructorExpression;
 import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.CaseBuilder;
@@ -39,7 +36,7 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
             .otherwise(hairStyle.id.count());
 
     @Override
-    public List<HairStyleQueryResponse> findByRecommend(HairRecommendCondition condition, Pageable pageable) {
+    public List<HairStyle> findByRecommend(HairRecommendCondition condition, Pageable pageable) {
         List<Long> filteredHairStyles = null;
         if (condition.getTags() != null) {
             filteredHairStyles = factory
@@ -57,40 +54,33 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
                 .where(hairStyleIn(filteredHairStyles))
                 .where(hairStyle.sex.eq(condition.getSex()))
                 .groupBy(hairStyle.id)
-                .orderBy(mainQueryOrderBy())
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
                 .fetch();
 
         return factory
-                .select(assembleQueryResponse())
+                .select(hairStyle)
                 .from(hairStyle)
                 .leftJoin(wish).on(hairStyle.id.eq(wish.hairStyleId))
                 .where(hairStyleIn(result))
                 .groupBy(hairStyle.id)
+                .orderBy(mainQueryOrderBy(condition.getTags()))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
     }
 
     @Override
     public Slice<HairStyle> findByWish(Long userId, Pageable pageable) {
-        QWishHair subWish = new QWishHair("sub_wish");
         List<HairStyle> hairStyles = factory
                 .select(hairStyle)
                 .from(wish)
                 .innerJoin(hairStyle).on(wish.hairStyleId.eq(hairStyle.id))
-                .leftJoin(subWish).on(subWish.hairStyleId.eq(hairStyle.id))
                 .where(wish.userId.eq(userId))
-                .groupBy(hairStyle.id)
                 .orderBy(wish.id.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize() + 1L)
                 .fetch();
 
         return new SliceImpl<>(hairStyles, pageable, validateHasNext(pageable, hairStyles));
-    }
-
-    private ConstructorExpression<HairStyleQueryResponse> assembleQueryResponse() {
-        return new QHairStyleQueryResponse(hairStyle, wishCount.as("wishCount"));
     }
 
     private BooleanExpression hashTagEq(Tag faceShape) {
@@ -117,12 +107,13 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
         return false;
     }
 
-    private OrderSpecifier<?>[] mainQueryOrderBy() {
+    private OrderSpecifier<?>[] mainQueryOrderBy(List<Tag> tags) {
         List<OrderSpecifier<?>> orderBy = new LinkedList<>();
 
+        if (tags != null) {
+            orderBy.add(hairStyle.count().desc());
+        }
 
-
-        orderBy.add(hairStyle.count().desc());
         orderBy.add(wishCount.desc());
         orderBy.add(hairStyle.name.asc());
         return orderBy.toArray(OrderSpecifier[]::new);
