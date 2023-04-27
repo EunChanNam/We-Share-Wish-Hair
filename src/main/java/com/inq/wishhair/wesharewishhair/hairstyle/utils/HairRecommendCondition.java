@@ -7,16 +7,21 @@ import lombok.Getter;
 
 import java.util.List;
 
+import static lombok.AccessLevel.PRIVATE;
+
 @Getter
-@AllArgsConstructor
-public class HairRecommendCondition() {
+@AllArgsConstructor(access = PRIVATE)
+public class HairRecommendCondition {
 
     private List<Tag> tags;
     private Tag userFaceShape;
     private Sex sex;
 
-    public HairRecommendCondition(Tag userFaceShape, Sex sex) {
-        this.userFaceShape = userFaceShape;
-        this.sex = sex;
+    public static HairRecommendCondition mainRecommend(List<Tag> tags, Tag userFaceShape, Sex sex) {
+        return new HairRecommendCondition(tags, userFaceShape, sex);
+    }
+
+    public static HairRecommendCondition subRecommend(Tag userFaceShape, Sex sex) {
+        return new HairRecommendCondition(null, userFaceShape, sex);
     }
 }

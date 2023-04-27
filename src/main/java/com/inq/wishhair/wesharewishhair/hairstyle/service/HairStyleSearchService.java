@@ -22,6 +22,8 @@ import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.*;
 import static com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponseAssembler.*;
+import static com.inq.wishhair.wesharewishhair.hairstyle.utils.HairRecommendCondition.mainRecommend;
+import static com.inq.wishhair.wesharewishhair.hairstyle.utils.HairRecommendCondition.subRecommend;
 
 @Service
 @RequiredArgsConstructor
@@ -37,7 +39,7 @@ public class HairStyleSearchService {
 
         validateUserHasFaceShapeTag(user);
 
-        HairRecommendCondition condition = new HairRecommendCondition(tags, user.getFaceShapeTag(), user.getSex());
+        HairRecommendCondition condition = mainRecommend(tags, user.getFaceShapeTag(), user.getSex());
         List<HairStyle> hairStyles = hairStyleRepository.findByRecommend(condition, getDefaultPageable());
 
         return toWrappedHairStyleResponse(hairStyles);
@@ -46,7 +48,7 @@ public class HairStyleSearchService {
     public ResponseWrapper<HairStyleResponse> recommendHairByFaceShape(Long userId) {
         User user = userFindService.findByUserId(userId);
 
-        HairRecommendCondition condition = new HairRecommendCondition(user.getFaceShapeTag(), user.getSex());
+        HairRecommendCondition condition = subRecommend(user.getFaceShapeTag(), user.getSex());
         List<HairStyle> hairStyles = hairStyleRepository.findByRecommend(condition, getDefaultPageable());
         return toWrappedHairStyleResponse(hairStyles);
     }
