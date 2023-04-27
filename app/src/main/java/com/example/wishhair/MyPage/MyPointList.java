@@ -64,7 +64,7 @@ public class MyPointList extends Fragment {
     LinearLayoutManager layoutManager;
     DividerItemDecoration dividerItemDecoration;
     private SharedPreferences loginSP;
-    final static private String url = UrlConst.URL + "/api/my_page";
+    final static private String url = UrlConst.URL + "/api/user/my_page";
     final static private String point_url = UrlConst.URL + "/api/point";
 
     static private String accessToken;
@@ -159,7 +159,7 @@ public class MyPointList extends Fragment {
 
             @Override
             public void onResponse(JSONObject response) {
-                String mypoint = Integer.toString(response.optInt("availablePoint"));
+                String mypoint = Integer.toString(response.optInt("point"));
                 Log.i("pointlist response ", mypoint);
                 mypointview.setText(mypoint+" P");
 

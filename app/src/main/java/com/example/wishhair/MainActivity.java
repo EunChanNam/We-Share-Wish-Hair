@@ -3,7 +3,6 @@ package com.example.wishhair;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -15,7 +14,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.example.wishhair.MyPage.ConfigFragment;
 import com.example.wishhair.MyPage.InformationModifyFragment;
 import com.example.wishhair.MyPage.MyCouponFragment;
-import com.example.wishhair.MyPage.MyInformationFragment;
 import com.example.wishhair.MyPage.MyPageFragment;
 import com.example.wishhair.MyPage.MyPointList;
 import com.example.wishhair.MyPage.MyHeartlistFragment;
@@ -41,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
     private final InformationModifyFragment informationModifyFragment = new InformationModifyFragment();
     private final MyCouponFragment myCouponFragment = new MyCouponFragment();
     private final MyPointList myPointList = new MyPointList();
-    private final MyInformationFragment myInformationFragment = new MyInformationFragment();
     private final ConfigFragment configFragment = new ConfigFragment();
     private final FavoriteFragment favoriteFragment = new FavoriteFragment();
     public static Context context;
@@ -96,7 +93,6 @@ public class MainActivity extends AppCompatActivity {
         switch(index)
         {
             case 1:
-                transaction.replace(R.id.MainLayout, myInformationFragment).commitAllowingStateLoss();
                 break;
             case 2:
                 transaction.replace(R.id.MainLayout, myPageFragment).commitAllowingStateLoss();

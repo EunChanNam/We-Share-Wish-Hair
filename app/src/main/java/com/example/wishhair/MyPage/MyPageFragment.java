@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -44,6 +45,7 @@ import com.example.wishhair.sign.UrlConst;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -62,6 +64,7 @@ public class MyPageFragment extends Fragment {
 
     static String testName = null;
     TextView tv;
+    TextView point_preview;
     ImageView userpicture;
 
     public MyPageFragment() {
@@ -86,9 +89,9 @@ public class MyPageFragment extends Fragment {
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.modify_toolbar);
 
-        Button toMyInformationButton = view.findViewById(R.id.toConfig);
-        Button toMyPointList = view.findViewById(R.id.toMyPointList);
-        Button toMyCoupon = view.findViewById(R.id.toMyCoupon);
+        ImageButton toMyInformationButton = view.findViewById(R.id.mypage_to_config);
+        ImageButton toMyPoint = view.findViewById(R.id.mypage_to_point);
+//        Button toMyCoupon = view.findViewById(R.id.toMyCoupon);
 
         HeartlistRecyclerView = view.findViewById(R.id.HeartlistRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
@@ -106,18 +109,18 @@ public class MyPageFragment extends Fragment {
                 mainActivity.ChangeFragment(8);
             }
         });
-        toMyPointList.setOnClickListener(new View.OnClickListener() {
+        toMyPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mainActivity.ChangeFragment(7);
             }
         });
-        toMyCoupon.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mainActivity.ChangeFragment(6);
-            }
-        });
+//        toMyCoupon.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                mainActivity.ChangeFragment(6);
+//            }
+//        });
 
 //        userpicture.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -143,7 +146,7 @@ public class MyPageFragment extends Fragment {
         toolbar.inflateMenu(R.menu.메뉴.xml);   버튼 추가 시 사용할 것 */
 
 //        LOGOUT
-        Button btn_logout  = view.findViewById(R.id.mypage_button_logout);
+        ImageButton btn_logout  = view.findViewById(R.id.mypage_button_logout);
         loginSP = getActivity().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         String accessToken = loginSP.getString("accessToken", "fail acc");
 
@@ -166,6 +169,7 @@ public class MyPageFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mypage_fragment, container, false);
         tv = view.findViewById(R.id.mypage_nickname);
+        point_preview = view.findViewById(R.id.mypage_point_preview);
         userpicture = view.findViewById(R.id.mypage_user_picture);
         return view;
     }
@@ -220,8 +224,10 @@ public class MyPageFragment extends Fragment {
             public void onResponse(JSONObject response) {
                 try {
                     testName = response.getString("nickname");
+                    String mypoint = Integer.toString(response.optInt("point"));
                     Log.i("받아온 거", testName);
                     tv.setText(testName+" 님");
+                    point_preview.setText(mypoint+ "P");
 
 
                 } catch (JSONException e) {
