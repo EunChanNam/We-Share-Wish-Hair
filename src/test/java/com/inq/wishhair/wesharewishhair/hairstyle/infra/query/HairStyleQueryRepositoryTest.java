@@ -3,10 +3,8 @@ package com.inq.wishhair.wesharewishhair.hairstyle.infra.query;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
-import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import org.junit.jupiter.api.BeforeEach;
@@ -48,7 +46,7 @@ public class HairStyleQueryRepositoryTest extends RepositoryTest {
             Sex sex = B.getSex();
 
             //when
-            List<HairStyle> result = hairStyleRepository.findByHashTags(tags, sex, getDefaultPageable());
+            List<HairStyle> result = hairStyleRepository.findByRecommend(tags, sex, getDefaultPageable());
 
             //then
             assertHairStylesMatch(result, List.of(1));
@@ -62,7 +60,7 @@ public class HairStyleQueryRepositoryTest extends RepositoryTest {
             Pageable pageable = getDefaultPageable();
 
             //when
-            List<HairStyle> result = hairStyleRepository.findByHashTags(tags, A.getSex(), pageable);
+            List<HairStyle> result = hairStyleRepository.findByRecommend(tags, A.getSex(), pageable);
 
             //then
             assertHairStylesMatch(result, List.of(2, 0, 4, 3));
@@ -75,7 +73,7 @@ public class HairStyleQueryRepositoryTest extends RepositoryTest {
             List<Tag> tags = D.getTags();
 
             //when
-            List<HairStyle> result = hairStyleRepository.findByHashTags(tags, D.getSex(), getDefaultPageable());
+            List<HairStyle> result = hairStyleRepository.findByRecommend(tags, D.getSex(), getDefaultPageable());
 
             //then
             assertHairStylesMatch(result, List.of(3, 4, 2, 0));

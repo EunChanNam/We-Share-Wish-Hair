@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.review.common;
+package com.inq.wishhair.wesharewishhair.review.utils;
 
 public interface ReviewSortCondition {
     String LIKES = "likes";

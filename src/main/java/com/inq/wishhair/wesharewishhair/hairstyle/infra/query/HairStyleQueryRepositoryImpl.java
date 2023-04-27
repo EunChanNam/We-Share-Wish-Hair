@@ -5,10 +5,9 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.QHairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.QHashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.QWishHair;
-import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
-import com.inq.wishhair.wesharewishhair.user.enums.Sex;
+import com.inq.wishhair.wesharewishhair.hairstyle.utils.HairRecommendCondition;
 import com.querydsl.core.types.OrderSpecifier;
-import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -30,34 +29,25 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
     private final QWishHair wish = new QWishHair("w");
 
     @Override
-    public List<HairStyle> findByHashTags(List<Tag> tags, Sex sex, Pageable pageable) {
+    public List<HairStyle> findByRecommend(HairRecommendCondition condition, Pageable pageable) {
+        List<Long> filteredHairStyles = null;
+        if (condition.getTags() != null) {
+            filteredHairStyles = factory
+                    .select(hairStyle.id)
+                    .from(hairStyle)
+                    .innerJoin(hairStyle.hashTags, hashTag)
+                    .where(hashTagEq(condition.getUserFaceShape()))
+                    .fetch();
+        }
         return factory
                 .select(hairStyle)
                 .from(hairStyle)
                 .leftJoin(hairStyle.hashTags, hashTag)
-                .where(hashTag.tag.in(tags))
-                .where(hairStyle.sex.eq(sex))
+                .where(hashTagInTagsOrEqFaceShape(condition.getTags(), condition.getUserFaceShape()))
+                .where(hairStyleIn(filteredHairStyles))
+                .where(hairStyle.sex.eq(condition.getSex()))
                 .groupBy(hairStyle.id)
-                .orderBy(mainQueryOrderBy().toArray(OrderSpecifier[]::new))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
-                .fetch();
-    }
-
-    @Override
-    public List<HairStyle> findByFaceShapeTag(FaceShape faceShape, Sex sex, Pageable pageable) {
-        JPAQuery<HairStyle> query = factory
-                .select(hairStyle)
-                .from(hairStyle)
-                .where(hairStyle.sex.eq(sex));
-
-        if (faceShape != null && faceShape.getTag() != null) {
-            query.leftJoin(hairStyle.hashTags, hashTag)
-                    .where(hashTag.tag.eq(faceShape.getTag()));
-        }
-
-        return query
-                .orderBy(hairStyle.wishListCount.value.desc(), hairStyle.name.asc())
+                .orderBy(mainQueryOrderBy())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -78,6 +68,22 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
         return new SliceImpl<>(hairStyles, pageable, validateHasNext(pageable, hairStyles));
     }
 
+    private BooleanExpression hashTagEq(Tag faceShape) {
+        return (faceShape != null) ? hashTag.tag.eq(faceShape) : null;
+    }
+
+    private BooleanExpression hairStyleIn(List<Long> filteredHairStyles) {
+        return (filteredHairStyles != null) ? hairStyle.id.in(filteredHairStyles) : null;
+    }
+
+    private BooleanExpression hashTagInTagsOrEqFaceShape(List<Tag> tags, Tag faceShapeTag) {
+        return (tags != null) ? hashTag.tag.in(tags) : tagEqFaceShape(faceShapeTag);
+    }
+
+    private BooleanExpression tagEqFaceShape(Tag faceShpaeTag) {
+        return (faceShpaeTag != null) ? hashTag.tag.eq(faceShpaeTag) : null;
+    }
+
     private boolean validateHasNext(Pageable pageable, List<HairStyle> result) {
         if (result.size() > pageable.getPageSize()) {
             result.remove(pageable.getPageSize());
@@ -86,12 +92,12 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
         return false;
     }
 
-    private List<OrderSpecifier<?>> mainQueryOrderBy() {
+    private OrderSpecifier<?>[] mainQueryOrderBy() {
         List<OrderSpecifier<?>> orderBy = new LinkedList<>();
 
         orderBy.add(hairStyle.count().desc());
         orderBy.add(hairStyle.wishListCount.value.desc());
         orderBy.add(hairStyle.name.asc());
-        return orderBy;
+        return orderBy.toArray(OrderSpecifier[]::new);
     }
 }

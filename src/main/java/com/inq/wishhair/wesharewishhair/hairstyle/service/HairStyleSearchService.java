@@ -4,9 +4,9 @@ import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
+import com.inq.wishhair.wesharewishhair.hairstyle.utils.HairRecommendCondition;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
@@ -32,17 +32,13 @@ public class HairStyleSearchService {
     private final HairStyleRepository hairStyleRepository;
     private final UserFindService userFindService;
 
-    public ResponseWrapper<HairStyleResponse> recommendHair(
-            List<Tag> tags, Long userId) {
+    public ResponseWrapper<HairStyleResponse> recommendHair(List<Tag> tags, Long userId) {
         User user = userFindService.findByUserId(userId);
 
         validateUserHasFaceShapeTag(user);
 
-        Tag faceShapeTag = user.getFaceShapeTag();
-        tags.add(faceShapeTag);
-
-        List<HairStyle> hairStyles = hairStyleRepository.findByHashTags(tags, user.getSex(), getDefaultPageable());
-        filterHasFaceShapeTag(hairStyles, faceShapeTag);
+        HairRecommendCondition condition = new HairRecommendCondition(tags, user.getFaceShapeTag(), user.getSex());
+        List<HairStyle> hairStyles = hairStyleRepository.findByRecommend(condition, getDefaultPageable());
 
         return toWrappedHairStyleResponse(hairStyles);
     }
@@ -50,7 +46,8 @@ public class HairStyleSearchService {
     public ResponseWrapper<HairStyleResponse> recommendHairByFaceShape(Long userId) {
         User user = userFindService.findByUserId(userId);
 
-        List<HairStyle> hairStyles = hairStyleRepository.findByFaceShapeTag(user.getFaceShape(), user.getSex(), getDefaultPageable());
+        HairRecommendCondition condition = new HairRecommendCondition(user.getFaceShapeTag(), user.getSex());
+        List<HairStyle> hairStyles = hairStyleRepository.findByRecommend(condition, getDefaultPageable());
         return toWrappedHairStyleResponse(hairStyles);
     }
 
@@ -63,12 +60,5 @@ public class HairStyleSearchService {
         if (!user.existFaceShape()) {
             throw new WishHairException(ErrorCode.USER_NO_FACE_SHAPE_TAG);
         }
-    }
-
-    private void filterHasFaceShapeTag(List<HairStyle> hairStyles, Tag faceShapeTag) {
-        hairStyles.removeIf(hairStyle -> !hairStyle.getHashTags().stream()
-                .map(HashTag::getTag)
-                .toList()
-                .contains(faceShapeTag));
     }
 }

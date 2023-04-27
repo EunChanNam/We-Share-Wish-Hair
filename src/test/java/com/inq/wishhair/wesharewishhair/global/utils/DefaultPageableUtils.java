@@ -4,8 +4,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import static com.inq.wishhair.wesharewishhair.review.common.ReviewSortCondition.DATE;
-import static com.inq.wishhair.wesharewishhair.review.common.ReviewSortCondition.LIKES;
+import static com.inq.wishhair.wesharewishhair.review.utils.ReviewSortCondition.DATE;
+import static com.inq.wishhair.wesharewishhair.review.utils.ReviewSortCondition.LIKES;
 
 public abstract class DefaultPageableUtils {
     public static Pageable getLikeDescPageable(int size) {
