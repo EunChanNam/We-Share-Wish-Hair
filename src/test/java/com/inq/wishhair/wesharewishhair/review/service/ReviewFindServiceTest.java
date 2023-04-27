@@ -23,13 +23,11 @@ public class ReviewFindServiceTest extends ServiceTest {
     private ReviewFindService reviewFindService;
 
     private Review review;
-    private User user;
-    private HairStyle hairStyle;
 
     @BeforeEach
     void setUp() {
-        user = userRepository.save(UserFixture.B.toEntity());
-        hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
+        User user = userRepository.save(UserFixture.B.toEntity());
+        HairStyle hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
         review = reviewRepository.save(ReviewFixture.A.toEntity(user, hairStyle));
     }
 
@@ -38,19 +36,6 @@ public class ReviewFindServiceTest extends ServiceTest {
     void findWithUserById() {
         //when
         Review result = reviewFindService.findWithPhotosByUserId(review.getId());
-
-        //then
-        assertThat(result).isEqualTo(review);
-    }
-
-    @Test
-    @DisplayName("아이디로 리뷰를 좋아요 정보와 함께 조회한다")
-    void findWithLikeReviewsById() {
-        //given
-        review.executeLike(user);
-
-        //when
-        Review result = reviewFindService.findWithLikeReviewsById(review.getId());
 
         //then
         assertThat(result).isEqualTo(review);

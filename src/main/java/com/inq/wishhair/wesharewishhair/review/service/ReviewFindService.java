@@ -18,9 +18,4 @@ public class ReviewFindService {
         return reviewRepository.findWithPhotosById(id)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
-
-    public Review findWithLikeReviewsById(Long id) {
-        return reviewRepository.findWithLikesById(id)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
-    }
 }

@@ -62,7 +62,7 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
         assertAll(
                 () -> assertThat(content).hasSize(1),
                 () -> assertThat(actual).isEqualTo(review),
-                () -> assertThat(actual.getUser()).isEqualTo(user),
+                () -> assertThat(actual.getWriter()).isEqualTo(user),
                 () -> assertThat(actual.getHairStyle()).isEqualTo(hairStyle),
                 () -> assertThat(actual.getPhotos()).hasSize(A.getStoreUrls().size()),
                 () -> assertThat(content.get(0).getLikes()).isZero()
@@ -86,7 +86,7 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
         assertAll(
                 () -> assertThat(content).hasSize(1),
                 () -> assertThat(actual).isEqualTo(review2),
-                () -> assertThat(actual.getUser()).isEqualTo(user),
+                () -> assertThat(actual.getWriter()).isEqualTo(user),
                 () -> assertThat(actual.getHairStyle()).isEqualTo(hairStyle),
                 () -> assertThat(actual.getPhotos()).hasSize(B.getStoreUrls().size()),
                 () -> assertThat(content.get(0).getLikes()).isEqualTo(1)
@@ -105,7 +105,7 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
         assertAll(
                 () -> assertThat(content).hasSize(1),
                 () -> assertThat(actual).isEqualTo(review),
-                () -> assertThat(actual.getUser()).isEqualTo(user),
+                () -> assertThat(actual.getWriter()).isEqualTo(user),
                 () -> assertThat(actual.getHairStyle()).isEqualTo(hairStyle),
                 () -> assertThat(actual.getPhotos()).hasSize(A.getStoreUrls().size()),
                 () -> assertThat(content.get(0).getLikes()).isZero()
@@ -122,7 +122,7 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
         assertAll(
                 () -> assertThat(result).hasSize(1),
                 () -> assertThat(result.get(0)).isEqualTo(review),
-                () -> assertThat(result.get(0).getUser()).isEqualTo(user),
+                () -> assertThat(result.get(0).getWriter()).isEqualTo(user),
                 () -> assertThat(result.get(0).getHairStyle()).isEqualTo(hairStyle),
                 () -> assertThat(result.get(0).getPhotos()).hasSize(A.getStoreUrls().size())
         );

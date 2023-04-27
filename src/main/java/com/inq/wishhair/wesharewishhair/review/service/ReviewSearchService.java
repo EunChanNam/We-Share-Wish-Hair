@@ -34,7 +34,7 @@ public class ReviewSearchService {
         ReviewQueryResponse queryResponse = reviewRepository.findReviewById(reviewId)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
 
-        boolean isLiking = likeReviewRepository.existByUserAndReview(userId, reviewId);
+        boolean isLiking = likeReviewRepository.existsByUserIdAndReviewId(userId, reviewId);
 
         return toReviewDetailResponse(queryResponse, userId, isLiking);
     }

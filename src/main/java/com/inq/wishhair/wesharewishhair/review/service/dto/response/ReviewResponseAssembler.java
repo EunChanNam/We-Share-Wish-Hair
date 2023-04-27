@@ -29,7 +29,7 @@ public abstract class ReviewResponseAssembler {
         return new ReviewResponse(
                 review.getId(),
                 review.getHairStyle().getName(),
-                review.getUser().getNicknameValue(),
+                review.getWriter().getNicknameValue(),
                 review.getScore().getValue(),
                 review.getContents().getValue(),
                 review.getCreatedDate(),

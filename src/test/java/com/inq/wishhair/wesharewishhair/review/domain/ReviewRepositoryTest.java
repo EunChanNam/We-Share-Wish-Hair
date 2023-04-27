@@ -50,7 +50,7 @@ public class ReviewRepositoryTest extends RepositoryTest {
         //then
         assertAll(
                 () -> assertThat(result).isEqualTo(review),
-                () -> assertThat(result.getUser()).isEqualTo(user)
+                () -> assertThat(result.getWriter()).isEqualTo(user)
         );
     }
 

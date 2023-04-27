@@ -25,7 +25,7 @@ public class Review extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
+    private User writer;
 
     private Contents contents;
 
@@ -42,8 +42,8 @@ public class Review extends BaseEntity {
     private HairStyle hairStyle;
 
     //==생성 메서드==//
-    private Review(User user, String contents, Score score, List<String> photos, HairStyle hairStyle) {
-        this.user = user;
+    private Review(User writer, String contents, Score score, List<String> photos, HairStyle hairStyle) {
+        this.writer = writer;
         this.contents = new Contents(contents);
         this.score = score;
         applyPhotos(photos);
@@ -62,7 +62,7 @@ public class Review extends BaseEntity {
     }
 
     public boolean isWriter(Long userId) {
-        return this.user.getId().equals(userId);
+        return this.writer.getId().equals(userId);
     }
 
     private void applyPhotos(List<String> storeUrls) {

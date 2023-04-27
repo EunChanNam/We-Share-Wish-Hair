@@ -18,7 +18,7 @@ public class ReviewSimpleResponse {
 
     public ReviewSimpleResponse(Review review) {
         this.reviewId = review.getId();
-        this.userNickname = review.getUser().getNicknameValue();
+        this.userNickname = review.getWriter().getNicknameValue();
         this.hairStyleName = review.getHairStyle().getName();
         this.contents = review.getContentsValue();
     }

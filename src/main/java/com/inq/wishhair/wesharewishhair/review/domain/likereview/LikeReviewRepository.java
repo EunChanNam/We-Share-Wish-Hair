@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 public interface LikeReviewRepository extends JpaRepository<LikeReview, Long> {
 
     @Modifying
-    @Query("delete from LikeReview l where l.review.id = :reviewId")
+    @Query("delete from LikeReview l where l.reviewId = :reviewId")
     void deleteAllByReview(@Param("reviewId") Long reviewId);
 
     @Modifying
