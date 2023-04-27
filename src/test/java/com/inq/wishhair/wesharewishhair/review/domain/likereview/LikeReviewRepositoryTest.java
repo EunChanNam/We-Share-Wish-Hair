@@ -28,7 +28,7 @@ public class LikeReviewRepositoryTest extends RepositoryTest {
     void setUp() {
         //given
         review = reviewRepository.save(ReviewFixture.A.toEntity(null, null));
-        likeReviewRepository.save(LikeReview.createLikeReview(null, review));
+        likeReviewRepository.save(LikeReview.addLike(null, review));
     }
 
     @Test

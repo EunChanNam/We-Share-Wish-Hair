@@ -19,7 +19,7 @@ public class LikeReviewService {
     public void executeLike(Long reviewId, Long userId) {
         validateIsNotLiking(userId, reviewId);
 
-        likeReviewRepository.save(LikeReview.createLikeReview(userId, reviewId));
+        likeReviewRepository.save(LikeReview.addLike(userId, reviewId));
     }
 
     @Transactional

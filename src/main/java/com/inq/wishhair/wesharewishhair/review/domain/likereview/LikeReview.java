@@ -1,7 +1,5 @@
 package com.inq.wishhair.wesharewishhair.review.domain.likereview;
 
-import com.inq.wishhair.wesharewishhair.review.domain.Review;
-import com.inq.wishhair.wesharewishhair.user.domain.User;
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -27,7 +25,7 @@ public class LikeReview {
         this.userId = userId;
         this.reviewId = reviewId;
     }
-    public static LikeReview createLikeReview(Long userId, Long reviewId) {
+    public static LikeReview addLike(Long userId, Long reviewId) {
         return new LikeReview(userId, reviewId);
     }
 

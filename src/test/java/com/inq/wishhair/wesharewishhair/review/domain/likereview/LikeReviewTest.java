@@ -28,7 +28,7 @@ public class LikeReviewTest {
         Review review = ReviewFixture.A.toEntity(user, hairStyle);
 
         //when
-        LikeReview likeReview = LikeReview.createLikeReview(user, review);
+        LikeReview likeReview = LikeReview.addLike(user, review);
 
         //then
         assertAll(
@@ -49,7 +49,7 @@ public class LikeReviewTest {
             User user = Mockito.mock(User.class);
             HairStyle hairStyle = HairStyleFixture.A.toEntity();
             Review review = ReviewFixture.A.toEntity(user, hairStyle);
-            likeReview = LikeReview.createLikeReview(user, review);
+            likeReview = LikeReview.addLike(user, review);
 
             given(user.getId()).willReturn(1L);
         }

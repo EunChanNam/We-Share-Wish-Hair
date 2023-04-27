@@ -29,7 +29,7 @@ public class LikeReviewQueryRepositoryTest extends RepositoryTest {
             //given
             User user = userRepository.save(UserFixture.B.toEntity());
             Review review = reviewRepository.save(ReviewFixture.A.toEntity(user, null));
-            likeReviewRepository.save(LikeReview.createLikeReview(user, review));
+            likeReviewRepository.save(LikeReview.addLike(user, review));
 
             //when
             boolean result = likeReviewRepository.existByUserAndReview(user.getId(), review.getId());

@@ -75,7 +75,7 @@ public class LikeReviewServiceTest extends ServiceTest {
         @DisplayName("좋아요가 존재하여 true 를 응답한다")
         void exist() {
             //given
-            likeReviewRepository.save(LikeReview.createLikeReview(user, review));
+            likeReviewRepository.save(LikeReview.addLike(user, review));
 
             //when
             boolean result = likeReviewService.checkIsLiking(user.getId(), review.getId());
