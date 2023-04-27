@@ -50,23 +50,7 @@ public class ReviewRepositoryTest extends RepositoryTest {
         //then
         assertAll(
                 () -> assertThat(result).isEqualTo(review),
-                () -> assertThat(result.getUser()).isEqualTo(user)
-        );
-    }
-
-    @Test
-    @DisplayName("리뷰를 아이디로 유저, 헤어스타일, 사진 정보와 함께 조회한다")
-    void findReviewById() {
-        //when
-        Optional<Review> result = reviewRepository.findReviewById(review.getId());
-
-        //then
-        assertAll(
-                () -> assertThat(result).isPresent(),
-                () -> {
-                    Review actual = result.orElseThrow();
-                    assertThat(actual).isEqualTo(review);
-                }
+                () -> assertThat(result.getWriter()).isEqualTo(user)
         );
     }
 }

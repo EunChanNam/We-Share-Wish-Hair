@@ -7,7 +7,6 @@ import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler.toReviewResponse;
 
 @Service
 @RequiredArgsConstructor
@@ -17,11 +16,6 @@ public class ReviewFindService {
 
     public Review findWithPhotosByUserId(Long id) {
         return reviewRepository.findWithPhotosById(id)
-                .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
-    }
-
-    public Review findWithLikeReviewsById(Long id) {
-        return reviewRepository.findWithLikesById(id)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
     }
 }

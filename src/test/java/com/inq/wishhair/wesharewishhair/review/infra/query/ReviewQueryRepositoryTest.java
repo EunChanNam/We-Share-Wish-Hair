@@ -5,20 +5,19 @@ import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
-import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
+import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
 import com.inq.wishhair.wesharewishhair.review.infra.query.dto.response.ReviewQueryResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
-import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture.*;
 import static com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils.getLikeDescPageable;
@@ -28,12 +27,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("ReviewFindRepository DataJpaTest")
 public class ReviewQueryRepositoryTest extends RepositoryTest {
-
-    @Autowired
-    private ReviewRepository reviewRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     private User user;
     private HairStyle hairStyle;
@@ -51,6 +44,23 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
     }
 
     @Test
+    @DisplayName("리뷰를 아이디로 유저, 헤어스타일, 사진 정보와 함께 조회한다")
+    void findReviewById() {
+        //when
+        Optional<ReviewQueryResponse> result = reviewRepository.findReviewById(review.getId());
+
+        //then
+        assertAll(
+                () -> assertThat(result).isPresent(),
+                () -> {
+                    ReviewQueryResponse actual = result.orElseThrow();
+                    assertThat(actual.getReview()).isEqualTo(review);
+                    assertThat(actual.getLikes()).isZero();
+                }
+        );
+    }
+
+    @Test
     @DisplayName("전체리뷰를 조회한다")
     void findReviewByPaging() {
         //when
@@ -62,7 +72,7 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
         assertAll(
                 () -> assertThat(content).hasSize(1),
                 () -> assertThat(actual).isEqualTo(review),
-                () -> assertThat(actual.getUser()).isEqualTo(user),
+                () -> assertThat(actual.getWriter()).isEqualTo(user),
                 () -> assertThat(actual.getHairStyle()).isEqualTo(hairStyle),
                 () -> assertThat(actual.getPhotos()).hasSize(A.getStoreUrls().size()),
                 () -> assertThat(content.get(0).getLikes()).isZero()
@@ -74,8 +84,8 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
     void findReviewByLike() {
         //given
         Review review2 = B.toEntity(user, hairStyle);
-        review2.executeLike(user);
         reviewRepository.save(review2);
+        likeReviewRepository.save(LikeReview.addLike(user.getId(), review2.getId()));
 
         //when
         Slice<ReviewQueryResponse> result = reviewRepository.findReviewByLike(user.getId(), pageable);
@@ -86,7 +96,7 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
         assertAll(
                 () -> assertThat(content).hasSize(1),
                 () -> assertThat(actual).isEqualTo(review2),
-                () -> assertThat(actual.getUser()).isEqualTo(user),
+                () -> assertThat(actual.getWriter()).isEqualTo(user),
                 () -> assertThat(actual.getHairStyle()).isEqualTo(hairStyle),
                 () -> assertThat(actual.getPhotos()).hasSize(B.getStoreUrls().size()),
                 () -> assertThat(content.get(0).getLikes()).isEqualTo(1)
@@ -105,7 +115,7 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
         assertAll(
                 () -> assertThat(content).hasSize(1),
                 () -> assertThat(actual).isEqualTo(review),
-                () -> assertThat(actual.getUser()).isEqualTo(user),
+                () -> assertThat(actual.getWriter()).isEqualTo(user),
                 () -> assertThat(actual.getHairStyle()).isEqualTo(hairStyle),
                 () -> assertThat(actual.getPhotos()).hasSize(A.getStoreUrls().size()),
                 () -> assertThat(content.get(0).getLikes()).isZero()
@@ -122,7 +132,7 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
         assertAll(
                 () -> assertThat(result).hasSize(1),
                 () -> assertThat(result.get(0)).isEqualTo(review),
-                () -> assertThat(result.get(0).getUser()).isEqualTo(user),
+                () -> assertThat(result.get(0).getWriter()).isEqualTo(user),
                 () -> assertThat(result.get(0).getHairStyle()).isEqualTo(hairStyle),
                 () -> assertThat(result.get(0).getPhotos()).hasSize(A.getStoreUrls().size())
         );

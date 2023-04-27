@@ -1,9 +1,9 @@
 package com.inq.wishhair.wesharewishhair.review.service;
 
-import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
+import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
-import com.inq.wishhair.wesharewishhair.user.domain.User;
-import com.inq.wishhair.wesharewishhair.user.service.UserFindService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,19 +13,35 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(readOnly = true)
 public class LikeReviewService {
 
-    private final ReviewFindService reviewFindService;
-    private final UserFindService userFindService;
     private final LikeReviewRepository likeReviewRepository;
 
     @Transactional
-    public void likeReview(Long reviewId, Long userId) {
-        User user = userFindService.findByUserId(userId);
-        Review review = reviewFindService.findWithLikeReviewsById(reviewId);
+    public void executeLike(Long reviewId, Long userId) {
+        validateIsNotLiking(userId, reviewId);
 
-        review.executeLike(user);
+        likeReviewRepository.save(LikeReview.addLike(userId, reviewId));
+    }
+
+    @Transactional
+    public void cancelLike(Long reviewId, Long userId) {
+        validateIsLiking(userId, reviewId);
+
+        likeReviewRepository.deleteByUserIdAndReviewId(userId, reviewId);
     }
 
     public boolean checkIsLiking(Long userId, Long reviewId) {
-        return likeReviewRepository.existByUserAndReview(userId, reviewId);
+        return likeReviewRepository.existsByUserIdAndReviewId(userId, reviewId);
+    }
+
+    private void validateIsNotLiking(Long userId, Long reviewId) {
+        if (checkIsLiking(userId, reviewId)) {
+            throw new WishHairException(ErrorCode.REVIEW_ALREADY_LIKING);
+        }
+    }
+
+    private void validateIsLiking(Long userId, Long reviewId) {
+        if (!checkIsLiking(userId, reviewId)) {
+            throw new WishHairException(ErrorCode.REVIEW_NOT_LIKING);
+        }
     }
 }

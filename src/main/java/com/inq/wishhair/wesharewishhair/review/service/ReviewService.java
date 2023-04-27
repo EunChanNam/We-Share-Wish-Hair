@@ -2,7 +2,6 @@ package com.inq.wishhair.wesharewishhair.review.service;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleFindService;
-import com.inq.wishhair.wesharewishhair.photo.domain.PhotoRepository;
 import com.inq.wishhair.wesharewishhair.photo.service.PhotoService;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewCreateRequest;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
@@ -28,7 +27,6 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final LikeReviewRepository likeReviewRepository;
     private final ReviewFindService reviewFindService;
-    private final PhotoRepository photoRepository;
     private final PhotoService photoService;
     private final UserFindService userFindService;
     private final HairStyleFindService hairStyleFindService;

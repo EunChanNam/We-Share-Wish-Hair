@@ -12,10 +12,8 @@ public class ReviewQueryResponse {
     private final long likes;
 
     @QueryProjection
-    public ReviewQueryResponse(Review review, long likes, Long likesId) {
+    public ReviewQueryResponse(Review review, long likes) {
         this.review = review;
-        if (likesId == null) {
-            this.likes = 0;
-        } else this.likes = likes;
+        this.likes = likes;
     }
 }

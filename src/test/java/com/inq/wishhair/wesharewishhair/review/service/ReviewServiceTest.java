@@ -47,8 +47,8 @@ public class ReviewServiceTest extends ServiceTest {
         //then
         Review result = reviewRepository.findWithPhotosById(reviewId).orElseThrow();
         assertAll(
-                () -> assertThat(result.getUser()).isEqualTo(user),
-                () -> assertThat(result.getUser()).isEqualTo(user),
+                () -> assertThat(result.getWriter()).isEqualTo(user),
+                () -> assertThat(result.getWriter()).isEqualTo(user),
                 () -> assertThat(result.getHairStyle()).isEqualTo(hairStyle),
                 () -> assertThat(result.getContentsValue()).isEqualTo(A.getContents()),
                 () -> assertThat(result.getScore()).isEqualTo(A.getScore()),

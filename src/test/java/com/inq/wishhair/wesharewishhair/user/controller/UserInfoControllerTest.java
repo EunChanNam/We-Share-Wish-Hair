@@ -8,6 +8,7 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.review.infra.query.dto.response.ReviewQueryResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
@@ -162,9 +163,10 @@ public class UserInfoControllerTest extends ControllerTest {
         HairStyle hairStyle = HairStyleFixture.A.toEntity();
 
         Review review = ReviewFixture.values()[index].toEntity(user, hairStyle);
+        ReviewQueryResponse queryResponse = new ReviewQueryResponse(review, 1L);
 
         ReflectionTestUtils.setField(review, "id", index + 1L);
 
-        return ReviewResponseAssembler.toReviewResponse(review, 1L);
+        return ReviewResponseAssembler.toReviewResponse(queryResponse, 1L);
     }
 }

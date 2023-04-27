@@ -16,17 +16,26 @@ public class LikeReviewController {
     private final LikeReviewService likeReviewService;
 
     @PostMapping("/{reviewId}")
-    public ResponseEntity<Success> likeReview(
+    public ResponseEntity<Success> executeLike(
             @PathVariable Long reviewId,
             @ExtractPayload Long userId) {
 
-        likeReviewService.likeReview(reviewId, userId);
+        likeReviewService.executeLike(reviewId, userId);
+        return ResponseEntity.ok(new Success());
+    }
+
+    @PostMapping("/cancel/{reviewId}")
+    public ResponseEntity<Success> cancelLike(
+            @PathVariable Long reviewId,
+            @ExtractPayload Long userId) {
+
+        likeReviewService.cancelLike(reviewId, userId);
         return ResponseEntity.ok(new Success());
     }
 
     @GetMapping("/{reviewId}")
     public ResponseEntity<ReviewLikeResponse> checkIsLiking(@ExtractPayload Long userId,
-                                                       @PathVariable Long reviewId) {
+                                                            @PathVariable Long reviewId) {
 
         boolean result = likeReviewService.checkIsLiking(userId, reviewId);
         return ResponseEntity.ok(new ReviewLikeResponse(result));

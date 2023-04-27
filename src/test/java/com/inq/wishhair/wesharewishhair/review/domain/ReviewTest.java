@@ -10,13 +10,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.mockito.BDDMockito.given;
 
 @DisplayName("Review 도메인 테스트")
 public class ReviewTest {
@@ -26,78 +25,50 @@ public class ReviewTest {
 
     @Test
     @DisplayName("리뷰를 생성한다")
-    void test1() {
+    void createReview() {
         //when
         Review result = Review.createReview(user, "hello", Score.S2H, new ArrayList<>(), hairStyle);
 
         //then
         assertAll(
                 () -> assertThat(result.getHairStyle()).isEqualTo(hairStyle),
-                () -> assertThat(result.getLikes()).isZero(),
-                () -> assertThat(result.getUser()).isEqualTo(user),
+                () -> assertThat(result.getWriter()).isEqualTo(user),
                 () -> assertThat(result.getPhotos()).isEmpty(),
                 () -> assertThat(result.getScore()).isEqualTo(Score.S2H),
                 () -> assertThat(result.getContentsValue()).isEqualTo("hello")
         );
     }
 
-    @Test
-    @DisplayName("좋아요 수를 조회한다")
-    void test2() {
-        //given
-        Review review = ReviewFixture.A.toEntity(user, hairStyle);
-
-        //when
-        long likes = review.getLikes();
-
-        //then
-        assertThat(likes).isZero();
-    }
-
     @Nested
-    @DisplayName("좋아요를 실행한다")
-    class executeLike {
+    @DisplayName("리뷰의 작성자인지 확인한다")
+    class isWriter {
 
-        private Review review;
+        private final Review review = ReviewFixture.A.toEntity(user, null);
 
-        @BeforeEach
-        void setUp() {
+        @Test
+        @DisplayName("작성자로 true 를 리턴한다")
+        void isTrue() {
             //given
-            review = Review.createReview(user, "hello", Score.S2H, new ArrayList<>(), hairStyle);
+            ReflectionTestUtils.setField(user, "id", 1L);
+
+            //when
+            boolean result = review.isWriter(1L);
+
+            //then
+            assertThat(result).isTrue();
         }
 
         @Test
-        @DisplayName("좋아요를 실행한 유저가 좋아요를 하지 않은 유저여서 새로운 좋아요가 생긴다")
-        void test3() {
+        @DisplayName("작성자가 아니여서 false 를 리턴한다")
+        void isFalse() {
             //given
-            User mockUser = Mockito.mock(User.class);
+            ReflectionTestUtils.setField(user, "id", 1L);
 
             //when
-            review.executeLike(mockUser);
+            boolean result = review.isWriter(2L);
 
             //then
-            assertAll(
-                    () -> assertThat(review.getLikes()).isEqualTo(1),
-                    () -> assertThat(review.getLikeReviews()).hasSize(1)
-            );
-        }
-
-        @Test
-        @DisplayName("좋아요를 실행한 유저가 이미 좋아요를 한 유저여서 기존 좋아요가 취소된다")
-        void test4() {
-            //given
-            User mockUser = Mockito.mock(User.class);
-            given(mockUser.getId()).willReturn(1L);
-
-            //when
-            review.executeLike(mockUser);
-            review.executeLike(mockUser);
-
-            //then
-            assertAll(
-                    () -> assertThat(review.getLikes()).isZero(),
-                    () -> assertThat(review.getLikeReviews()).isEmpty()
-            );
+            assertThat(result).isFalse();
         }
     }
 }

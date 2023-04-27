@@ -6,6 +6,7 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
+import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.infra.query.dto.response.ReviewQueryResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewDetailResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
@@ -26,13 +27,16 @@ import static com.inq.wishhair.wesharewishhair.review.service.dto.response.Revie
 public class ReviewSearchService {
 
     private final ReviewRepository reviewRepository;
+    private final LikeReviewRepository likeReviewRepository;
 
     /*리뷰 단건 조회*/
     public ReviewDetailResponse findReviewById(Long reviewId, Long userId) {
-        Review findReview = reviewRepository.findReviewById(reviewId)
+        ReviewQueryResponse queryResponse = reviewRepository.findReviewById(reviewId)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
 
-        return toReviewDetailResponse(findReview, userId);
+        boolean isLiking = likeReviewRepository.existsByUserIdAndReviewId(userId, reviewId);
+
+        return toReviewDetailResponse(queryResponse, userId, isLiking);
     }
 
     /*전체 리뷰 조회*/
