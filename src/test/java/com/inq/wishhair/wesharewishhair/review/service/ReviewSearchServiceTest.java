@@ -11,6 +11,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewSimpleResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
@@ -54,7 +55,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
         @DisplayName("전체 리뷰를 좋아요 수로 정렬하여 조회한다")
         void orderByLikes() {
             //given
-            saveReview(List.of(1, 4, 5), List.of(now(), now(), now()));
+            saveReview(List.of(1, 4, 5, 3), List.of(now(), now(), now(), now()));
 
             User user1 = userRepository.save(UserFixture.B.toEntity());
             User user2 = userRepository.save(UserFixture.C.toEntity());
@@ -63,15 +64,16 @@ public class ReviewSearchServiceTest extends ServiceTest {
             addLikes(user1, List.of(4, 5));
             addLikes(user2, List.of(5));
 
-            Pageable pageable = DefaultPageableUtils.getLikeDescPageable(3);
+            Pageable pageable = DefaultPageableUtils.getLikeDescPageable(4);
 
             //when
             PagedResponse<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable, user.getId());
 
             //then
             assertThat(result.getPaging().hasNext()).isFalse();
+
             assertReviewResponseMatch(result.getResult(),
-                    List.of(reviews.get(5), reviews.get(4), reviews.get(1)));
+                    List.of(5, 4, 1), List.of(3L, 2L, 1L, 0L));
         }
 
         @Test
@@ -89,7 +91,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
             //then
             assertThat(result.getPaging().hasNext()).isFalse();
             assertReviewResponseMatch(result.getResult(),
-                    List.of(reviews.get(1), reviews.get(5), reviews.get(4), reviews.get(3), reviews.get(2)));
+                    List.of(1, 5, 4, 3, 2), List.of(0L, 0L, 0L, 0L, 0L));
 
         }
     }
@@ -130,7 +132,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
             //then
             assertThat(result.getPaging().hasNext()).isFalse();
             assertReviewResponseMatch(result.getResult(),
-                    List.of(reviews.get(1), reviews.get(4), reviews.get(2), reviews.get(3)));
+                    List.of(1, 4, 2, 3), List.of(1L, 1L, 1L, 1L));
         }
 
     }
@@ -163,15 +165,13 @@ public class ReviewSearchServiceTest extends ServiceTest {
 
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(4);
 
-            System.out.println(pageable.getSort());
-
             //when
             PagedResponse<ReviewResponse> result = reviewSearchService.findMyReviews(user.getId(), pageable);
 
             //then
             assertThat(result.getPaging().hasNext()).isFalse();
             assertReviewResponseMatch(result.getResult(),
-                    List.of(reviews.get(1), reviews.get(4), reviews.get(2), reviews.get(3)));
+                    List.of(1, 4, 2, 3), List.of(0L, 0L, 0L, 0L));
         }
     }
 
@@ -193,8 +193,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
         ResponseWrapper<ReviewSimpleResponse> result = reviewSearchService.findReviewOfMonth();
 
         //then
-        assertReviewSimpleResponseMatch(result.getResult(),
-                List.of(reviews.get(5), reviews.get(4), reviews.get(1)));
+        assertReviewSimpleResponseMatch(result.getResult(), List.of(5, 4, 1));
     }
 
     private void saveReview(List<Integer> indexes, List<LocalDateTime> times) {
@@ -210,22 +209,23 @@ public class ReviewSearchServiceTest extends ServiceTest {
 
     private void addLikes(User user, List<Integer> indexes) {
         for (int index : indexes) {
-            reviews.get(index).executeLike(user);
+            likeReviewRepository.save(LikeReview.addLike(user.getId(), reviews.get(index).getId()));
         }
     }
 
-    private void assertReviewResponseMatch(List<ReviewResponse> responses, List<Review> expectedReviews) {
-        assertThat(responses).hasSize(expectedReviews.size());
+    private void assertReviewResponseMatch(List<ReviewResponse> responses, List<Integer> indexes,
+                                           List<Long> likes) {
+        assertThat(responses).hasSize(indexes.size());
 
-        int expectedSize = responses.size();
+        for (int i = 0; i < responses.size(); i++) {
+            int index = indexes.get(i);
+            ReviewResponse response = responses.get(i);
+            Review expected = reviews.get(index);
+            Long like = likes.get(i);
 
-        for (int index = 0; index < expectedSize; index++) {
-            ReviewResponse response = responses.get(index);
-            Review expected = expectedReviews.get(index);
-
+            assertThat(response.getLikes()).isEqualTo(like);
             assertAll(
                     () -> assertThat(response.getReviewId()).isEqualTo(expected.getId()),
-                    () -> assertThat(response.getLikes()).isEqualTo(expected.getLikes()),
                     () -> assertThat(response.getContents()).isEqualTo(expected.getContentsValue()),
                     () -> assertThat(response.getScore()).isEqualTo(expected.getScore().getValue()),
                     () -> assertThat(response.getCreatedDate()).isEqualTo(expected.getCreatedDate()),
@@ -244,14 +244,13 @@ public class ReviewSearchServiceTest extends ServiceTest {
         }
     }
 
-    private void assertReviewSimpleResponseMatch(List<ReviewSimpleResponse> responses, List<Review> expectedReviews) {
-        assertThat(responses).hasSize(expectedReviews.size());
+    private void assertReviewSimpleResponseMatch(List<ReviewSimpleResponse> responses, List<Integer> indexes) {
+        assertThat(responses).hasSize(indexes.size());
 
-        int expectedSize = responses.size();
-
-        for (int index = 0; index < expectedSize; index++) {
-            ReviewSimpleResponse response = responses.get(index);
-            Review expected = expectedReviews.get(index);
+        for (int i = 0; i < responses.size(); i++) {
+            int index = indexes.get(i);
+            ReviewSimpleResponse response = responses.get(i);
+            Review expected = reviews.get(index);
 
             assertAll(
                     () -> assertThat(response.getReviewId()).isEqualTo(expected.getId()),
