@@ -7,7 +7,6 @@ import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import static com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponseAssembler.toReviewResponse;
 
 @Service
 @RequiredArgsConstructor

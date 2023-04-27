@@ -16,24 +16,23 @@ public class LikeReview {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn
+    private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "review_id")
-    private Review review;
+    @JoinColumn
+    private Long reviewId;
 
     //==생성 메서드==//
-    public static LikeReview createLikeReview(User user, Review review) {
-        LikeReview likeReview = new LikeReview();
-        likeReview.user = user;
-        likeReview.review = review;
-        return likeReview;
+    private LikeReview(Long userId, Long reviewId) {
+        this.userId = userId;
+        this.reviewId = reviewId;
+    }
+    public static LikeReview createLikeReview(Long userId, Long reviewId) {
+        return new LikeReview(userId, reviewId);
     }
 
     //편의 메서드
     public boolean isSameUser(Long userId) {
-        return user.getId().equals(userId);
+        return this.userId.equals(userId);
     }
 }

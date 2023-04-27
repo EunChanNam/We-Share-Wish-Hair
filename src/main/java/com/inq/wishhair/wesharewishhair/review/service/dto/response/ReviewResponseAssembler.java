@@ -55,8 +55,8 @@ public abstract class ReviewResponseAssembler {
         );
     }
 
-    public static ReviewDetailResponse toReviewDetailResponse(Review review, Long userId) {
-        return new ReviewDetailResponse(toReviewResponse(review, userId), review.isLikingUSer(userId));
+    public static ReviewDetailResponse toReviewDetailResponse(Review review, Long userId, boolean isLiking) {
+        return new ReviewDetailResponse(toReviewResponse(review, userId), isLiking);
     }
 
     public static ResponseWrapper<ReviewSimpleResponse> toWrappedSimpleResponse(List<Review> reviews) {
