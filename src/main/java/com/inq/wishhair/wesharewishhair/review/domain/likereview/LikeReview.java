@@ -28,9 +28,4 @@ public class LikeReview {
     public static LikeReview addLike(Long userId, Long reviewId) {
         return new LikeReview(userId, reviewId);
     }
-
-    //편의 메서드
-    public boolean isSameUser(Long userId) {
-        return this.userId.equals(userId);
-    }
 }
