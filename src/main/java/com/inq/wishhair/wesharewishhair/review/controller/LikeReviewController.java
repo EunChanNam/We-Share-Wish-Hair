@@ -24,7 +24,7 @@ public class LikeReviewController {
         return ResponseEntity.ok(new Success());
     }
 
-    @PostMapping("/{reviewId}")
+    @PostMapping("/cancel/{reviewId}")
     public ResponseEntity<Success> cancelLike(
             @PathVariable Long reviewId,
             @ExtractPayload Long userId) {

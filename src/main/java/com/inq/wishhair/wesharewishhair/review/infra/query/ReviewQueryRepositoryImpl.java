@@ -36,8 +36,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
     private final NumberExpression<Long> likes = new CaseBuilder()
             .when(like.id.sum().isNull())
             .then(0L)
-            .otherwise(review.count())
-            .as("likes");
+            .otherwise(review.id.count());
 
     @Override
     public Optional<ReviewQueryResponse> findReviewById(Long id) {
@@ -48,7 +47,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
                         .leftJoin(like).on(review.id.eq(like.reviewId))
                         .leftJoin(review.hairStyle)
                         .fetchJoin()
-                        .leftJoin(review.user)
+                        .leftJoin(review.writer)
                         .fetchJoin()
                         .where(review.id.eq(id))
                         .groupBy(review.id)
@@ -64,7 +63,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
                 .leftJoin(like).on(review.id.eq(like.reviewId))
                 .leftJoin(review.hairStyle)
                 .fetchJoin()
-                .leftJoin(review.user)
+                .leftJoin(review.writer)
                 .fetchJoin()
                 .groupBy(review.id)
                 .orderBy(applyOrderBy(pageable))
@@ -81,7 +80,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
                 .select(assembleReviewProjection())
                 .from(review)
                 .leftJoin(like).on(review.id.eq(like.reviewId))
-                .leftJoin(review.user)
+                .leftJoin(review.writer)
                 .fetchJoin()
                 .leftJoin(review.hairStyle)
                 .fetchJoin()
@@ -103,11 +102,11 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
                 .leftJoin(like).on(review.id.eq(like.reviewId))
                 .leftJoin(review.hairStyle)
                 .fetchJoin()
-                .leftJoin(review.user)
+                .leftJoin(review.writer)
                 .fetchJoin()
                 .groupBy(review.id)
                 .orderBy(applyOrderBy(pageable))
-                .where(review.user.id.eq(userId))
+                .where(review.writer.id.eq(userId))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize() + 1L);
 
@@ -126,7 +125,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
                 .leftJoin(like).on(review.id.eq(like.reviewId))
                 .leftJoin(review.hairStyle)
                 .fetchJoin()
-                .leftJoin(review.user)
+                .leftJoin(review.writer)
                 .fetchJoin()
                 .where(review.createdDate.between(startDate, endDate))
                 .groupBy(review.id)
@@ -137,7 +136,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
     }
 
     private ConstructorExpression<ReviewQueryResponse> assembleReviewProjection() {
-        return new QReviewQueryResponse(review, likes);
+        return new QReviewQueryResponse(review, likes.as("likes"));
     }
 
     private OrderSpecifier<?>[] applyOrderBy(Pageable pageable) {

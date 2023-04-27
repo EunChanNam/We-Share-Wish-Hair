@@ -12,6 +12,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewDetailResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewSimpleResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
@@ -48,6 +49,19 @@ public class ReviewSearchServiceTest extends ServiceTest {
         }
     }
 
+    @Test
+    @DisplayName("리뷰를 아이디로 단건 조회한다")
+    void findByReviewId() {
+        //given
+        saveReview(List.of(1), List.of(now()));
+
+        //when
+        ReviewDetailResponse result = reviewSearchService.findReviewById(reviews.get(1).getId(), user.getId());
+
+        //then
+        assertReviewDetailResponse(result, 1, 0L);
+    }
+
     @Nested
     @DisplayName("전체 리뷰를 조회한다")
     class findPagedReview {
@@ -73,7 +87,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
             assertThat(result.getPaging().hasNext()).isFalse();
 
             assertReviewResponseMatch(result.getResult(),
-                    List.of(5, 4, 1), List.of(3L, 2L, 1L, 0L));
+                    List.of(5, 4, 1, 3), List.of(3L, 2L, 1L, 0L));
         }
 
         @Test
@@ -259,5 +273,11 @@ public class ReviewSearchServiceTest extends ServiceTest {
                     () -> assertThat(response.getUserNickname()).isEqualTo(expected.getWriter().getNicknameValue())
             );
         }
+    }
+
+    private void assertReviewDetailResponse(ReviewDetailResponse response, int index, long likes) {
+        assertThat(response.isLiking()).isFalse();
+        ReviewResponse actual = response.getReviewResponse();
+        assertReviewResponseMatch(List.of(actual), List.of(index), List.of(likes));
     }
 }
