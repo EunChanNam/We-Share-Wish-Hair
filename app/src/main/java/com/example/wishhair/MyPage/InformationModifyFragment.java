@@ -17,10 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -30,7 +28,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.wishhair.MainActivity;
 import com.example.wishhair.R;
 import com.example.wishhair.sign.EmailCertActivity;
-import com.example.wishhair.sign.LoginActivity;
 import com.example.wishhair.sign.UrlConst;
 
 import org.json.JSONObject;
@@ -59,13 +56,12 @@ public class InformationModifyFragment extends Fragment {
     private SharedPreferences loginSP;
     final static private String url = UrlConst.URL + "/api/my_page";
     static private String accessToken;
-    Button modify_commit;
-    Button pw_modify;
+    Button config_apply;
 
-    static TextView nameTv = null;
-    static TextView sexTv = null;
-    static TextView IDTv = null;
-    static TextView PWTv = null;
+    TextView nameTv;
+    TextView sexTv;
+    TextView IDTv;
+    TextView PWTv;
 
 
 
@@ -123,13 +119,7 @@ public class InformationModifyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_information_modify, container, false);
-        nameTv = view.findViewById(R.id.name_modify);
-        sexTv = view.findViewById(R.id.email_modify);
-        IDTv = view.findViewById(R.id.nickname_modify);
-//        PWTv = view.findViewById(R.id.PWModify);
-        modify_commit = view.findViewById(R.id.modify_commit);
-        pw_modify = view.findViewById(R.id.pw_modify);
+        View view = inflater.inflate(R.layout.my_information_config, container, false);
 
         return view;
     }
@@ -148,14 +138,6 @@ public class InformationModifyFragment extends Fragment {
                 mainActivity.ChangeFragment(2);
             }
         });
-        pw_modify.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(mainActivity, EmailCertActivity.class);
-                startActivity(intent);
-            }
-        });
-
 
         loginSP = getActivity().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         String accessToken = loginSP.getString("accessToken", "fail acc");
@@ -171,7 +153,7 @@ public class InformationModifyFragment extends Fragment {
 
     }
 
-    public void ModifyRequest(String accessToken) {
+    public void ConfigRequest(String accessToken) {
         String name = nameTv.getText().toString();
         String sex = sexTv.getText().toString();
         String ID = IDTv.getText().toString();
