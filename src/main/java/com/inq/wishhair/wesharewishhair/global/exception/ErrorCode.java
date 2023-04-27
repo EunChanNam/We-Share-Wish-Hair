@@ -27,6 +27,9 @@ public enum ErrorCode {
 
     REVIEW_NOT_WRITER("REVIEW_001", "리뷰 작성자가 아닙니다.", HttpStatus.BAD_REQUEST),
 
+    REVIEW_ALREADY_LIKING("LIKE_001", "이미 좋아요한 리뷰입니다.", HttpStatus.BAD_REQUEST),
+    REVIEW_NOT_LIKING("LIKE_002", "좋아요 하지 않은 리뷰입니다.", HttpStatus.BAD_REQUEST),
+
     CONTENTS_INVALID_LENGTH("CONTENTS_001", "5자 이상 100자 이하로 작성해주세요", HttpStatus.BAD_REQUEST),
 
     MAIL_EXPIRED_KEY("MAIL_001", "인증키가 만료되었습니다.", HttpStatus.UNAUTHORIZED),
@@ -40,7 +43,6 @@ public enum ErrorCode {
 
     SCORE_MISMATCH("SCORE_001", "정해진 형식의 입력이 아닙니다.", HttpStatus.BAD_REQUEST),
 
-    WISH_LIST_NOT_HOST("Wish_LIST_001", "찜 목록 주인이 아닙니다", HttpStatus.FORBIDDEN),
     WISH_HAIR_NOT_EXIST("WISH_HAIR_001", "찜한 헤어스타일이 아닙니다", HttpStatus.BAD_REQUEST),
     WISH_HAIR_ALREADY_EXIST("WISH_HAIR_002", "이미 찜한 헤어스타일 입니다.", HttpStatus.BAD_REQUEST),
 

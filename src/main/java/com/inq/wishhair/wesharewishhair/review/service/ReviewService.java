@@ -28,7 +28,6 @@ public class ReviewService {
     private final ReviewRepository reviewRepository;
     private final LikeReviewRepository likeReviewRepository;
     private final ReviewFindService reviewFindService;
-    private final PhotoRepository photoRepository;
     private final PhotoService photoService;
     private final UserFindService userFindService;
     private final HairStyleFindService hairStyleFindService;

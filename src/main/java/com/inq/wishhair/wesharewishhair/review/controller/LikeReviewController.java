@@ -20,7 +20,7 @@ public class LikeReviewController {
             @PathVariable Long reviewId,
             @ExtractPayload Long userId) {
 
-        likeReviewService.likeReview(reviewId, userId);
+        likeReviewService.executeLike(reviewId, userId);
         return ResponseEntity.ok(new Success());
     }
 
