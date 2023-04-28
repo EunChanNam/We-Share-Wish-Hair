@@ -12,11 +12,8 @@ import androidx.fragment.app.FragmentTransaction;
 
 
 import com.example.wishhair.MyPage.ConfigFragment;
-import com.example.wishhair.MyPage.InformationModifyFragment;
-import com.example.wishhair.MyPage.MyCouponFragment;
 import com.example.wishhair.MyPage.MyPageFragment;
 import com.example.wishhair.MyPage.MyPointList;
-import com.example.wishhair.MyPage.MyHeartlistFragment;
 import com.example.wishhair.MyPage.MyStyleFragment;
 
 import com.example.wishhair.MyPage.RefundFragment;
@@ -36,11 +33,8 @@ public class MainActivity extends AppCompatActivity {
     private final ReviewFragment reviewFragment = new ReviewFragment();
     private final MyPageFragment myPageFragment = new MyPageFragment();
     private final MyStyleFragment myStyleFragment = new MyStyleFragment();
-    private final MyHeartlistFragment myHeartlistFragment = new MyHeartlistFragment();
-    private final InformationModifyFragment informationModifyFragment = new InformationModifyFragment();
-    private final MyCouponFragment myCouponFragment = new MyCouponFragment();
-    private final MyPointList myPointList = new MyPointList();
     private final ConfigFragment configFragment = new ConfigFragment();
+    private final MyPointList myPointList = new MyPointList();
     private final FavoriteFragment favoriteFragment = new FavoriteFragment();
     private final RefundFragment refundFragment = new RefundFragment();
     public static Context context;
@@ -103,13 +97,10 @@ public class MainActivity extends AppCompatActivity {
                 transaction.replace(R.id.MainLayout, myStyleFragment).commitAllowingStateLoss();
                 break;
             case 4:
-                transaction.replace(R.id.MainLayout, myHeartlistFragment).commitAllowingStateLoss();
                 break;
             case 5:
-                transaction.replace(R.id.MainLayout, informationModifyFragment).commitAllowingStateLoss();
                 break;
             case 6:
-                transaction.replace(R.id.MainLayout, myCouponFragment).commitAllowingStateLoss();
                 break;
             case 7:
                 transaction.replace(R.id.MainLayout, myPointList).commitAllowingStateLoss();

@@ -119,7 +119,7 @@ public class MyPointList extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toolbar toolbar = getView().findViewById(R.id.modify_toolbar);
+        Toolbar toolbar = getView().findViewById(R.id.point_toolbar);
         loginSP = getActivity().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         String accessToken = loginSP.getString("accessToken", "fail acc");
 

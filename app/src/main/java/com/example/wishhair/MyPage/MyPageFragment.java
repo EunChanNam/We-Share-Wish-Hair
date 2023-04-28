@@ -87,23 +87,21 @@ public class MyPageFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.modify_toolbar);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.mypage_toolbar);
 
-        ImageButton toMyInformationButton = view.findViewById(R.id.mypage_to_config);
+        ImageButton toConfig = view.findViewById(R.id.mypage_to_config);
         ImageButton toMyPoint = view.findViewById(R.id.mypage_to_point);
-//        Button toMyCoupon = view.findViewById(R.id.toMyCoupon);
+        ImageButton withdrawBtn = view.findViewById(R.id.mypage_withdraw);
 
         HeartlistRecyclerView = view.findViewById(R.id.HeartlistRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         HeartlistRecyclerView.setLayoutManager(layoutManager);
-//        recyclerDecoration = new RecyclerDecoration(-200);
-//        HeartlistRecyclerView.addItemDecoration(recyclerDecoration);
 
         adapter = new MyPageRecyclerViewAdapter();
 
         HeartlistRecyclerView.setAdapter(adapter);
 
-        toMyInformationButton.setOnClickListener(new View.OnClickListener() {
+        toConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mainActivity.ChangeFragment(8);
@@ -115,12 +113,13 @@ public class MyPageFragment extends Fragment {
                 mainActivity.ChangeFragment(7);
             }
         });
-//        toMyCoupon.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                mainActivity.ChangeFragment(6);
-//            }
-//        });
+        withdrawBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+            }
+        });
+
 
 //        userpicture.setOnClickListener(new View.OnClickListener() {
 //            @Override

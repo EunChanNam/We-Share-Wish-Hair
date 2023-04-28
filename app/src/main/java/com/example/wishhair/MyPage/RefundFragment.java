@@ -1,12 +1,20 @@
 package com.example.wishhair.MyPage;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.wishhair.R;
 
@@ -26,19 +34,13 @@ public class RefundFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    Button refundApply;
+
     public RefundFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RefundFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static RefundFragment newInstance(String param1, String param2) {
         RefundFragment fragment = new RefundFragment();
         Bundle args = new Bundle();
@@ -60,7 +62,47 @@ public class RefundFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.my_point_refund_fragment, container, false);
+        View view = inflater.inflate(R.layout.my_point_refund_fragment, container, false);
+        refundApply = view.findViewById(R.id.refund_apply);
+        return view;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        refundApply.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(view.getContext(), R.style.RefundAlertDialogTheme);
+                    View v = LayoutInflater.from(getContext()).inflate(R.layout.mypage_refund_dialog, view.findViewById(R.id.dialog_refund_layout));
+                    // alert의 title과 Messege 세팅
+
+                    myAlertBuilder.setView(v);
+                    AlertDialog alertDialog = myAlertBuilder.create();
+
+                    // 버튼 리스너 설정
+                    v.findViewById(R.id.dialog_refund_OKbtn).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(view.getContext().getApplicationContext(),"환급 완료 !",Toast.LENGTH_SHORT).show();
+                            alertDialog.dismiss();
+                        }
+                    });
+                    v.findViewById(R.id.dialog_refund_Canclebtn).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            alertDialog.dismiss();
+                        }
+                    });
+
+                    // 다이얼로그 형태 지우기
+                    if (alertDialog.getWindow() != null) {
+                        alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+                    }
+                    // Alert를 생성해주고 보여주는 메소드(show를 선언해야 Alert가 생성됨)
+                    alertDialog.show();
+                }
+            });
     }
 }

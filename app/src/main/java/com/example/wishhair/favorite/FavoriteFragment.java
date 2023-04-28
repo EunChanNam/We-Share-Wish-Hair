@@ -55,8 +55,8 @@ public class FavoriteFragment extends Fragment {
     Button btn;
 
     private SharedPreferences loginSP;
-    final static private String url = UrlConst.URL + "/api/wish_list";
-    final static private String url2 = UrlConst.URL + "/api/wish_list/3";
+    final static private String url = UrlConst.URL + "/api/hair_style/wish";
+    final static private String url2 = UrlConst.URL + "/api/hair_style/wish/3";
 
     static private String accessToken;
 
@@ -124,8 +124,8 @@ public class FavoriteFragment extends Fragment {
                     for (int i=0;i<3;i++) {
                         FavoriteItem item = new FavoriteItem();
                         JSONObject object = jsonArray.getJSONObject(i);
-                        item.setFavoriteStyleName(object.getString("hairStyleName"));
-                        Log.i("stylename response test", object.getString("hairStyleName"));
+                        item.setFavoriteStyleName(object.getString("name"));
+                        Log.i("stylename response test", object.getString("name"));
                         adapter.addItem(item);
                         adapter.notifyDataSetChanged();
                     }
@@ -159,7 +159,11 @@ public class FavoriteFragment extends Fragment {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url2 , null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-
+                try {
+                    Log.i("error message", response.getString("message"));
+                } catch (JSONException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }, new Response.ErrorListener() {
 
