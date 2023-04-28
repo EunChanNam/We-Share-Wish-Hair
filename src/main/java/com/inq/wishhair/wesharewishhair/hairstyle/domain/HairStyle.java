@@ -34,16 +34,12 @@ public class HairStyle {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    @Embedded
-    private WishListCount wishListCount;
-
     //==생성 메서드==//
     private HairStyle(String name, Sex sex, List<String> photos, List<Tag> tags) {
         this.name = name;
         this.sex = sex;
         applyPhotos(photos);
         applyHasTags(tags);
-        wishListCount = new WishListCount();
     }
 
     public static HairStyle createHairStyle(
@@ -52,18 +48,6 @@ public class HairStyle {
     }
 
     //==편의 메서드--//
-    public void plusWishListCount() {
-        wishListCount.plusWishListCount();
-    }
-
-    public void minusWishListCount() {
-        wishListCount.minusWishListCount();
-    }
-
-    public int getWishListCount() {
-        return wishListCount.getValue();
-    }
-
     private void applyHasTags(List<Tag> tags) {
         tags.stream().map(HashTag::of).toList()
                 .forEach(hashTag -> {

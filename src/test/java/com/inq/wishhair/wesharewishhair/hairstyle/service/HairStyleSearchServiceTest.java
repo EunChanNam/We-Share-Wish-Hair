@@ -7,7 +7,6 @@ import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
@@ -81,7 +80,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
         }
 
         @Test
-        @DisplayName("조회된 헤어스타일은 일치하는 해시태그 수, 찜수, 이름으로 정렬된다")
+        @DisplayName("조회된 헤어스타일은 일치하는 해시태그 수, 이름으로 정렬된다")
         void test3() {
             //given
             List<Tag> tags = new ArrayList<>(List.of(Tag.PERM, Tag.LIGHT));
@@ -105,6 +104,7 @@ public class HairStyleSearchServiceTest extends ServiceTest {
         void test5() {
             //given
             user.updateFaceShape(new FaceShape(Tag.OBLONG));
+            wishHairStyles(List.of(2, 2, 4));
 
             //when
             ResponseWrapper<HairStyleResponse> result = hairStyleSearchService.recommendHairByFaceShape(user.getId());
@@ -117,13 +117,16 @@ public class HairStyleSearchServiceTest extends ServiceTest {
         @Test
         @DisplayName("얼굴형 태그가 저장돼 있지 않은 유저라면 태그 없이 헤어가 찜수, 이름으로 정렬되어 조회된다")
         void test6() {
+            //given
+            wishHairStyles(List.of(2, 2, 0));
+
             //when
             ResponseWrapper<HairStyleResponse> result =
                     hairStyleSearchService.recommendHairByFaceShape(user.getId());
 
             //then
             List<HairStyleResponse> actual = result.getResult();
-            assertHairStyleResponseMatch(actual, List.of(2, 0, 4, 3));
+            assertHairStyleResponseMatch(actual, List.of(2, 0, 3, 4));
         }
     }
 

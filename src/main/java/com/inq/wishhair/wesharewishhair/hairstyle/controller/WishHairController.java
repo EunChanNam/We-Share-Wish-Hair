@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/hair_style")
+@RequestMapping("/api/hair_style/wish/")
 public class WishHairController {
 
     private final WishHairService wishHairService;
 
-    @PostMapping("/wish/{hairStyleId}")
-    public ResponseEntity<Success> createWishList(
+    @PostMapping("/{hairStyleId}")
+    public ResponseEntity<Success> executeWish(
             @PathVariable Long hairStyleId,
             @ExtractPayload Long userId) {
 
@@ -25,9 +25,9 @@ public class WishHairController {
         return ResponseEntity.ok(new Success());
     }
 
-    @DeleteMapping("/wish/{hairStyleId}")
-    public ResponseEntity<Success> deleteWishList(@PathVariable Long hairStyleId,
-                                                  @ExtractPayload Long userId) {
+    @DeleteMapping("/{hairStyleId}")
+    public ResponseEntity<Success> cancelWish(@PathVariable Long hairStyleId,
+                                              @ExtractPayload Long userId) {
 
         wishHairService.cancelWish(hairStyleId, userId);
 

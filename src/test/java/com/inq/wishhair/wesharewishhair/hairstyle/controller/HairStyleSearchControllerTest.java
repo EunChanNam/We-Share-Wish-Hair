@@ -148,9 +148,10 @@ public class HairStyleSearchControllerTest extends ControllerTest {
             //then
             assertException(expectedError, requestBuilder, status().isUnauthorized());
         }
+
         @Test
-        @DisplayName("사용자 얼굴형 기반 헤어추천 서비스 로직의 결과를 헤어스타일 응답으로 변환해 응답한다")
-        void success() throws Exception {
+        @DisplayName("사용자 얼굴형으로 추천된 헤어스타일을 조회한다")
+        void success1() throws Exception {
             //given
             given(hairStyleSearchService.recommendHairByFaceShape(1L))
                     .willReturn(assembleWrappedResponse(List.of(C, E, D)));
@@ -172,7 +173,6 @@ public class HairStyleSearchControllerTest extends ControllerTest {
                             )
                     );
         }
-
     }
 
     @Nested
