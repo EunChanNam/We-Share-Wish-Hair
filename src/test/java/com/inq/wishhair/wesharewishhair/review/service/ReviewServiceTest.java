@@ -6,12 +6,14 @@ import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
+import com.inq.wishhair.wesharewishhair.photo.service.PhotoService;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewCreateRequest;
 import com.inq.wishhair.wesharewishhair.review.controller.utils.ReviewCreateRequestUtils;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,12 +21,16 @@ import java.util.List;
 import static com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.BDDMockito.given;
 
 @DisplayName("ReviewServiceTest - SpringBootTest")
 public class ReviewServiceTest extends ServiceTest {
 
     @Autowired
     private ReviewService reviewService;
+
+    @MockBean
+    private PhotoService photoService;
 
     private User user;
     private HairStyle hairStyle;
@@ -40,6 +46,7 @@ public class ReviewServiceTest extends ServiceTest {
     void test1() throws IOException {
         //given
         ReviewCreateRequest request = ReviewCreateRequestUtils.createRequest(A, hairStyle.getId());
+        given(photoService.uploadPhotos(request.getFiles())).willReturn(A.getStoreUrls());
 
         //when
         Long reviewId = reviewService.createReview(request, user.getId());
@@ -54,11 +61,6 @@ public class ReviewServiceTest extends ServiceTest {
                 () -> assertThat(result.getScore()).isEqualTo(A.getScore()),
                 () -> assertThat(result.getPhotos()).hasSize(A.getStoreUrls().size())
         );
-
-        //이벤트 리스너 강제 실행 <- 다른 테스트가 깨지므로 중단
-        /*TestTransaction.flagForCommit();
-        TestTransaction.end();
-        assertThat(user.getAvailablePoint()).isEqualTo(100);*/
     }
 
     @Nested
