@@ -51,8 +51,7 @@ public class WishHairControllerTest extends ControllerTest {
         void failByAlreadyExist() throws Exception {
             //given
             ErrorCode expectedError = ErrorCode.WISH_HAIR_ALREADY_EXIST;
-            doThrow(new WishHairException(expectedError))
-                    .when(wishHairService).executeWish(any(), any());
+            doThrow(new WishHairException(expectedError)).when(wishHairService).executeWish(any(), any());
 
             //when
             MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
@@ -72,6 +71,62 @@ public class WishHairControllerTest extends ControllerTest {
             //when
             MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
                     .post(BASE_URL + "/{hairStyleId}", 1L);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
+        }
+    }
+
+    @Nested
+    @DisplayName("찜 취소 API")
+    class cancelWish {
+        @Test
+        @DisplayName("찜 취소를 성공한다")
+        void success() throws Exception {
+            //when
+            MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
+                    .delete(BASE_URL + "/{hairStyleId}", 1L)
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    pathParameters(
+                                            parameterWithName("hairStyleId").description("찜 취소 할 헤어스타일 ID")
+                                    ),
+                                    successResponseDocument()
+                            )
+                    );
+        }
+
+        @Test
+        @DisplayName("찜하지 않은 헤어스타일에 요청해 실패한다")
+        void failByNotExist() throws Exception {
+            //given
+            ErrorCode expectedError = ErrorCode.WISH_HAIR_NOT_EXIST;
+            doThrow(new WishHairException(expectedError)).when(wishHairService).cancelWish(any(), any());
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
+                    .delete(BASE_URL + "/{hairStyleId}", 1L)
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isBadRequest());
+        }
+
+        @Test
+        @DisplayName("헤더에 토큰을 포함하지 않아 실패한다")
+        void failByNoAccessToken() throws Exception {
+            //given
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
+                    .delete(BASE_URL + "/{hairStyleId}", 1L);
 
             //then
             assertException(expectedError, requestBuilder, status().isUnauthorized());

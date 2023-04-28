@@ -16,7 +16,7 @@ public class WishHairController {
     private final WishHairService wishHairService;
 
     @PostMapping("/{hairStyleId}")
-    public ResponseEntity<Success> createWishList(
+    public ResponseEntity<Success> executeWish(
             @PathVariable Long hairStyleId,
             @ExtractPayload Long userId) {
 
@@ -26,8 +26,8 @@ public class WishHairController {
     }
 
     @DeleteMapping("/{hairStyleId}")
-    public ResponseEntity<Success> deleteWishList(@PathVariable Long hairStyleId,
-                                                  @ExtractPayload Long userId) {
+    public ResponseEntity<Success> cancelWish(@PathVariable Long hairStyleId,
+                                              @ExtractPayload Long userId) {
 
         wishHairService.cancelWish(hairStyleId, userId);
 
