@@ -37,22 +37,35 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
 
     @Override
     public List<HairStyle> findByRecommend(HairRecommendCondition condition, Pageable pageable) {
-        List<Long> filteredHairStyles = null;
-        if (condition.getTags() != null) {
-            filteredHairStyles = factory
-                    .select(hairStyle.id)
-                    .from(hairStyle)
-                    .innerJoin(hairStyle.hashTags, hashTag)
-                    .where(hashTagEq(condition.getUserFaceShape()))
-                    .fetch();
-        }
-        List<Long> result = factory
+        List<Long> filteredHairStyles = factory
                 .select(hairStyle.id)
                 .from(hairStyle)
-                .leftJoin(hairStyle.hashTags, hashTag)
-                .where(hashTagInTagsOrEqFaceShape(condition.getTags(), condition.getUserFaceShape()))
-                .where(hairStyleIn(filteredHairStyles))
-                .where(hairStyle.sex.eq(condition.getSex()))
+                .innerJoin(hairStyle.hashTags, hashTag).on(hashTagEqFaceShape(condition.getUserFaceShape()))
+                .groupBy(hairStyle.id)
+                .fetch();
+
+        return factory
+                .select(hairStyle)
+                .from(hairStyle)
+                .innerJoin(hairStyle.hashTags, hashTag)
+                .where(
+                        hashTagInTags(condition.getTags()),
+                        hairStyleIn(filteredHairStyles),
+                        hairStyle.sex.eq(condition.getSex()))
+                .groupBy(hairStyle.id)
+                .orderBy(mainOrderBy())
+                .fetch();
+    }
+
+    @Override
+    public List<HairStyle> findByFaceShape(HairRecommendCondition condition, Pageable pageable) {
+        List<Long> filteredHairStyles = factory
+                .select(hairStyle.id)
+                .from(hairStyle)
+                .innerJoin(hairStyle.hashTags, hashTag)
+                .where(
+                        hashTagEqFaceShape(condition.getUserFaceShape()),
+                        hairStyle.sex.eq(condition.getSex()))
                 .groupBy(hairStyle.id)
                 .fetch();
 
@@ -60,11 +73,9 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
                 .select(hairStyle)
                 .from(hairStyle)
                 .leftJoin(wish).on(hairStyle.id.eq(wish.hairStyleId))
-                .where(hairStyleIn(result))
+                .where(hairStyleIn(filteredHairStyles))
                 .groupBy(hairStyle.id)
-                .orderBy(mainQueryOrderBy(condition.getTags()))
-                .offset(pageable.getOffset())
-                .limit(pageable.getPageSize())
+                .orderBy(subOrderBy())
                 .fetch();
     }
 
@@ -83,19 +94,15 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
         return new SliceImpl<>(hairStyles, pageable, validateHasNext(pageable, hairStyles));
     }
 
-    private BooleanExpression hashTagEq(Tag faceShape) {
-        return (faceShape != null) ? hashTag.tag.eq(faceShape) : null;
-    }
-
     private BooleanExpression hairStyleIn(List<Long> filteredHairStyles) {
         return (filteredHairStyles != null) ? hairStyle.id.in(filteredHairStyles) : null;
     }
 
-    private BooleanExpression hashTagInTagsOrEqFaceShape(List<Tag> tags, Tag faceShapeTag) {
-        return (tags != null) ? hashTag.tag.in(tags) : tagEqFaceShape(faceShapeTag);
+    private BooleanExpression hashTagInTags(List<Tag> tags) {
+        return hashTag.tag.in(tags);
     }
 
-    private BooleanExpression tagEqFaceShape(Tag faceShpaeTag) {
+    private BooleanExpression hashTagEqFaceShape(Tag faceShpaeTag) {
         return (faceShpaeTag != null) ? hashTag.tag.eq(faceShpaeTag) : null;
     }
 
@@ -107,15 +114,21 @@ public class HairStyleQueryRepositoryImpl implements HairStyleQueryRepository{
         return false;
     }
 
-    private OrderSpecifier<?>[] mainQueryOrderBy(List<Tag> tags) {
+    private OrderSpecifier<?>[] mainOrderBy() {
         List<OrderSpecifier<?>> orderBy = new LinkedList<>();
 
-        if (tags != null) {
-            orderBy.add(hairStyle.count().desc());
-        }
+        orderBy.add(hairStyle.id.count().desc());
+        orderBy.add(hairStyle.name.asc());
+
+        return orderBy.toArray(OrderSpecifier[]::new);
+    }
+
+    private OrderSpecifier<?>[] subOrderBy() {
+        List<OrderSpecifier<?>> orderBy = new LinkedList<>();
 
         orderBy.add(wishCount.desc());
         orderBy.add(hairStyle.name.asc());
+
         return orderBy.toArray(OrderSpecifier[]::new);
     }
 }

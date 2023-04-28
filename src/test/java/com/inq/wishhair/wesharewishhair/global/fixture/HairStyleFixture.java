@@ -17,15 +17,15 @@ import java.util.List;
 public enum HairStyleFixture {
 
     A("hairStyleA", new ArrayList<>(List.of("one.png", "two.png")),
-            new ArrayList<>(List.of(Tag.PERM, Tag.LONG, Tag.SQUARE, Tag.UPSTAGE)), Sex.WOMAN, 3),
+            new ArrayList<>(List.of(Tag.PERM, Tag.LONG, Tag.SQUARE, Tag.UPSTAGE)), Sex.WOMAN),
     B("hairStyleB", new ArrayList<>(List.of("three.png", "four.png")),
-            new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.NEAT, Tag.OVAL)), Sex.MAN, 2),
+            new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.NEAT, Tag.OVAL)), Sex.MAN),
     C("hairStyleC", new ArrayList<>(List.of("five.png", "six.png")),
-            new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.UPSTAGE, Tag.CUTE, Tag.OBLONG)), Sex.WOMAN, 4),
+            new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.UPSTAGE, Tag.CUTE, Tag.OBLONG)), Sex.WOMAN),
     D("hairStyleD", new ArrayList<>(List.of("seven.png", "eight.png")),
-            new ArrayList<>(List.of(Tag.PERM, Tag.LONG, Tag.HARD, Tag.FORMAL, Tag.OBLONG)), Sex.WOMAN, 2),
+            new ArrayList<>(List.of(Tag.PERM, Tag.LONG, Tag.HARD, Tag.FORMAL, Tag.OBLONG)), Sex.WOMAN),
     E("hairStyleE", new ArrayList<>(List.of("nine.png", "ten.png")),
-            new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.LIGHT, Tag.FORMAL, Tag.OBLONG)), Sex.WOMAN, 3);
+            new ArrayList<>(List.of(Tag.PERM, Tag.SHORT, Tag.LIGHT, Tag.FORMAL, Tag.OBLONG)), Sex.WOMAN);
 
     private final String name;
 
@@ -35,14 +35,14 @@ public enum HairStyleFixture {
 
     private final Sex sex;
 
-    private final int wishListCount;
-
     public HairStyle toEntity() {
-        HairStyle hairStyle = HairStyle.createHairStyle(name, sex, filenames, tags);
-        for (int i = 0; i < wishListCount; i++) {
-            hairStyle.plusWishListCount();
-        }
-        return hairStyle;
+        return HairStyle.createHairStyle(name, sex, filenames, tags);
+    }
+
+    public Tag extractFaceShapeTag() {
+        return tags.stream()
+                .filter(Tag::isFaceShapeType)
+                .findAny().orElseThrow();
     }
 
     public HairStyleResponse toResponse(Long id) {

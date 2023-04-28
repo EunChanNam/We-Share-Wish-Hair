@@ -45,10 +45,12 @@ public class HairStyleQueryRepositoryTest extends RepositoryTest {
     @DisplayName("헤어스타일 추천 쿼리")
     class findByHashTags {
         @Test
-        @DisplayName("태그와 유저의 성별을 통해서 헤어스타일을 조회한다.")
+        @DisplayName("성별이 맞는 헤어스타일을 조회한다.")
         void test1() {
             //given
-            HairRecommendCondition condition = mainRecommend(A.getTags(), UserFixture.A.toEntity());
+            User user = UserFixture.A.toEntity();
+            user.updateFaceShape(new FaceShape(B.extractFaceShapeTag()));
+            HairRecommendCondition condition = mainRecommend(B.getTags(), user);
 
             //when
             List<HairStyle> result = hairStyleRepository.findByRecommend(condition, getDefaultPageable());
@@ -58,45 +60,36 @@ public class HairStyleQueryRepositoryTest extends RepositoryTest {
         }
 
         @Test
-        @DisplayName("성별이 맞고 태그가 하나라도 포함되면 해당 헤어스타일은 조회된다")
-        void test2() {
+        @DisplayName("조회된 헤어스타일은 해시태그의 개수, 이름으로 정렬된다")
+        void test4() {
             //given
-            HairRecommendCondition condition = mainRecommend(List.of(Tag.PERM), UserFixture.B.toEntity());
+            User user = UserFixture.B.toEntity();
+            user.updateFaceShape(new FaceShape(D.extractFaceShapeTag()));
+            HairRecommendCondition condition = mainRecommend(D.getTags(), user);
 
             //when
             List<HairStyle> result = hairStyleRepository.findByRecommend(condition, getDefaultPageable());
 
             //then
-            assertHairStylesMatch(result, List.of(2, 0, 4, 3));
-        }
-
-        @Test
-        @DisplayName("조회된 헤어스타일은 해시태그의 개수, 찜수, 이름으로 정렬된다")
-        void test3() {
-            //given
-            HairRecommendCondition condition = mainRecommend(D.getTags(), UserFixture.B.toEntity());
-
-            //when
-            List<HairStyle> result = hairStyleRepository.findByRecommend(condition, getDefaultPageable());
-
-            //then
-            assertHairStylesMatch(result, List.of(3, 4, 2, 0));
+            assertHairStylesMatch(result, List.of(3, 4, 2));
         }
     }
 
     @Nested
-    @DisplayName("사용자 얼굴형 기반 맞춤 헤어 추천 쿼리")
-    class findByFaceShapeTag {
+    @DisplayName("얼굴형 헤어스타일 추천 쿼리")
+    class findByFaceShape {
         @Test
         @DisplayName("얼굴형 태그로 헤어를 검색하고, 찜 수와 이름으로 정렬한다")
-        void test4() {
+        void test5() {
             //given
             User user = UserFixture.B.toEntity();
             user.updateFaceShape(new FaceShape(Tag.OBLONG));
             HairRecommendCondition condition = subRecommend(user);
 
+            wishHairStyles(List.of(2, 2, 4));
+
             //when
-            List<HairStyle> result = hairStyleRepository.findByRecommend(condition, getDefaultPageable());
+            List<HairStyle> result = hairStyleRepository.findByFaceShape(condition, getDefaultPageable());
 
             //then
             assertHairStylesMatch(result, List.of(2, 4, 3));
@@ -104,18 +97,22 @@ public class HairStyleQueryRepositoryTest extends RepositoryTest {
 
         @Test
         @DisplayName("얼굴형 태그 없이 검색 후 찜 수와 이름으로 정렬한다")
-        void test5() {
+        void test6() {
             //given
             User user = UserFixture.B.toEntity();
             HairRecommendCondition condition = subRecommend(user);
 
+            wishHairStyles(List.of(2, 2, 0));
+
             //when
-            List<HairStyle> result = hairStyleRepository.findByRecommend(condition, getDefaultPageable());
+            List<HairStyle> result = hairStyleRepository.findByFaceShape(condition, getDefaultPageable());
 
             //then
-            assertHairStylesMatch(result, List.of(2, 0, 4, 3));
+            assertHairStylesMatch(result, List.of(2, 0, 3, 4));
         }
     }
+
+
 
     @Nested
     @DisplayName("사용자가 찜한 헤어스타일을 조회한다")
