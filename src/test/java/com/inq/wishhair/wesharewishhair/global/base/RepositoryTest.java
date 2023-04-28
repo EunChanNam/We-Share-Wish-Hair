@@ -4,6 +4,7 @@ import com.inq.wishhair.wesharewishhair.global.config.JpaAuditingConfig;
 import com.inq.wishhair.wesharewishhair.global.config.QueryDslConfig;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHairRepository;
+import com.inq.wishhair.wesharewishhair.photo.domain.PhotoRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
@@ -22,6 +23,9 @@ import javax.persistence.PersistenceContext;
         classes = JpaAuditingConfig.class
 ))
 public abstract class RepositoryTest {
+
+    @Autowired
+    protected PhotoRepository photoRepository;
 
     @Autowired
     protected WishHairRepository wishHairRepository;
