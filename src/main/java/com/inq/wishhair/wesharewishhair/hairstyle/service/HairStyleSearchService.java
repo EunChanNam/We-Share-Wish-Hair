@@ -49,7 +49,7 @@ public class HairStyleSearchService {
         User user = userFindService.findByUserId(userId);
 
         HairRecommendCondition condition = subRecommend(user.getFaceShapeTag(), user.getSex());
-        List<HairStyle> hairStyles = hairStyleRepository.findByRecommend(condition, getDefaultPageable());
+        List<HairStyle> hairStyles = hairStyleRepository.findByFaceShape(condition, getDefaultPageable());
         return toWrappedHairStyleResponse(hairStyles);
     }
 
