@@ -14,7 +14,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
-            android:text="리뷰 작성 포인트 적립"
+            android:text="unselected"
             android:textColor="@color/black"
             android:textSize="15sp" />
 
@@ -26,7 +26,7 @@
             android:layout_marginLeft="15dp"
             android:layout_marginTop="15dp"
             android:text="+200"
-            android:textColor="@color/default_blue"
+            android:textColor="#567891"
             android:textSize="15sp" />
 
         <TextView
@@ -39,6 +39,7 @@
             android:layout_marginTop="10dp"
             android:layout_toEndOf="@id/point_num"
             android:text="yyyy.mm.dd"
-            android:textColor="@color/black" />
+            android:textColor="@color/black"
+            android:textSize="10sp"/>
     </RelativeLayout>
 </LinearLayout>

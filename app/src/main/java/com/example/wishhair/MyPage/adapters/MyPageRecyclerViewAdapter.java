@@ -9,6 +9,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.wishhair.MyPage.PointHistory;
 import com.example.wishhair.MyPage.items.HeartlistItem;
 import com.example.wishhair.R;
 
@@ -20,6 +21,7 @@ public class MyPageRecyclerViewAdapter extends RecyclerView.Adapter<MyPageRecycl
     public class ViewHolder extends RecyclerView.ViewHolder {
         public ImageView HeartlistPicture;
         public TextView HeartlistGrade, HeartlistHeartcount;
+        public TextView HeartlistStyleName;
 
         ViewHolder(View view) {
             super(view);
@@ -27,6 +29,7 @@ public class MyPageRecyclerViewAdapter extends RecyclerView.Adapter<MyPageRecycl
             HeartlistPicture = view.findViewById(R.id.heartlist_my_imageView_picture);
             HeartlistGrade = view.findViewById(R.id.heartlist_my_tv_grade);
             HeartlistHeartcount = view.findViewById(R.id.heartlist_my_tv_heartCount);
+            HeartlistStyleName = view.findViewById(R.id.heartlist_stylename);
         }
     }
 
@@ -42,6 +45,7 @@ public class MyPageRecyclerViewAdapter extends RecyclerView.Adapter<MyPageRecycl
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         HeartlistItem item = heartlistItems.get(position);
         holder.HeartlistPicture.setImageResource(R.drawable.home);
+        holder.HeartlistStyleName.setText(item.getHeartlistStyleName());
     }
 
     @Override
@@ -50,6 +54,9 @@ public class MyPageRecyclerViewAdapter extends RecyclerView.Adapter<MyPageRecycl
     }
     public void addItem(HeartlistItem e) {
         heartlistItems.add(e);
+    }
+    public void setItems(ArrayList<HeartlistItem> items) {
+        this.heartlistItems = items;
     }
 }
 

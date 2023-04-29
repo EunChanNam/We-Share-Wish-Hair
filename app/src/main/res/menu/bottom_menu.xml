@@ -8,9 +8,9 @@
         />
 
     <item
-        android:id="@+id/bot_nav_recommend"
+        android:id="@+id/bot_nav_favorite"
         android:icon="@drawable/heart_fill"
-        android:title="Ai 추천받기"
+        android:title="찜한 스타일"
         android:enabled="true"
         />
 

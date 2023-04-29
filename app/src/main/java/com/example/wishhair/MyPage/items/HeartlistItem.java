@@ -5,13 +5,15 @@ import android.widget.TextView;
 
 public class HeartlistItem {
     ImageView HeartlistPicture;
-    TextView HeartlistGrade, HeartlistHeartcount;
+    String HeartlistGrade, HeartlistHeartcount;
+    String HeartlistStyleName;
 
-    public HeartlistItem(ImageView imageView, TextView grade, TextView count) {
-        HeartlistPicture = imageView;
-        HeartlistGrade = grade;
-        HeartlistHeartcount = count;
-    }
+//    public HeartlistItem(ImageView imageView, TextView grade, TextView count, TextView StyleName) {
+//        HeartlistPicture = imageView;
+//        HeartlistGrade = grade;
+//        HeartlistHeartcount = count;
+//        HeartlistStyleName = StyleName;
+//    }
     public HeartlistItem() {}
 
     public ImageView getHeartlistPicture() {
@@ -22,19 +24,27 @@ public class HeartlistItem {
         HeartlistPicture = heartlistPicture;
     }
 
-    public TextView getHeartlistHeartcount() {
+    public String getHeartlistHeartcount() {
         return HeartlistHeartcount;
     }
 
-    public void setHeartlistHeartcount(TextView heartlistHeartcount) {
+    public void setHeartlistHeartcount(String heartlistHeartcount) {
         HeartlistHeartcount = heartlistHeartcount;
     }
 
-    public TextView getHeartlistGrade() {
+    public String getHeartlistGrade() {
         return HeartlistGrade;
     }
 
-    public void setHeartlistGrade(TextView heartlistGrade) {
+    public void setHeartlistGrade(String heartlistGrade) {
         HeartlistGrade = heartlistGrade;
+    }
+
+    public void setHeartlistStyleName(String s) {
+        HeartlistStyleName = s;
+    }
+
+    public String getHeartlistStyleName() {
+        return HeartlistStyleName;
     }
 }

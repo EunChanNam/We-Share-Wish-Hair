@@ -1,18 +1,29 @@
 package com.example.wishhair.MyPage;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,14 +39,16 @@ import com.example.wishhair.MainActivity;
 import com.example.wishhair.MyPage.adapters.MyPageRecyclerViewAdapter;
 import com.example.wishhair.MyPage.items.HeartlistItem;
 import com.example.wishhair.R;
+import com.example.wishhair.sign.LoginActivity;
 import com.example.wishhair.sign.UrlConst;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class MyPageFragment extends Fragment {
 
@@ -46,7 +59,13 @@ public class MyPageFragment extends Fragment {
 
     private SharedPreferences loginSP;
     final static private String url = UrlConst.URL + "/api/logout";
-    String nickname = null;
+    final static private String url2 = UrlConst.URL + "/api/user/my_page";
+    final static private String url_wishlist = UrlConst.URL + "/api/wish_list/wish_list";
+
+    static String testName = null;
+    TextView tv;
+    TextView point_preview;
+    ImageView userpicture;
 
     public MyPageFragment() {
         // Required empty public constructor
@@ -67,48 +86,50 @@ public class MyPageFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
-        Button toMyInformationButton = view.findViewById(R.id.toMyInformation);
-        Button toMyPointList = view.findViewById(R.id.toMyPointList);
-        Button toMyCoupon = view.findViewById(R.id.toMyCoupon);
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.mypage_toolbar);
+
+        ImageButton toConfig = view.findViewById(R.id.mypage_to_config);
+        ImageButton toMyPoint = view.findViewById(R.id.mypage_to_point);
+        ImageButton withdrawBtn = view.findViewById(R.id.mypage_withdraw);
 
         HeartlistRecyclerView = view.findViewById(R.id.HeartlistRecyclerView);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         HeartlistRecyclerView.setLayoutManager(layoutManager);
-//        recyclerDecoration = new RecyclerDecoration(-200);
-//        HeartlistRecyclerView.addItemDecoration(recyclerDecoration);
 
         adapter = new MyPageRecyclerViewAdapter();
-        adapter.addItem(new HeartlistItem());
-        adapter.addItem(new HeartlistItem());
-        adapter.addItem(new HeartlistItem());
-        adapter.addItem(new HeartlistItem());
-        adapter.addItem(new HeartlistItem());
-        adapter.addItem(new HeartlistItem());
-        adapter.addItem(new HeartlistItem());
 
         HeartlistRecyclerView.setAdapter(adapter);
 
-        toMyInformationButton.setOnClickListener(new View.OnClickListener() {
+        toConfig.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.ChangeFragment(5);
+                mainActivity.ChangeFragment(8);
             }
         });
-        toMyPointList.setOnClickListener(new View.OnClickListener() {
+        toMyPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 mainActivity.ChangeFragment(7);
             }
         });
-        toMyCoupon.setOnClickListener(new View.OnClickListener() {
+        withdrawBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mainActivity.ChangeFragment(6);
+
             }
         });
 
+
+//        userpicture.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(Intent.ACTION_PICK);
+//                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+//                intent.setAction(Intent.ACTION_PICK);
+//                activityResultLauncher.launch(intent);
+//            }
+//        });
 
 /*      HomeFragment로 이동하는 버튼 <불필요 시 삭제>
         toolbar.setNavigationIcon(R.drawable.back);
@@ -124,7 +145,7 @@ public class MyPageFragment extends Fragment {
         toolbar.inflateMenu(R.menu.메뉴.xml);   버튼 추가 시 사용할 것 */
 
 //        LOGOUT
-        Button btn_logout  = view.findViewById(R.id.mypage_button_logout);
+        ImageButton btn_logout  = view.findViewById(R.id.mypage_button_logout);
         loginSP = getActivity().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
         String accessToken = loginSP.getString("accessToken", "fail acc");
 
@@ -137,8 +158,8 @@ public class MyPageFragment extends Fragment {
                 logout(accessToken);
             }
         });
-
-        myPageRequest();
+        myPageRequest(accessToken);
+        myPageRecyclerviewRequest(accessToken);
 
     }
 
@@ -146,6 +167,9 @@ public class MyPageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.mypage_fragment, container, false);
+        tv = view.findViewById(R.id.mypage_nickname);
+        point_preview = view.findViewById(R.id.mypage_point_preview);
+        userpicture = view.findViewById(R.id.mypage_user_picture);
         return view;
     }
 
@@ -155,16 +179,19 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onResponse(JSONObject response) {
                 logout_delete_token(loginSP);
+                Intent intent = new Intent(mainActivity, LoginActivity.class);
+                startActivity(intent);
+                mainActivity.finish();
 
-//                TODO : 현재 액티비티(프래그먼트)를 끝내고 LoginActivity로 이동
             }
         }, new Response.ErrorListener() {
 
             @Override
             public void onErrorResponse(VolleyError volleyError) {
                 logout_delete_token(loginSP);
-
-//                TODO : 현재 액티비티(프래그먼트)를 끝내고 LoginActivity로 이동
+                Intent intent = new Intent(mainActivity, LoginActivity.class);
+                startActivity(intent);
+                mainActivity.finish();
             }
 
         }) {
@@ -189,14 +216,19 @@ public class MyPageFragment extends Fragment {
         editor.apply();
     }
 
-    public void myPageRequest() {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url , null, new Response.Listener<JSONObject>() {
+    public void myPageRequest(String accessToken) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url2 , null, new Response.Listener<JSONObject>() {
 
             @Override
             public void onResponse(JSONObject response) {
                 try {
-                    nickname = response.getString("nickname");
-                    Log.i("받아온 거", nickname);
+                    testName = response.getString("nickname");
+                    String mypoint = Integer.toString(response.optInt("point"));
+                    Log.i("받아온 거", testName);
+                    tv.setText(testName+" 님");
+                    point_preview.setText(mypoint+ "P");
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -207,10 +239,77 @@ public class MyPageFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError volleyError) {
             }
-        });
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap();
+                params.put("Authorization", "bearer" + accessToken);
+
+                return params;
+            }
+        };
 
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(jsonObjectRequest);
     }
+
+    //wishlist recyclerview request
+    public void myPageRecyclerviewRequest(String accessToken) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url_wishlist , null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONObject obj = new JSONObject(response.toString());
+                    JSONArray jsonArray = obj.getJSONArray("result");
+                    for (int i=0;i<3;i++) {
+                        HeartlistItem item = new HeartlistItem();
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        item.setHeartlistStyleName(object.getString("hairStyleName"));
+                        Log.i("photo response test", object.getString("hairStyleName"));
+                        adapter.addItem(item);
+                        adapter.notifyDataSetChanged();
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap();
+                params.put("Authorization", "bearer" + accessToken);
+
+                return params;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(jsonObjectRequest);
+    }
+
+
+
+    public ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if(result.getResultCode() == Activity.RESULT_OK) {
+                        Intent intent = result.getData();
+                        Uri uri = intent.getData();
+                        userpicture.setImageURI(uri);
+                    }
+                }
+            }
+    );
 
 }
