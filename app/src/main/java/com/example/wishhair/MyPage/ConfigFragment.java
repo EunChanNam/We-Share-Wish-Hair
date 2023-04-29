@@ -59,7 +59,7 @@ public class ConfigFragment extends Fragment {
     static private String accessToken;
     Button config_apply;
 
-    TextView nameTv;
+    TextView nameTv1;
     TextView sexTv;
     TextView IDTv;
     TextView PWTv;
@@ -183,7 +183,7 @@ public class ConfigFragment extends Fragment {
     }
 
     public void ConfigRequest(String accessToken) {
-        String name = nameTv.getText().toString();
+        String name = nameTv1.getText().toString();
         String sex = sexTv.getText().toString();
         String ID = IDTv.getText().toString();
         String PW = PWTv.getText().toString();
