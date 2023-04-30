@@ -64,6 +64,7 @@
                     android:text="@string/write_review_massage_2"
                     android:textSize="14sp"
                     android:textColor="@color/black"/>
+<!--                 TODO   https://kong-droid.com/67 -->
                 <RatingBar
                     android:id="@+id/write_review_ratingBar"
                     android:layout_width="wrap_content"
