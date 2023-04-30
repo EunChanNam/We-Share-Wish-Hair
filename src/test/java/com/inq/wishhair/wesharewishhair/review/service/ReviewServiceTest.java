@@ -7,6 +7,7 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.photo.service.PhotoService;
+import com.inq.wishhair.wesharewishhair.photo.utils.PhotoStore;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewCreateRequest;
 import com.inq.wishhair.wesharewishhair.review.controller.utils.ReviewCreateRequestUtils;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
@@ -21,7 +22,9 @@ import java.util.List;
 import static com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 
 @DisplayName("ReviewServiceTest - SpringBootTest")
 public class ReviewServiceTest extends ServiceTest {
@@ -30,7 +33,7 @@ public class ReviewServiceTest extends ServiceTest {
     private ReviewService reviewService;
 
     @MockBean
-    private PhotoService photoService;
+    private PhotoStore photoStore;
 
     private User user;
     private HairStyle hairStyle;
@@ -46,7 +49,7 @@ public class ReviewServiceTest extends ServiceTest {
     void test1() throws IOException {
         //given
         ReviewCreateRequest request = ReviewCreateRequestUtils.createRequest(A, hairStyle.getId());
-        given(photoService.uploadPhotos(request.getFiles())).willReturn(A.getStoreUrls());
+        given(photoStore.uploadFiles(request.getFiles())).willReturn(A.getStoreUrls());
 
         //when
         Long reviewId = reviewService.createReview(request, user.getId());
@@ -92,6 +95,7 @@ public class ReviewServiceTest extends ServiceTest {
         void test4() {
             //when
             reviewService.deleteReview(review.getId(), user.getId());
+            doNothing().when(photoStore).deleteFiles(any());
 
             //then
             List<Review> result = reviewRepository.findAll();
