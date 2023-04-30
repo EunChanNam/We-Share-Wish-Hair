@@ -6,6 +6,7 @@ import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
+import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.photo.service.PhotoService;
 import com.inq.wishhair.wesharewishhair.photo.utils.PhotoStore;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewCreateRequest;
@@ -93,9 +94,12 @@ public class ReviewServiceTest extends ServiceTest {
         @Test
         @DisplayName("리뷰 삭제에 성공한다")
         void test4() {
+            //given
+            List<String> storeUrls = review.getPhotos().stream().map(Photo::getStoreUrl).toList();
+            doNothing().when(photoStore).deleteFiles(storeUrls);
+
             //when
             reviewService.deleteReview(review.getId(), user.getId());
-            doNothing().when(photoStore).deleteFiles(any());
 
             //then
             List<Review> result = reviewRepository.findAll();
