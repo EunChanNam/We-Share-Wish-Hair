@@ -7,7 +7,6 @@ import com.inq.wishhair.wesharewishhair.global.base.InfraTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.global.utils.MockMultipartFileUtils;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -24,8 +23,10 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 
 public class PhotoStoreTest extends InfraTest {
 
@@ -109,6 +110,20 @@ public class PhotoStoreTest extends InfraTest {
                     .isInstanceOf(WishHairException.class)
                     .hasMessageContaining(ErrorCode.EMPTY_FILE_EX.getMessage());
         }
+    }
+
+    @Test
+    @DisplayName("이미지를 삭제한다")
+    void deleteFiles() {
+        //given
+        List<String> storeUrls = filenames.stream()
+                .map(filename -> createUploadLink(createStoreFilename(filename)))
+                .toList();
+
+        doNothing().when(amazon).deleteObject(any(), any());
+
+        //when, then
+        assertDoesNotThrow(() -> photoStore.deleteFiles(storeUrls));
     }
 
     private String createUploadLink(String storeUrl) {
