@@ -19,8 +19,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
+import static com.inq.wishhair.wesharewishhair.global.utils.FilenameGenerator.createStoreFilename;
+import static com.inq.wishhair.wesharewishhair.global.utils.FilenameGenerator.createUploadLink;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -59,7 +60,7 @@ public class PhotoStoreTest extends InfraTest {
             given(amazon.putObject(any(PutObjectRequest.class))).willReturn(putObjectResult);
 
             String storeUrl = createStoreFilename("hello1.png");
-            URL mockUrl = new URL(createUploadLink(storeUrl));
+            URL mockUrl = new URL(createUploadLink(BUKET, storeUrl));
             given(amazon.getUrl(any(), any())).willReturn(mockUrl);
 
             //when
@@ -72,7 +73,7 @@ public class PhotoStoreTest extends InfraTest {
         }
 
         @Test
-        @DisplayName("이미지가 한장도 없으면 빈 List를 응답한다")
+        @DisplayName("이미지가 한장도 없으면 빈 List 를 응답한다")
         void NoImages() {
             //given
             List<MultipartFile> files = new ArrayList<>();
@@ -117,30 +118,12 @@ public class PhotoStoreTest extends InfraTest {
     void deleteFiles() {
         //given
         List<String> storeUrls = filenames.stream()
-                .map(filename -> createUploadLink(createStoreFilename(filename)))
+                .map(filename -> createUploadLink(BUKET, createStoreFilename(filename)))
                 .toList();
 
         doNothing().when(amazon).deleteObject(any(), any());
 
         //when, then
         assertDoesNotThrow(() -> photoStore.deleteFiles(storeUrls));
-    }
-
-    private String createUploadLink(String storeUrl) {
-        return String.format(
-                "https://kr.object.ncloudstorage.com/%s/%s",
-                BUKET,
-                storeUrl
-        );
-    }
-
-    private String createStoreFilename(String originalFilename) {
-        String ext = getExt(originalFilename);
-        return UUID.randomUUID() + ext;
-    }
-
-    private String getExt(String originalFilename) {
-        int index = originalFilename.lastIndexOf(".");
-        return originalFilename.substring(index);
     }
 }
