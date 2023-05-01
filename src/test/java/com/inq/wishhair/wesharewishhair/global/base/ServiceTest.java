@@ -3,6 +3,7 @@ package com.inq.wishhair.wesharewishhair.global.base;
 import com.inq.wishhair.wesharewishhair.auth.domain.TokenRepository;
 import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
+import com.inq.wishhair.wesharewishhair.photo.domain.PhotoRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
@@ -21,6 +22,9 @@ public abstract class ServiceTest {
 
     @Autowired
     protected WishHairRepository wishHairRepository;
+
+    @Autowired
+    protected PhotoRepository photoRepository;
 
     @Autowired
     protected PointRepository pointRepository;
