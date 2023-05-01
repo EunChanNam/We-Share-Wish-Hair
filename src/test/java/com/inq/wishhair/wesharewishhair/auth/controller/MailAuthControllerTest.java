@@ -1,28 +1,38 @@
 package com.inq.wishhair.wesharewishhair.auth.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.inq.wishhair.wesharewishhair.auth.event.AuthMailSendEvent;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.AuthKeyRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.MailRequest;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.BDDMockito;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.test.context.event.ApplicationEvents;
+import org.springframework.test.context.event.RecordApplicationEvents;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@RecordApplicationEvents
 public class MailAuthControllerTest extends ControllerTest {
+
+    @Autowired
+    private ApplicationEvents events;
 
     @Value("${mail.receiver}")
     private String receiver;
@@ -47,6 +57,9 @@ public class MailAuthControllerTest extends ControllerTest {
 
             //then
             assertException(expectedError, requestBuilder, status().isBadRequest());
+
+            int count = (int) events.stream(AuthMailSendEvent.class).count();
+            assertThat(count).isZero();
         }
 
         @Test
@@ -74,6 +87,9 @@ public class MailAuthControllerTest extends ControllerTest {
                                     )
                             )
                     );
+
+            int count = (int) events.stream(AuthMailSendEvent.class).count();
+            assertThat(count).isEqualTo(1);
         }
 
         @Test
@@ -89,6 +105,9 @@ public class MailAuthControllerTest extends ControllerTest {
 
             //then
             assertException(expectedError, requestBuilder, status().isConflict());
+
+            int count = (int) events.stream(AuthMailSendEvent.class).count();
+            assertThat(count).isZero();
         }
 
         private MockHttpServletRequestBuilder generateMailSendRequest(MailRequest request) throws JsonProcessingException {

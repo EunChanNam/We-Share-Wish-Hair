@@ -7,17 +7,24 @@ import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PointUseRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.PointUseRequestUtils;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
+import com.inq.wishhair.wesharewishhair.user.event.RefundMailSendEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.event.ApplicationEvents;
+import org.springframework.test.context.event.RecordApplicationEvents;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+@RecordApplicationEvents
 @DisplayName("PointServiceTest - SpringBootTest")
 public class PointServiceTest extends ServiceTest {
+
+    @Autowired
+    private ApplicationEvents events;
 
     @Autowired
     private PointService pointService;
@@ -72,6 +79,9 @@ public class PointServiceTest extends ServiceTest {
             assertThatThrownBy(() -> pointService.usePoint(request, user.getId()))
                     .isInstanceOf(WishHairException.class)
                     .hasMessageContaining(expectedError.getMessage());
+
+            int count = (int) events.stream(RefundMailSendEvent.class).count();
+            assertThat(count).isZero();
         }
 
         @Test
@@ -87,6 +97,9 @@ public class PointServiceTest extends ServiceTest {
             //then
             int availablePoint = user.getAvailablePoint();
             assertThat(availablePoint).isZero();
+
+            int count = (int) events.stream(RefundMailSendEvent.class).count();
+            assertThat(count).isEqualTo(1);
         }
     }
 }

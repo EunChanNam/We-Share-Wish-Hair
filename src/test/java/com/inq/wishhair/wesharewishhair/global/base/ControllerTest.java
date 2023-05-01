@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Pageable;
 import org.springframework.restdocs.RestDocumentationContextProvider;
@@ -103,6 +104,9 @@ public abstract class ControllerTest {
 
     @MockBean
     protected EmailSender emailSender;
+
+    @MockBean
+    protected ApplicationEventPublisher publisher;
 
     @MockBean
     protected ReviewService reviewService;
