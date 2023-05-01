@@ -12,10 +12,13 @@ import com.inq.wishhair.wesharewishhair.photo.utils.PhotoStore;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewCreateRequest;
 import com.inq.wishhair.wesharewishhair.review.controller.utils.ReviewCreateRequestUtils;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.review.event.PointChargeEvent;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.event.ApplicationEvents;
+import org.springframework.test.context.event.RecordApplicationEvents;
 
 import java.io.IOException;
 import java.util.List;
@@ -27,11 +30,15 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 
+@RecordApplicationEvents
 @DisplayName("ReviewServiceTest - SpringBootTest")
 public class ReviewServiceTest extends ServiceTest {
 
     @Autowired
     private ReviewService reviewService;
+
+    @Autowired
+    private ApplicationEvents events;
 
     @MockBean
     private PhotoStore photoStore;
@@ -65,6 +72,9 @@ public class ReviewServiceTest extends ServiceTest {
                 () -> assertThat(result.getScore()).isEqualTo(A.getScore()),
                 () -> assertThat(result.getPhotos()).hasSize(A.getStoreUrls().size())
         );
+
+        int count = (int) events.stream(PointChargeEvent.class).count();
+        assertThat(count).isEqualTo(1);
     }
 
     @Nested
