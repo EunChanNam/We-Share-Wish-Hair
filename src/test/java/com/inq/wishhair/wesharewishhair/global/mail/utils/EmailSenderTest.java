@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.global.mail.utils;
 
 import com.inq.wishhair.wesharewishhair.global.base.InfraTest;
+import com.inq.wishhair.wesharewishhair.global.mail.dto.RefundMailDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,5 +45,17 @@ public class EmailSenderTest extends InfraTest {
 
         //when, then
         assertDoesNotThrow(() -> emailSender.sendAuthMail(ADDRESS, "1927"));
+    }
+
+    @Test
+    @DisplayName("환급 요청 메일 발송 테스트")
+    void sendRefundRequestMail() {
+        //given
+        given(templateEngine.process(any(String.class), any(Context.class))).willReturn(REFUND_TEMPLATE);
+        given(mailSender.createMimeMessage()).willReturn(mimeMessage);
+        RefundMailDto refundMailDto = RefundMailDto.of(ADDRESS, "userA", "기업은행", "111111111", 1000);
+
+        //when, then
+        assertDoesNotThrow(() -> emailSender.sendRefundRequestMail(refundMailDto));
     }
 }
