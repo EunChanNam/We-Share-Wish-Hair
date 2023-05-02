@@ -50,4 +50,33 @@ public class WishHairServiceTest extends ServiceTest {
                     .hasMessageContaining(ErrorCode.WISH_HAIR_ALREADY_EXIST.getMessage());
         }
     }
+
+    @Nested
+    @DisplayName("찜을 취소한다")
+    class cancelWish {
+        @Test
+        @DisplayName("찜 취소를 성공한다")
+        void success() {
+            //given
+            wishHairRepository.save(WishHair.createWishHair(userId, hairStyleId));
+
+            //when, then
+            assertDoesNotThrow(() -> wishHairService.cancelWish(hairStyleId, userId));
+
+            List<WishHair> all = wishHairRepository.findAll();
+            assertThat(all).isEmpty();
+        }
+
+        @Test
+        @DisplayName("찜한 헤어스타일이 아니라서 실패한다")
+        void failByNotExist() {
+            //given
+            ErrorCode expectedError = ErrorCode.WISH_HAIR_NOT_EXIST;
+
+            //when
+            assertThatThrownBy(() -> wishHairService.cancelWish(hairStyleId, userId))
+                    .isInstanceOf(WishHairException.class)
+                    .hasMessageContaining(expectedError.getMessage());
+        }
+    }
 }
