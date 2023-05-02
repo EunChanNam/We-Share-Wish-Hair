@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Component;
-import org.thymeleaf.TemplateEngine;
+import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
 
 import javax.mail.internet.InternetAddress;
@@ -25,7 +25,7 @@ public class EmailSender {
     @Value("${spring.mail.username}")
     private String from;
     private final JavaMailSender mailSender;
-    private final TemplateEngine templateEngine;
+    private final ITemplateEngine templateEngine;
 
     public void sendAuthMail(String address, String authKey) throws Exception {
 
