@@ -1,5 +1,6 @@
 package com.example.wishhair.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -20,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.wishhair.FuncActivity;
 import com.example.wishhair.R;
 import com.example.wishhair.sign.UrlConst;
 
@@ -56,6 +58,10 @@ public class HomeFragment extends Fragment {
 
 //        go analyze
         Button btn_go = v.findViewById(R.id.home_btn_go);
+        btn_go.setOnClickListener(view -> {
+            Intent intent = new Intent(requireContext(), FuncActivity.class);
+            startActivity(intent);
+        });
 
 //        HotReview
         ArrayList<HomeItems> hotReviewItems = new ArrayList<>();

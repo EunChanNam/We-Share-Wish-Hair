@@ -76,6 +76,9 @@
     <string name="write_review_message_4">• 헤어스타일명</string>
     <string name="write_review_message_5">• 사진</string>
     <string name="write_review_message_6">• 내용</string>
+    <string name="func_message_1">사진 4장을 업로드해주세요 :)</string>
+    <string name="func_message_2">정면을 보고 있는 사진을 업로드해주세요</string>
+    <string name="func_message_btn_submit">얼굴형 분석하기</string>
 
 
 </resources>
