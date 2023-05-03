@@ -1,70 +1,166 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".favorite.FavoriteDetail">
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="400dp">
-
-        <ImageButton
-            android:id="@+id/favorite_detail_back"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:src="@drawable/back"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="9dp"/>
-
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/favorite_detail_viewpager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipChildren="false"
-            android:clipToPadding="false" />
-
-        <me.relex.circleindicator.CircleIndicator3
-            android:id="@+id/favorite_detail_indicator"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="10dp" />
-    </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/favorite_detail_stylename"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="스타일 이름"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="10dp"
-            android:textSize="12pt"/>
+            android:orientation="vertical"
+            >
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="360dp">
 
-        <TextView
-            android:id="@+id/favorite_detail_hashtag"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="#태그 #태그"
-            android:textColor="@color/black"
-            android:textStyle="bold"
-            android:layout_marginLeft="15dp"
-            android:textSize="7pt"/>
+                <ImageButton
+                    android:id="@+id/favorite_detail_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="9dp"
+                    android:background="@android:color/transparent"
+                    android:src="@drawable/back" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/black"
-            android:layout_marginTop="15dp"/>
-    </LinearLayout>
-</LinearLayout>
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/favorite_detail_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="360dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false" />
+
+                <me.relex.circleindicator.CircleIndicator3
+                    android:id="@+id/favorite_detail_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="10dp" />
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/favorite_detail_stylename"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="스타일 이름"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/favorite_detail_hashtag"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="5dp"
+                    android:text="#태그 #태그"
+                    android:textColor="@color/black"
+                    android:textSize="12sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="25dp"
+                >
+
+                <TextView
+                    android:id="@+id/favorite_detail_tv_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="헤어스타일 리뷰"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="20dp"
+                    />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/favorite_detail_review_recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="230dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginRight="20dp"
+                    />
+            </LinearLayout>
+            
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:background="#ADB3BC"
+                >
+            </View>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginTop="5dp">
+
+                <ImageButton
+                    android:id="@+id/favorite_detail_heart_button"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:src="@drawable/heart_fill_5"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.05"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.2"/>
+
+                <TextView
+                    android:id="@+id/favorite_detail_heart_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="13sp"
+                    android:textColor="@color/black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/favorite_detail_heart_button"
+                    app:layout_constraintStart_toStartOf="@+id/favorite_detail_heart_button"
+                    app:layout_constraintTop_toBottomOf="@+id/favorite_detail_heart_button" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintHorizontal_bias="0.2"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@color/black"
+                    />
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/favorite_detail_similar_button"
+                    android:layout_width="270dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/point_btn"
+                    android:text="비슷한 헤어스타일 보기"
+                    android:textSize="16sp"
+                    android:textColor="#F7EEE9"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.75"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.5" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+    </ScrollView>

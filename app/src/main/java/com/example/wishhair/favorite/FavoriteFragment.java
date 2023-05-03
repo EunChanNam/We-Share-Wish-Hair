@@ -23,6 +23,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.wishhair.MainActivity;
 import com.example.wishhair.MyPage.PointHistory;
 import com.example.wishhair.MyPage.items.HeartlistItem;
 import com.example.wishhair.R;
@@ -51,6 +52,7 @@ public class FavoriteFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    MainActivity mainActivity;
     RecyclerView recyclerView;
     FavoriteAdapter adapter;
     Button btn;
@@ -84,6 +86,12 @@ public class FavoriteFragment extends Fragment {
     }
 
     @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        mainActivity = (MainActivity) getActivity();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.favorite_fragment, container, false);
@@ -96,7 +104,7 @@ public class FavoriteFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         loginSP = getActivity().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
-        String accessToken = loginSP.getString("accessToken", "fail acc");
+        accessToken = loginSP.getString("accessToken", "fail acc");
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +121,7 @@ public class FavoriteFragment extends Fragment {
             @Override
             public void onItemClicked(int position, String data) {
                 Toast.makeText(getContext(),"position:" +position + " data:"+data, Toast.LENGTH_SHORT).show();
+                mainActivity.ChangeFragment(4);
             }
         });
 
