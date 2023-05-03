@@ -59,7 +59,14 @@ public class PointAdapter extends RecyclerView.Adapter<PointAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         PointHistory item = pointItems.get(position);
-        holder.setItem(item);
+        if (item.getPointType() == "충전") {
+            holder.PointlistNum.setText("+" + item.getDealAmount());
+            holder.PointlistNum.setTextColor(Color.BLUE);
+        } else {
+            holder.PointlistNum.setText("-" + item.getDealAmount());
+            holder.PointlistNum.setTextColor(Color.RED);
+        }
+        holder.PointlistDate.setText(item.getDealDate().toString());
     }
 
     @Override

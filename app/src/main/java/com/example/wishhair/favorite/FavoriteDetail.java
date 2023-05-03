@@ -15,6 +15,9 @@ import android.view.ViewGroup;
 import com.example.wishhair.R;
 import com.example.wishhair.review.detail.ImageSliderAdapter;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import me.relex.circleindicator.CircleIndicator3;
 
 public class FavoriteDetail extends Fragment {
@@ -34,13 +37,14 @@ public class FavoriteDetail extends Fragment {
 
     private ViewPager2 sliderViewPager;
     private CircleIndicator3 circleIndicator;
-    private String[] images = new String[] {
+    public ArrayList<String> images = new ArrayList<String>(
+            Arrays.asList(
             "https://cdn.pixabay.com/photo/2019/12/26/10/44/horse-4720178_1280.jpg",
             "https://cdn.pixabay.com/photo/2020/11/04/15/29/coffee-beans-5712780_1280.jpg",
             "https://cdn.pixabay.com/photo/2020/03/08/21/41/landscape-4913841_1280.jpg",
             "https://cdn.pixabay.com/photo/2020/09/02/18/03/girl-5539094_1280.jpg",
             "https://cdn.pixabay.com/photo/2014/03/03/16/15/mosque-279015_1280.jpg"
-    };
+    ));
 
     public static FavoriteDetail newInstance(String param1, String param2) {
         FavoriteDetail fragment = new FavoriteDetail();
@@ -65,7 +69,7 @@ public class FavoriteDetail extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_favorite_detail, container, false);
+        View view = inflater.inflate(R.layout.favorite_detail, container, false);
         sliderViewPager = view.findViewById(R.id.favorite_detail_viewpager);
         circleIndicator = view.findViewById(R.id.favorite_detail_indicator);
         return view;

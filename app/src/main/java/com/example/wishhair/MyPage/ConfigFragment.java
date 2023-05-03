@@ -55,7 +55,7 @@ public class ConfigFragment extends Fragment {
     MainActivity mainActivity;
     private OnBackPressedCallback callback;
     private SharedPreferences loginSP;
-    final static private String url = UrlConst.URL + "/api/my_page";
+    final static private String url = UrlConst.URL + "/api/user";
     static private String accessToken;
     Button config_apply;
 

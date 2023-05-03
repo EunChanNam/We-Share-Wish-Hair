@@ -23,8 +23,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 }
 
@@ -53,6 +53,8 @@ dependencies {
 
     // Gson
     implementation 'com.google.code.gson:gson:2.8.7'
+    // threeten (백포팅)
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.3.0'
 
 
     testImplementation 'junit:junit:4.13.2'

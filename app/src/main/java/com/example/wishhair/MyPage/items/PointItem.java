@@ -3,33 +3,33 @@ package com.example.wishhair.MyPage.items;
 import android.widget.TextView;
 
 public class PointItem {
-    TextView PointItemTitle;
-    TextView PointItemNum;
-    TextView PointItemDate;
+    String PointItemTitle;
+    int PointItemNum;
+    String PointItemDate;
 
     public PointItem() { }
 
-    public TextView getPointItemTitle() {
+    public String getPointItemTitle() {
         return PointItemTitle;
     }
 
-    public void setPointItemTitle(TextView pointItemTitle) {
+    public void setPointItemTitle(String pointItemTitle) {
         PointItemTitle = pointItemTitle;
     }
 
-    public TextView getPointItemNum() {
+    public int getPointItemNum() {
         return PointItemNum;
     }
 
-    public void setPointItemNum(TextView pointItemNum) {
+    public void setPointItemNum(int pointItemNum) {
         PointItemNum = pointItemNum;
     }
 
-    public TextView getPointItemDate() {
+    public String getPointItemDate() {
         return PointItemDate;
     }
 
-    public void setPointItemDate(TextView pointItemDate) {
+    public void setPointItemDate(String pointItemDate) {
         PointItemDate = pointItemDate;
     }
 }

@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -56,7 +57,7 @@ public class FavoriteFragment extends Fragment {
 
     private SharedPreferences loginSP;
     final static private String url = UrlConst.URL + "/api/hair_style/wish";
-    final static private String url2 = UrlConst.URL + "/api/hair_style/wish/3";
+    final static private String url2 = UrlConst.URL + "/api/hair_style/wish/4";
 
     static private String accessToken;
 
@@ -108,11 +109,16 @@ public class FavoriteFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new FavoriteAdapter();
 
+        adapter.setOnItemClickListener(new FavoriteAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClicked(int position, String data) {
+                Toast.makeText(getContext(),"position:" +position + " data:"+data, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         FavoriteRequest(accessToken);
         recyclerView.setAdapter(adapter);
-
     }
-
 
     public void FavoriteRequest(String accessToken) {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url , null, new Response.Listener<JSONObject>() {
@@ -183,4 +189,5 @@ public class FavoriteFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(jsonObjectRequest);
     }
+
 }

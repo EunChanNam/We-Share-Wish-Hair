@@ -1,9 +1,11 @@
 package com.example.wishhair.MyPage;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -24,6 +26,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -60,7 +63,8 @@ public class MyPageFragment extends Fragment {
     private SharedPreferences loginSP;
     final static private String url = UrlConst.URL + "/api/logout";
     final static private String url2 = UrlConst.URL + "/api/user/my_page";
-    final static private String url_wishlist = UrlConst.URL + "/api/wish_list/wish_list";
+    final static private String url_wishlist = UrlConst.URL + "/api/hair_style/wish";
+    final static private String url_withdraw = UrlConst.URL + "/api/user";
 
     static String testName = null;
     TextView tv;
@@ -85,7 +89,8 @@ public class MyPageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        loginSP = getActivity().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
+        String accessToken = loginSP.getString("accessToken", "fail acc");
 
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.mypage_toolbar);
 
@@ -116,11 +121,39 @@ public class MyPageFragment extends Fragment {
         withdrawBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(view.getContext(), R.style.WithdrawAlertDialogTheme);
+                View v = LayoutInflater.from(getContext()).inflate(R.layout.mypage_withdraw_dialog, view.findViewById(R.id.dialog_withdraw_layout));
+                // alert의 title과 Messege 세팅
 
+                myAlertBuilder.setView(v);
+                AlertDialog alertDialog = myAlertBuilder.create();
+
+                // 버튼 리스너 설정
+                v.findViewById(R.id.dialog_withdraw_OKbtn).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        WithdrawRequest(accessToken);
+                        Toast.makeText(view.getContext().getApplicationContext(),"회원 탈퇴 완료",Toast.LENGTH_SHORT).show();
+                        alertDialog.dismiss();
+                    }
+                });
+                v.findViewById(R.id.dialog_withdraw_Canclebtn).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        alertDialog.dismiss();
+                    }
+                });
+
+                // 다이얼로그 형태 지우기
+                if (alertDialog.getWindow() != null) {
+                    alertDialog.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+                }
+                // Alert를 생성해주고 보여주는 메소드(show를 선언해야 Alert가 생성됨)
+                alertDialog.show();
             }
         });
 
-
+//      Profile Picture Click Event
 //        userpicture.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -146,8 +179,6 @@ public class MyPageFragment extends Fragment {
 
 //        LOGOUT
         ImageButton btn_logout  = view.findViewById(R.id.mypage_button_logout);
-        loginSP = getActivity().getSharedPreferences("UserInfo", Context.MODE_PRIVATE);
-        String accessToken = loginSP.getString("accessToken", "fail acc");
 
         Log.d("acc", loginSP.getString("accessToken", "fail acc"));
         Log.d("ref", loginSP.getString("refreshToken", "fail ref"));
@@ -265,8 +296,8 @@ public class MyPageFragment extends Fragment {
                     for (int i=0;i<3;i++) {
                         HeartlistItem item = new HeartlistItem();
                         JSONObject object = jsonArray.getJSONObject(i);
-                        item.setHeartlistStyleName(object.getString("hairStyleName"));
-                        Log.i("photo response test", object.getString("hairStyleName"));
+                        item.setHeartlistStyleName(object.getString("name"));
+                        Log.i("photo response test", object.getString("name"));
                         adapter.addItem(item);
                         adapter.notifyDataSetChanged();
                     }
@@ -312,4 +343,34 @@ public class MyPageFragment extends Fragment {
             }
     );
 
+    // 회원 탈퇴 Request
+    public void WithdrawRequest(String accessToken) {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, url_withdraw , null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.i("WithDraw Request", "success");
+                Intent intent = new Intent(mainActivity, LoginActivity.class);
+                startActivity(intent);
+                mainActivity.finish();
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+            }
+        }) {
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap();
+                params.put("Authorization", "bearer" + accessToken);
+
+                return params;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        queue.add(jsonObjectRequest);
+    }
 }

@@ -32,7 +32,9 @@ import com.example.wishhair.R;
 import com.example.wishhair.sign.UrlConst;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.jakewharton.threetenabp.AndroidThreeTen;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
@@ -40,6 +42,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.threeten.bp.LocalDateTime;
+import org.threeten.bp.format.DateTimeFormatter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -56,7 +61,7 @@ public class MyPointList extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    DateTimeFormatter formatter;
     MainActivity mainActivity;
     private OnBackPressedCallback callback;
 
@@ -67,6 +72,7 @@ public class MyPointList extends Fragment {
     private SharedPreferences loginSP;
     final static private String url = UrlConst.URL + "/api/user/my_page";
     final static private String point_url = UrlConst.URL + "/api/point";
+    final static private String pointhistory_url = UrlConst.URL + "/api/point?size=10&page=0";
 
     static private String accessToken;
     TextView mypointview;
@@ -161,6 +167,8 @@ public class MyPointList extends Fragment {
         View view = inflater.inflate(R.layout.my_point_list_fragment, container, false);
         mypointview = view.findViewById(R.id.point_pointview);
         toPointRefund = view.findViewById(R.id.point_refund);
+        AndroidThreeTen.init(getContext());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd");
         return view;
     }
 
@@ -194,11 +202,34 @@ public class MyPointList extends Fragment {
         queue.add(jsonObjectRequest);
     }
     public void PointHistoryRequest(String accessToken) {
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, point_url , null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, pointhistory_url , null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
-                Log.i("Gson", "request");
-                processResponse(response);
+                try {
+                    JSONObject obj = new JSONObject(response.toString());
+                    JSONArray jsonArray = obj.getJSONArray("result");
+
+                    for (int i = 0; i<jsonArray.length(); i++) {
+                        PointHistory item = new PointHistory();
+                        JSONObject object = jsonArray.getJSONObject(i);
+                        item.setPointType(object.getString("pointType"));
+                        item.setDealAmount(object.getInt("dealAmount"));
+                        item.setPoint(object.getInt("point"));
+//                        LocalDateTime localDateTime = LocalDateTime.parse(object.getString("dealDate"),
+//                                DateTimeFormatter.ofPattern("yyyy.mm.dd."));
+//                        item.setDealDate(localDateTime.toString());
+                        item.setDealDate(object.getString("dealDate"));
+
+                        adapter.addItem(item);
+                        adapter.notifyDataSetChanged();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+//                Log.i("Gson", "request");
+//                processResponse(response);
             }
         }, new Response.ErrorListener() {
 
@@ -220,18 +251,18 @@ public class MyPointList extends Fragment {
         queue.add(jsonObjectRequest);
     }
 
-    public void processResponse(JSONObject response) {
-        Gson gson = new Gson();
-        Type type = new TypeToken<List<PointHistory>>(){}.getType();
-        List<PointHistory> phList = new ArrayList<PointHistory>();
-        PointHistory test1 = new PointHistory();
-        phList.add(test1);
-        if (phList != null && !phList.isEmpty()) {
-            adapter.setItems((ArrayList<PointHistory>) phList);
-            adapter.notifyDataSetChanged();
-            Log.d("Gson","adapter passed");
-        }
-        else
-            Log.d("Gson","else passed");
-    }
+//    public void processResponse(JSONObject response) {
+//        Gson gson = new Gson();
+//        Type type = new TypeToken<List<PointHistory>>(){}.getType();
+//        List<PointHistory> phList = new ArrayList<PointHistory>();
+//        PointHistory test1 = new PointHistory();
+//        phList.add(test1);
+//        if (phList != null && !phList.isEmpty()) {
+//            adapter.setItems((ArrayList<PointHistory>) phList);
+//            adapter.notifyDataSetChanged();
+//            Log.d("Gson","adapter passed");
+//        }
+//        else
+//            Log.d("Gson","else passed");
+//    }
 }
