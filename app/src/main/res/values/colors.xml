@@ -15,4 +15,5 @@
     <color name="text_ivory">#FFEEE9DA</color>
     <color name="btnDetail_gray">#FF898A8D</color>
     <color name="spinner_gray">#FFAFAFAF</color>
+    <color name="rating_yellow">#FFFFD400</color>
 </resources>
