@@ -74,7 +74,6 @@ public class EmailCertActivity extends AppCompatActivity {
         Button btn_send = findViewById(R.id.sign_cert_btn_requestSend);
         btn_send.setOnClickListener(view -> {
             timer.start();
-//            TODO : 타이머 테스트 용 이메일 인증 일시정지
             String inputEmail = String.valueOf(ed_email.getText());
             emailSendRequest(inputEmail);
         });

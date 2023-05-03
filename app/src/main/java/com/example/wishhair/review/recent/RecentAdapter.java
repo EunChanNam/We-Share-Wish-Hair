@@ -68,7 +68,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
         } else {
             holder.isHeart.setImageResource(R.drawable.heart_empty);
         }
-        holder.heartCount.setText(String.valueOf(item.getLikes()));
+        holder.likes.setText(String.valueOf(item.getLikes()));
         holder.viewContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -84,7 +84,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView contentImage, isHeart;
-        TextView nickname, hairStyleName, tags,grade, date, heartCount;
+        TextView nickname, hairStyleName, tags,grade, date, likes;
         Button viewContent;
 
         ViewHolder(View itemView) {
@@ -95,7 +95,7 @@ public class RecentAdapter extends RecyclerView.Adapter<RecentAdapter.ViewHolder
             this.tags = itemView.findViewById(R.id.review_recent_tv_tags);
             this.grade = itemView.findViewById(R.id.review_recent_tv_grade);
             this.isHeart = itemView.findViewById(R.id.review_recent_imageView_isHeart);
-            this.heartCount = itemView.findViewById(R.id.review_recent_tv_heartCount);
+            this.likes = itemView.findViewById(R.id.review_recent_tv_likes);
             this.date = itemView.findViewById(R.id.review_recent_tv_date);
             this.viewContent = itemView.findViewById(R.id.review_recent_btn_viewContent);
         }

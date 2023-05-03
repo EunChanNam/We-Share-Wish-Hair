@@ -15,7 +15,7 @@
     </style>
     <style name="RatingBar" parent="Theme.AppCompat">
         <item name="colorControlNormal">@color/signBox_gray</item>
-        <item name="colorControlActivated">@color/unselect_blue</item>
+        <item name="colorControlActivated">@color/rating_yellow</item>
     </style>
     <!--  Dialog style theme  -->
     <style name="RefundAlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
