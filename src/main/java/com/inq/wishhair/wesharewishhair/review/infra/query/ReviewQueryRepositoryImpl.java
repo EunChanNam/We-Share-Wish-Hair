@@ -22,7 +22,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
-import static com.inq.wishhair.wesharewishhair.review.utils.ReviewSortCondition.*;
+import static com.inq.wishhair.wesharewishhair.global.utils.SortCondition.*;
 
 @Transactional(readOnly = true)
 @RequiredArgsConstructor

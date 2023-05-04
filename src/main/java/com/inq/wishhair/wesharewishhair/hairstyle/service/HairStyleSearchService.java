@@ -64,7 +64,6 @@ public class HairStyleSearchService {
 
     //전체 헤어스타일 조회 로직
     public ResponseWrapper<HairStyleSimpleResponse> findAllHairStyle() {
-        PageableGenerator
         List<HairStyle> result = hairStyleRepository.findAll();
         return toWrappedHairStyleSimpleResponse(result);
     }
