@@ -4,9 +4,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import static com.inq.wishhair.wesharewishhair.review.utils.ReviewSortCondition.DATE;
+import static com.inq.wishhair.wesharewishhair.global.utils.SortCondition.DATE;
 
-public interface PageableUtils {
+public interface PageableGenerator {
     static Pageable getDefaultPageable() {
         return PageRequest.of(0, 4);
     }

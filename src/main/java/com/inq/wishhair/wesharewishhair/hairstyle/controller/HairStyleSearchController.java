@@ -8,6 +8,7 @@ import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleSearchService;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleSimpleResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -44,6 +45,11 @@ public class HairStyleSearchController {
                                                                @PageableDefault Pageable pageable) {
 
         return hairStyleSearchService.findWishHairStyles(useId, pageable);
+    }
+
+    @GetMapping
+    public ResponseWrapper<HairStyleSimpleResponse> findAllHairStyles() {
+        return hairStyleSearchService.findAllHairStyle();
     }
 
     private void validateHasTag(List<Tag> tags) {

@@ -1,6 +1,6 @@
-package com.inq.wishhair.wesharewishhair.review.utils;
+package com.inq.wishhair.wesharewishhair.global.utils;
 
-public interface ReviewSortCondition {
+public interface SortCondition {
     String LIKES = "likes";
     String LIKES_DESC = "likes.DESC";
     String DATE = "createdDate";

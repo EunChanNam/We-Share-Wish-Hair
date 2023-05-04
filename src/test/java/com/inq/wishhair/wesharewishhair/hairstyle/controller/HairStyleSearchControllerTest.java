@@ -7,29 +7,30 @@ import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
-import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
+import com.inq.wishhair.wesharewishhair.global.utils.PageableGenerator;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleSimpleResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.restdocs.payload.ResponseFieldsSnippet;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture.*;
-import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.getDefaultPageable;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -186,7 +187,7 @@ public class HairStyleSearchControllerTest extends ControllerTest {
                     .willReturn(assemblePagedResponse(List.of(A, B, C)));
 
             //when
-            MultiValueMap<String, String> pageableParams = generatePageableParams(PageableUtils.generateSimplePageable(10));
+            MultiValueMap<String, String> pageableParams = generatePageableParams(PageableGenerator.generateSimplePageable(10));
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
                     .get(BASE_URL + "/wish")
                     .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
@@ -219,6 +220,49 @@ public class HairStyleSearchControllerTest extends ControllerTest {
         }
     }
 
+    @Nested
+    @DisplayName("전체 헤어스타일 조회 API")
+    class findAllHairStyles {
+        @Test
+        @DisplayName("전제 헤어스타일을 조회한다")
+        void success() throws Exception {
+            //given
+            given(hairStyleSearchService.findAllHairStyle()).willReturn(assembleWrappedSimpleResponse());
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .get(BASE_URL)
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    responseFields(
+                                            fieldWithPath("result[].hairStyleId").description("헤어스타일 ID"),
+                                            fieldWithPath("result[].hairStyleName").description("헤어스타일 이름")
+                                    )
+                            )
+                    );
+        }
+
+        @Test
+        @DisplayName("헤더에 토큰을 포함하지 않아 실패")
+        void failByNoAccessToken() throws Exception {
+            //given
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .get(BASE_URL);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
+        }
+    }
+
     private MultiValueMap<String, String> generateTagParams(List<Tag> tags) {
         MultiValueMap<String, String> queryParams = new LinkedMultiValueMap<>();
         tags.forEach(tag -> queryParams.add("tags", tag.toString()));
@@ -234,6 +278,10 @@ public class HairStyleSearchControllerTest extends ControllerTest {
         return new PagedResponse<>(generateExpectedResponse(fixtures), defualtPaging);
     }
 
+    private ResponseWrapper<HairStyleSimpleResponse> assembleWrappedSimpleResponse() {
+        return new ResponseWrapper<>(generateSimpleResponses());
+    }
+
     private List<HairStyleResponse> generateExpectedResponse(List<HairStyleFixture> fixtures) {
         List<HairStyleResponse> expectedResponse = new ArrayList<>();
         long id = 1L;
@@ -241,6 +289,14 @@ public class HairStyleSearchControllerTest extends ControllerTest {
             expectedResponse.add(fixture.toResponse(id++));
         }
         return expectedResponse;
+    }
+
+    private List<HairStyleSimpleResponse> generateSimpleResponses() {
+        List<HairStyle> hairStyles = Arrays.stream(values()).map(HairStyleFixture::toEntity).toList();
+        for (int i = 0; i < hairStyles.size(); i++) {
+            ReflectionTestUtils.setField(hairStyles.get(i), "id", i + 1L);
+        }
+        return hairStyles.stream().map(HairStyleSimpleResponse::new).toList();
     }
 
     private ResponseFieldsSnippet hairStyleResponseDocument() {
