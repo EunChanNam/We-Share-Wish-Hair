@@ -6,6 +6,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyleRepository;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleSimpleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.utils.HairRecommendCondition;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -59,6 +60,12 @@ public class HairStyleSearchService {
     public PagedResponse<HairStyleResponse> findWishHairStyles(Long userId, Pageable pageable) {
         Slice<HairStyle> sliceResult = hairStyleRepository.findByWish(userId, pageable);
         return toPagedResponse(sliceResult);
+    }
+
+    //전체 헤어스타일 조회 로직
+    public ResponseWrapper<HairStyleSimpleResponse> findAllHairStyle() {
+        List<HairStyle> result = hairStyleRepository.findAll();
+        return toWrappedHairStyleSimpleResponse(result);
     }
 
     private void validateUserHasFaceShapeTag(User user) {

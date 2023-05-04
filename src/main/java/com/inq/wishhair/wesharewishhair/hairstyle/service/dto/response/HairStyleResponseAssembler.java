@@ -21,6 +21,14 @@ public abstract class HairStyleResponseAssembler {
         return new ResponseWrapper<>(toHairStyleResponses(hairStyles));
     }
 
+    public static ResponseWrapper<HairStyleSimpleResponse> toWrappedHairStyleSimpleResponse(List<HairStyle> hairStyles) {
+        return new ResponseWrapper<>(toHairStyleSimpleResponses(hairStyles));
+    }
+
+    private static List<HairStyleSimpleResponse> toHairStyleSimpleResponses(List<HairStyle> hairStyles) {
+        return hairStyles.stream().map(HairStyleSimpleResponse::new).toList();
+    }
+
     private static Slice<HairStyleResponse> transferContentToResponse(Slice<HairStyle> slice) {
         return slice.map(HairStyleResponse::new);
     }
