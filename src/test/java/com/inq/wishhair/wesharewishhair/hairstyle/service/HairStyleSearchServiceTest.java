@@ -12,6 +12,7 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.HashTag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponse;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleSimpleResponse;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HashTagResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
@@ -159,6 +160,16 @@ public class HairStyleSearchServiceTest extends ServiceTest {
         }
     }
 
+    @Test
+    @DisplayName("전체 헤어스타일을 이름으로 정렬해서 조회한다")
+    void findAllHairStyle() {
+        ResponseWrapper<HairStyleSimpleResponse> result = hairStyleSearchService.findAllHairStyle();
+
+        //then
+        List<HairStyleSimpleResponse> actual = result.getResult();
+        assertHairStyleSimpleResponseMatch(actual, List.of(0, 1, 2, 3, 4));
+    }
+
     private void wishHairStyles(List<Integer> indexes) {
         for (int index : indexes) {
             Long hairStyleId = hairStyles[index].getId();
@@ -181,6 +192,20 @@ public class HairStyleSearchServiceTest extends ServiceTest {
                         assertThat(resultTags).containsAll(actualTags);
                     },
                     () -> assertThat(actual.getPhotos()).hasSize(expected.getPhotos().size())
+            );
+        }
+    }
+
+    private void assertHairStyleSimpleResponseMatch(List<HairStyleSimpleResponse> actualList, List<Integer> indexes) {
+        assertThat(actualList).hasSize(indexes.size());
+        for (int i = 0; i < actualList.size(); i++) {
+            int index = indexes.get(i);
+            HairStyleSimpleResponse actual = actualList.get(i);
+            HairStyle expected = hairStyles[index];
+
+            assertAll(
+                    () -> assertThat(actual.getHairStyleId()).isEqualTo(expected.getId()),
+                    () -> assertThat(actual.getHairStyleName()).isEqualTo(expected.getName())
             );
         }
     }
