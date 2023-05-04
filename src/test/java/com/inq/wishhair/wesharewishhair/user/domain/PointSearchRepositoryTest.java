@@ -2,7 +2,7 @@ package com.inq.wishhair.wesharewishhair.user.domain;
 
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
-import com.inq.wishhair.wesharewishhair.global.utils.PageableUtils;
+import com.inq.wishhair.wesharewishhair.global.utils.PageableGenerator;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointSearchRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointRepository;
@@ -48,7 +48,7 @@ public class PointSearchRepositoryTest extends RepositoryTest {
     @DisplayName("유저의 아이디와 페이징 정보로 포인트 내역을 조회한다")
     void test1() {
         //given
-        Pageable pageable = PageableUtils.generateSimplePageable(2);
+        Pageable pageable = PageableGenerator.generateSimplePageable(2);
 
         //when
         Slice<PointHistory> result = pointSearchRepository.findByUserIdOrderByNew(user.getId(), pageable);

@@ -21,7 +21,7 @@ import java.util.Optional;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture.*;
 import static com.inq.wishhair.wesharewishhair.global.utils.DefaultPageableUtils.getLikeDescPageable;
-import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.getDefaultPageable;
+import static com.inq.wishhair.wesharewishhair.global.utils.PageableGenerator.getDefaultPageable;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 

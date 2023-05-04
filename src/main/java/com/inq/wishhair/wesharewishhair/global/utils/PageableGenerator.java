@@ -6,7 +6,7 @@ import org.springframework.data.domain.Sort;
 
 import static com.inq.wishhair.wesharewishhair.review.utils.ReviewSortCondition.DATE;
 
-public interface PageableUtils {
+public interface PageableGenerator {
     static Pageable getDefaultPageable() {
         return PageRequest.of(0, 4);
     }

@@ -6,23 +6,19 @@ import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
-import com.inq.wishhair.wesharewishhair.hairstyle.service.utils.HairRecommendConditionUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.utils.HairRecommendCondition;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
-import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture.*;
-import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.getDefaultPageable;
+import static com.inq.wishhair.wesharewishhair.global.utils.PageableGenerator.getDefaultPageable;
 import static com.inq.wishhair.wesharewishhair.hairstyle.service.utils.HairRecommendConditionUtils.*;
 import static com.inq.wishhair.wesharewishhair.hairstyle.service.utils.HairRecommendConditionUtils.mainRecommend;
 import static org.assertj.core.api.Assertions.assertThat;

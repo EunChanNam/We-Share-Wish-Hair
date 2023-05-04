@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.inq.wishhair.wesharewishhair.global.utils.PageableUtils.*;
+import static com.inq.wishhair.wesharewishhair.global.utils.PageableGenerator.*;
 import static com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.HairStyleResponseAssembler.*;
 import static com.inq.wishhair.wesharewishhair.hairstyle.utils.HairRecommendCondition.mainRecommend;
 import static com.inq.wishhair.wesharewishhair.hairstyle.utils.HairRecommendCondition.subRecommend;
@@ -64,6 +64,7 @@ public class HairStyleSearchService {
 
     //전체 헤어스타일 조회 로직
     public ResponseWrapper<HairStyleSimpleResponse> findAllHairStyle() {
+        PageableGenerator
         List<HairStyle> result = hairStyleRepository.findAll();
         return toWrappedHairStyleSimpleResponse(result);
     }
