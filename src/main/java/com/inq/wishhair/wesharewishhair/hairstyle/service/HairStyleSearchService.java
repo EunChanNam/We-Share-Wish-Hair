@@ -64,7 +64,7 @@ public class HairStyleSearchService {
 
     //전체 헤어스타일 조회 로직
     public ResponseWrapper<HairStyleSimpleResponse> findAllHairStyle() {
-        List<HairStyle> result = hairStyleRepository.findAll();
+        List<HairStyle> result = hairStyleRepository.findAllByOrderByName();
         return toWrappedHairStyleSimpleResponse(result);
     }
 
