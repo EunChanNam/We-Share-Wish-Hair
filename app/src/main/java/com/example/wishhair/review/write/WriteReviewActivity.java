@@ -62,7 +62,7 @@ public class WriteReviewActivity extends AppCompatActivity {
         String[] hairStyles = {"물결펌", "물결펌", "물결펌", "물결펌", "물결펌", "물결펌"};
 
         Spinner hairStyleSpinner = findViewById(R.id.write_review_spinner_hairStyle);
-        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<String>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, hairStyles);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, hairStyles);
         hairStyleSpinner.setAdapter(spinnerAdapter);
 
 
