@@ -9,19 +9,20 @@ import org.junit.jupiter.api.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@DisplayName("")
+@DisplayName("HairStyleRepositoryTest - DataJpaTest")
 public class HairStyleRepositoryTest extends RepositoryTest {
 
-    private List<HairStyle> hairStyles;
+    private HairStyle[] hairStyles;
 
     @BeforeEach
     void setUp() {
         //given
-        HairStyleFixture[] values = HairStyleFixture.values();
-        hairStyles = Arrays.stream(values).map(HairStyleFixture::toEntity).toList();
-        hairStyleRepository.saveAll(hairStyles);
+        HairStyleFixture[] values = values();
+        hairStyles = Arrays.stream(values).map(HairStyleFixture::toEntity).toArray(HairStyle[]::new);
+        hairStyleRepository.saveAll(Arrays.asList(hairStyles));
     }
 
     @Test
@@ -31,6 +32,6 @@ public class HairStyleRepositoryTest extends RepositoryTest {
         List<HairStyle> result = hairStyleRepository.findAllByOrderByName();
 
         //then
-        assertThat(result).containsExactly(hairStyles.toArray(HairStyle[]::new));
+        assertThat(result).containsExactly(hairStyles);
     }
 }
