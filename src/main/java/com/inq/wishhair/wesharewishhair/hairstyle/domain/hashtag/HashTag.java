@@ -24,19 +24,16 @@ public class HashTag {
     private HairStyle hairStyle;
 
     //==생성 메서드==//
-    private HashTag(Tag tag) {
+    private HashTag(HairStyle hairStyle, Tag tag) {
+        this.hairStyle = hairStyle;
         this.tag = tag;
     }
 
-    public static HashTag of(Tag tag) {
-        return new HashTag(tag);
+    public static HashTag of(HairStyle hairStyle, Tag tag) {
+        return new HashTag(hairStyle, tag);
     }
 
     //==편의 메서드==//
-    public void registerHairStyle(HairStyle hairStyle) {
-        this.hairStyle = hairStyle;
-    }
-
     public String getDescription() {
         return tag.getDescription();
     }

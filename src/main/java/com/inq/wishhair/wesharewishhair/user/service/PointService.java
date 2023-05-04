@@ -26,7 +26,7 @@ public class PointService {
         User user = userFindService.findByUserId(userId);
         insertPointHistory(PointType.USE, request.getDealAmount(), user);
 
-        eventPublisher.publishEvent(new RefundMailSendEvent(request.refundMailDto(user)));
+        eventPublisher.publishEvent(new RefundMailSendEvent(request.toRefundMailDto(user)));
     }
 
     @Transactional

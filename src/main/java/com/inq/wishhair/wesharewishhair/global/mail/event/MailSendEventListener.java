@@ -24,7 +24,7 @@ public class MailSendEventListener {
 
     @Async("mailAsyncExecutor")
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void sendPointChargeRequestMail(RefundMailSendEvent event) throws Exception {
+    public void sendRefundMail(RefundMailSendEvent event) throws Exception {
         emailSender.sendRefundRequestMail(event.dto());
     }
 }

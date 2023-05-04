@@ -18,7 +18,7 @@ public class PointUseRequest {
 
     private int dealAmount;
 
-    public RefundMailDto refundMailDto(User user) {
+    public RefundMailDto toRefundMailDto(User user) {
         return RefundMailDto.of(user.getEmailValue(),
                 user.getName(),
                 bankName,

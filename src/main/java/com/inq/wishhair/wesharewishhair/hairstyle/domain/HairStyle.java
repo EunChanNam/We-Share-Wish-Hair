@@ -49,11 +49,7 @@ public class HairStyle {
 
     //==편의 메서드--//
     private void applyHasTags(List<Tag> tags) {
-        tags.stream().map(HashTag::of).toList()
-                .forEach(hashTag -> {
-                    hashTag.registerHairStyle(this);
-                    hashTags.add(hashTag);
-                });
+        tags.forEach(tag -> hashTags.add(HashTag.of(this, tag)));
     }
 
     private void applyPhotos(List<String> storeUrls) {
