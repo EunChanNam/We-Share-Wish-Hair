@@ -1,17 +1,12 @@
 package com.inq.wishhair.wesharewishhair.review.domain.likereview;
 
-import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
-import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
-import com.inq.wishhair.wesharewishhair.review.domain.Review;
-import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
-import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -72,5 +67,25 @@ public class LikeReviewRepositoryTest extends RepositoryTest {
             //then
             assertThat(result).isFalse();
         }
+    }
+
+    @Test
+    @DisplayName("입력받은 리뷰 이이디들을 참조하는 모든 좋아요를 삭제한다")
+    void deleteAllByReviews() {
+        //given
+        final List<Long> reviewIds = new ArrayList<>(List.of(2L, 3L, 4L));
+        final Long userId2 = 2L;
+        reviewIds.forEach(reviewId -> {
+            likeReviewRepository.save(LikeReview.addLike(userId, reviewId));
+            likeReviewRepository.save(LikeReview.addLike(userId2, reviewId));
+        });
+        reviewIds.add(reviewId);
+
+        //when
+        likeReviewRepository.deleteAllByReviews(reviewIds);
+
+        //then
+        List<LikeReview> result = likeReviewRepository.findAll();
+        assertThat(result).isEmpty();
     }
 }
