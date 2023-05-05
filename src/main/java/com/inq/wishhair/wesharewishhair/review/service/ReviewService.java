@@ -47,7 +47,7 @@ public class ReviewService {
 
     @Transactional
     public void deleteReview(Long reviewId, Long userId) {
-        Review review = reviewFindService.findWithPhotosByUserId(reviewId);
+        Review review = reviewFindService.findWithPhotosById(reviewId);
         validateIsWriter(userId, review);
         likeReviewRepository.deleteAllByReview(reviewId);
         photoService.deletePhotosByReviewId(reviewId, review.getPhotos());
