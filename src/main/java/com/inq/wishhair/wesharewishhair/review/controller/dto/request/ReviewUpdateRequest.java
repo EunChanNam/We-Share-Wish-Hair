@@ -16,6 +16,9 @@ import java.util.List;
 public class ReviewUpdateRequest {
 
     @NotNull
+    private Long reviewId;
+
+    @NotNull
     private String contents;
 
     @NotNull

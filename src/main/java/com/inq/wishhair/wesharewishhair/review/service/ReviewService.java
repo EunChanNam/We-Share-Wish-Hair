@@ -4,6 +4,8 @@ import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.HairStyleFindService;
 import com.inq.wishhair.wesharewishhair.photo.service.PhotoService;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewCreateRequest;
+import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewUpdateRequest;
+import com.inq.wishhair.wesharewishhair.review.domain.Contents;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.ReviewRepository;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -54,10 +57,25 @@ public class ReviewService {
         reviewRepository.delete(review);
     }
 
+    @Transactional
+    public void updateReview(ReviewUpdateRequest request, Long userId) {
+        Review review = reviewFindService.findWithPhotosById(request.getReviewId());
+        validateIsWriter(userId, review);
+
+        Contents contents = new Contents(request.getContents());
+        List<String> storeUrls = refreshPhotos(review, request.getFiles());
+        review.updateReview(contents, request.getScore(), storeUrls);
+    }
+
     private void validateIsWriter(Long userId, Review review) {
         if (!review.isWriter(userId)) {
             throw new WishHairException(ErrorCode.REVIEW_NOT_WRITER);
         }
+    }
+
+    private List<String> refreshPhotos(Review review, List<MultipartFile> files) {
+        photoService.deletePhotosByReviewId(review.getId(), review.getPhotos());
+        return photoService.uploadPhotos(files);
     }
 
     private Review generateReview(ReviewCreateRequest request, List<String> photos, User user, HairStyle hairStyle) {
