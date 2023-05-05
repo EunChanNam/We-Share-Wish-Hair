@@ -39,7 +39,7 @@ public class ReviewController {
     }
 
     @PatchMapping
-    public ResponseEntity<Success> updateReview(@RequestBody ReviewUpdateRequest request,
+    public ResponseEntity<Success> updateReview(@ModelAttribute ReviewUpdateRequest request,
                                                 @ExtractPayload Long userId) {
 
         reviewService.updateReview(request, userId);
