@@ -53,7 +53,7 @@ public class ReviewService {
         Review review = reviewFindService.findWithPhotosById(reviewId);
         validateIsWriter(userId, review);
         likeReviewRepository.deleteAllByReview(reviewId);
-        photoService.deletePhotosByReviewId(reviewId, review.getPhotos());
+        photoService.deletePhotosByReviewId(review);
         reviewRepository.delete(review);
     }
 
@@ -67,6 +67,16 @@ public class ReviewService {
         review.updateReview(contents, request.getScore(), storeUrls);
     }
 
+    @Transactional
+    public void deleteReviewByUserId(Long userId) {
+        List<Review> reviews = reviewFindService.findWithPhotosByUserId(userId);
+        List<Long> reviewIds = reviews.stream().map(Review::getId).toList();
+
+        likeReviewRepository.deleteAllByReviews(reviewIds);
+        photoService.deletePhotosByWriter(reviews);
+        reviewRepository.deleteAllByWriter(reviewIds);
+    }
+
     private void validateIsWriter(Long userId, Review review) {
         if (!review.isWriter(userId)) {
             throw new WishHairException(ErrorCode.REVIEW_NOT_WRITER);
@@ -74,7 +84,7 @@ public class ReviewService {
     }
 
     private List<String> refreshPhotos(Review review, List<MultipartFile> files) {
-        photoService.deletePhotosByReviewId(review.getId(), review.getPhotos());
+        photoService.deletePhotosByReviewId(review);
         return photoService.uploadPhotos(files);
     }
 
