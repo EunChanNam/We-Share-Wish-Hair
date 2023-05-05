@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.review.domain;
 
 import com.inq.wishhair.wesharewishhair.review.infra.query.ReviewQueryRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
@@ -21,4 +22,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewQue
             "left outer join fetch r.photos " +
             "where r.writer.id = :userId")
     List<Review> findWithPhotosByUserId(@Param("userId") Long userId);
+
+    @Modifying
+    @Query("delete from Review r where r.id in :reviewIds")
+    void deleteAllByWriter(@Param("reviewIds") List<Long> reviewIds);
 }
