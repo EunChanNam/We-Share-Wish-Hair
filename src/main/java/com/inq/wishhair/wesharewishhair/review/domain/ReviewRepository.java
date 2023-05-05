@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewQueryRepository {
@@ -14,4 +15,10 @@ public interface ReviewRepository extends JpaRepository<Review, Long>, ReviewQue
             "left outer join fetch r.photos " +
             "where r.id = :id")
     Optional<Review> findWithPhotosById(@Param("id") Long id);
+
+    //회원 탈퇴를 위한 사용자가 작성한 리뷰 조회
+    @Query("select distinct r from Review r " +
+            "left outer join fetch r.photos " +
+            "where r.writer.id = :userId")
+    List<Review> findWithPhotosByUserId(@Param("userId") Long userId);
 }
