@@ -1,8 +1,10 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
+import com.inq.wishhair.wesharewishhair.auth.domain.TokenRepository;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.SignUpRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
@@ -21,6 +23,8 @@ public class UserService {
     private final UserFindService userFindService;
     private final UserValidator userValidator;
     private final PasswordEncoder passwordEncoder;
+    private final ReviewService reviewService;
+    private final TokenRepository tokenRepository;
 
     @Transactional
     public Long createUser(SignUpRequest request) {
@@ -35,6 +39,8 @@ public class UserService {
 
     @Transactional
     public void deleteUser(Long userId) {
+        tokenRepository.deleteByUserId(userId);
+        reviewService.deleteReviewByWriter(userId);
         userRepository.deleteById(userId);
     }
 

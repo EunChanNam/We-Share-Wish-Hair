@@ -52,6 +52,7 @@ public class ReviewService {
     public void deleteReview(Long reviewId, Long userId) {
         Review review = reviewFindService.findWithPhotosById(reviewId);
         validateIsWriter(userId, review);
+
         likeReviewRepository.deleteAllByReview(reviewId);
         photoService.deletePhotosByReviewId(review);
         reviewRepository.delete(review);
@@ -68,7 +69,7 @@ public class ReviewService {
     }
 
     @Transactional
-    public void deleteReviewByUserId(Long userId) {
+    public void deleteReviewByWriter(Long userId) {
         List<Review> reviews = reviewFindService.findWithPhotosByUserId(userId);
         List<Long> reviewIds = reviews.stream().map(Review::getId).toList();
 
