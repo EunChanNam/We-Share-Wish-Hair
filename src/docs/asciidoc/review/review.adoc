@@ -39,3 +39,25 @@ include::{snippets}/delete-review/fail-by-no-access-token/response-fields.adoc[]
 include::{snippets}/delete-review/fail-by-writer/http-response.adoc[]
 include::{snippets}/delete-review/fail-by-writer/response-fields.adoc[]
 
+== 리뷰 수정 API
+=== 1. 성공
+Http Request
+include::{snippets}/update-review/success/http-request.adoc[]
+include::{snippets}/update-review/success/request-parameters.adoc[]
+include::{snippets}/update-review/success/request-parts.adoc[]
+include::{snippets}/update-review/success/request-headers.adoc[]
+include::{snippets}/update-review/success/request-fields.adoc[]
+
+Http Response
+include::{snippets}/update-review/success/http-response.adoc[]
+
+=== 2. 리뷰 작성자가 아니라서 실패
+Http Response
+include::{snippets}/update-review/fail-by-not-writer/http-response.adoc[]
+
+=== 3. 헤더에 토큰을 포함하지 않아 실패
+Http Response
+include::{snippets}/update-review/fail-by-no-access-token/http-response.adoc[]
+
+
+

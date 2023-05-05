@@ -65,7 +65,7 @@ public class ReviewControllerTest extends ControllerTest {
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .multipart(BASE_URL)
+                    .multipart(HttpMethod.POST, BASE_URL)
                     .file((MockMultipartFile) request.getFiles().get(0))
                     .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
                     .params(params);
