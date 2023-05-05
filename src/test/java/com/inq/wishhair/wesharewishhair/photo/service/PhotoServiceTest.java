@@ -4,17 +4,14 @@ import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
-import com.inq.wishhair.wesharewishhair.global.utils.FilenameGenerator;
 import com.inq.wishhair.wesharewishhair.global.utils.MockMultipartFileUtils;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.photo.utils.PhotoStore;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
@@ -128,7 +125,7 @@ public class PhotoServiceTest extends ServiceTest {
         doNothing().when(photoStore).deleteFiles(storeUrls);
 
         //when
-        photoService.deletePhotosByReviewId(review.getId(), review.getPhotos());
+        photoService.deletePhotosByReviewId(review);
 
         //then
         List<Photo> all = photoRepository.findAll();
