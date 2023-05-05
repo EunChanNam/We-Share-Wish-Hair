@@ -10,7 +10,9 @@ import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.photo.service.PhotoService;
 import com.inq.wishhair.wesharewishhair.photo.utils.PhotoStore;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewCreateRequest;
+import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewUpdateRequest;
 import com.inq.wishhair.wesharewishhair.review.controller.utils.ReviewCreateRequestUtils;
+import com.inq.wishhair.wesharewishhair.review.controller.utils.ReviewUpdateRequestUtils;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.event.PointChargeEvent;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
@@ -24,8 +26,11 @@ import java.io.IOException;
 import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture.*;
+import static com.inq.wishhair.wesharewishhair.review.controller.utils.ReviewUpdateRequestUtils.request;
+import static com.inq.wishhair.wesharewishhair.review.controller.utils.ReviewUpdateRequestUtils.wrongContentsRequest;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
@@ -78,7 +83,7 @@ public class ReviewServiceTest extends ServiceTest {
     }
 
     @Nested
-    @DisplayName("리뷰를 삭제한다")
+    @DisplayName("리뷰를 삭제 서비스 테스트")
     class deleteReview {
 
         private Review review;
@@ -114,6 +119,54 @@ public class ReviewServiceTest extends ServiceTest {
             //then
             List<Review> result = reviewRepository.findAll();
             assertThat(result).isEmpty();
+        }
+    }
+
+    @Nested
+    @DisplayName("리뷰 수정 서비스 테스트")
+    class updateReview {
+        private Review review;
+
+        @BeforeEach
+        void setUp() {
+            //given
+            review = reviewRepository.save(B.toEntity(user, hairStyle));
+        }
+
+        @Test
+        @DisplayName("리뷰 수정을 성공한다")
+        void success() throws IOException {
+            //given
+            ReviewUpdateRequest request = request(review.getId(), A);
+            given(photoStore.uploadFiles(request.getFiles())).willReturn(A.getStoreUrls());
+
+            //when, then
+            assertDoesNotThrow(() -> reviewService.updateReview(request, user.getId()));
+        }
+
+        @Test
+        @DisplayName("수정하는 Contents 가 길이 형식이 맞지 않아 실패한다")
+        void failByContents() throws IOException {
+            //given
+            ReviewUpdateRequest request = wrongContentsRequest(review.getId(), A);
+
+            //when, then
+            assertThatThrownBy(() -> reviewService.updateReview(request, user.getId()))
+                    .isInstanceOf(WishHairException.class)
+                    .hasMessageContaining(ErrorCode.CONTENTS_INVALID_LENGTH.getMessage());
+        }
+
+        @Test
+        @DisplayName("작성자가 아니여서 실패한다")
+        void failByNotWriter() throws IOException {
+            //given
+            final Long WRONG_USER_ID = 99L;
+            ReviewUpdateRequest request = request(review.getId(), A);
+
+            //when, then
+            assertThatThrownBy(() -> reviewService.updateReview(request, WRONG_USER_ID))
+                    .isInstanceOf(WishHairException.class)
+                    .hasMessageContaining(ErrorCode.REVIEW_NOT_WRITER.getMessage());
         }
     }
 }
