@@ -3,6 +3,7 @@ package com.inq.wishhair.wesharewishhair.photo.service;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.photo.domain.PhotoRepository;
 import com.inq.wishhair.wesharewishhair.photo.utils.PhotoStore;
+import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,9 +23,19 @@ public class PhotoService {
     }
 
     @Transactional
-    public void deletePhotosByReviewId(Long reviewId, List<Photo> photos) {
-        List<String> storeUrls = photos.stream().map(Photo::getStoreUrl).toList();
+    public void deletePhotosByReviewId(Review review) {
+        deletePhotosInCloud(review);
+        photoRepository.deleteAllByReview(review.getId());
+    }
+
+    @Transactional
+    public void deletePhotosByWriter(List<Review> reviews) {
+        reviews.forEach(this::deletePhotosInCloud);
+        photoRepository.deleteAllByReviews(reviews.stream().map(Review::getId).toList());
+    }
+
+    private void deletePhotosInCloud(Review review) {
+        List<String> storeUrls = review.getPhotos().stream().map(Photo::getStoreUrl).toList();
         photoStore.deleteFiles(storeUrls);
-        photoRepository.deleteAllByReview(reviewId);
     }
 }
