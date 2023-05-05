@@ -35,7 +35,7 @@ public class ReviewFindServiceTest extends ServiceTest {
     @DisplayName("아이디로 리뷰를 유저 정보와 함께 조회한다")
     void findWithUserById() {
         //when
-        Review result = reviewFindService.findWithPhotosByUserId(review.getId());
+        Review result = reviewFindService.findWithPhotosById(review.getId());
 
         //then
         assertThat(result).isEqualTo(review);

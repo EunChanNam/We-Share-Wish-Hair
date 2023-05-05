@@ -68,4 +68,23 @@ public class Review extends BaseEntity {
     private void applyPhotos(List<String> storeUrls) {
         storeUrls.forEach(storeUrl -> photos.add(Photo.createReviewPhoto(storeUrl, this)));
     }
+
+    public void updateReview(Contents contents, Score score, List<String> storeUrls) {
+        updateContents(contents);
+        updateScore(score);
+        updatePhotos(storeUrls);
+    }
+
+    private void updateContents(Contents contents) {
+        this.contents = contents;
+    }
+
+    private void updateScore(Score score) {
+        this.score = score;
+    }
+
+    private void updatePhotos(List<String> storeUrls) {
+        this.photos.clear();
+        applyPhotos(storeUrls);
+    }
 }

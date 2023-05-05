@@ -4,15 +4,14 @@ import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
+import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
 import com.inq.wishhair.wesharewishhair.review.domain.enums.Score;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -70,5 +69,29 @@ public class ReviewTest {
             //then
             assertThat(result).isFalse();
         }
+    }
+
+    @Test
+    @DisplayName("리뷰를 업데이트한다")
+    void updateReview() {
+        //given
+        Review review = ReviewFixture.A.toEntity(null, null);
+
+        final Contents newContents = new Contents("new Contents");
+        final Score newScore = Score.S1H;
+        final List<String> newStoreUrls = List.of("new1.png", "new2.png");
+
+        //when
+        review.updateReview(newContents, newScore, newStoreUrls);
+
+        //then
+        assertAll(
+                () -> assertThat(review.getContents()).isEqualTo(newContents),
+                () -> assertThat(review.getScore()).isEqualTo(newScore),
+                () -> {
+                    List<String> actual = review.getPhotos().stream().map(Photo::getStoreUrl).toList();
+                    assertThat(actual).containsAll(newStoreUrls);
+                }
+        );
     }
 }

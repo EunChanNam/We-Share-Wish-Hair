@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.review.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
+import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewUpdateRequest;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewCreateRequest;
 import lombok.RequiredArgsConstructor;
@@ -33,6 +34,15 @@ public class ReviewController {
                                                 @PathVariable Long reviewId) {
 
         reviewService.deleteReview(reviewId, userId);
+
+        return ResponseEntity.ok(new Success());
+    }
+
+    @PatchMapping
+    public ResponseEntity<Success> updateReview(@ModelAttribute ReviewUpdateRequest request,
+                                                @ExtractPayload Long userId) {
+
+        reviewService.updateReview(request, userId);
 
         return ResponseEntity.ok(new Success());
     }

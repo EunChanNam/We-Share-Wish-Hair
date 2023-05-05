@@ -8,7 +8,6 @@ import java.io.IOException;
 
 
 public abstract class ReviewCreateRequestUtils {
-    private static final String FILE_PATH = "src/test/resources/images/";
 
     public static ReviewCreateRequest createRequest(ReviewFixture fixture, Long hairStyleId) throws IOException {
         return new ReviewCreateRequest(
