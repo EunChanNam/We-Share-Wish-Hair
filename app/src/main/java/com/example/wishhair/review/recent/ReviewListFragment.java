@@ -39,6 +39,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -222,9 +225,14 @@ public class ReviewListFragment extends Fragment {
         spinner_sort.setAdapter(spinnerAdapter);
 
         spinner_sort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 sort_selected = sortItems[position];
+// https://recipes4dev.tistory.com/79
+                Comparator<ReviewItem> likeDesc = (item1, item2) -> (item2.getLikes() - item1.getLikes());
+                Collections.sort(recentReviewItems, likeDesc);
+                recentAdapter.notifyDataSetChanged();
             }
 
             @Override

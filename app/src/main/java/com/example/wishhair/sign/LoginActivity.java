@@ -3,8 +3,6 @@ package com.example.wishhair.sign;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.wishhair.MainActivity;
@@ -15,19 +13,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.wishhair.review.write.WriteReviewActivity;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -61,14 +54,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 //        find passwd
-//        TODO 0316 : 비밀번호 찾기 구현 여부
         Button btn_findPassword = findViewById(R.id.btn_findPassword);
-        btn_findPassword.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, WriteReviewActivity.class);
-                startActivity(intent);
-            }
+        btn_findPassword.setOnClickListener(view -> {
+            Intent intent = new Intent(LoginActivity.this, FindPasswordActivity.class);
+            startActivity(intent);
         });
     }
 
@@ -127,6 +116,5 @@ public class LoginActivity extends AppCompatActivity {
         queue.add(jsonObjectRequest);
 
     }
-
 
 }

@@ -9,41 +9,21 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.ClipData;
 import android.content.Intent;
 import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.OpenableColumns;
 import android.util.Log;
-import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RatingBar;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
 import com.example.wishhair.CustomTokenHandler;
 import com.example.wishhair.R;
-import com.example.wishhair.sign.UrlConst;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 public class WriteReviewActivity extends AppCompatActivity {
     private static final String TAG = "WriteReviewActivity";
@@ -69,13 +49,22 @@ public class WriteReviewActivity extends AppCompatActivity {
 //        accessToken
         CustomTokenHandler customTokenHandler = new CustomTokenHandler(this);
         String accessToken = customTokenHandler.getAccessToken();
+//        back
+        btn_back = findViewById(R.id.toolbar_btn_back);
+        btn_back.setOnClickListener(view -> finish());
+
 //         hair Style info
 //        #TODO hair style info 받아오기
         writeRequestData.setHairStyleId("10");
 
-//        back
-        btn_back = findViewById(R.id.toolbar_btn_back);
-        btn_back.setOnClickListener(view -> finish());
+//        setHairStyle
+        int cntStyle = 10;
+        String[] hairStyles = {"물결펌", "물결펌", "물결펌", "물결펌", "물결펌", "물결펌"};
+
+        Spinner hairStyleSpinner = findViewById(R.id.write_review_spinner_hairStyle);
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, hairStyles);
+        hairStyleSpinner.setAdapter(spinnerAdapter);
+
 
         recyclerView = findViewById(R.id.write_review_picture_recyclerView);
 

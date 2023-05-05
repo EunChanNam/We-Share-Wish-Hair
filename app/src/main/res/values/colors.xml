@@ -14,8 +14,8 @@
     <color name="timer_red">#FFC0392B</color>
     <color name="text_ivory">#FFEEE9DA</color>
     <color name="btnDetail_gray">#FF898A8D</color>
-
     <color name="mypage_border">#ADB3BC</color>
-
+    <color name="rating_yellow">#FFFFD400</color>
+    <color name="spinner_gray">#FFAFAFAF</color>
 
 </resources>

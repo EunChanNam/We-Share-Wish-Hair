@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class WriteReviewAdapter extends RecyclerView.Adapter<WriteReviewAdapter.WriteViewHolder> {
 
-    private ArrayList<Uri> items = new ArrayList<>();
+    private ArrayList<Uri> items;
     private final Context context;
 
     public WriteReviewAdapter(ArrayList<Uri> items, Context context) {
