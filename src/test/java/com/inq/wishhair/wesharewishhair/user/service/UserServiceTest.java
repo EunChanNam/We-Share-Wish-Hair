@@ -1,7 +1,11 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
+import com.inq.wishhair.wesharewishhair.auth.domain.Token;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
+import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.review.domain.Review;
+import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.FaceShapeUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.SignUpRequest;
@@ -84,13 +88,29 @@ class UserServiceTest extends ServiceTest {
         @Test
         @DisplayName("회원 탈퇴에 성공한다")
         void success() {
-            //when
+            //given
             User user = userRepository.save(B.toEntity());
+            tokenRepository.save(Token.issue(user, "token"));
+            Review review = reviewRepository.save(ReviewFixture.E.toEntity(user, null));
+            reviewRepository.save(ReviewFixture.D.toEntity(user, null));
+            likeReviewRepository.save(LikeReview.addLike(user.getId(), review.getId()));
+            likeReviewRepository.save(LikeReview.addLike(user.getId(), review.getId()));
+
+            //when
             userService.deleteUser(user.getId());
 
             //then
-            List<User> result = userRepository.findAll();
-            assertThat(result).isEmpty();
+            List<User> userResult = userRepository.findAll();
+            List<Token> tokenResult = tokenRepository.findAll();
+            List<Review> reviewResult = reviewRepository.findAll();
+            List<LikeReview> likeResult = likeReviewRepository.findAll();
+
+            assertAll(
+                    () -> assertThat(userResult).isEmpty(),
+                    () -> assertThat(tokenResult).isEmpty(),
+                    () -> assertThat(reviewResult).isEmpty(),
+                    () -> assertThat(likeResult).isEmpty()
+            );
         }
     }
 

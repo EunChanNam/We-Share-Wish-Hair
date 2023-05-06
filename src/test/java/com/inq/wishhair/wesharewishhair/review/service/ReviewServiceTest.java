@@ -7,18 +7,14 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
-import com.inq.wishhair.wesharewishhair.photo.service.PhotoService;
-import com.inq.wishhair.wesharewishhair.photo.utils.PhotoStore;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewCreateRequest;
 import com.inq.wishhair.wesharewishhair.review.controller.dto.request.ReviewUpdateRequest;
 import com.inq.wishhair.wesharewishhair.review.controller.utils.ReviewCreateRequestUtils;
-import com.inq.wishhair.wesharewishhair.review.controller.utils.ReviewUpdateRequestUtils;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.event.PointChargeEvent;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.event.ApplicationEvents;
 import org.springframework.test.context.event.RecordApplicationEvents;
 
@@ -31,7 +27,6 @@ import static com.inq.wishhair.wesharewishhair.review.controller.utils.ReviewUpd
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doNothing;
 
@@ -44,9 +39,6 @@ public class ReviewServiceTest extends ServiceTest {
 
     @Autowired
     private ApplicationEvents events;
-
-    @MockBean
-    private PhotoStore photoStore;
 
     private User user;
     private HairStyle hairStyle;
