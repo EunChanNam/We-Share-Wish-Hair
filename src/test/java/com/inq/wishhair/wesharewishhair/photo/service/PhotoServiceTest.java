@@ -25,7 +25,6 @@ import static com.inq.wishhair.wesharewishhair.global.utils.FilenameGenerator.cr
 import static com.inq.wishhair.wesharewishhair.global.utils.FilenameGenerator.createUploadLink;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
 
 @DisplayName("PhotoService test - SpringBootTest")
 public class PhotoServiceTest extends ServiceTest {
@@ -116,16 +115,30 @@ public class PhotoServiceTest extends ServiceTest {
     }
 
     @Test
-    @DisplayName("이미지 삭제 서비스 테스트")
+    @DisplayName("입력받은 리뷰에 대한 모든 이미지를 삭제한다")
     void deletePhotosByReviewId() {
         //given
         Review review = reviewRepository.save(ReviewFixture.A.toEntity(null, null));
-        List<String> storeUrls = review.getPhotos().stream().map(Photo::getStoreUrl).toList();
-
-        doNothing().when(photoStore).deleteFiles(storeUrls);
 
         //when
         photoService.deletePhotosByReviewId(review);
+
+        //then
+        List<Photo> all = photoRepository.findAll();
+        assertThat(all).isEmpty();
+    }
+
+    @Test
+    @DisplayName("입력받은 리뷰들에 대한 모든 이미지를 삭제한다")
+    void deletePhotosByWriter() {
+        //given
+        List<Review> reviews = new ArrayList<>();
+        for (ReviewFixture fixture : ReviewFixture.values()) {
+            reviews.add(reviewRepository.save(fixture.toEntity(null, null)));
+        }
+
+        //when
+        photoService.deletePhotosByWriter(reviews);
 
         //then
         List<Photo> all = photoRepository.findAll();
