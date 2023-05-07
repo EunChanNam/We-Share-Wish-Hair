@@ -4,19 +4,14 @@ import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
-import com.inq.wishhair.wesharewishhair.global.utils.FilenameGenerator;
 import com.inq.wishhair.wesharewishhair.global.utils.MockMultipartFileUtils;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
-import com.inq.wishhair.wesharewishhair.photo.utils.PhotoStore;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.mockito.BDDMockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -28,14 +23,10 @@ import static com.inq.wishhair.wesharewishhair.global.utils.FilenameGenerator.cr
 import static com.inq.wishhair.wesharewishhair.global.utils.FilenameGenerator.createUploadLink;
 import static org.assertj.core.api.Assertions.*;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
 
 @DisplayName("PhotoService test - SpringBootTest")
 public class PhotoServiceTest extends ServiceTest {
     private static final String BUCKET = "bucket";
-
-    @MockBean
-    private PhotoStore photoStore;
 
     @Autowired
     private PhotoService photoService;
@@ -119,16 +110,30 @@ public class PhotoServiceTest extends ServiceTest {
     }
 
     @Test
-    @DisplayName("이미지 삭제 서비스 테스트")
+    @DisplayName("입력받은 리뷰에 대한 모든 이미지를 삭제한다")
     void deletePhotosByReviewId() {
         //given
         Review review = reviewRepository.save(ReviewFixture.A.toEntity(null, null));
-        List<String> storeUrls = review.getPhotos().stream().map(Photo::getStoreUrl).toList();
-
-        doNothing().when(photoStore).deleteFiles(storeUrls);
 
         //when
-        photoService.deletePhotosByReviewId(review.getId(), review.getPhotos());
+        photoService.deletePhotosByReviewId(review);
+
+        //then
+        List<Photo> all = photoRepository.findAll();
+        assertThat(all).isEmpty();
+    }
+
+    @Test
+    @DisplayName("입력받은 리뷰들에 대한 모든 이미지를 삭제한다")
+    void deletePhotosByWriter() {
+        //given
+        List<Review> reviews = new ArrayList<>();
+        for (ReviewFixture fixture : ReviewFixture.values()) {
+            reviews.add(reviewRepository.save(fixture.toEntity(null, null)));
+        }
+
+        //when
+        photoService.deletePhotosByWriter(reviews);
 
         //then
         List<Photo> all = photoRepository.findAll();
