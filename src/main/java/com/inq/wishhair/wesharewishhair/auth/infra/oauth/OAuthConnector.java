@@ -1,11 +1,11 @@
 package com.inq.wishhair.wesharewishhair.auth.infra.oauth;
 
-import com.inq.wishhair.wesharewishhair.auth.infra.oauth.dto.response.GoogleTokenResponse;
-import com.inq.wishhair.wesharewishhair.auth.infra.oauth.dto.response.GoogleUserResponse;
+import com.inq.wishhair.wesharewishhair.auth.infra.oauth.dto.response.OAuthTokenResponse;
+import com.inq.wishhair.wesharewishhair.auth.infra.oauth.dto.response.OAuthUserResponse;
 
 public interface OAuthConnector {
 
-    GoogleTokenResponse requestToken(String code);
+    OAuthTokenResponse requestToken(String code);
 
-    GoogleUserResponse requestUserInfo(String accessToken);
+    OAuthUserResponse requestUserInfo(String accessToken);
 }

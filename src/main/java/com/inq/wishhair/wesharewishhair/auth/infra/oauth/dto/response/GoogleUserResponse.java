@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class GoogleUserResponse {
+public class GoogleUserResponse implements OAuthUserResponse{
 
     private String name;
     private String email;
