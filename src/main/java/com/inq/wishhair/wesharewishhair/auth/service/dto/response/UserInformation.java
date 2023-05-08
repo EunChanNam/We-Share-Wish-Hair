@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.user.service.dto.response;
+package com.inq.wishhair.wesharewishhair.auth.service.dto.response;
 
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import lombok.AllArgsConstructor;

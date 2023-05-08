@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.service.dto.response;
 
+import com.inq.wishhair.wesharewishhair.auth.service.dto.response.UserInformation;
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;

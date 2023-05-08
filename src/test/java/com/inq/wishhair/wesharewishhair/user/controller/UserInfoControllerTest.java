@@ -14,7 +14,7 @@ import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewRespon
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse;
-import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserInformation;
+import com.inq.wishhair.wesharewishhair.auth.service.dto.response.UserInformation;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
