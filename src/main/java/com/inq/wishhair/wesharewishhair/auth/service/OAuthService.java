@@ -25,21 +25,21 @@ public class OAuthService {
 
     @Transactional
     public LoginResponse login(String code) {
-        OAuthTokenResponse oauthToken = oAuthConnector.requestToken(code);
-        OAuthUserResponse userInfo = oAuthConnector.requestUserInfo(oauthToken.getAccessToken());
+        OAuthUserResponse userInfo = findUserInfoByOAuth(code);
 
         User user = findUserOrExceptionToSignUp(userInfo);
 
-        return issueAndSynchronizeToken(user);
-    }
-
-    private LoginResponse issueAndSynchronizeToken(User user) {
         String refreshToken = provider.createRefreshToken(user.getId());
         String accessToken = provider.createAccessToken(user.getId());
 
         tokenManager.synchronizeRefreshToken(user, refreshToken);
 
         return new LoginResponse(user, accessToken, refreshToken);
+    }
+
+    private OAuthUserResponse findUserInfoByOAuth(String code) {
+        OAuthTokenResponse oauthToken = oAuthConnector.requestToken(code);
+        return oAuthConnector.requestUserInfo(oauthToken.getAccessToken());
     }
 
     private User findUserOrExceptionToSignUp(OAuthUserResponse userInfo) {

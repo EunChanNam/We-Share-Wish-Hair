@@ -28,10 +28,6 @@ public class AuthService {
                 .filter(findUser -> passwordEncoder.matches(pw, findUser.getPasswordValue()))
                 .orElseThrow(() -> new WishHairException(ErrorCode.LOGIN_FAIL));
 
-        return issueAndSynchronizeToken(user);
-    }
-
-    private TokenResponse issueAndSynchronizeToken(User user) {
         String refreshToken = provider.createRefreshToken(user.getId());
         String accessToken = provider.createAccessToken(user.getId());
 
