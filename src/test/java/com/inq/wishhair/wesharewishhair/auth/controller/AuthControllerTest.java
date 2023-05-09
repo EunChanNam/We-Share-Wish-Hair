@@ -18,8 +18,6 @@ import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.AUTH_REQUIRED_LOGIN;
 import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.LOGIN_FAIL;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
-import static org.springframework.restdocs.headers.HeaderDocumentation.requestHeaders;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,8 +25,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("AuthControllerTest - WebMvcTest")
 public class AuthControllerTest extends ControllerTest {
 
-    private static final String LOGIN_URL = "/api/login";
-    private static final String LOGOUT_URL = "/api/logout";
+    private static final String LOGIN_URL = "/api/auth/login";
+    private static final String LOGOUT_URL = "/api/auth/logout";
     private static final String AUTHORIZATION = "Authorization";
     private static final String BEARER = "Bearer";
 
