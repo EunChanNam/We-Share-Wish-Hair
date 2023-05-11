@@ -4,7 +4,7 @@ import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
-import org.junit.jupiter.api.Assertions;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.WishHairResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -77,6 +77,33 @@ public class WishHairServiceTest extends ServiceTest {
             assertThatThrownBy(() -> wishHairService.cancelWish(hairStyleId, userId))
                     .isInstanceOf(WishHairException.class)
                     .hasMessageContaining(expectedError.getMessage());
+        }
+    }
+
+    @Nested
+    @DisplayName("찜 여부를 조회한다")
+    class checkIsWishing {
+        @Test
+        @DisplayName("찜을 하고 있지 않아 false 를 반환한다")
+        void isFalse() {
+            //when
+            WishHairResponse result = wishHairService.checkIsWishing(hairStyleId, userId);
+
+            //then
+            assertThat(result.isWishing()).isFalse();
+        }
+
+        @Test
+        @DisplayName("찜을 하고 있어 true 를 반환한다")
+        void isTrue() {
+            //given
+            wishHairRepository.save(WishHair.createWishHair(userId, hairStyleId));
+
+            //when
+            WishHairResponse result = wishHairService.checkIsWishing(hairStyleId, userId);
+
+            //then
+            assertThat(result.isWishing()).isTrue();
         }
     }
 }

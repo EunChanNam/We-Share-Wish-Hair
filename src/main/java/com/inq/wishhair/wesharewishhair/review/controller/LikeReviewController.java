@@ -3,7 +3,7 @@ package com.inq.wishhair.wesharewishhair.review.controller;
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
 import com.inq.wishhair.wesharewishhair.review.service.LikeReviewService;
-import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewLikeResponse;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.LikeReviewResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,10 +34,10 @@ public class LikeReviewController {
     }
 
     @GetMapping("/{reviewId}")
-    public ResponseEntity<ReviewLikeResponse> checkIsLiking(@ExtractPayload Long userId,
+    public ResponseEntity<LikeReviewResponse> checkIsLiking(@ExtractPayload Long userId,
                                                             @PathVariable Long reviewId) {
 
-        boolean result = likeReviewService.checkIsLiking(userId, reviewId);
-        return ResponseEntity.ok(new ReviewLikeResponse(result));
+        LikeReviewResponse result = likeReviewService.checkIsLiking(userId, reviewId);
+        return ResponseEntity.ok(result);
     }
 }
