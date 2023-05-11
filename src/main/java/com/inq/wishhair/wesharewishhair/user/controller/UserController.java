@@ -2,11 +2,8 @@ package com.inq.wishhair.wesharewishhair.user.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.FaceShapeUpdateRequest;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.*;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.SignUpRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +18,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public ResponseEntity<Success> createUser(@RequestBody SignUpRequest createRequest) {
+    public ResponseEntity<Success> signUp(@RequestBody SignUpRequest createRequest) {
         Long userId = userService.createUser(createRequest);
 
         return ResponseEntity
@@ -32,6 +29,15 @@ public class UserController {
     @DeleteMapping
     public ResponseEntity<Success> deleteUser(@ExtractPayload Long userId) {
         userService.deleteUser(userId);
+
+        return ResponseEntity.ok(new Success());
+    }
+
+    @PatchMapping("/refresh/password")
+    public ResponseEntity<Success> refreshPassword(@RequestBody PasswordRefreshRequest request,
+                                                   @ExtractPayload Long userId) {
+
+        userService.refreshPassword(request, userId);
 
         return ResponseEntity.ok(new Success());
     }
