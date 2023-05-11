@@ -29,14 +29,18 @@ public class WishHairService {
          wishHairRepository.deleteByHairStyleIdAndUserId(hairStyleId, userId);
     }
 
+    public boolean checkIsWishing(Long hairStyleId, Long userId) {
+        return wishHairRepository.existsByHairStyleIdAndUserId(hairStyleId, userId);
+    }
+
     private void validateDoesWishHairExist(Long hairStyleId, Long userId) {
-        if (!wishHairRepository.existsByHairStyleIdAndUserId(hairStyleId, userId)) {
+        if (!checkIsWishing(hairStyleId, userId)) {
             throw new WishHairException(ErrorCode.WISH_HAIR_NOT_EXIST);
         }
     }
 
     private void validateDoesNotExistWishHair(Long hairStyleId, Long userId) {
-        if (wishHairRepository.existsByHairStyleIdAndUserId(hairStyleId, userId)) {
+        if (checkIsWishing(hairStyleId, userId)) {
             throw new WishHairException(ErrorCode.WISH_HAIR_ALREADY_EXIST);
         }
     }
