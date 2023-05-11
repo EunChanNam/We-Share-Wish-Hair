@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public class UserInformation {
+public class UserInfo {
 
     private String nickname;
 
@@ -14,7 +14,7 @@ public class UserInformation {
 
     private String faceShapeTag;
 
-    public UserInformation(User user) {
+    public UserInfo(User user) {
         this.nickname = user.getNicknameValue();
         this.hasFaceShape = user.existFaceShape();
         this.faceShapeTag = user.getFaceShapeTag().getDescription();
