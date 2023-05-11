@@ -3,6 +3,7 @@ package com.inq.wishhair.wesharewishhair.review.controller;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.LikeReviewResponse;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -148,7 +149,8 @@ public class LikeReviewControllerTest extends ControllerTest {
         @DisplayName("사용자의 입력한 id 에 해당하는 리뷰에 대한 좋아요 여부를 조회한다")
         void success() throws Exception {
             //given
-            given(likeReviewService.checkIsLiking(any(), any())).willReturn(true);
+            LikeReviewResponse expectedResponse = new LikeReviewResponse(true);
+            given(likeReviewService.checkIsLiking(1L, 1L)).willReturn(expectedResponse);
 
             //when
             MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders

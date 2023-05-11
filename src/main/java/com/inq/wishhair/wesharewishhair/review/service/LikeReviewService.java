@@ -4,6 +4,7 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReviewRepository;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.LikeReviewResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,18 +30,22 @@ public class LikeReviewService {
         likeReviewRepository.deleteByUserIdAndReviewId(userId, reviewId);
     }
 
-    public boolean checkIsLiking(Long userId, Long reviewId) {
+    public LikeReviewResponse checkIsLiking(Long userId, Long reviewId) {
+        return new LikeReviewResponse(existLikeReview(userId, reviewId));
+    }
+
+    private boolean existLikeReview(Long userId, Long reviewId) {
         return likeReviewRepository.existsByUserIdAndReviewId(userId, reviewId);
     }
 
     private void validateIsNotLiking(Long userId, Long reviewId) {
-        if (checkIsLiking(userId, reviewId)) {
+        if (existLikeReview(userId, reviewId)) {
             throw new WishHairException(ErrorCode.REVIEW_ALREADY_LIKING);
         }
     }
 
     private void validateIsLiking(Long userId, Long reviewId) {
-        if (!checkIsLiking(userId, reviewId)) {
+        if (!existLikeReview(userId, reviewId)) {
             throw new WishHairException(ErrorCode.REVIEW_NOT_LIKING);
         }
     }

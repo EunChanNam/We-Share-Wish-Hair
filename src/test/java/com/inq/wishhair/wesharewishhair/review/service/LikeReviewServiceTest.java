@@ -3,8 +3,8 @@ package com.inq.wishhair.wesharewishhair.review.service;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
+import com.inq.wishhair.wesharewishhair.review.service.dto.response.LikeReviewResponse;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -86,20 +86,20 @@ public class LikeReviewServiceTest extends ServiceTest {
             likeReviewRepository.save(LikeReview.addLike(userId, reviewId));
 
             //when
-            boolean result = likeReviewService.checkIsLiking(userId, reviewId);
+            LikeReviewResponse result = likeReviewService.checkIsLiking(userId, reviewId);
 
             //then
-            assertThat(result).isTrue();
+            assertThat(result.isLiking()).isTrue();
         }
 
         @Test
         @DisplayName("좋아요가 존재하지 않아 false 를 응답한다")
         void notExist() {
             //when
-            boolean result = likeReviewService.checkIsLiking(userId, reviewId);
+            LikeReviewResponse result = likeReviewService.checkIsLiking(userId, reviewId);
 
             //then
-            assertThat(result).isFalse();
+            assertThat(result.isLiking()).isFalse();
         }
     }
 }
