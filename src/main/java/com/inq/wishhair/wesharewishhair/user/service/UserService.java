@@ -5,6 +5,7 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordRefreshRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.SignUpRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
@@ -42,6 +43,13 @@ public class UserService {
         tokenRepository.deleteByUserId(userId);
         reviewService.deleteReviewByWriter(userId);
         userRepository.deleteById(userId);
+    }
+
+    @Transactional
+    public void refreshPassword(PasswordRefreshRequest request, Long userId) {
+        User user = userFindService.findByUserId(userId);
+
+        user.updatePassword(Password.encrypt(request.getNewPassword(), passwordEncoder));
     }
 
     @Transactional
