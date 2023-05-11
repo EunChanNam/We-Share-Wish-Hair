@@ -14,7 +14,8 @@ import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewRespon
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse;
-import com.inq.wishhair.wesharewishhair.auth.service.dto.response.UserInfo;
+import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserInformation;
+import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserResponseAssembler;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -113,7 +114,7 @@ public class UserInfoControllerTest extends ControllerTest {
         @DisplayName("사용자의 정보를 조회한다")
         void success() throws Exception {
             //given
-            UserInfo expectedResponse = generateUserInformation();
+            UserInformation expectedResponse = generateUserInformation();
             given(userInfoService.getUserInformation(1L))
                     .willReturn(expectedResponse);
 
@@ -129,20 +130,21 @@ public class UserInfoControllerTest extends ControllerTest {
                             restDocs.document(
                                     accessTokenHeaderDocument(),
                                     responseFields(
+                                            fieldWithPath("email").description("이메일"),
+                                            fieldWithPath("name").description("사용자 이름"),
                                             fieldWithPath("nickname").description("사용자 닉네임"),
-                                            fieldWithPath("hasFaceShape").description("얼굴형 보유 여부"),
-                                            fieldWithPath("faceShapeTag").description("사용자 얼굴형, 얼굴형을 보유하지 않을 시 null")
+                                            fieldWithPath("sex").description("사용자 성별")
                                     )
                             )
                     );
         }
     }
 
-    private UserInfo generateUserInformation() {
+    private UserInformation generateUserInformation() {
         User user = UserFixture.A.toEntity();
         user.updateFaceShape(new FaceShape(Tag.ROUND));
 
-        return new UserInfo(user);
+        return UserResponseAssembler.toUserInformation(user);
     }
 
     private MyPageResponse generateMyPageResponse() {
