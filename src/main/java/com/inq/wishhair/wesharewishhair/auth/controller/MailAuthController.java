@@ -3,8 +3,8 @@ package com.inq.wishhair.wesharewishhair.auth.controller;
 import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.AuthKeyRequest;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.MailRequest;
+import com.inq.wishhair.wesharewishhair.auth.controller.dto.request.AuthKeyRequest;
+import com.inq.wishhair.wesharewishhair.auth.controller.dto.request.MailRequest;
 import com.inq.wishhair.wesharewishhair.auth.event.AuthMailSendEvent;
 import com.inq.wishhair.wesharewishhair.user.domain.Email;
 import com.inq.wishhair.wesharewishhair.user.service.UserValidator;
@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
 import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.MAIL_INVALID_KEY;
 
@@ -33,7 +36,7 @@ public class MailAuthController {
 
     @PostMapping("/send")
     public ResponseEntity<SessionIdResponse> sendAuthorizationMail(@RequestBody MailRequest mailRequest,
-                                                                   HttpServletRequest request) {
+                                                                   HttpServletRequest request) throws NoSuchAlgorithmException {
 
         userValidator.validateEmailIsNotDuplicated(new Email(mailRequest.getEmail()));
 
@@ -76,7 +79,8 @@ public class MailAuthController {
         return session.getId();
     }
 
-    private String createAuthKey() {
-        return String.valueOf((int) (Math.random() * 8999 + 1000));
+    private String createAuthKey() throws NoSuchAlgorithmException {
+        SecureRandom random = SecureRandom.getInstanceStrong();
+        return String.valueOf(random.nextInt(8999) + 1000);
     }
 }

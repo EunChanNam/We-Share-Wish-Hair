@@ -1,4 +1,5 @@
-package com.inq.wishhair.wesharewishhair.user.controller.dto.request;
+package com.inq.wishhair.wesharewishhair.auth.controller.dto.request;
+
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -10,8 +11,8 @@ import javax.validation.constraints.NotNull;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class MailRequest {
+public class AuthKeyRequest {
 
     @NotNull
-    private String email;
+    private String authKey;
 }
