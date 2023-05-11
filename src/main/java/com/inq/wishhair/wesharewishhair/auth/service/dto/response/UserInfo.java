@@ -17,6 +17,8 @@ public class UserInfo {
     public UserInfo(User user) {
         this.nickname = user.getNicknameValue();
         this.hasFaceShape = user.existFaceShape();
-        this.faceShapeTag = user.getFaceShapeTag().getDescription();
+        if (hasFaceShape) {
+            this.faceShapeTag = user.getFaceShapeTag().getDescription();
+        }
     }
 }
