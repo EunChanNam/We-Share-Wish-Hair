@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.auth.service;
 
 import com.inq.wishhair.wesharewishhair.auth.domain.Token;
+import com.inq.wishhair.wesharewishhair.auth.service.dto.response.LoginResponse;
 import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
@@ -38,11 +39,13 @@ public class AuthServiceTest extends ServiceTest {
         @DisplayName("로그인에 성공한다")
         void test1() {
             //when
-            TokenResponse result = authService.login(user.getEmailValue(), A.getPassword());
+            LoginResponse result = authService.login(user.getEmailValue(), A.getPassword());
 
             //then
             assertAll(
                     () -> assertThat(result).isNotNull(),
+                    () -> assertThat(result.getUserInfo().getNickname()).isEqualTo(A.getNickname()),
+                    () -> assertThat(result.getUserInfo().isHasFaceShape()).isFalse(),
                     () -> assertThat(result.getAccessToken()).isNotNull(),
                     () -> assertThat(result.getRefreshToken()).isNotNull()
             );

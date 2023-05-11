@@ -34,7 +34,7 @@ bin/
 ### IntelliJ IDEA ###
 .idea
 *.iws
-*.iml
+*.iml경
 *.ipr
 out/
 !**/src/main/**/out/
@@ -49,6 +49,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-### application.test ###
-application-test.yml

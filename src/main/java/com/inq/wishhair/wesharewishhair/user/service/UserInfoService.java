@@ -5,7 +5,7 @@ import com.inq.wishhair.wesharewishhair.review.service.ReviewSearchService;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
-import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserInformation;
+import com.inq.wishhair.wesharewishhair.auth.service.dto.response.UserInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -35,7 +35,7 @@ public class UserInfoService {
         return toMyPageResponse(user, reviewResponses);
     }
 
-    public UserInformation getUserInformation(Long userId) {
+    public UserInfo getUserInformation(Long userId) {
 
         return toUserInformation(userFindService.findByUserId(userId));
     }

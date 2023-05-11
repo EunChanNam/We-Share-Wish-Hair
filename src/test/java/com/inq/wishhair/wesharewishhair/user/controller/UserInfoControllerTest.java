@@ -14,7 +14,7 @@ import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewRespon
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse;
-import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserInformation;
+import com.inq.wishhair.wesharewishhair.auth.service.dto.response.UserInfo;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -94,7 +94,7 @@ public class UserInfoControllerTest extends ControllerTest {
 
     @Nested
     @DisplayName("사용자 정보 조회 API")
-    class getUserInformation {
+    class getUserInfo {
         @Test
         @DisplayName("헤더에 토큰을 포함하지 않아 실패")
         void failByNoAccessToken() throws Exception {
@@ -113,7 +113,7 @@ public class UserInfoControllerTest extends ControllerTest {
         @DisplayName("사용자의 정보를 조회한다")
         void success() throws Exception {
             //given
-            UserInformation expectedResponse = generateUserInformation();
+            UserInfo expectedResponse = generateUserInformation();
             given(userInfoService.getUserInformation(1L))
                     .willReturn(expectedResponse);
 
@@ -138,11 +138,11 @@ public class UserInfoControllerTest extends ControllerTest {
         }
     }
 
-    private UserInformation generateUserInformation() {
+    private UserInfo generateUserInformation() {
         User user = UserFixture.A.toEntity();
         user.updateFaceShape(new FaceShape(Tag.ROUND));
 
-        return new UserInformation(user);
+        return new UserInfo(user);
     }
 
     private MyPageResponse generateMyPageResponse() {

@@ -1,0 +1,82 @@
+spring:
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:tcp://localhost/~/wishhair-db-test
+    username: sa
+    password:
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    properties:
+      jakarta:
+        persistence:
+          sharedCache:
+            mode: UNSPECIFIED # Encountered deprecated setting 해결
+
+      hibernate:
+        default_batch_fetch_size: 100
+        format_sql: true # ddl을 이쁘게 하려고 킴
+
+    open-in-view: false
+
+  #메일 설정
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: username
+    password: password
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+          auth: true
+mail:
+  receiver: namgm23@naver.com
+
+#p6spy 설정
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+
+#JWT key
+jwt:
+  secret-key: abcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabcabc
+  access-token-validity: 1111
+  refresh-token-validity: 1111
+
+# OAuth
+oauth2:
+  google:
+    grant-type: authorization_code
+    client-id: client-id
+    redirect-url: redirect-url
+    scope: profile, email
+    auth-url: https://accounts.google.com/o/oauth2/v2/auth
+    token-url: https://www.googleapis.com/oauth2/v4/token
+    user-info-url: https://www.googleapis.com/oauth2/v3/userinfo
+
+# 네이버 클라우드 오브젝트 스토리지
+cloud:
+  aws:
+    credentials:
+      access-key: access-key
+      secret-key: secret-key
+    stack:
+      auto: false
+    region:
+      static: ap-northeast-2
+    s3:
+      endpoint: https://kr.object.ncloudstorage.com
+      bucket: test-bucket
+
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          EC2MetadataUtils: error

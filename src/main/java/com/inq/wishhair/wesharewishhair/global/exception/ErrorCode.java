@@ -50,6 +50,8 @@ public enum ErrorCode {
     GLOBAL_NOT_SUPPORTED_URI("GLOBAL_002", "지원하지 않는 URI 요청입니다.", HttpStatus.NOT_FOUND),
     GLOBAL_NOT_SUPPORTED_METHOD("GLOBAL_003", "지원하지 않는 Method 요청입니다.", HttpStatus.METHOD_NOT_ALLOWED),
     GLOBAL_INTERNAL_SERVER_ERROR("GLOBAL_004", "서버 내부 오류입니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+
+    GOOGLE_OAUTH_EXCEPTION("AUTH_004", "Google 서버 요청 간 에러가 발생하였습니다.", HttpStatus.FORBIDDEN),
     ;
 
     private final String code;

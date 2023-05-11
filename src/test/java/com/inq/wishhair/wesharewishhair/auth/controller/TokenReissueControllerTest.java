@@ -81,7 +81,7 @@ public class TokenReissueControllerTest extends ControllerTest {
             //given
             setUpSuccessToken();
 
-            TokenResponse expectedResponse = toResponse();
+            TokenResponse expectedResponse = toTokenResponse();
             given(tokenReissueService.reissueToken(1L, REFRESH_TOKEN))
                     .willReturn(expectedResponse);
 
