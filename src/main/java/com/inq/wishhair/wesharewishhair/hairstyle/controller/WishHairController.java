@@ -3,6 +3,7 @@ package com.inq.wishhair.wesharewishhair.hairstyle.controller;
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
 import com.inq.wishhair.wesharewishhair.hairstyle.service.WishHairService;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.WishHairResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +33,13 @@ public class WishHairController {
         wishHairService.cancelWish(hairStyleId, userId);
 
         return ResponseEntity.ok(new Success());
+    }
+
+    @GetMapping(path = {"{hairStyleId}"})
+    public ResponseEntity<WishHairResponse> checkIsWishing(@PathVariable Long hairStyleId,
+                                                           @ExtractPayload Long userId) {
+
+        WishHairResponse result = wishHairService.checkIsWishing(hairStyleId, userId);
+        return ResponseEntity.ok(result);
     }
 }
