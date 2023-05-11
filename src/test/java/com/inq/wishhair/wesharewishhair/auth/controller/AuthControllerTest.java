@@ -3,10 +3,11 @@ package com.inq.wishhair.wesharewishhair.auth.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.inq.wishhair.wesharewishhair.auth.controller.dto.request.LoginRequest;
 import com.inq.wishhair.wesharewishhair.auth.controller.utils.LoginRequestUtils;
-import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
+import com.inq.wishhair.wesharewishhair.auth.service.dto.response.LoginResponse;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -38,7 +39,7 @@ public class AuthControllerTest extends ControllerTest {
         void success() throws Exception {
             //given
             LoginRequest request = LoginRequestUtils.createRequest();
-            TokenResponse expectedResponse = toResponse();
+            LoginResponse expectedResponse = toLoginResponse(UserFixture.A);
             given(authService.login(request.getEmail(), request.getPw()))
                     .willReturn(expectedResponse);
 
@@ -60,6 +61,9 @@ public class AuthControllerTest extends ControllerTest {
                                                     .attributes(constraint("필수 입니다"))
                                     ),
                                     responseFields(
+                                            fieldWithPath("userInfo.nickname").description("사용자 닉네임"),
+                                            fieldWithPath("userInfo.hasFaceShape").description("얼굴형 보유 여부"),
+                                            fieldWithPath("userInfo.faceShapeTag").description("사용자 얼굴형, 얼굴형을 보유하지 않을 시 null"),
                                             fieldWithPath("accessToken").description("Access 토큰 (Expire 2시간)"),
                                             fieldWithPath("refreshToken").description("Refresh 토큰 (Expire 2주)")
                                     )

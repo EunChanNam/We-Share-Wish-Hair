@@ -1,7 +1,7 @@
 package com.inq.wishhair.wesharewishhair.auth.service;
 
+import com.inq.wishhair.wesharewishhair.auth.service.dto.response.LoginResponse;
 import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
-import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.Email;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -23,7 +23,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
-    public TokenResponse login(String email, String pw) {
+    public LoginResponse login(String email, String pw) {
         User user = userRepository.findByEmail(new Email(email))
                 .filter(findUser -> passwordEncoder.matches(pw, findUser.getPasswordValue()))
                 .orElseThrow(() -> new WishHairException(ErrorCode.LOGIN_FAIL));
@@ -33,7 +33,7 @@ public class AuthService {
 
         tokenManager.synchronizeRefreshToken(user, refreshToken);
 
-        return TokenResponse.of(accessToken, refreshToken);
+        return new LoginResponse(user, accessToken, refreshToken);
     }
 
     @Transactional

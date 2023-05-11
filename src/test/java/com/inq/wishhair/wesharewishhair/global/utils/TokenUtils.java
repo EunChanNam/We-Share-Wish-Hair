@@ -1,6 +1,12 @@
 package com.inq.wishhair.wesharewishhair.global.utils;
 
+
+import com.inq.wishhair.wesharewishhair.auth.service.dto.response.LoginResponse;
 import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
+import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 
 public abstract class TokenUtils {
 
@@ -10,7 +16,13 @@ public abstract class TokenUtils {
     public static final String AUTHORIZATION = "Authorization";
     public static final String BEARER = "Bearer";
 
-    public static TokenResponse toResponse() {
+    public static LoginResponse toLoginResponse(UserFixture fixture) {
+        User user = fixture.toEntity();
+        user.updateFaceShape(new FaceShape(Tag.ROUND));
+        return new LoginResponse(user, ACCESS_TOKEN, REFRESH_TOKEN);
+    }
+
+    public static TokenResponse toTokenResponse() {
         return TokenResponse.of(ACCESS_TOKEN, REFRESH_TOKEN);
     }
 }

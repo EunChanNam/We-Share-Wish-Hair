@@ -2,7 +2,7 @@ package com.inq.wishhair.wesharewishhair.auth.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
 import com.inq.wishhair.wesharewishhair.auth.service.AuthService;
-import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
+import com.inq.wishhair.wesharewishhair.auth.service.dto.response.LoginResponse;
 import com.inq.wishhair.wesharewishhair.auth.controller.dto.request.LoginRequest;
 import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +17,8 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest) {
-        TokenResponse response = authService.login(loginRequest.getEmail(), loginRequest.getPw());
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) {
+        LoginResponse response = authService.login(loginRequest.getEmail(), loginRequest.getPw());
         return ResponseEntity.ok(response);
     }
 
