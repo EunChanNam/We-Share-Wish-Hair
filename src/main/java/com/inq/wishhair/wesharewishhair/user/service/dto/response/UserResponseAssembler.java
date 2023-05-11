@@ -1,6 +1,5 @@
 package com.inq.wishhair.wesharewishhair.user.service.dto.response;
 
-import com.inq.wishhair.wesharewishhair.auth.service.dto.response.UserInfo;
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
@@ -26,7 +25,12 @@ public abstract class UserResponseAssembler {
         return new MyPageResponse(user, reviewResponses);
     }
 
-    public static UserInfo toUserInformation(User user) {
-        return new UserInfo(user);
+    public static UserInformation toUserInformation(User user) {
+        return new UserInformation(
+                user.getEmailValue(),
+                user.getName(),
+                user.getNicknameValue(),
+                user.getSex()
+        );
     }
 }

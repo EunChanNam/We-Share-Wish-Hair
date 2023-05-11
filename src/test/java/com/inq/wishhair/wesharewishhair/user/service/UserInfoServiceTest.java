@@ -4,6 +4,7 @@ import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse;
+import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserInformation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("User-MyPageServiceTest - SpringBootTest")
 public class UserInfoServiceTest extends ServiceTest {
-    //todo 리뷰에 대한 검증을 한번 더 해야되는지
+
     @Autowired
     private UserInfoService userInfoService;
 
@@ -38,6 +39,21 @@ public class UserInfoServiceTest extends ServiceTest {
                 () -> assertThat(result.getPoint()).isEqualTo(user.getAvailablePoint()),
                 () -> assertThat(result.getSex()).isEqualTo(user.getSex()),
                 () -> assertThat(result.getReviews()).isEmpty()
+        );
+    }
+
+    @Test
+    @DisplayName("사용자의 정보를 조회한다")
+    void getUserInformation() {
+        //when
+        UserInformation result = userInfoService.getUserInformation(user.getId());
+
+        //then
+        assertAll(
+                () -> assertThat(result.email()).isEqualTo(user.getEmailValue()),
+                () -> assertThat(result.name()).isEqualTo(user.getName()),
+                () -> assertThat(result.nickname()).isEqualTo(user.getNicknameValue()),
+                () -> assertThat(result.sex()).isEqualTo(user.getSex())
         );
     }
 }
