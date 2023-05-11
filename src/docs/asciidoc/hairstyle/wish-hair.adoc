@@ -40,3 +40,14 @@ include::{snippets}/cancel-wish/fail-by-not-exist/http-response.adoc[]
 === 3. 헤더에 토큰을 포함하지 않아 실패한다
 include::{snippets}/cancel-wish/fail-by-no-access-token/http-response.adoc[]
 
+== 찜 여부 조회 API
+=== 1. 찜 여부 조회를 성공한다
+Http Request
+include::{snippets}/check-is-wishing/success/http-request.adoc[]
+include::{snippets}/check-is-wishing/success/request-headers.adoc[]
+include::{snippets}/check-is-wishing/success/path-parameters.adoc[]
+
+Http Response
+include::{snippets}/check-is-wishing/success/http-response.adoc[]
+include::{snippets}/check-is-wishing/success/response-fields.adoc[]
+
