@@ -6,10 +6,7 @@ import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.FaceShapeUpdateRequest;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.SignUpRequest;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.*;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.SignUpRequestUtils;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.UserUpdateRequestUtils;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
@@ -209,5 +206,20 @@ class UserServiceTest extends ServiceTest {
                 () -> assertThat(user.existFaceShape()).isTrue(),
                 () -> assertThat(user.getFaceShapeTag()).isEqualTo(request.getFaceShapeTag())
         );
+    }
+
+    @Test
+    @DisplayName("비밀번호 갱신 서비스")
+    void refreshPassword() {
+        //given
+        User user = userRepository.save(A.toEntity());
+        final String NEW_PASSWORD = "hello1234@";
+        PasswordRefreshRequest request = new PasswordRefreshRequest(NEW_PASSWORD);
+
+        //when
+        userService.refreshPassword(request, user.getId());
+
+        //then
+        assertThat(passwordEncoder.matches(NEW_PASSWORD, user.getPasswordValue())).isTrue();
     }
 }
