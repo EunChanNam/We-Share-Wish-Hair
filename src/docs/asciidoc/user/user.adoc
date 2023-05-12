@@ -79,3 +79,18 @@ include::{snippets}/update-face-shape/success/response-fields.adoc[]
 === 2. 헤더에 토큰을 포함하지 않아 실패
 Http Response
 include::{snippets}/update-face-shape/fail-by-no-access-token/http-response.adoc[]
+
+== 비밀번호 갱신 API
+=== 1. 성공
+Http Request
+include::{snippets}/refresh-password/success/http-request.adoc[]
+include::{snippets}/refresh-password/success/request-headers.adoc[]
+include::{snippets}/refresh-password/success/request-fields.adoc[]
+
+Http Response
+include::{snippets}/refresh-password/success/http-response.adoc[]
+include::{snippets}/refresh-password/success/response-fields.adoc[]
+
+=== 2. 헤더에 토큰을 포함하지 않아 실패
+Http Response
+include::{snippets}/refresh-password/fail-by-no-access-token/http-response.adoc[]

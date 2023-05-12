@@ -6,10 +6,7 @@ import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.FaceShapeUpdateRequest;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.SignUpRequest;
-import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
+import com.inq.wishhair.wesharewishhair.user.controller.dto.request.*;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.PasswordUpdateRequestUtils;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.UserUpdateRequestUtils;
 import org.junit.jupiter.api.DisplayName;
@@ -311,6 +308,56 @@ public class UserControllerTest extends ControllerTest {
                                     successResponseDocument()
                             )
                     );
+        }
+    }
+
+    @Nested
+    @DisplayName("비밀번호 갱신 API")
+    class refreshPassword {
+        private static final String NEW_PASSWORD = "hello1234@";
+
+        @Test
+        @DisplayName("사용자 비밀번호를 갱신한다")
+        void success() throws Exception {
+            //given
+            PasswordRefreshRequest request = new PasswordRefreshRequest(NEW_PASSWORD);
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .patch(BASE_URL + "/refresh/password")
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
+                    .contentType(APPLICATION_JSON)
+                    .content(toJson(request));
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    requestFields(
+                                            fieldWithPath("newPassword").description("새로 갱신할 비밀번호")
+                                    ),
+                                    successResponseDocument()
+                            )
+                    );
+        }
+
+        @Test
+        @DisplayName("헤더에 토큰을 포함하지 않아 실패")
+        void failByNoAccessToken() throws Exception {
+            //given
+            PasswordRefreshRequest request = new PasswordRefreshRequest(NEW_PASSWORD);
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .patch(BASE_URL + "/refresh/password")
+                    .contentType(APPLICATION_JSON)
+                    .content(toJson(request));
+
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
         }
     }
 }
