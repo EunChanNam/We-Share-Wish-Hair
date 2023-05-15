@@ -2,7 +2,6 @@ package com.inq.wishhair.wesharewishhair.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
@@ -15,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static com.inq.wishhair.wesharewishhair.global.fixture.UserFixture.*;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
 import static com.inq.wishhair.wesharewishhair.user.controller.utils.SignUpRequestUtils.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -131,7 +131,7 @@ public class UserControllerTest extends ControllerTest {
         @DisplayName("헤더에 토큰을 포함하지 않아 예외를 던진다")
         void failByNoAccessToken() throws Exception {
             //given
-            UserUpdateRequest request = UserUpdateRequestUtils.request(UserFixture.A);
+            UserUpdateRequest request = UserUpdateRequestUtils.request(A);
             ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
 
             //when
@@ -147,7 +147,7 @@ public class UserControllerTest extends ControllerTest {
         @Test
         @DisplayName("중복된 닉네임으로 수정에 실패한다")
         void failByDuplicatedNickname() throws Exception {
-            UserUpdateRequest request = UserUpdateRequestUtils.request(UserFixture.A);
+            UserUpdateRequest request = UserUpdateRequestUtils.request(A);
             ErrorCode expectedError = ErrorCode.USER_DUPLICATED_NICKNAME;
             doThrow(new WishHairException(expectedError)).when(userService).updateUser(any(), any());
 
@@ -166,7 +166,7 @@ public class UserControllerTest extends ControllerTest {
         @DisplayName("회원 정보 수정을 한다")
         void success() throws Exception {
             //given
-            UserUpdateRequest request = UserUpdateRequestUtils.request(UserFixture.A);
+            UserUpdateRequest request = UserUpdateRequestUtils.request(A);
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -199,7 +199,7 @@ public class UserControllerTest extends ControllerTest {
         @DisplayName("헤더에 토큰을 포함하지 않아 예외를 던진다")
         void failByNoAccessToken() throws Exception {
             //given
-            PasswordUpdateRequest request = PasswordUpdateRequestUtils.request(UserFixture.A);
+            PasswordUpdateRequest request = PasswordUpdateRequestUtils.request(A);
             ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
 
             //when
@@ -216,7 +216,7 @@ public class UserControllerTest extends ControllerTest {
         @DisplayName("기존 비밀번호가 일치하지 않아 실패한다")
         void failByOldPassword() throws Exception {
             //given
-            PasswordUpdateRequest request = PasswordUpdateRequestUtils.request(UserFixture.A);
+            PasswordUpdateRequest request = PasswordUpdateRequestUtils.request(A);
             ErrorCode expectedError = ErrorCode.USER_WRONG_PASSWORD;
             doThrow(new WishHairException(expectedError)).when(userService).updatePassword(any(), any());
 
@@ -235,7 +235,7 @@ public class UserControllerTest extends ControllerTest {
         @DisplayName("비밀번호 변경을 한다")
         void successUpdatePassword() throws Exception {
             //given
-            PasswordUpdateRequest request = PasswordUpdateRequestUtils.request(UserFixture.A);
+            PasswordUpdateRequest request = PasswordUpdateRequestUtils.request(A);
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
@@ -314,29 +314,25 @@ public class UserControllerTest extends ControllerTest {
     @Nested
     @DisplayName("비밀번호 갱신 API")
     class refreshPassword {
+        private static final String REFRESH_URL = "/refresh/password";
         private static final String NEW_PASSWORD = "hello1234@";
+        private final PasswordRefreshRequest request = new PasswordRefreshRequest(A.getEmail(), NEW_PASSWORD);
 
         @Test
         @DisplayName("사용자 비밀번호를 갱신한다")
         void success() throws Exception {
-            //given
-            PasswordRefreshRequest request = new PasswordRefreshRequest(NEW_PASSWORD);
-
             //when
-            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .patch(BASE_URL + "/refresh/password")
-                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                    .contentType(APPLICATION_JSON)
-                    .content(toJson(request));
+            MockHttpServletRequestBuilder requestBuilder = generatePasswordRefreshRequest();
 
             //then
             mockMvc.perform(requestBuilder)
                     .andExpect(status().isOk())
                     .andDo(
                             restDocs.document(
-                                    accessTokenHeaderDocument(),
                                     requestFields(
+                                            fieldWithPath("email").description("비밀번호 갱신할 사용자 이메일"),
                                             fieldWithPath("newPassword").description("새로 갱신할 비밀번호")
+                                                    .attributes(constraint("비밀번호 형식 준수"))
                                     ),
                                     successResponseDocument()
                             )
@@ -344,20 +340,42 @@ public class UserControllerTest extends ControllerTest {
         }
 
         @Test
-        @DisplayName("헤더에 토큰을 포함하지 않아 실패")
-        void failByNoAccessToken() throws Exception {
+        @DisplayName("틀린 비밀번호 형식으로 실패")
+        void failByWongPassword() throws Exception {
             //given
-            PasswordRefreshRequest request = new PasswordRefreshRequest(NEW_PASSWORD);
-            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
+            ErrorCode expectedError = ErrorCode.USER_INVALID_PASSWORD;
+
+            doThrow(new WishHairException(expectedError))
+                    .when(userService).refreshPassword(any(PasswordRefreshRequest.class));
 
             //when
-            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .patch(BASE_URL + "/refresh/password")
-                    .contentType(APPLICATION_JSON)
-                    .content(toJson(request));
+            MockHttpServletRequestBuilder requestBuilder = generatePasswordRefreshRequest();
 
             //then
-            assertException(expectedError, requestBuilder, status().isUnauthorized());
+            assertException(expectedError, requestBuilder, status().isBadRequest());
+        }
+
+        @Test
+        @DisplayName("입력받은 이메일에 해당하는 사용자가 없어 실패")
+        void failByNotExistUser() throws Exception {
+            //given
+            ErrorCode expectedError = ErrorCode.USER_NOT_FOUND_BY_EMAIL;
+
+            doThrow(new WishHairException(expectedError))
+                    .when(userService).refreshPassword(any(PasswordRefreshRequest.class));
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = generatePasswordRefreshRequest();
+
+            //then
+            assertException(expectedError, requestBuilder, status().isNotFound());
+        }
+
+        private MockHttpServletRequestBuilder generatePasswordRefreshRequest() throws JsonProcessingException {
+            return MockMvcRequestBuilders
+                    .patch(BASE_URL + REFRESH_URL)
+                    .contentType(APPLICATION_JSON)
+                    .content(toJson(request));
         }
     }
 }
