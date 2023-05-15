@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.user.service;
 
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.user.domain.Email;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -18,5 +19,10 @@ public class UserFindService {
     public User findByUserId(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
+    }
+
+    public User findByEmail(Email email) {
+        return userRepository.findByEmail(email)
+                .orElseThrow(() -> new WishHairException(ErrorCode.USER_NOT_FOUND_BY_EMAIL));
     }
 }
