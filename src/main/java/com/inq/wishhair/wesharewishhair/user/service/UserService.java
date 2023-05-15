@@ -46,8 +46,8 @@ public class UserService {
     }
 
     @Transactional
-    public void refreshPassword(PasswordRefreshRequest request, Long userId) {
-        User user = userFindService.findByUserId(userId);
+    public void refreshPassword(PasswordRefreshRequest request) {
+        User user = userFindService.findByEmail(new Email(request.getEmail()));
 
         user.updatePassword(Password.encrypt(request.getNewPassword(), passwordEncoder));
     }

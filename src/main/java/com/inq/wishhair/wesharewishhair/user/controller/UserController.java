@@ -34,10 +34,9 @@ public class UserController {
     }
 
     @PatchMapping("/refresh/password")
-    public ResponseEntity<Success> refreshPassword(@RequestBody PasswordRefreshRequest request,
-                                                   @ExtractPayload Long userId) {
+    public ResponseEntity<Success> refreshPassword(@RequestBody PasswordRefreshRequest request) {
 
-        userService.refreshPassword(request, userId);
+        userService.refreshPassword(request);
 
         return ResponseEntity.ok(new Success());
     }

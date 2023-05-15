@@ -23,7 +23,8 @@ public enum ErrorCode {
     USER_DUPLICATED_NICKNAME("USER_005", "이미 존재하는 닉네임 입니다.", HttpStatus.CONFLICT),
     USER_DUPLICATED_EMAIL("USER_006", "이미 존재하는 이메일 입니다.", HttpStatus.CONFLICT),
     USER_WRONG_PASSWORD("USER_006", "일치하지 않는 비밀번호 입니다.", HttpStatus.BAD_REQUEST),
-    USER_NO_FACE_SHAPE_TAG("USER__007", "얼굴형 분석을 시도하세요", HttpStatus.FORBIDDEN),
+    USER_NO_FACE_SHAPE_TAG("USER_007", "얼굴형 분석을 시도하세요", HttpStatus.FORBIDDEN),
+    USER_NOT_FOUND_BY_EMAIL("USER_008", "이메일에 해당하는 회원이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
 
     REVIEW_NOT_WRITER("REVIEW_001", "리뷰 작성자가 아닙니다.", HttpStatus.BAD_REQUEST),
 

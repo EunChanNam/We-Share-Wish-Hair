@@ -208,18 +208,49 @@ class UserServiceTest extends ServiceTest {
         );
     }
 
-    @Test
+    @Nested
     @DisplayName("비밀번호 갱신 서비스")
-    void refreshPassword() {
-        //given
-        User user = userRepository.save(A.toEntity());
-        final String NEW_PASSWORD = "hello1234@";
-        PasswordRefreshRequest request = new PasswordRefreshRequest(NEW_PASSWORD);
+    class refreshPassword {
+        private static final String NEW_PASSWORD = "hello1234@";
+        private static final String WRONG_PASSWORD = "wrong";
 
-        //when
-        userService.refreshPassword(request, user.getId());
+        @Test
+        @DisplayName("비밀번호 갱신에 성공한다")
+        void success() {
+            //given
+            User user = userRepository.save(A.toEntity());
+            PasswordRefreshRequest request = new PasswordRefreshRequest(A.getEmail(), NEW_PASSWORD);
 
-        //then
-        assertThat(passwordEncoder.matches(NEW_PASSWORD, user.getPasswordValue())).isTrue();
+            //when
+            userService.refreshPassword(request);
+
+            //then
+            assertThat(passwordEncoder.matches(NEW_PASSWORD, user.getPasswordValue())).isTrue();
+        }
+
+        @Test
+        @DisplayName("이메일에 맞는 사용자가 존재하지 않아 실패")
+        void failByNotExistUser() {
+            //given
+            PasswordRefreshRequest request = new PasswordRefreshRequest(A.getEmail(), NEW_PASSWORD);
+
+            //when, then
+            assertThatThrownBy(() -> userService.refreshPassword(request))
+                    .isInstanceOf(WishHairException.class)
+                    .hasMessageContaining(ErrorCode.USER_NOT_FOUND_BY_EMAIL.getMessage());
+        }
+
+        @Test
+        @DisplayName("틀린 비밀번호 형식으로 실패")
+        void failByWrongPassword() {
+            //given
+            userRepository.save(A.toEntity());
+            PasswordRefreshRequest wrongRequest = new PasswordRefreshRequest(A.getEmail(), WRONG_PASSWORD);
+
+            //when, then
+            assertThatThrownBy(() -> userService.refreshPassword(wrongRequest))
+                    .isInstanceOf(WishHairException.class)
+                    .hasMessageContaining(ErrorCode.USER_INVALID_PASSWORD.getMessage());
+        }
     }
 }
