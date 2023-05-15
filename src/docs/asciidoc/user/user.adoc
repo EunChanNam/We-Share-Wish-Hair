@@ -84,13 +84,16 @@ include::{snippets}/update-face-shape/fail-by-no-access-token/http-response.adoc
 === 1. 성공
 Http Request
 include::{snippets}/refresh-password/success/http-request.adoc[]
-include::{snippets}/refresh-password/success/request-headers.adoc[]
 include::{snippets}/refresh-password/success/request-fields.adoc[]
 
 Http Response
 include::{snippets}/refresh-password/success/http-response.adoc[]
 include::{snippets}/refresh-password/success/response-fields.adoc[]
 
-=== 2. 헤더에 토큰을 포함하지 않아 실패
+=== 2. 틀린 비밀번호 형식으로 실패
 Http Response
-include::{snippets}/refresh-password/fail-by-no-access-token/http-response.adoc[]
+include::{snippets}/refresh-password/fail-by-wong-password/http-response.adoc[]
+
+=== 3. 입력받은 이메일에 해당하는 사용자가 없어 실패
+Http Response
+include::{snippets}/refresh-password/fail-by-not-exist-user/http-response.adoc[]
