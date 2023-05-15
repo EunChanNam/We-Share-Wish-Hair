@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.global.utils;
 
 
+import com.inq.wishhair.wesharewishhair.auth.infra.oauth.dto.response.GoogleTokenResponse;
 import com.inq.wishhair.wesharewishhair.auth.service.dto.response.LoginResponse;
 import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
@@ -24,5 +25,9 @@ public abstract class TokenUtils {
 
     public static TokenResponse toTokenResponse() {
         return TokenResponse.of(ACCESS_TOKEN, REFRESH_TOKEN);
+    }
+
+    public static GoogleTokenResponse toGoogleTokenResponse() {
+        return new GoogleTokenResponse(ACCESS_TOKEN);
     }
 }
