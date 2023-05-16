@@ -14,14 +14,16 @@ import org.aspectj.lang.annotation.Pointcut;
 public class AddIsWriterAspect {
 
     @Pointcut("execution(com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse *(..))")
-    public void pagedResponsePointcut() {}
+    private void pagedResponsePointcut() {}
 
     @Pointcut("execution(com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewDetailResponse *(..))")
-    public void reviewDetailResponsePointcut() {}
+    private void reviewDetailResponsePointcut() {}
+
+    @Pointcut("@annotation(com.inq.wishhair.wesharewishhair.global.aop.annotation.AddisWriter)")
+    private void addWriterAnnotation() {}
 
     @SuppressWarnings("unchecked")
-    @Around("pagedResponsePointcut() && @annotation(com.inq.wishhair.wesharewishhair.global.aop.annotation.AddisWriter) " +
-            "&& args(userId, ..)")
+    @Around("pagedResponsePointcut() && addWriterAnnotation() && args(userId, ..)")
     public Object addIsWriterToPagedResponse(ProceedingJoinPoint joinPoint, Long userId) throws Throwable {
         PagedResponse<?> result = (PagedResponse<?>) joinPoint.proceed();
         if (!(result.getResult() instanceof ReviewResponse)) {
@@ -32,8 +34,7 @@ public class AddIsWriterAspect {
         return castedResult;
     }
 
-    @Around("reviewDetailResponsePointcut() && @annotation(com.inq.wishhair.wesharewishhair.global.aop.annotation.AddisWriter) " +
-            "&& args(userId, ..)")
+    @Around("reviewDetailResponsePointcut() && addWriterAnnotation() && args(userId, ..)")
     public Object addIsWriterToReviewDetailResponse(ProceedingJoinPoint joinPoint, Long userId) throws Throwable {
         ReviewDetailResponse result = (ReviewDetailResponse) joinPoint.proceed();
 
