@@ -24,4 +24,8 @@ public abstract class MockMultipartFileUtils {
             return new MockMultipartFile(name, originalFilename, "image/bmp", stream);
         }
     }
+
+    public static MultipartFile createEmptyMultipartFile(String name) {
+        return new MockMultipartFile(name, "hello1.png", "image/bmp", new byte[]{});
+    }
 }

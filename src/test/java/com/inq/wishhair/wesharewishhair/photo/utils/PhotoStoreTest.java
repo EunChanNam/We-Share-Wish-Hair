@@ -6,13 +6,11 @@ import com.amazonaws.services.s3.model.PutObjectResult;
 import com.inq.wishhair.wesharewishhair.global.base.InfraTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.global.utils.MockMultipartFileUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -22,6 +20,8 @@ import java.util.List;
 
 import static com.inq.wishhair.wesharewishhair.global.utils.FilenameGenerator.createStoreFilename;
 import static com.inq.wishhair.wesharewishhair.global.utils.FilenameGenerator.createUploadLink;
+import static com.inq.wishhair.wesharewishhair.global.utils.MockMultipartFileUtils.createEmptyMultipartFile;
+import static com.inq.wishhair.wesharewishhair.global.utils.MockMultipartFileUtils.generateFiles;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -54,7 +54,7 @@ public class PhotoStoreTest extends InfraTest {
         @DisplayName("이미지를 네이버 클라우드에 저장한다")
         void success() throws IOException {
             //given
-            List<MultipartFile> files = MockMultipartFileUtils.generateFiles(filenames);
+            List<MultipartFile> files = generateFiles(filenames);
 
             PutObjectResult putObjectResult = new PutObjectResult();
             given(amazon.putObject(any(PutObjectRequest.class))).willReturn(putObjectResult);
@@ -103,7 +103,7 @@ public class PhotoStoreTest extends InfraTest {
         void failByEmptyFile() {
             //given
             List<MultipartFile> files = new ArrayList<>();
-            MockMultipartFile emptyFile = new MockMultipartFile("files", "hello1.png", "image/bmp", new byte[]{});
+            MultipartFile emptyFile = createEmptyMultipartFile("files");
             files.add(emptyFile);
 
             //when, then

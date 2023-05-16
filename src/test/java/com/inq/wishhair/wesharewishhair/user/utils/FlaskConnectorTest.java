@@ -3,7 +3,6 @@ package com.inq.wishhair.wesharewishhair.user.utils;
 import com.inq.wishhair.wesharewishhair.global.base.InfraTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.global.utils.MockMultipartFileUtils;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -11,13 +10,14 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.http.ResponseEntity;
-import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+import static com.inq.wishhair.wesharewishhair.global.utils.MockMultipartFileUtils.createEmptyMultipartFile;
+import static com.inq.wishhair.wesharewishhair.global.utils.MockMultipartFileUtils.createMultipartFile;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
@@ -49,7 +49,7 @@ public class FlaskConnectorTest extends InfraTest {
         @DisplayName("얼굴형 분류에 성공한다")
         void success() throws IOException {
             //given
-            MultipartFile file = MockMultipartFileUtils.createMultipartFile(FILENAME, "file");
+            MultipartFile file = createMultipartFile(FILENAME, "file");
             ResponseEntity<String> response = ResponseEntity.ok("OBLONG");
             given(restTemplate.postForEntity(eq(DOMAIN + URL), any(), eq(String.class)))
                     .willReturn(response);
@@ -65,7 +65,7 @@ public class FlaskConnectorTest extends InfraTest {
         @DisplayName("빈 파일로 실패한다")
         void failByEmptyFile() {
             //given
-            MultipartFile emptyFile = new MockMultipartFile("files", "hello1.png", "image/bmp", new byte[]{});
+            MultipartFile emptyFile = createEmptyMultipartFile("file");
             MultipartFile nullFile = null;
             ErrorCode expectedError = ErrorCode.EMPTY_FILE_EX;
 
@@ -83,7 +83,7 @@ public class FlaskConnectorTest extends InfraTest {
         void failByFlaskServer() throws IOException {
             //given
             ErrorCode expectedError = ErrorCode.FLASK_SERVER_EXCEPTION;
-            MultipartFile file = MockMultipartFileUtils.createMultipartFile(FILENAME, "file");
+            MultipartFile file = createMultipartFile(FILENAME, "file");
             given(restTemplate.postForEntity(eq(DOMAIN + URL), any(), eq(String.class)))
                     .willThrow(new WishHairException(expectedError));
 
@@ -98,7 +98,7 @@ public class FlaskConnectorTest extends InfraTest {
         void failByFlaskServerResponse() throws IOException {
             //given
             final String INVALID_RESPONSE = "INVALID";
-            MultipartFile file = MockMultipartFileUtils.createMultipartFile(FILENAME, "file");
+            MultipartFile file = createMultipartFile(FILENAME, "file");
             ResponseEntity<String> response = ResponseEntity.ok(INVALID_RESPONSE);
             given(restTemplate.postForEntity(eq(DOMAIN + URL), any(), eq(String.class)))
                     .willReturn(response);
@@ -113,7 +113,7 @@ public class FlaskConnectorTest extends InfraTest {
         @DisplayName("잘못된 응답 코드로 실패한다")
         void failByStatusCode() throws IOException {
             //given
-            MultipartFile file = MockMultipartFileUtils.createMultipartFile(FILENAME, "file");
+            MultipartFile file = createMultipartFile(FILENAME, "file");
             ResponseEntity<String> response = ResponseEntity.status(400).body("OBLONG");
             given(restTemplate.postForEntity(eq(DOMAIN + URL), any(), eq(String.class)))
                     .willReturn(response);
