@@ -11,7 +11,7 @@ import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpda
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.SignUpRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.domain.*;
-import com.inq.wishhair.wesharewishhair.user.utils.FlaskConnector;
+import com.inq.wishhair.wesharewishhair.user.utils.AiConnector;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final ReviewService reviewService;
     private final TokenRepository tokenRepository;
-    private final FlaskConnector connector;
+    private final AiConnector connector;
 
     @Transactional
     public Long createUser(SignUpRequest request) {
