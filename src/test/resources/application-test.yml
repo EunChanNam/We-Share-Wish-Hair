@@ -34,6 +34,17 @@ spring:
           starttls:
             enable: true
           auth: true
+
+  # 파일 최대 크기 #
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
+# Flask domain #
+flask:
+  domain: https://localhost:5000
+
+# 메일 수신자 #
 mail:
   receiver: namgm23@naver.com
 
