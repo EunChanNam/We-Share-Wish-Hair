@@ -53,6 +53,8 @@ public enum ErrorCode {
     GLOBAL_INTERNAL_SERVER_ERROR("GLOBAL_004", "서버 내부 오류입니다.", HttpStatus.INTERNAL_SERVER_ERROR),
 
     GOOGLE_OAUTH_EXCEPTION("AUTH_004", "Google 서버 요청 간 에러가 발생하였습니다.", HttpStatus.FORBIDDEN),
+
+    FLASK_SERVER_EXCEPTION("FLASK_001", "Flask 서버 요청 간 에러가 발생하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR)
     ;
 
     private final String code;
