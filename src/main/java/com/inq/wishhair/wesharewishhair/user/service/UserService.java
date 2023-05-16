@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
 import com.inq.wishhair.wesharewishhair.auth.domain.TokenRepository;
+import com.inq.wishhair.wesharewishhair.global.dto.response.SimpleResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
@@ -10,10 +11,12 @@ import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpda
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.SignUpRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.domain.*;
+import com.inq.wishhair.wesharewishhair.user.utils.FlaskConnector;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @RequiredArgsConstructor
@@ -26,6 +29,7 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final ReviewService reviewService;
     private final TokenRepository tokenRepository;
+    private final FlaskConnector connector;
 
     @Transactional
     public Long createUser(SignUpRequest request) {
@@ -64,10 +68,12 @@ public class UserService {
     }
 
     @Transactional
-    public void updateFaceShape(Long userId, Tag faceShapeTag) {
+    public SimpleResponseWrapper<String> updateFaceShape(Long userId, MultipartFile file) {
         User user = userFindService.findByUserId(userId);
+        Tag faceShapeTag = connector.detectFaceShape(file);
 
         user.updateFaceShape(new FaceShape(faceShapeTag));
+        return new SimpleResponseWrapper<>(user.getFaceShapeTag().getDescription());
     }
 
     @Transactional
