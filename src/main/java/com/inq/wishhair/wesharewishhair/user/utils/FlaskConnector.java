@@ -2,6 +2,7 @@ package com.inq.wishhair.wesharewishhair.user.utils;
 
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.util.LinkedMultiValueMap;
@@ -24,14 +25,15 @@ public class FlaskConnector implements AiConnector{
     }
 
     @Override
-    public String detectFaceShape(MultipartFile file) {
+    public Tag detectFaceShape(MultipartFile file) {
         validateFileExist(file);
 
         HttpHeaders headers = generateHeaders();
         MultiValueMap<String, Object> body = generateBody(file);
         HttpEntity<MultiValueMap<String, Object>> request = new HttpEntity<>(body, headers);
 
-        return fetchFlackResponse(request);
+        String response = fetchFlackResponse(request);
+        return toTag(response);
     }
 
     private String fetchFlackResponse(HttpEntity<MultiValueMap<String, Object>> request) {
@@ -67,6 +69,14 @@ public class FlaskConnector implements AiConnector{
     private void validateFileExist(MultipartFile file) {
         if (file == null || file.isEmpty()) {
             throw new WishHairException(ErrorCode.EMPTY_FILE_EX);
+        }
+    }
+
+    private Tag toTag(String response) {
+        try {
+            return Tag.valueOf(response);
+        } catch (IllegalArgumentException e) {
+            throw new WishHairException(ErrorCode.FLASK_RESPONSE_ERROR);
         }
     }
 }
