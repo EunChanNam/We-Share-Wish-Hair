@@ -12,21 +12,29 @@ import com.inq.wishhair.wesharewishhair.user.controller.utils.UserUpdateRequestU
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.user.utils.AiConnector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.UserFixture.*;
+import static com.inq.wishhair.wesharewishhair.global.utils.MockMultipartFileUtils.createEmptyMultipartFile;
+import static com.inq.wishhair.wesharewishhair.global.utils.MockMultipartFileUtils.createMultipartFile;
 import static com.inq.wishhair.wesharewishhair.user.controller.utils.PasswordUpdateRequestUtils.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 
 @DisplayName("UserServiceTest - SpringBootTest")
 class UserServiceTest extends ServiceTest {
@@ -36,6 +44,9 @@ class UserServiceTest extends ServiceTest {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @MockBean
+    private AiConnector connector;
 
     @Nested
     @DisplayName("회원가입 서비스 테스트")
@@ -191,21 +202,80 @@ class UserServiceTest extends ServiceTest {
         }
     }
 
-    @Test
-    @DisplayName("사용자 얼굴형 업데이트 서비스")
-    void updateFaceShape() {
-        //given
-        User user = userRepository.save(A.toEntity());
-        FaceShapeUpdateRequest request = new FaceShapeUpdateRequest(Tag.OBLONG);
+    @Nested
+    @DisplayName("사용자 얼굴형 분석 및 업데이트 서비스")
+    class updateFaceShape {
+        private static final String FILENAME = "hello1.png";
+        private static final String NAME = "file";
+        private User user;
 
-        //when
-        userService.updateFaceShape(user.getId(), request.getFaceShapeTag());
+        @BeforeEach
+        void setUpUser() {
+            user = userRepository.save(A.toEntity());
+        }
+        @Test
+        @DisplayName("사용자 얼굴형 분석 및 업데이트를 성공한다")
+        void success() throws IOException {
+            //given
+            MultipartFile file = createMultipartFile(FILENAME, NAME);
+            given(connector.detectFaceShape(any(MultipartFile.class))).willReturn(Tag.OBLONG);
 
-        //then
-        assertAll(
-                () -> assertThat(user.existFaceShape()).isTrue(),
-                () -> assertThat(user.getFaceShapeTag()).isEqualTo(request.getFaceShapeTag())
-        );
+            //when
+            userService.updateFaceShape(user.getId(), file);
+
+            //then
+            assertAll(
+                    () -> assertThat(user.existFaceShape()).isTrue(),
+                    () -> assertThat(user.getFaceShapeTag()).isEqualTo(Tag.OBLONG)
+            );
+        }
+
+        @Test
+        @DisplayName("빈 파일로 실패한다")
+        void failByEmptyFile() {
+            //given
+            MultipartFile emptyFile = createEmptyMultipartFile(NAME);
+            ErrorCode expectedError = ErrorCode.EMPTY_FILE_EX;
+
+            given(connector.detectFaceShape(emptyFile)).willThrow(new WishHairException(expectedError));
+            given(connector.detectFaceShape(null)).willThrow(new WishHairException(expectedError));
+
+            //when
+            assertThatThrownBy(() -> userService.updateFaceShape(user.getId(), emptyFile))
+                    .isInstanceOf(WishHairException.class)
+                    .hasMessageContaining(expectedError.getMessage());
+            assertThatThrownBy(() -> userService.updateFaceShape(user.getId(), emptyFile))
+                    .isInstanceOf(WishHairException.class)
+                    .hasMessageContaining(expectedError.getMessage());
+        }
+
+        @Test
+        @DisplayName("Flask Server 오류로 실패한다")
+        void failByFlaskServer() throws IOException {
+            //given
+            MultipartFile file = createMultipartFile(FILENAME, NAME);
+            ErrorCode expectedError = ErrorCode.FLASK_SERVER_EXCEPTION;
+            given(connector.detectFaceShape(file)).willThrow(new WishHairException(expectedError));
+
+            //when, then
+            assertThatThrownBy(() -> userService.updateFaceShape(user.getId(), file))
+                    .isInstanceOf(WishHairException.class)
+                    .hasMessageContaining(expectedError.getMessage());
+        }
+
+        @Test
+        @DisplayName("Flask Sever 의 잘못된 응답으로 실패한다")
+        void failByInvalidResponse() throws IOException {
+            //given
+            MultipartFile file = createMultipartFile(FILENAME, NAME);
+            ErrorCode expectedError = ErrorCode.FLASK_RESPONSE_ERROR;
+            given(connector.detectFaceShape(file)).willThrow(new WishHairException(expectedError));
+
+            //when, then
+            assertThatThrownBy(() -> userService.updateFaceShape(user.getId(), file))
+                    .isInstanceOf(WishHairException.class)
+                    .hasMessageContaining(expectedError.getMessage());
+        }
     }
 
     @Nested

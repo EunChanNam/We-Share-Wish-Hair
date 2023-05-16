@@ -1,18 +1,23 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.inq.wishhair.wesharewishhair.global.dto.response.SimpleResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.*;
+import com.inq.wishhair.wesharewishhair.user.controller.utils.FaceShapeUpdateRequestUtils;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.PasswordUpdateRequestUtils;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.UserUpdateRequestUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpMethod;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
 
 import static com.inq.wishhair.wesharewishhair.global.fixture.UserFixture.*;
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.*;
@@ -22,6 +27,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.doThrow;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
+import static org.springframework.restdocs.request.RequestDocumentation.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @DisplayName("UserControllerTest - Mock")
@@ -269,31 +275,28 @@ public class UserControllerTest extends ControllerTest {
         @DisplayName("헤더에 토큰을 포함하지 않아 실패")
         void failByNoAccessToken() throws Exception {
             //given
-            FaceShapeUpdateRequest request = new FaceShapeUpdateRequest(Tag.OBLONG);
+            FaceShapeUpdateRequest request = FaceShapeUpdateRequestUtils.request();
             ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
 
             //when
             MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .patch(BASE_URL + "/face_shape")
-                    .contentType(APPLICATION_JSON)
-                    .content(toJson(request));
+                    .multipart(HttpMethod.PATCH, BASE_URL + "/face_shape")
+                    .file((MockMultipartFile) request.getFile());
 
             //then
             assertException(expectedError, requestBuilder, status().isUnauthorized());
         }
 
         @Test
-        @DisplayName("사용자 얼굴형을 업데이트 한다")
+        @DisplayName("사용자 얼굴형을 분석 후 업데이트 한다")
         void success() throws Exception {
             //given
-            FaceShapeUpdateRequest request = new FaceShapeUpdateRequest(Tag.OBLONG);
+            FaceShapeUpdateRequest request = FaceShapeUpdateRequestUtils.request();
+            SimpleResponseWrapper<String> response = new SimpleResponseWrapper<>(Tag.OBLONG.getDescription());
+            given(userService.updateFaceShape(1L, request.getFile())).willReturn(response);
 
             //when
-            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
-                    .patch(BASE_URL + "/face_shape")
-                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN)
-                    .contentType(APPLICATION_JSON)
-                    .content(toJson(request));
+            MockHttpServletRequestBuilder requestBuilder = generateUpdateFaceShapeRequest(request);
 
             //then
             mockMvc.perform(requestBuilder)
@@ -301,13 +304,69 @@ public class UserControllerTest extends ControllerTest {
                     .andDo(
                             restDocs.document(
                                     accessTokenHeaderDocument(),
-                                    requestFields(
-                                            fieldWithPath("faceShapeTag").description("얼굴형 태그")
-                                                    .attributes(constraint("반드시 존재하는 얼굴형 태그"))
+                                    requestParts(
+                                            partWithName("file").description("분석할 사용자 사진")
+                                                    .attributes(constraint("필수 입니다"))
                                     ),
-                                    successResponseDocument()
+                                    responseFields(
+                                            fieldWithPath("result").description("분석한 사용자 얼굴형")
+                                    )
                             )
                     );
+        }
+
+        @Test
+        @DisplayName("빈 파일을 입력해 실패한다")
+        void failByEmptyFile() throws Exception {
+            //given
+            FaceShapeUpdateRequest request = FaceShapeUpdateRequestUtils.request();
+            ErrorCode expectedError = ErrorCode.EMPTY_FILE_EX;
+            given(userService.updateFaceShape(1L, request.getFile()))
+                    .willThrow(new WishHairException(expectedError));
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = generateUpdateFaceShapeRequest(request);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isBadRequest());
+        }
+
+        @Test
+        @DisplayName("Flask Server 오류로 실패한다")
+        void failByFlaskServer() throws Exception {
+            //given
+            FaceShapeUpdateRequest request = FaceShapeUpdateRequestUtils.request();
+            ErrorCode expectedError = ErrorCode.FLASK_SERVER_EXCEPTION;
+            given(userService.updateFaceShape(1L, request.getFile()))
+                    .willThrow(new WishHairException(expectedError));
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = generateUpdateFaceShapeRequest(request);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isInternalServerError());
+        }
+
+        @Test
+        @DisplayName("Flask Server 의 잘못된 응답값으로 실패한다")
+        void failByInvalidResponse() throws Exception {
+            FaceShapeUpdateRequest request = FaceShapeUpdateRequestUtils.request();
+            ErrorCode expectedError = ErrorCode.FLASK_RESPONSE_ERROR;
+            given(userService.updateFaceShape(1L, request.getFile()))
+                    .willThrow(new WishHairException(expectedError));
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = generateUpdateFaceShapeRequest(request);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isInternalServerError());
+        }
+
+        private MockHttpServletRequestBuilder generateUpdateFaceShapeRequest(FaceShapeUpdateRequest request) {
+            return MockMvcRequestBuilders
+                    .multipart(HttpMethod.PATCH, BASE_URL + "/face_shape")
+                    .file((MockMultipartFile) request.getFile())
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
         }
     }
 

@@ -14,14 +14,18 @@ public abstract class MockMultipartFileUtils {
     public static List<MultipartFile> generateFiles(List<String> filenames) throws IOException {
         List<MultipartFile> files = new ArrayList<>();
         for (String filename : filenames) {
-            files.add(createMultipartFile(filename));
+            files.add(createMultipartFile(filename, "files"));
         }
         return files;
     }
 
-    private static MultipartFile createMultipartFile(String originalFilename) throws IOException {
+    public static MultipartFile createMultipartFile(String originalFilename, String name) throws IOException {
         try (FileInputStream stream = new FileInputStream(FILE_PATH + originalFilename)) {
-            return new MockMultipartFile("files", originalFilename, "image/bmp", stream);
+            return new MockMultipartFile(name, originalFilename, "image/bmp", stream);
         }
+    }
+
+    public static MultipartFile createEmptyMultipartFile(String name) {
+        return new MockMultipartFile(name, "hello1.png", "image/bmp", new byte[]{});
     }
 }

@@ -69,8 +69,8 @@ include::{snippets}/update-password/fail-by-no-access-token/http-response.adoc[]
 === 1. 성공
 Http Request
 include::{snippets}/update-face-shape/success/http-request.adoc[]
+include::{snippets}/update-face-shape/success/request-parts.adoc[]
 include::{snippets}/update-face-shape/success/request-headers.adoc[]
-include::{snippets}/update-face-shape/success/request-fields.adoc[]
 
 Http Response
 include::{snippets}/update-face-shape/success/http-response.adoc[]
@@ -79,6 +79,18 @@ include::{snippets}/update-face-shape/success/response-fields.adoc[]
 === 2. 헤더에 토큰을 포함하지 않아 실패
 Http Response
 include::{snippets}/update-face-shape/fail-by-no-access-token/http-response.adoc[]
+
+=== 3. 빈 파일을 입력해 실패
+Http Response
+include::{snippets}/update-face-shape/fail-by-empty-file/http-response.adoc[]
+
+=== 4. Flask Server 오류로 실패
+Http Response
+include::{snippets}/update-face-shape/fail-by-flask-server/http-response.adoc[]
+
+=== 5. Flask Server 의 잘못된 응답값으로 실패
+Http Response
+include::{snippets}/update-face-shape/fail-by-invalid-response/http-response.adoc[]
 
 == 비밀번호 갱신 API
 === 1. 성공

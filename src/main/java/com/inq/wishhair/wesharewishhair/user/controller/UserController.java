@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
+import com.inq.wishhair.wesharewishhair.global.dto.response.SimpleResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.dto.response.Success;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.*;
 import com.inq.wishhair.wesharewishhair.user.service.UserService;
@@ -60,11 +61,11 @@ public class UserController {
     }
 
     @PatchMapping("/face_shape")
-    public ResponseEntity<Success> updateFaceShape(@RequestBody FaceShapeUpdateRequest request,
-                                                   @ExtractPayload Long userId) {
+    public ResponseEntity<SimpleResponseWrapper<String>> updateFaceShape(@ModelAttribute FaceShapeUpdateRequest request,
+                                                                         @ExtractPayload Long userId) {
 
-        userService.updateFaceShape(userId, request.getFaceShapeTag());
+        SimpleResponseWrapper<String> result = userService.updateFaceShape(userId, request.getFile());
 
-        return ResponseEntity.ok(new Success());
+        return ResponseEntity.ok(result);
     }
 }
