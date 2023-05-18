@@ -51,7 +51,7 @@ public class HairStyleSearchService {
     public ResponseWrapper<HairStyleResponse> recommendHairByFaceShape(Long userId) {
         User user = userFindService.findByUserId(userId);
 
-        HairRecommendCondition condition = subRecommend(user.getFaceShapeTag(), user.getSex());
+        HairRecommendCondition condition = subRecommend(user.getFaceShape(), user.getSex());
         List<HairStyle> hairStyles = hairStyleRepository.findByFaceShape(condition, getDefaultPageable());
         return toWrappedHairStyleResponse(hairStyles);
     }
