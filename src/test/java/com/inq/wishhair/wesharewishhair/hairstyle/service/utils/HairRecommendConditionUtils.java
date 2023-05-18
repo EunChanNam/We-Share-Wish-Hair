@@ -13,6 +13,6 @@ public abstract class HairRecommendConditionUtils {
     }
 
     public static HairRecommendCondition subRecommend(User user) {
-        return HairRecommendCondition.subRecommend(user.getFaceShapeTag(), user.getSex());
+        return HairRecommendCondition.subRecommend(user.getFaceShape(), user.getSex());
     }
 }

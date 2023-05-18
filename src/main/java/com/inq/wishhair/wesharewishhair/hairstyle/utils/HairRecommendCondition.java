@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.utils;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.enums.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,7 +22,10 @@ public class HairRecommendCondition {
         return new HairRecommendCondition(tags, userFaceShape, sex);
     }
 
-    public static HairRecommendCondition subRecommend(Tag userFaceShape, Sex sex) {
-        return new HairRecommendCondition(null, userFaceShape, sex);
+    public static HairRecommendCondition subRecommend(FaceShape faceShape, Sex sex) {
+        if (faceShape == null || faceShape.getTag() == null) {
+            return new HairRecommendCondition(null, null, sex);
+        }
+        return new HairRecommendCondition(null, faceShape.getTag(), sex);
     }
 }
