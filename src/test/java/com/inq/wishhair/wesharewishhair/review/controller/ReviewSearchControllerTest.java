@@ -54,7 +54,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
         @DisplayName("리뷰의 아이디를 통해 단건으로 조회한다")
         void success() throws Exception {
             //given
-            ReviewDetailResponse expectedResponse = generateReviewDetailResponse();
+            ReviewDetailResponse expectedResponse = generateReviewDetailResponse(2L);
             given(reviewSearchService.findReviewById(1L, 1L))
                     .willReturn(expectedResponse);
 
@@ -113,7 +113,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
         @DisplayName("전체 리뷰를 조회한다")
         void success() throws Exception {
             //given
-            PagedResponse<ReviewResponse> expectedResponse = assemblePagedResponse(2);
+            PagedResponse<ReviewResponse> expectedResponse = assemblePagedResponse(2, 2L);
 
             given(reviewSearchService.findPagedReviews(any(), any()))
                     .willReturn(expectedResponse);
@@ -162,7 +162,7 @@ public class ReviewSearchControllerTest extends ControllerTest {
         @DisplayName("나의 리뷰를 조회한다")
         void success() throws Exception {
             //given
-            PagedResponse<ReviewResponse> expectedResponse = assemblePagedResponse(2);
+            PagedResponse<ReviewResponse> expectedResponse = assemblePagedResponse(2, 1L);
             given(reviewSearchService.findMyReviews(any(), any()))
                     .willReturn(expectedResponse);
 
@@ -233,12 +233,12 @@ public class ReviewSearchControllerTest extends ControllerTest {
 
     }
 
-    private PagedResponse<ReviewResponse> assemblePagedResponse(int count) {
+    private PagedResponse<ReviewResponse> assemblePagedResponse(int count, Long userId) {
         Paging defaultPaging = new Paging(count, 0, false);
-        return new PagedResponse<>(generateReviewResponses(count), defaultPaging);
+        return new PagedResponse<>(generateReviewResponses(count, userId), defaultPaging);
     }
 
-    private ReviewDetailResponse generateReviewDetailResponse() {
+    private ReviewDetailResponse generateReviewDetailResponse(Long userId) {
         User user = UserFixture.B.toEntity();
         ReflectionTestUtils.setField(user, "id", 1L);
 
@@ -247,11 +247,13 @@ public class ReviewSearchControllerTest extends ControllerTest {
         Review review = ReviewFixture.A.toEntity(user, hairStyle);
         ReviewQueryResponse queryResponse = new ReviewQueryResponse(review, 0);
         ReflectionTestUtils.setField(review, "id", 1L);
+        ReviewDetailResponse response = ReviewResponseAssembler.toReviewDetailResponse(queryResponse, false);
+        response.getReviewResponse().addIsWriter(userId);
 
-        return ReviewResponseAssembler.toReviewDetailResponse(queryResponse, 1L, false);
+        return response;
     }
 
-    private List<ReviewResponse> generateReviewResponses(int count) {
+    private List<ReviewResponse> generateReviewResponses(int count, Long userId) {
         User user = UserFixture.B.toEntity();
         ReflectionTestUtils.setField(user, "id", 1L);
 
@@ -266,7 +268,10 @@ public class ReviewSearchControllerTest extends ControllerTest {
             Review review = fixture.toEntity(user, hairStyle);
             ReviewQueryResponse queryResponse = new ReviewQueryResponse(review, 0);
             ReflectionTestUtils.setField(review, "id", 1L + index);
-            result.add(ReviewResponseAssembler.toReviewResponse(queryResponse, 1L));
+            ReviewResponse reviewResponse = ReviewResponseAssembler.toReviewResponse(queryResponse);
+            reviewResponse.addIsWriter(userId);
+
+            result.add(reviewResponse);
         }
 
         return result;

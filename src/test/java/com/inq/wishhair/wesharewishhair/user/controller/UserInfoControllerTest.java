@@ -149,7 +149,6 @@ public class UserInfoControllerTest extends ControllerTest {
 
     private MyPageResponse generateMyPageResponse() {
         User user = UserFixture.A.toEntity();
-        ReflectionTestUtils.setField(user, "id", 1L);
 
         List<ReviewResponse> reviewResponses = new ArrayList<>();
 
@@ -165,10 +164,11 @@ public class UserInfoControllerTest extends ControllerTest {
         HairStyle hairStyle = HairStyleFixture.A.toEntity();
 
         Review review = ReviewFixture.values()[index].toEntity(user, hairStyle);
-        ReviewQueryResponse queryResponse = new ReviewQueryResponse(review, 1L);
-
         ReflectionTestUtils.setField(review, "id", index + 1L);
 
-        return ReviewResponseAssembler.toReviewResponse(queryResponse, 1L);
+        ReviewQueryResponse queryResponse = new ReviewQueryResponse(review, index + 10L);
+        ReviewResponse reviewResponse = ReviewResponseAssembler.toReviewResponse(queryResponse);
+        reviewResponse.addIsWriter(1L);
+        return reviewResponse;
     }
 }
