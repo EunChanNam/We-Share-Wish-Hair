@@ -40,7 +40,7 @@ public class ReviewSearchController {
             @PageableDefault(sort = LIKES, direction = Sort.Direction.DESC) Pageable pageable,
             @ExtractPayload Long userId) {
 
-        PagedResponse<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable, userId);
+        PagedResponse<ReviewResponse> result = reviewSearchService.findPagedReviews(userId, pageable);
 
         return ResponseEntity.ok(result);
     }
