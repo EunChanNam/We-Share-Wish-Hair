@@ -56,7 +56,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
         saveReview(List.of(1), List.of(now()));
 
         //when
-        ReviewDetailResponse result = reviewSearchService.findReviewById(reviews.get(1).getId(), user.getId());
+        ReviewDetailResponse result = reviewSearchService.findReviewById(user.getId(), reviews.get(1).getId());
 
         //then
         assertReviewDetailResponse(result, 1, 0L);
@@ -81,7 +81,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getLikeDescPageable(4);
 
             //when
-            PagedResponse<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable, user.getId());
+            PagedResponse<ReviewResponse> result = reviewSearchService.findPagedReviews(user.getId(), pageable);
 
             //then
             assertThat(result.getPaging().hasNext()).isFalse();
@@ -100,7 +100,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(5);
 
             //when
-            PagedResponse<ReviewResponse> result = reviewSearchService.findPagedReviews(pageable, user.getId());
+            PagedResponse<ReviewResponse> result = reviewSearchService.findPagedReviews(user.getId(), pageable);
 
             //then
             assertThat(result.getPaging().hasNext()).isFalse();
@@ -253,7 +253,8 @@ public class ReviewSearchServiceTest extends ServiceTest {
                         expectedTags.forEach(tag -> assertThat(resultTags).contains(tag));
                     },
                     () -> assertThat(response.getPhotos()).hasSize(expected.getPhotos().size()),
-                    () -> assertThat(response.isWriter()).isTrue()
+                    () -> assertThat(response.isWriter()).isTrue(),
+                    () -> assertThat(response.getWriterId()).isEqualTo(expected.getWriter().getId())
             );
         }
     }

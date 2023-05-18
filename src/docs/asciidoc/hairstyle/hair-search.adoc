@@ -35,12 +35,12 @@ include::{snippets}/recommend-hair-style/fail-by-no-access-token/response-fields
 == 사용자 얼굴형 기반 헤어스타일 추천 API
 === 1. 조회 성공
 Http Request
-include::{snippets}/recommend-hair-style-by-face-shape/success/http-request.adoc[]
-include::{snippets}/recommend-hair-style-by-face-shape/success/request-headers.adoc[]
+include::{snippets}/recommend-hair-style-by-face-shape/success1/http-request.adoc[]
+include::{snippets}/recommend-hair-style-by-face-shape/success1/request-headers.adoc[]
 
 Http Response
-include::{snippets}/recommend-hair-style-by-face-shape/success/http-response.adoc[]
-include::{snippets}/recommend-hair-style-by-face-shape/success/response-fields.adoc[]
+include::{snippets}/recommend-hair-style-by-face-shape/success1/http-response.adoc[]
+include::{snippets}/recommend-hair-style-by-face-shape/success1/response-fields.adoc[]
 
 === 3. 헤더에 토큰을 포함하지 않아 실패
 Http Response

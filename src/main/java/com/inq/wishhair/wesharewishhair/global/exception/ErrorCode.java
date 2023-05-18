@@ -55,7 +55,9 @@ public enum ErrorCode {
     GOOGLE_OAUTH_EXCEPTION("AUTH_004", "Google 서버 요청 간 에러가 발생하였습니다.", HttpStatus.FORBIDDEN),
 
     FLASK_SERVER_EXCEPTION("FLASK_001", "Flask 서버 요청 간 에러가 발생하였습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
-    FLASK_RESPONSE_ERROR("FLASK_002", "Flask 서버의 응답값의 형식이 올바르지 않습니다.", HttpStatus.INTERNAL_SERVER_ERROR)
+    FLASK_RESPONSE_ERROR("FLASK_002", "Flask 서버의 응답값의 형식이 올바르지 않습니다.", HttpStatus.INTERNAL_SERVER_ERROR),
+
+    AOP_GENERIC_EXCEPTION("AOP_001", "AOP 에서 발생한 Generic 에러 입니다.", HttpStatus.INTERNAL_SERVER_ERROR)
     ;
 
     private final String code;

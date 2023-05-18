@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.review.service;
 
+import com.inq.wishhair.wesharewishhair.global.aop.annotation.AddisWriter;
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.dto.response.ResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -30,32 +31,36 @@ public class ReviewSearchService {
     private final LikeReviewRepository likeReviewRepository;
 
     /*리뷰 단건 조회*/
-    public ReviewDetailResponse findReviewById(Long reviewId, Long userId) {
+    @AddisWriter
+    public ReviewDetailResponse findReviewById(Long userId, Long reviewId) {
         ReviewQueryResponse queryResponse = reviewRepository.findReviewById(reviewId)
                 .orElseThrow(() -> new WishHairException(ErrorCode.NOT_EXIST_KEY));
 
         boolean isLiking = likeReviewRepository.existsByUserIdAndReviewId(userId, reviewId);
 
-        return toReviewDetailResponse(queryResponse, userId, isLiking);
+        return toReviewDetailResponse(queryResponse, isLiking);
     }
 
     /*전체 리뷰 조회*/
-    public PagedResponse<ReviewResponse> findPagedReviews(Pageable pageable, Long userId) {
+    @AddisWriter
+    public PagedResponse<ReviewResponse> findPagedReviews(Long userId, Pageable pageable) {
         Slice<ReviewQueryResponse> sliceResult = reviewRepository.findReviewByPaging(pageable);
-        return toPagedReviewResponse(sliceResult, userId);
+        return toPagedReviewResponse(sliceResult);
     }
 
     /*좋아요한 리뷰 조회*/
+    @AddisWriter
     public PagedResponse<ReviewResponse> findLikingReviews(Long userId, Pageable pageable) {
         Slice<ReviewQueryResponse> sliceResult = reviewRepository.findReviewByLike(userId, pageable);
-        return toPagedReviewResponse(sliceResult, userId);
+        return toPagedReviewResponse(sliceResult);
     }
 
     /*나의 리뷰 조회*/
+    @AddisWriter
     public PagedResponse<ReviewResponse> findMyReviews(Long userId, Pageable pageable) {
         Slice<ReviewQueryResponse> sliceResult = reviewRepository.findReviewByUser(userId, pageable);
 
-        return toPagedReviewResponse(sliceResult, userId);
+        return toPagedReviewResponse(sliceResult);
     }
 
     /*이달의 추천 리뷰 조회*/
