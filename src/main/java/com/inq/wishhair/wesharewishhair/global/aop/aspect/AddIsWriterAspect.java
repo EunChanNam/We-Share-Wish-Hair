@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.global.aop.annotation;
+package com.inq.wishhair.wesharewishhair.global.aop.aspect;
 
 import com.inq.wishhair.wesharewishhair.global.dto.response.PagedResponse;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
@@ -26,7 +26,7 @@ public class AddIsWriterAspect {
     @Around("pagedResponsePointcut() && addWriterAnnotation() && args(userId, ..)")
     public Object addIsWriterToPagedResponse(ProceedingJoinPoint joinPoint, Long userId) throws Throwable {
         PagedResponse<?> result = (PagedResponse<?>) joinPoint.proceed();
-        if (!(result.getResult() instanceof ReviewResponse)) {
+        if (!result.getResult().isEmpty() && !(result.getResult().get(0) instanceof ReviewResponse)) {
             throw new WishHairException(ErrorCode.AOP_GENERIC_EXCEPTION);
         }
         PagedResponse<ReviewResponse> castedResult = (PagedResponse<ReviewResponse>) result;
