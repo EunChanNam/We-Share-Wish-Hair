@@ -7,7 +7,7 @@
 == 사용자 정보 조회 API
 === 1. 성공
 Http Request
-include::{snippets}/get-user-info/success/http-response.adoc[]
+include::{snippets}/get-user-info/success/http-request.adoc[]
 include::{snippets}/get-user-info/success/request-headers.adoc[]
 
 Http Response

@@ -34,11 +34,17 @@ public class MailAuthController {
 
     private final UserValidator userValidator;
 
+    @PostMapping("/check")
+    public ResponseEntity<Success> checkDuplicateEmail(@RequestBody MailRequest request) {
+
+        userValidator.validateEmailIsNotDuplicated(new Email(request.getEmail()));
+
+        return ResponseEntity.ok(new Success());
+    }
+
     @PostMapping("/send")
     public ResponseEntity<SessionIdResponse> sendAuthorizationMail(@RequestBody MailRequest mailRequest,
                                                                    HttpServletRequest request) throws NoSuchAlgorithmException {
-
-        userValidator.validateEmailIsNotDuplicated(new Email(mailRequest.getEmail()));
 
         String authKey = createAuthKey();
         String sessionId = registerAuthKey(request, authKey);
