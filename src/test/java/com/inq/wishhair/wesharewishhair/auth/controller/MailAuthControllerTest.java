@@ -7,6 +7,7 @@ import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.auth.controller.dto.request.AuthKeyRequest;
 import com.inq.wishhair.wesharewishhair.auth.controller.dto.request.MailRequest;
+import com.inq.wishhair.wesharewishhair.user.domain.Email;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,7 @@ public class MailAuthControllerTest extends ControllerTest {
 
     private static final String SEND_URL = "/api/email/send";
     private static final String VALIDATE_URL = "/api/email/validate";
+    private static final String CHECK_DUPLICATE_EMAIL_URL = "/api/email/check";
 
     @Nested
     @DisplayName("메일 전송 API")
@@ -90,29 +92,60 @@ public class MailAuthControllerTest extends ControllerTest {
             assertThat(count).isEqualTo(1);
         }
 
+        private MockHttpServletRequestBuilder generateMailSendRequest(MailRequest request) throws JsonProcessingException {
+            return MockMvcRequestBuilders
+                    .post(SEND_URL)
+                    .content(toJson(request))
+                    .contentType(MediaType.APPLICATION_JSON);
+        }
+    }
+
+    @Nested
+    @DisplayName("이메일 중복체크 API")
+    class checkDuplicateEmail {
+        @Test
+        @DisplayName("중복되지 않은 이메일로 성공한다")
+        void success() throws Exception {
+            //given
+            MailRequest request = new MailRequest(receiver);
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = generateCheckEmailRequest(request);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    requestFields(
+                                            fieldWithPath("email").description("이메일 (아이디)")
+                                                    .attributes(constraint("이메일 형식 준수"))
+                                    ),
+                                    successResponseDocument()
+                            )
+                    );
+        }
+
         @Test
         @DisplayName("중복된 이메일로 실패한다")
         void failByDuplicatedEmail() throws Exception {
             //given
             MailRequest request = new MailRequest(receiver);
             ErrorCode expectedError = ErrorCode.USER_DUPLICATED_EMAIL;
-            doThrow(new WishHairException(expectedError)).when(userValidator).validateEmailIsNotDuplicated(any());
+            doThrow(new WishHairException(expectedError)).when(userValidator).validateEmailIsNotDuplicated(any(Email.class));
 
             //when
-            MockHttpServletRequestBuilder requestBuilder = generateMailSendRequest(request);
+            MockHttpServletRequestBuilder requestBuilder = generateCheckEmailRequest(request);
 
             //then
             assertException(expectedError, requestBuilder, status().isConflict());
-
-            int count = (int) events.stream(AuthMailSendEvent.class).count();
-            assertThat(count).isZero();
         }
 
-        private MockHttpServletRequestBuilder generateMailSendRequest(MailRequest request) throws JsonProcessingException {
+        private MockHttpServletRequestBuilder generateCheckEmailRequest(MailRequest request) throws JsonProcessingException {
             return MockMvcRequestBuilders
-                    .post(SEND_URL)
-                    .content(toJson(request))
-                    .contentType(MediaType.APPLICATION_JSON);
+                    .post(CHECK_DUPLICATE_EMAIL_URL)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(toJson(request));
         }
     }
 
