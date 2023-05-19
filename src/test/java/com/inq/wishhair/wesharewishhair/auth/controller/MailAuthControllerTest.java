@@ -46,23 +46,6 @@ public class MailAuthControllerTest extends ControllerTest {
     @DisplayName("메일 전송 API")
     class sendAuthorizationMail {
         @Test
-        @DisplayName("올바르지 않은 형식의 이메일로 400 예외를 던진다")
-        void failByWrongEmail() throws Exception {
-            //given
-            MailRequest request = new MailRequest(WRONG_EMAIL);
-            ErrorCode expectedError = ErrorCode.USER_INVALID_EMAIL;
-
-            //when
-            MockHttpServletRequestBuilder requestBuilder = generateMailSendRequest(request);
-
-            //then
-            assertException(expectedError, requestBuilder, status().isBadRequest());
-
-            int count = (int) events.stream(AuthMailSendEvent.class).count();
-            assertThat(count).isZero();
-        }
-
-        @Test
         @DisplayName("성공적으로 메일을 전송한다")
         void success() throws Exception {
             //given
@@ -139,6 +122,23 @@ public class MailAuthControllerTest extends ControllerTest {
 
             //then
             assertException(expectedError, requestBuilder, status().isConflict());
+        }
+
+        @Test
+        @DisplayName("올바르지 않은 형식의 이메일로 400 예외를 던진다")
+        void failByWrongEmail() throws Exception {
+            //given
+            MailRequest request = new MailRequest(WRONG_EMAIL);
+            ErrorCode expectedError = ErrorCode.USER_INVALID_EMAIL;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = generateCheckEmailRequest(request);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isBadRequest());
+
+            int count = (int) events.stream(AuthMailSendEvent.class).count();
+            assertThat(count).isZero();
         }
 
         private MockHttpServletRequestBuilder generateCheckEmailRequest(MailRequest request) throws JsonProcessingException {
