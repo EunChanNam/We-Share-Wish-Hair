@@ -46,8 +46,6 @@ public class MailAuthController {
     public ResponseEntity<SessionIdResponse> sendAuthorizationMail(@RequestBody MailRequest mailRequest,
                                                                    HttpServletRequest request) throws NoSuchAlgorithmException {
 
-        userValidator.validateEmailIsNotDuplicated(new Email(mailRequest.getEmail()));
-
         String authKey = createAuthKey();
         String sessionId = registerAuthKey(request, authKey);
 
