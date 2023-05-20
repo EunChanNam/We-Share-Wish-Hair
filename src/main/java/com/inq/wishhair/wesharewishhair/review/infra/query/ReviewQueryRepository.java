@@ -5,7 +5,6 @@ import com.inq.wishhair.wesharewishhair.review.infra.query.dto.response.ReviewQu
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,4 +24,7 @@ public interface ReviewQueryRepository {
 
     //지난달에 작성한 리뷰 조회
     List<Review> findReviewByCreatedDate();
+
+    //헤어스타일의 리뷰 조회
+    List<ReviewQueryResponse> findReviewByHairStyle(Long hairStyleId);
 }

@@ -233,6 +233,51 @@ public class ReviewSearchControllerTest extends ControllerTest {
 
     }
 
+    @Nested
+    @DisplayName("헤어스타일 리뷰 조회 API")
+    class findHairStyleReview {
+        @Test
+        @DisplayName("헤어스타일의 리뷰를 조회한다")
+        void success() throws Exception {
+            //given
+            ResponseWrapper<ReviewResponse> expectedResponse = new ResponseWrapper<>(generateReviewResponses(2, 1L));
+            given(reviewSearchService.findReviewByHairStyle(1L, 1L))
+                    .willReturn(expectedResponse);
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
+                    .get(BASE_URL + "/hair_style/{hairStyleId}", 1L)
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    pathParameters(
+                                            parameterWithName("hairStyleId").description("헤어스타일 아이디")
+                                    ),
+                                    reviewResponseDocument("result[].")
+                            )
+                    );
+        }
+
+        @Test
+        @DisplayName("헤더에 토큰을 포함하지 않아 실패")
+        void failByNoAccessToken() throws Exception {
+            //given
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
+                    .get(BASE_URL + "/hair_style/{hairStyleId}", 1L);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
+        }
+    }
+
     private PagedResponse<ReviewResponse> assemblePagedResponse(int count, Long userId) {
         Paging defaultPaging = new Paging(count, 0, false);
         return new PagedResponse<>(generateReviewResponses(count, userId), defaultPaging);

@@ -64,3 +64,19 @@ include::{snippets}/find-review-of-month/success/response-fields.adoc[]
 Http Response
 include::{snippets}/find-review-of-month/fail-by-no-access-token/http-response.adoc[]
 include::{snippets}/find-review-of-month/fail-by-no-access-token/response-fields.adoc[]
+
+== 헤어스타일 리뷰 검색 API
+=== 1. 성공
+Http Request
+include::{snippets}/find-hair-style-review/success/http-request.adoc[]
+include::{snippets}/find-hair-style-review/success/request-headers.adoc[]
+include::{snippets}/find-hair-style-review/success/path-parameters.adoc[]
+
+Http Response
+include::{snippets}/find-hair-style-review/success/http-response.adoc[]
+include::{snippets}/find-hair-style-review/success/response-fields.adoc[]
+
+=== 2. 헤더에 토크을 포함하지 않아 실패
+Http Response
+include::{snippets}/find-hair-style-review/fail-by-no-access-token/http-response.adoc[]
+

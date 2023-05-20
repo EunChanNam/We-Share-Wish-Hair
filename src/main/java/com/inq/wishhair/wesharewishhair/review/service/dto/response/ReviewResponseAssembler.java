@@ -46,10 +46,12 @@ public abstract class ReviewResponseAssembler {
     }
 
     public static ResponseWrapper<ReviewSimpleResponse> toWrappedSimpleResponse(List<Review> reviews) {
-        return new ResponseWrapper<>(toSimpleResponse(reviews));
+        List<ReviewSimpleResponse> responses = reviews.stream().map(ReviewSimpleResponse::new).toList();
+        return new ResponseWrapper<>(responses);
     }
 
-    private static List<ReviewSimpleResponse> toSimpleResponse(List<Review> reviews) {
-        return reviews.stream().map(ReviewSimpleResponse::new).toList();
+    public static ResponseWrapper<ReviewResponse> toWrappedReviewResponse(List<ReviewQueryResponse> responses) {
+        List<ReviewResponse> reviewResponses = responses.stream().map(ReviewResponseAssembler::toReviewResponse).toList();
+        return new ResponseWrapper<>(reviewResponses);
     }
 }

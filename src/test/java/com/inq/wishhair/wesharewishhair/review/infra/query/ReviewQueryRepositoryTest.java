@@ -137,4 +137,21 @@ public class ReviewQueryRepositoryTest extends RepositoryTest {
                 () -> assertThat(result.get(0).getPhotos()).hasSize(A.getStoreUrls().size())
         );
     }
+
+    @Test
+    @DisplayName("헤어스타일의 리뷰를 조회한다")
+    void findReviewByHairStyle() {
+        //when
+        List<ReviewQueryResponse> result = reviewRepository.findReviewByHairStyle(hairStyle.getId());
+
+        //then
+        assertAll(
+                () -> assertThat(result).isNotEmpty(),
+                () -> {
+                    ReviewQueryResponse actual = result.get(0);
+                    assertThat(actual.getLikes()).isZero();
+                    assertThat(actual.getReview()).isEqualTo(review);
+                }
+        );
+    }
 }

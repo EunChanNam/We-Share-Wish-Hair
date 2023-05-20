@@ -75,6 +75,23 @@ public class MailAuthControllerTest extends ControllerTest {
             assertThat(count).isEqualTo(1);
         }
 
+        @Test
+        @DisplayName("올바르지 않은 형식의 이메일로 400 예외를 던진다")
+        void failByWrongEmail() throws Exception {
+            //given
+            MailRequest request = new MailRequest(WRONG_EMAIL);
+            ErrorCode expectedError = ErrorCode.USER_INVALID_EMAIL;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = generateMailSendRequest(request);
+
+            //then
+            assertException(expectedError, requestBuilder, status().isBadRequest());
+
+            int count = (int) events.stream(AuthMailSendEvent.class).count();
+            assertThat(count).isZero();
+        }
+
         private MockHttpServletRequestBuilder generateMailSendRequest(MailRequest request) throws JsonProcessingException {
             return MockMvcRequestBuilders
                     .post(SEND_URL)
@@ -136,9 +153,6 @@ public class MailAuthControllerTest extends ControllerTest {
 
             //then
             assertException(expectedError, requestBuilder, status().isBadRequest());
-
-            int count = (int) events.stream(AuthMailSendEvent.class).count();
-            assertThat(count).isZero();
         }
 
         private MockHttpServletRequestBuilder generateCheckEmailRequest(MailRequest request) throws JsonProcessingException {

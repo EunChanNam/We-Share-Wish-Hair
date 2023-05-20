@@ -37,12 +37,13 @@ public class ReviewSearchServiceTest extends ServiceTest {
 
     private final List<Review> reviews = new ArrayList<>();
     private User user;
+    private HairStyle hairStyle;
 
     @BeforeEach
     void setUp() {
         //given
         user = userRepository.save(UserFixture.A.toEntity());
-        HairStyle hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
+        hairStyle = hairStyleRepository.save(HairStyleFixture.A.toEntity());
 
         for (ReviewFixture fixture : ReviewFixture.values()) {
             reviews.add(fixture.toEntity(user, hairStyle));
@@ -208,6 +209,24 @@ public class ReviewSearchServiceTest extends ServiceTest {
 
         //then
         assertReviewSimpleResponseMatch(result.getResult(), List.of(5, 4, 1));
+    }
+
+    @Test
+    @DisplayName("특정 헤어스타일의 리뷰를 좋아요 순으로 조회한다")
+    void findReviewByHairStyle() {
+        //given
+        saveReview(List.of(1, 2, 4, 5), List.of(now(), now(), now(), now()));
+
+        User user1 = userRepository.save(UserFixture.B.toEntity());
+        addLikes(user, List.of(1, 4, 5));
+        addLikes(user1, List.of(4, 5));
+        addLikes(user1, List.of(5));
+
+        //when
+        ResponseWrapper<ReviewResponse> result = reviewSearchService.findReviewByHairStyle(user.getId(), hairStyle.getId());
+
+        //then
+        assertReviewResponseMatch(result.getResult(), List.of(5, 4, 1, 2), List.of(3L, 2L, 1L, 0L));
     }
 
     private void saveReview(List<Integer> indexes, List<LocalDateTime> times) {

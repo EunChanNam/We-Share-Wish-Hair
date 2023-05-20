@@ -19,7 +19,7 @@ public class MailSendEventListener {
     @Async("mailAsyncExecutor")
     @EventListener
     public void sendAuthMail(AuthMailSendEvent event) throws Exception {
-        emailSender.sendAuthMail(event.address(), event.authKey());
+        emailSender.sendAuthMail(event.email().getValue(), event.authKey());
     }
 
     @Async("mailAsyncExecutor")

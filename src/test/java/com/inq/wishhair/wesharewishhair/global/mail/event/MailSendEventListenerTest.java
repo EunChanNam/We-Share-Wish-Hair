@@ -6,6 +6,7 @@ import com.inq.wishhair.wesharewishhair.global.mail.dto.RefundMailDto;
 import com.inq.wishhair.wesharewishhair.global.mail.utils.EmailSender;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PointUseRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.PointUseRequestUtils;
+import com.inq.wishhair.wesharewishhair.user.domain.Email;
 import com.inq.wishhair.wesharewishhair.user.event.RefundMailSendEvent;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,7 +35,7 @@ public class MailSendEventListenerTest {
         doNothing().when(emailSender).sendAuthMail(ADDRESS, authKey);
 
         //when, then
-        assertDoesNotThrow(() -> listener.sendAuthMail(new AuthMailSendEvent(ADDRESS, authKey)));
+        assertDoesNotThrow(() -> listener.sendAuthMail(new AuthMailSendEvent(new Email(ADDRESS), authKey)));
     }
 
     @Test

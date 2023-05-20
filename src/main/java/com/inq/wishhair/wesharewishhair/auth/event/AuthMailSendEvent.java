@@ -1,4 +1,6 @@
 package com.inq.wishhair.wesharewishhair.auth.event;
 
-public record AuthMailSendEvent(String address, String authKey) {
+import com.inq.wishhair.wesharewishhair.user.domain.Email;
+
+public record AuthMailSendEvent(Email email, String authKey) {
 }
