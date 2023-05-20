@@ -7,7 +7,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class ResponseWrapper<T> {
+public class ResponseWrapper<T> implements ListResponse<T> {
 
     private List<T> result;
 }

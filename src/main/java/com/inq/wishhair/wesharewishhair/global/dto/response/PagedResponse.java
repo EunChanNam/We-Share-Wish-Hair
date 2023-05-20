@@ -8,7 +8,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class PagedResponse<T> {
+public class PagedResponse<T> implements ListResponse<T> {
 
     private List<T> result;
 
