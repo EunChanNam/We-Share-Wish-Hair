@@ -68,4 +68,11 @@ public class ReviewSearchService {
         List<Review> result = reviewRepository.findReviewByCreatedDate();
         return toWrappedSimpleResponse(result);
     }
+
+    /*헤어스타일의 리뷰 조회*/
+    @AddisWriter
+    public ResponseWrapper<ReviewResponse> findReviewByHairStyle(Long userId, Long hairStyleId) {
+        List<ReviewQueryResponse> result = reviewRepository.findReviewByHairStyle(hairStyleId);
+        return toWrappedReviewResponse(result);
+    }
 }
