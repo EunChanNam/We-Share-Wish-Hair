@@ -30,7 +30,7 @@ public class ReviewSearchController {
     public ResponseEntity<ReviewDetailResponse> findReview(@PathVariable Long reviewId,
                                                            @ExtractPayload Long userId) {
 
-        ReviewDetailResponse result = reviewSearchService.findReviewById(reviewId, userId);
+        ReviewDetailResponse result = reviewSearchService.findReviewById(userId, reviewId);
 
         return ResponseEntity.ok(result);
     }
