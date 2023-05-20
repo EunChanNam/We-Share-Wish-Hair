@@ -14,9 +14,11 @@ Http Response
 include::{snippets}/check-duplicate-email/success/http-response.adoc[]
 
 === 2. 중복된 이메일로 실패
+Http Response
 include::{snippets}/check-duplicate-email/fail-by-duplicated-email/http-response.adoc[]
 
 === 3. 틀린 이메일 형식으로 실패
+Http Response
 include::{snippets}/check-duplicate-email/fail-by-wrong-email/http-response.adoc[]
 
 == 검증 메일 전송 API
@@ -28,6 +30,10 @@ include::{snippets}/send-authorization-mail/success/request-fields.adoc[]
 Http Response
 include::{snippets}/send-authorization-mail/success/http-response.adoc[]
 include::{snippets}/send-authorization-mail/success/response-fields.adoc[]
+
+=== 2. 틀린 이메일 형식으로 실패
+Http Response
+include::{snippets}/send-authorization-mail/fail-by-wrong-email/http-response.adoc[]
 
 
 == 메일 검증 API

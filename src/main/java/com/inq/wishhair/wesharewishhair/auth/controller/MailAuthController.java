@@ -49,7 +49,7 @@ public class MailAuthController {
         String authKey = createAuthKey();
         String sessionId = registerAuthKey(request, authKey);
 
-        eventPublisher.publishEvent(new AuthMailSendEvent(mailRequest.getEmail(), authKey));
+        eventPublisher.publishEvent(new AuthMailSendEvent(new Email(mailRequest.getEmail()), authKey));
 
         return ResponseEntity.ok(new SessionIdResponse(sessionId));
     }
