@@ -60,4 +60,10 @@ public class ReviewSearchController {
 
         return reviewSearchService.findReviewOfMonth();
     }
+
+    @GetMapping("/hair_style/{hairStyleId}")
+    public ResponseWrapper<ReviewResponse> findHairStyleReview(@PathVariable Long hairStyleId,
+                                                               @ExtractPayload Long userId) {
+        return reviewSearchService.findReviewByHairStyle(userId, hairStyleId);
+    }
 }
