@@ -135,6 +135,23 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
                 .fetch();
     }
 
+    @Override
+    public List<ReviewQueryResponse> findReviewByHairStyle(Long hairStyleId) {
+        return factory
+                .select(assembleReviewProjection())
+                .from(review)
+                .leftJoin(like).on(review.id.eq(like.reviewId))
+                .leftJoin(review.hairStyle)
+                .fetchJoin()
+                .leftJoin(review.writer)
+                .fetchJoin()
+                .groupBy(review.id)
+                .orderBy(likes.desc())
+                .offset(0)
+                .limit(5)
+                .fetch();
+    }
+
     private ConstructorExpression<ReviewQueryResponse> assembleReviewProjection() {
         return new QReviewQueryResponse(review, likes.as("likes"));
     }
