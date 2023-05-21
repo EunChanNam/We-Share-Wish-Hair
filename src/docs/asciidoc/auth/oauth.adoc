@@ -1,0 +1,33 @@
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 2
+
+== Access Link 요청 API
+=== 1. 성공
+Http Request
+include::{snippets}/access/success/http-request.adoc[]
+
+Http Response
+include::{snippets}/access/success/http-response.adoc[]
+include::{snippets}/access/success/response-fields.adoc[]
+
+== OAuth 로그인 요청 API
+=== 1. 성공
+Http Request
+include::{snippets}/oauth-login/success/http-request.adoc[]
+include::{snippets}/oauth-login/success/request-parameters.adoc[]
+
+Http Response
+include::{snippets}/oauth-login/success/http-response.adoc[]
+include::{snippets}/oauth-login/success/response-fields.adoc[]
+
+=== 2. 잘못된 authorizationCode 나 Google Server 통신간 오류로 실패
+Http Response
+include::{snippets}/oauth-login/fail-by-google-server/http-response.adoc[]
+
+=== 3. 존재하지 않는 회원으로 회원가입 정보를 응답하며 실패
+Http Request
+include::{snippets}/oauth-login/fail-by-no-sign-up/http-response.adoc[]
+include::{snippets}/oauth-login/fail-by-no-sign-up/response-fields.adoc[]
