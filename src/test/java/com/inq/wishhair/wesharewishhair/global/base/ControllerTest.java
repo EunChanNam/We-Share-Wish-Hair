@@ -4,8 +4,11 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.inq.wishhair.wesharewishhair.auth.controller.AuthController;
 import com.inq.wishhair.wesharewishhair.auth.controller.MailAuthController;
+import com.inq.wishhair.wesharewishhair.auth.controller.OAuthController;
 import com.inq.wishhair.wesharewishhair.auth.controller.TokenReissueController;
+import com.inq.wishhair.wesharewishhair.auth.infra.oauth.OAuthUriGenerator;
 import com.inq.wishhair.wesharewishhair.auth.service.AuthService;
+import com.inq.wishhair.wesharewishhair.auth.service.OAuthService;
 import com.inq.wishhair.wesharewishhair.auth.service.TokenReissueService;
 import com.inq.wishhair.wesharewishhair.auth.utils.JwtTokenProvider;
 import com.inq.wishhair.wesharewishhair.global.config.RestDocsConfig;
@@ -66,7 +69,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         {UserController.class, HairStyleSearchController.class, AuthController.class, TokenReissueController.class,
         HairStyleSearchController.class, MailAuthController.class, ReviewController.class, ReviewSearchController.class,
         LikeReviewController.class, UserInfoController.class, PointController.class, PointSearchController.class,
-        WishHairController.class, WishHairController.class})
+        WishHairController.class, WishHairController.class, OAuthController.class})
 @ExtendWith(RestDocumentationExtension.class)
 @Import(RestDocsConfig.class)
 @AutoConfigureRestDocs
@@ -80,6 +83,12 @@ public abstract class ControllerTest {
 
     @Autowired
     protected ObjectMapper objectMapper;
+
+    @MockBean
+    protected OAuthUriGenerator uriGenerator;
+
+    @MockBean
+    protected OAuthService oauthService;
 
     @MockBean
     protected WishHairService wishHairService;
