@@ -20,7 +20,7 @@ public class GoogleConnector implements OAuthConnector{
 
     private static final String BEARER = "Bearer";
 
-    private final RestTemplate restTemplate;
+    private final RestTemplate restTemplate = new RestTemplate();
     private final OAuthProperties properties;
 
     @Override

@@ -11,6 +11,7 @@ import com.inq.wishhair.wesharewishhair.global.utils.TokenUtils;
 import org.junit.jupiter.api.*;
 import org.mockito.Mock;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 
 import static com.inq.wishhair.wesharewishhair.global.utils.TokenUtils.ACCESS_TOKEN;
@@ -34,15 +35,8 @@ public class OAuthConnectorTest extends InfraTest {
 
     @BeforeEach
     void setUp() {
-        connector = new GoogleConnector(restTemplate, properties);
-        //given
-//        given(properties.getAuthUrl()).willReturn("https://accounts.google.com/o/oauth2/v2/auth");
-//        given(properties.getGrantType()).willReturn("authorization_code");
-//        given(properties.getTokenUrl()).willReturn("https://www.googleapis.com/oauth2/v4/token");
-//        given(properties.getRedirectUrl()).willReturn("redirect-url");
-//        given(properties.getClientId()).willReturn("client-id");
-//        given(properties.getUserInfoUrl()).willReturn("https://www.googleapis.com/oauth2/v3/userinfo");
-//        given(properties.getScope()).willReturn(Set.of("profile", "email"));
+        connector = new GoogleConnector(properties);
+        ReflectionTestUtils.setField(connector, "restTemplate", restTemplate);
     }
 
     @Nested
