@@ -1,5 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
+import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserInfo;
 import com.inq.wishhair.wesharewishhair.global.utils.PageableGenerator;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewSearchService;
 import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewResponse;
@@ -38,5 +39,9 @@ public class UserInfoService {
     public UserInformation getUserInformation(Long userId) {
 
         return toUserInformation(userFindService.findByUserId(userId));
+    }
+
+    public UserInfo getUserInfo(Long userId) {
+        return new UserInfo(userFindService.findByUserId(userId));
     }
 }
