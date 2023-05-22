@@ -14,6 +14,7 @@ import com.inq.wishhair.wesharewishhair.review.service.dto.response.ReviewRespon
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse;
+import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserInfo;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserInformation;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserResponseAssembler;
 import org.junit.jupiter.api.DisplayName;
@@ -95,7 +96,7 @@ public class UserInfoControllerTest extends ControllerTest {
 
     @Nested
     @DisplayName("사용자 정보 조회 API")
-    class getUserInfo {
+    class getUserInformation {
         @Test
         @DisplayName("헤더에 토큰을 포함하지 않아 실패")
         void failByNoAccessToken() throws Exception {
@@ -137,6 +138,54 @@ public class UserInfoControllerTest extends ControllerTest {
                                     )
                             )
                     );
+        }
+    }
+
+    @Nested
+    @DisplayName("홈화면 사용자 정보 조회 API")
+    class getUserInfo {
+        @Test
+        @DisplayName("홈화면에 필요한 사용자 정보를 조회한다")
+        void success() throws Exception {
+            //given
+            User user = UserFixture.A.toEntity();
+            user.updateFaceShape(new FaceShape(Tag.OBLONG));
+            UserInfo userInfo = new UserInfo(user);
+
+            given(userInfoService.getUserInfo(1L)).willReturn(userInfo);
+
+            //then
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .get(BASE_URL + "/home_info")
+                    .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
+
+            //then
+            mockMvc.perform(requestBuilder)
+                    .andExpect(status().isOk())
+                    .andDo(
+                            restDocs.document(
+                                    accessTokenHeaderDocument(),
+                                    responseFields(
+                                            fieldWithPath("nickname").description("사용자 닉네임"),
+                                            fieldWithPath("hasFaceShape").description("얼굴형 보유 여부"),
+                                            fieldWithPath("faceShapeTag").description("사용자 얼굴형, 얼굴형을 보유하지 않을 시 null")
+                                    )
+                            )
+                    );
+        }
+
+        @Test
+        @DisplayName("헤더에 토큰을 포함하지 않아 실패")
+        void failByNoAccessToken() throws Exception {
+            //given
+            ErrorCode expectedError = ErrorCode.AUTH_REQUIRED_LOGIN;
+
+            //when
+            MockHttpServletRequestBuilder requestBuilder = MockMvcRequestBuilders
+                    .get(BASE_URL + "/home_info");
+
+            //then
+            assertException(expectedError, requestBuilder, status().isUnauthorized());
         }
     }
 

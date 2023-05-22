@@ -4,6 +4,7 @@ import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse;
+import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserInfo;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserInformation;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -54,6 +55,20 @@ public class UserInfoServiceTest extends ServiceTest {
                 () -> assertThat(result.name()).isEqualTo(user.getName()),
                 () -> assertThat(result.nickname()).isEqualTo(user.getNicknameValue()),
                 () -> assertThat(result.sex()).isEqualTo(user.getSex())
+        );
+    }
+
+    @Test
+    @DisplayName("홈화면에 필요한 사용자 정보를 조회한다")
+    void getUserInfo() {
+        //when
+        UserInfo result = userInfoService.getUserInfo(user.getId());
+
+        //then
+        assertAll(
+                () -> assertThat(result.isHasFaceShape()).isFalse(),
+                () -> assertThat(result.getNickname()).isEqualTo(user.getNicknameValue()),
+                () -> assertThat(result.getFaceShapeTag()).isNull()
         );
     }
 }
