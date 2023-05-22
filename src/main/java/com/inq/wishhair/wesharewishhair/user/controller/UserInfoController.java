@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.user.controller;
 
 import com.inq.wishhair.wesharewishhair.auth.config.resolver.ExtractPayload;
+import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserInfo;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.MyPageResponse;
 import com.inq.wishhair.wesharewishhair.user.service.UserInfoService;
 import com.inq.wishhair.wesharewishhair.user.service.dto.response.UserInformation;
@@ -29,6 +30,14 @@ public class UserInfoController {
     public ResponseEntity<UserInformation> getUserInformation(@ExtractPayload Long userId) {
 
         UserInformation result = userInfoService.getUserInformation(userId);
+
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/home_info")
+    public ResponseEntity<UserInfo> getUserInfo(@ExtractPayload Long userId) {
+
+        UserInfo result = userInfoService.getUserInfo(userId);
 
         return ResponseEntity.ok(result);
     }
