@@ -12,7 +12,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.event.ApplicationEvents;
@@ -33,8 +32,7 @@ public class MailAuthControllerTest extends ControllerTest {
     @Autowired
     private ApplicationEvents events;
 
-    @Value("${mail.receiver}")
-    private String receiver;
+    private static final String RECEIVER = "receiver@hello.com";
     private static final String WRONG_EMAIL = "email@navercom";
     private static final String AUTH_KEY = "KEY";
 
@@ -49,7 +47,7 @@ public class MailAuthControllerTest extends ControllerTest {
         @DisplayName("성공적으로 메일을 전송한다")
         void success() throws Exception {
             //given
-            MailRequest request = new MailRequest(receiver);
+            MailRequest request = new MailRequest(RECEIVER);
 
             //when
             MockHttpServletRequestBuilder requestBuilder = generateMailSendRequest(request);
@@ -107,7 +105,7 @@ public class MailAuthControllerTest extends ControllerTest {
         @DisplayName("중복되지 않은 이메일로 성공한다")
         void success() throws Exception {
             //given
-            MailRequest request = new MailRequest(receiver);
+            MailRequest request = new MailRequest(RECEIVER);
 
             //when
             MockHttpServletRequestBuilder requestBuilder = generateCheckEmailRequest(request);
@@ -130,7 +128,7 @@ public class MailAuthControllerTest extends ControllerTest {
         @DisplayName("중복된 이메일로 실패한다")
         void failByDuplicatedEmail() throws Exception {
             //given
-            MailRequest request = new MailRequest(receiver);
+            MailRequest request = new MailRequest(RECEIVER);
             ErrorCode expectedError = ErrorCode.USER_DUPLICATED_EMAIL;
             doThrow(new WishHairException(expectedError)).when(userValidator).validateEmailIsNotDuplicated(any(Email.class));
 

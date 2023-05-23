@@ -44,9 +44,9 @@ spring:
 flask:
   domain: https://localhost:5000
 
-# 메일 수신자 #
+# 포인트 메일 수신자 #
 mail:
-  receiver: namgm23@naver.com
+  point-mail-receiver: receiver
 
 #p6spy 설정
 decorator:
