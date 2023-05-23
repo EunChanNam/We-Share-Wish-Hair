@@ -3,7 +3,7 @@ package com.inq.wishhair.wesharewishhair.user.service;
 import com.inq.wishhair.wesharewishhair.auth.domain.Token;
 import com.inq.wishhair.wesharewishhair.global.base.ServiceTest;
 import com.inq.wishhair.wesharewishhair.global.fixture.ReviewFixture;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.Tag;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
 import com.inq.wishhair.wesharewishhair.review.domain.likereview.LikeReview;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.*;

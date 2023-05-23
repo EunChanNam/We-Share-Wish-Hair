@@ -2,7 +2,7 @@ package com.inq.wishhair.wesharewishhair.user.domain;
 
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.Tag;
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;

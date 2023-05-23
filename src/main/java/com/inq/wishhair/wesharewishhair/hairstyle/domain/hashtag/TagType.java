@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums;
+package com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag;
 
 public enum TagType {
     NORMAL, FACE_SHAPE;

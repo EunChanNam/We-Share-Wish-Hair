@@ -5,7 +5,7 @@ import com.inq.wishhair.wesharewishhair.auth.infra.oauth.dto.response.GoogleToke
 import com.inq.wishhair.wesharewishhair.auth.service.dto.response.LoginResponse;
 import com.inq.wishhair.wesharewishhair.auth.service.dto.response.TokenResponse;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.Tag;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 

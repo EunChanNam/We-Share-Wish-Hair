@@ -3,7 +3,6 @@ package com.inq.wishhair.wesharewishhair.review.domain;
 import com.inq.wishhair.wesharewishhair.auditing.BaseEntity;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.photo.domain.Photo;
-import com.inq.wishhair.wesharewishhair.review.domain.enums.Score;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import javax.persistence.*;
 import lombok.AccessLevel;

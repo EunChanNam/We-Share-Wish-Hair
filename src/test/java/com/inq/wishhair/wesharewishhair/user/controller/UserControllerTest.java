@@ -5,7 +5,7 @@ import com.inq.wishhair.wesharewishhair.global.dto.response.SimpleResponseWrappe
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.global.base.ControllerTest;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.Tag;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.*;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.FaceShapeUpdateRequestUtils;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.PasswordUpdateRequestUtils;

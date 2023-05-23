@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.service.dto.response;
 
-import com.inq.wishhair.wesharewishhair.user.enums.Sex;
+import com.inq.wishhair.wesharewishhair.user.domain.Sex;
 
 public record UserInformation(
         String email,
