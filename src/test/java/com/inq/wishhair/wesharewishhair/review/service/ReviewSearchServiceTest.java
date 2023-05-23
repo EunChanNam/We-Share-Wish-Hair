@@ -137,7 +137,9 @@ public class ReviewSearchServiceTest extends ServiceTest {
             saveReview(List.of(3, 2, 4, 1), List.of(now().minusMonths(1), now().minusMinutes(1), now(),
                     now().minusDays(1)));
 
+            User user1 = userRepository.save(UserFixture.B.toEntity());
             addLikes(user, List.of(1, 2, 3, 4));
+            addLikes(user1, List.of(1, 2));
 
             Pageable pageable = DefaultPageableUtils.getDateDescPageable(4);
 
@@ -147,7 +149,7 @@ public class ReviewSearchServiceTest extends ServiceTest {
             //then
             assertThat(result.getPaging().hasNext()).isFalse();
             assertReviewResponseMatch(result.getResult(),
-                    List.of(1, 4, 2, 3), List.of(1L, 1L, 1L, 1L));
+                    List.of(1, 4, 2, 3), List.of(2L, 1L, 2L, 1L));
         }
 
     }
