@@ -5,7 +5,6 @@ import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointHistory;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointRepository;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointType;
-import com.inq.wishhair.wesharewishhair.user.event.RefundMailSendEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
@@ -26,7 +25,7 @@ public class PointService {
         User user = userFindService.findByUserId(userId);
         insertPointHistory(PointType.USE, request.getDealAmount(), user);
 
-        eventPublisher.publishEvent(new RefundMailSendEvent(request.toRefundMailDto(user)));
+        eventPublisher.publishEvent(request.toRefundMailEvent(user.getName()));
     }
 
     @Transactional

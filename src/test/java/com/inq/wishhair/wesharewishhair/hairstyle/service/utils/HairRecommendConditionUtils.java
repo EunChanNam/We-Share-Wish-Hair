@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.service.utils;
 
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.utils.HairRecommendCondition;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 

@@ -3,7 +3,7 @@ package com.inq.wishhair.wesharewishhair.hairstyle.infra.query;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.QHairStyle;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.QHashTag;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.QWishHair;
 import com.inq.wishhair.wesharewishhair.hairstyle.utils.HairRecommendCondition;
 import com.querydsl.core.types.OrderSpecifier;

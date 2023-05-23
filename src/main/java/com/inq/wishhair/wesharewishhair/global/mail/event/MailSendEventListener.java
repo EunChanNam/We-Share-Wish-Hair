@@ -10,6 +10,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.event.TransactionPhase;
 import org.springframework.transaction.event.TransactionalEventListener;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
+
 @Component
 @RequiredArgsConstructor
 public class MailSendEventListener {
@@ -18,13 +21,13 @@ public class MailSendEventListener {
 
     @Async("mailAsyncExecutor")
     @EventListener
-    public void sendAuthMail(AuthMailSendEvent event) throws Exception {
+    public void sendAuthMail(AuthMailSendEvent event) throws MessagingException, UnsupportedEncodingException {
         emailSender.sendAuthMail(event.email().getValue(), event.authKey());
     }
 
     @Async("mailAsyncExecutor")
     @TransactionalEventListener(phase = TransactionPhase.AFTER_COMMIT)
-    public void sendRefundMail(RefundMailSendEvent event) throws Exception {
-        emailSender.sendRefundRequestMail(event.dto());
+    public void sendRefundMail(RefundMailSendEvent event) throws MessagingException, UnsupportedEncodingException {
+        emailSender.sendRefundRequestMail(event);
     }
 }

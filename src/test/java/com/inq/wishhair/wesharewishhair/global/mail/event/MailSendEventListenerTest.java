@@ -2,7 +2,6 @@ package com.inq.wishhair.wesharewishhair.global.mail.event;
 
 import com.inq.wishhair.wesharewishhair.auth.event.AuthMailSendEvent;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
-import com.inq.wishhair.wesharewishhair.global.mail.dto.RefundMailDto;
 import com.inq.wishhair.wesharewishhair.global.mail.utils.EmailSender;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PointUseRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.utils.PointUseRequestUtils;
@@ -39,14 +38,14 @@ public class MailSendEventListenerTest {
     }
 
     @Test
-    @DisplayName("포인트 환급요청 메일 발송 이벤트 리스너 테스틐")
+    @DisplayName("포인트 환급요청 메일 발송 이벤트 리스너 테스트")
     void sendRefundMail() throws Exception {
         //given
         PointUseRequest request = PointUseRequestUtils.request(1000);
-        RefundMailDto refundMailDto = request.toRefundMailDto(UserFixture.A.toEntity());
-        doNothing().when(emailSender).sendRefundRequestMail(refundMailDto);
+        RefundMailSendEvent event = request.toRefundMailEvent(UserFixture.A.getName());
+        doNothing().when(emailSender).sendRefundRequestMail(event);
 
         //when, then
-        assertDoesNotThrow(() -> listener.sendRefundMail(new RefundMailSendEvent(refundMailDto)));
+        assertDoesNotThrow(() -> listener.sendRefundMail(event));
     }
 }

@@ -4,7 +4,7 @@ import com.inq.wishhair.wesharewishhair.global.base.RepositoryTest;
 import com.inq.wishhair.wesharewishhair.global.fixture.HairStyleFixture;
 import com.inq.wishhair.wesharewishhair.global.fixture.UserFixture;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.Tag;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair.WishHair;
 import com.inq.wishhair.wesharewishhair.hairstyle.utils.HairRecommendCondition;
 import com.inq.wishhair.wesharewishhair.user.domain.FaceShape;
@@ -22,7 +22,6 @@ import static com.inq.wishhair.wesharewishhair.global.utils.PageableGenerator.ge
 import static com.inq.wishhair.wesharewishhair.hairstyle.service.utils.HairRecommendConditionUtils.*;
 import static com.inq.wishhair.wesharewishhair.hairstyle.service.utils.HairRecommendConditionUtils.mainRecommend;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertAll;
 
 public class HairStyleQueryRepositoryTest extends RepositoryTest {
 

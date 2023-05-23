@@ -1,12 +1,13 @@
 package com.inq.wishhair.wesharewishhair.global.mail.utils;
 
 import com.inq.wishhair.wesharewishhair.global.base.InfraTest;
-import com.inq.wishhair.wesharewishhair.global.mail.dto.RefundMailDto;
+import com.inq.wishhair.wesharewishhair.user.event.RefundMailSendEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -34,6 +35,8 @@ public class EmailSenderTest extends InfraTest {
     @BeforeEach
     void setUp() {
         emailSender = new EmailSender(mailSender, templateEngine);
+        ReflectionTestUtils.setField(emailSender, "from", "from");
+        ReflectionTestUtils.setField(emailSender, "receiver", "receiver");
     }
 
     @Test
@@ -53,9 +56,9 @@ public class EmailSenderTest extends InfraTest {
         //given
         given(templateEngine.process(any(String.class), any(Context.class))).willReturn(REFUND_TEMPLATE);
         given(mailSender.createMimeMessage()).willReturn(mimeMessage);
-        RefundMailDto refundMailDto = RefundMailDto.of(ADDRESS, "userA", "기업은행", "111111111", 1000);
+        RefundMailSendEvent event = new RefundMailSendEvent("userA", "기업은행", "111111111", 1000);
 
         //when, then
-        assertDoesNotThrow(() -> emailSender.sendRefundRequestMail(refundMailDto));
+        assertDoesNotThrow(() -> emailSender.sendRefundRequestMail(event));
     }
 }

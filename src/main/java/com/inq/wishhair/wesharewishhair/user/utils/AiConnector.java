@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.user.utils;
 
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.Tag;
 import org.springframework.web.multipart.MultipartFile;
 
 @FunctionalInterface

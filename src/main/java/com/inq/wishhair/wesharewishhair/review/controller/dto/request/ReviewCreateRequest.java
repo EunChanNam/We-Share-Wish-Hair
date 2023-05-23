@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.review.controller.dto.request;
 
-import com.inq.wishhair.wesharewishhair.review.domain.enums.Score;
+import com.inq.wishhair.wesharewishhair.review.domain.Score;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

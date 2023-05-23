@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.global.mail.utils;
 
-import com.inq.wishhair.wesharewishhair.global.mail.dto.RefundMailDto;
+import com.inq.wishhair.wesharewishhair.user.event.RefundMailSendEvent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -9,8 +9,10 @@ import org.springframework.stereotype.Component;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
 
+import javax.mail.MessagingException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.io.UnsupportedEncodingException;
 
 @Component
 @RequiredArgsConstructor
@@ -24,10 +26,12 @@ public class EmailSender {
 
     @Value("${spring.mail.username}")
     private String from;
+    @Value("${mail.point-mail-receiver}")
+    private String receiver;
     private final JavaMailSender mailSender;
     private final ITemplateEngine templateEngine;
 
-    public void sendAuthMail(String address, String authKey) throws Exception {
+    public void sendAuthMail(String address, String authKey) throws MessagingException, UnsupportedEncodingException {
 
         Context context = new Context();
         context.setVariable("authKey", authKey);
@@ -39,22 +43,22 @@ public class EmailSender {
         mailSender.send(mimeMessage);
     }
 
-    public void sendRefundRequestMail(RefundMailDto dto) throws Exception{
+    public void sendRefundRequestMail(RefundMailSendEvent event) throws MessagingException, UnsupportedEncodingException {
 
         Context context = new Context();
-        context.setVariable("username", dto.getUsername());
-        context.setVariable("bankName", dto.getBankName());
-        context.setVariable("accountNumber", dto.getAccountNumber());
-        context.setVariable("dealAmount", dto.getDealAmount());
+        context.setVariable("username", event.username());
+        context.setVariable("bankName", event.bankName());
+        context.setVariable("accountNumber", event.accountNumber());
+        context.setVariable("dealAmount", event.dealAmount());
 
         String htmlTemplate = templateEngine.process(REFUND_TEMPLATE, context);
 
-        MimeMessage mimeMessage = generateMessage(dto.getAddress(), htmlTemplate, REFUND_MAIL_TITLE);
+        MimeMessage mimeMessage = generateMessage(receiver, htmlTemplate, REFUND_MAIL_TITLE);
 
         mailSender.send(mimeMessage);
     }
 
-    private MimeMessage generateMessage(String address, String htmlTemplate, String subject) throws Exception {
+    private MimeMessage generateMessage(String address, String htmlTemplate, String subject) throws MessagingException, UnsupportedEncodingException {
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, "UTF-8");
         mimeMessageHelper.setTo(address);

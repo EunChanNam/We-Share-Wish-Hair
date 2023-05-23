@@ -1,8 +1,8 @@
 package com.inq.wishhair.wesharewishhair.user.domain;
 
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.enums.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.Tag;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointType;
-import com.inq.wishhair.wesharewishhair.user.enums.Sex;
+
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

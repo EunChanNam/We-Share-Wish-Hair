@@ -2,7 +2,7 @@ package com.inq.wishhair.wesharewishhair.global.fixture;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.HairStyle;
 import com.inq.wishhair.wesharewishhair.review.domain.Review;
-import com.inq.wishhair.wesharewishhair.review.domain.enums.Score;
+import com.inq.wishhair.wesharewishhair.review.domain.Score;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

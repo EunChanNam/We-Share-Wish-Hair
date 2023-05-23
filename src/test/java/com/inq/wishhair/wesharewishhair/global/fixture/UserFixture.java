@@ -1,10 +1,8 @@
 package com.inq.wishhair.wesharewishhair.global.fixture;
 
-import com.inq.wishhair.wesharewishhair.user.domain.Email;
-import com.inq.wishhair.wesharewishhair.user.domain.Nickname;
 import com.inq.wishhair.wesharewishhair.user.domain.Password;
 import com.inq.wishhair.wesharewishhair.user.domain.User;
-import com.inq.wishhair.wesharewishhair.user.enums.Sex;
+import com.inq.wishhair.wesharewishhair.user.domain.Sex;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
