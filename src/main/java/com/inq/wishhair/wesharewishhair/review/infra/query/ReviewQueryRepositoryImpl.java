@@ -145,10 +145,11 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
                 .fetchJoin()
                 .leftJoin(review.writer)
                 .fetchJoin()
+                .where(review.hairStyle.id.eq(hairStyleId))
                 .groupBy(review.id)
                 .orderBy(likes.desc())
                 .offset(0)
-                .limit(5)
+                .limit(4)
                 .fetch();
     }
 
