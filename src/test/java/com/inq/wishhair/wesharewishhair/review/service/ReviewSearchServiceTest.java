@@ -211,22 +211,40 @@ public class ReviewSearchServiceTest extends ServiceTest {
         assertReviewSimpleResponseMatch(result.getResult(), List.of(5, 4, 1));
     }
 
-    @Test
-    @DisplayName("특정 헤어스타일의 리뷰를 좋아요 순으로 조회한다")
-    void findReviewByHairStyle() {
-        //given
-        saveReview(List.of(1, 2, 4, 5), List.of(now(), now(), now(), now()));
+    @Nested
+    @DisplayName("특정 헤어스타일의 리뷰 조회 서비스")
+    class findReviewByHairStyle {
+        @Test
+        @DisplayName("특정 헤어스타일의 리뷰를 좋아요 순으로 조회한다")
+        void success() {
+            //given
+            saveReview(List.of(1, 2, 4, 5), List.of(now(), now(), now(), now()));
 
-        User user1 = userRepository.save(UserFixture.B.toEntity());
-        addLikes(user, List.of(1, 4, 5));
-        addLikes(user1, List.of(4, 5));
-        addLikes(user1, List.of(5));
+            User user1 = userRepository.save(UserFixture.B.toEntity());
+            addLikes(user, List.of(1, 4, 5));
+            addLikes(user1, List.of(4, 5));
+            addLikes(user1, List.of(5));
 
-        //when
-        ResponseWrapper<ReviewResponse> result = reviewSearchService.findReviewByHairStyle(user.getId(), hairStyle.getId());
+            //when
+            ResponseWrapper<ReviewResponse> result = reviewSearchService.findReviewByHairStyle(user.getId(), hairStyle.getId());
 
-        //then
-        assertReviewResponseMatch(result.getResult(), List.of(5, 4, 1, 2), List.of(3L, 2L, 1L, 0L));
+            //then
+            assertReviewResponseMatch(result.getResult(), List.of(5, 4, 1, 2), List.of(3L, 2L, 1L, 0L));
+        }
+
+        @Test
+        @DisplayName("헤어스타일의 리뷰가 없으면 아무것도 조회되지 않는다")
+        void noResult() {
+            //given
+            saveReview(List.of(1, 2), List.of(now(), now()));
+
+            //when
+            ResponseWrapper<ReviewResponse> result = reviewSearchService.findReviewByHairStyle(user.getId(), 100L);
+
+            //then
+            List<ReviewResponse> actual = result.getResult();
+            assertThat(actual).isEmpty();
+        }
     }
 
     private void saveReview(List<Integer> indexes, List<LocalDateTime> times) {
