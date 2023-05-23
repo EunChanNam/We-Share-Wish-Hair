@@ -81,7 +81,7 @@ public class HairStyleQueryRepositoryTest extends RepositoryTest {
             user.updateFaceShape(new FaceShape(Tag.OBLONG));
             HairRecommendCondition condition = subRecommend(user);
 
-            wishHairStyles(List.of(2, 2, 4));
+            wishHairStyles(List.of(2, 4));
 
             //when
             List<HairStyle> result = hairStyleRepository.findByFaceShape(condition, getDefaultPageable());

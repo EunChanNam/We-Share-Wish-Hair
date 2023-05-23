@@ -76,6 +76,14 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
 
     @Override
     public Slice<ReviewQueryResponse> findReviewByLike(Long userId, Pageable pageable) {
+        List<Long> filteredReviewId = factory
+                .select(review.id)
+                .from(review)
+                .leftJoin(like).on(review.id.eq(like.reviewId))
+                .where(like.userId.eq(userId))
+                .groupBy(review.id)
+                .fetch();
+
         List<ReviewQueryResponse> result = factory
                 .select(assembleReviewProjection())
                 .from(review)
@@ -84,7 +92,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository{
                 .fetchJoin()
                 .leftJoin(review.hairStyle)
                 .fetchJoin()
-                .where(like.userId.eq(userId))
+                .where(review.id.in(filteredReviewId))
                 .groupBy(review.id)
                 .orderBy(review.id.desc())
                 .offset(pageable.getOffset())
