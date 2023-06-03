@@ -6,6 +6,21 @@
 <img src="https://github.com/EunChanNam/We-Share-Wish-Hair/assets/75837025/a497ae0a-568c-4443-a7d8-029a5b651946" width="50%">
 
 
+## ⚙️ 개발 환경
+* Language : Java 17
+* Framework : Spring Boot 2.7.7
+* IDE : Intellij
+* Storage : Naver Cloud Object Storage
+
+## 🛠️ 기술 스택
+* Java
+* Spring Boot
+* Spring Data JPA
+* Query Dsl
+* RestDocs
+* JUnit5
+* MySQL
+
 ## 🕹️ API 목록
 ### 인증
 * 로그인 API
