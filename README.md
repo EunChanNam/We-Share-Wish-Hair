@@ -1,6 +1,11 @@
 # We-Share-Wish-Hair - Backend
 💇‍♀️ AI 기반 헤어스타일 추천 어플리케이션 💇‍♂️
 
+## ✔️ 테스트
+### 커버리지
+<img src="https://github.com/EunChanNam/We-Share-Wish-Hair/assets/75837025/a497ae0a-568c-4443-a7d8-029a5b651946" width="50%">
+
+
 ## 🕹️ API 목록
 ### 인증
 * 로그인 API
