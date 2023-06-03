@@ -39,7 +39,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("HairStyleControllerTest - WebMvcTest")
 public class HairStyleSearchControllerTest extends ControllerTest {
 
-    private static final String BASE_URL = "/api/hair_style";
+    private static final String BASE_URL = "/api/hair_styles";
 
     @Nested
     @DisplayName("메인 헤어 추천 API")

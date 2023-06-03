@@ -18,7 +18,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/hair_style")
+@RequestMapping("/api/hair_styles")
 public class HairStyleSearchController {
 
     private final HairStyleSearchService hairStyleSearchService;
