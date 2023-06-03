@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/point")
+@RequestMapping("/api/users/point")
 @RequiredArgsConstructor
 public class PointController {
 

@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("User-PointControllerTest - WebMvcTest")
 public class PointControllerTest extends ControllerTest {
 
-    private static final String BASE_URL = "/api/point";
+    private static final String BASE_URL = "/api/users/point";
 
     @Nested
     @DisplayName("포인트 사용 API 테스트")
