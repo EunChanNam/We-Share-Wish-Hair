@@ -1,4 +1,4 @@
-package com.inq.wishhair.wesharewishhair.auditing;
+package com.inq.wishhair.wesharewishhair.global.auditing;
 
 import lombok.Getter;
 import org.springframework.data.annotation.LastModifiedDate;
