@@ -25,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("LikeReviewControllerTest - WebMvcTest")
 public class LikeReviewControllerTest extends ControllerTest {
 
-    private static final String BASE_URL = "/api/review/like";
+    private static final String BASE_URL = "/api/reviews/like";
 
     @Nested
     @DisplayName("좋아요 API 테스트")
@@ -94,7 +94,7 @@ public class LikeReviewControllerTest extends ControllerTest {
         void success() throws Exception {
             //when
             MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
-                    .post(BASE_URL + "/cancel/{reviewId}", 1L)
+                    .delete(BASE_URL + "/{reviewId}", 1L)
                     .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
 
             //then
@@ -119,7 +119,7 @@ public class LikeReviewControllerTest extends ControllerTest {
 
             //when
             MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
-                    .post(BASE_URL + "/cancel/{reviewId}", 1L);
+                    .delete(BASE_URL + "/{reviewId}", 1L);
 
             //then
             assertException(expectedError, requestBuilder, status().isUnauthorized());
@@ -134,7 +134,7 @@ public class LikeReviewControllerTest extends ControllerTest {
 
             //when
             MockHttpServletRequestBuilder requestBuilder = RestDocumentationRequestBuilders
-                    .post(BASE_URL + "/cancel/{reviewId}", 1L)
+                    .delete(BASE_URL + "/{reviewId}", 1L)
                     .header(AUTHORIZATION, BEARER + ACCESS_TOKEN);
 
             //then

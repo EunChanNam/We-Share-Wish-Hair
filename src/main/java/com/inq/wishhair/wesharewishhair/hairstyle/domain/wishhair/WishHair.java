@@ -1,6 +1,6 @@
 package com.inq.wishhair.wesharewishhair.hairstyle.domain.wishhair;
 
-import com.inq.wishhair.wesharewishhair.auditing.BaseEntity;
+import com.inq.wishhair.wesharewishhair.global.auditing.BaseEntity;
 
 import javax.persistence.*;
 import lombok.AccessLevel;
