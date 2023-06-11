@@ -10,7 +10,13 @@
 * Language : Java 17
 * Framework : Spring Boot 2.7.7
 * IDE : Intellij
+
+## 💻 배포 환경
+* Cloud : Naver Cloud Platform
 * Storage : Naver Cloud Object Storage
+* Server : ubuntu-18.04
+* DB : MySQL 8.0
+* CI/CD : Jenkins, Docker
 
 ## 🛠️ 기술 스택
 * Java
@@ -20,6 +26,8 @@
 * RestDocs
 * JUnit5
 * MySQL
+* Jenkins
+* Docker
 
 ## 🕹️ API 목록
 ### 인증
