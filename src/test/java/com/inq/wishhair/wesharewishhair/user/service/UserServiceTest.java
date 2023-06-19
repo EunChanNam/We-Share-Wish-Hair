@@ -12,6 +12,7 @@ import com.inq.wishhair.wesharewishhair.user.controller.utils.UserUpdateRequestU
 import com.inq.wishhair.wesharewishhair.user.domain.User;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
+import com.inq.wishhair.wesharewishhair.user.domain.point.PointType;
 import com.inq.wishhair.wesharewishhair.user.utils.AiConnector;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -67,7 +68,7 @@ class UserServiceTest extends ServiceTest {
                     () -> {
                         User user = actual.orElseThrow();
                         assertThat(user.getName()).isEqualTo(request.getName());
-                        assertThat(user.getAvailablePoint()).isZero();
+                        assertThat(user.getPoints()).isZero();
                         assertThat(user.getSex()).isEqualTo(request.getSex());
                         assertThat(user.getEmailValue()).isEqualTo(request.getEmail());
                         assertThat(passwordEncoder.matches(request.getPw(), user.getPasswordValue())).isTrue();
@@ -103,6 +104,7 @@ class UserServiceTest extends ServiceTest {
             reviewRepository.save(ReviewFixture.D.toEntity(user, null));
             likeReviewRepository.save(LikeReview.addLike(user.getId(), review.getId()));
             likeReviewRepository.save(LikeReview.addLike(user.getId(), review.getId()));
+            user.updateAvailablePoint(PointType.CHARGE, 1000);
 
             //when
             userService.deleteUser(user.getId());
