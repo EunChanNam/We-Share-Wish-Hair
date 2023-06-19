@@ -77,7 +77,7 @@ public class User {
     }
 
     public void updateAvailablePoint(PointType pointType, int dealAmount) {
-        points.updateAvailablePoint(pointType, dealAmount);
+        points.updateAvailablePoint(pointType, dealAmount, this);
     }
 
     public void updatePassword(Password password) {

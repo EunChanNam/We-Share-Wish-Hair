@@ -3,6 +3,8 @@ package com.inq.wishhair.wesharewishhair.user.domain.point;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 
 import javax.persistence.*;
+
+import com.inq.wishhair.wesharewishhair.user.domain.User;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,7 +24,7 @@ public class Points {
 
     private int availablePoint = 0;
 
-    public void updateAvailablePoint(PointType pointType, int dealAmount) {
+    public void updateAvailablePoint(PointType pointType, int dealAmount, User user) {
         if (pointType.isCharge()) {
             validateChargeAmount(dealAmount);
             availablePoint += dealAmount;
@@ -30,6 +32,8 @@ public class Points {
             validateUseAmount(dealAmount);
             availablePoint -= dealAmount;
         }
+
+        addPointHistory(pointType, dealAmount, availablePoint, user);
     }
 
     private void validateChargeAmount(int chargeAmount) {
@@ -42,5 +46,9 @@ public class Points {
         if (useAmount <= 0 || availablePoint - useAmount < 0) {
             throw new WishHairException(POINT_NOT_ENOUGH);
         }
+    }
+
+    private void addPointHistory(PointType pointType, int dealAmount, int point, User user) {
+        pointHistories.add(PointHistory.createPointHistory(user, pointType, dealAmount, point));
     }
 }
