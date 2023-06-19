@@ -60,7 +60,7 @@ public class PointServiceTest extends ServiceTest {
             pointService.chargePoint(1000, user.getId());
 
             //then
-            int availablePoint = user.getAvailablePoint();
+            int availablePoint = user.getPoints();
             assertThat(availablePoint).isEqualTo(1000);
         }
     }
@@ -95,7 +95,7 @@ public class PointServiceTest extends ServiceTest {
             pointService.usePoint(request, user.getId());
 
             //then
-            int availablePoint = user.getAvailablePoint();
+            int availablePoint = user.getPoints();
             assertThat(availablePoint).isZero();
 
             int count = (int) events.stream(RefundMailSendEvent.class).count();

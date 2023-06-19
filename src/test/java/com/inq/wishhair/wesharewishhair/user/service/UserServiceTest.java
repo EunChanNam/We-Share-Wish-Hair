@@ -67,7 +67,7 @@ class UserServiceTest extends ServiceTest {
                     () -> {
                         User user = actual.orElseThrow();
                         assertThat(user.getName()).isEqualTo(request.getName());
-                        assertThat(user.getAvailablePoint()).isZero();
+                        assertThat(user.getPoints()).isZero();
                         assertThat(user.getSex()).isEqualTo(request.getSex());
                         assertThat(user.getEmailValue()).isEqualTo(request.getEmail());
                         assertThat(passwordEncoder.matches(request.getPw(), user.getPasswordValue())).isTrue();

@@ -37,7 +37,7 @@ public class UserInfoServiceTest extends ServiceTest {
         //then
         assertAll(
                 () -> assertThat(result.getNickname()).isEqualTo(user.getNicknameValue()),
-                () -> assertThat(result.getPoint()).isEqualTo(user.getAvailablePoint()),
+                () -> assertThat(result.getPoint()).isEqualTo(user.getPoints()),
                 () -> assertThat(result.getSex()).isEqualTo(user.getSex()),
                 () -> assertThat(result.getReviews()).isEmpty()
         );

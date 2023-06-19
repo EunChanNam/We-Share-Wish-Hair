@@ -1,6 +1,7 @@
 package com.inq.wishhair.wesharewishhair.user.domain;
 
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.Tag;
+import com.inq.wishhair.wesharewishhair.user.domain.point.Points;
 import com.inq.wishhair.wesharewishhair.user.domain.point.PointType;
 
 import javax.persistence.*;
@@ -37,7 +38,7 @@ public class User {
     private FaceShape faceShape;
 
     @Embedded
-    private AvailablePoint availablePoint;
+    private Points points;
 
     //=생성 메서드=//
     private User(Email email, Password password, String name, Nickname nickname, Sex sex) {
@@ -47,7 +48,7 @@ public class User {
         this.nickname = nickname;
         this.sex = sex;
         this.faceShape = new FaceShape();
-        this.availablePoint = new AvailablePoint();
+        this.points = new Points();
     }
 
     public static User createUser(String email, Password password, String name, String nickname, Sex sex) {
@@ -71,12 +72,12 @@ public class User {
         this.faceShape = faceShape;
     }
 
-    public int getAvailablePoint() {
-        return availablePoint.getValue();
+    public int getPoints() {
+        return points.getValue();
     }
 
     public void updateAvailablePoint(PointType pointType, int dealAmount) {
-        availablePoint.updateAvailablePoint(pointType, dealAmount);
+        points.updateAvailablePoint(pointType, dealAmount);
     }
 
     public void updatePassword(Password password) {

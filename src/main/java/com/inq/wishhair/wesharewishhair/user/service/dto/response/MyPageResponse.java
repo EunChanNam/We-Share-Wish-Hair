@@ -23,7 +23,7 @@ public class MyPageResponse {
     public MyPageResponse(User user, List<ReviewResponse> reviewResponses) {
         this.nickname = user.getNicknameValue();
         this.sex = user.getSex();
-        this.point = user.getAvailablePoint();
+        this.point = user.getPoints();
         this.reviews = reviewResponses;
     }
 }

@@ -46,9 +46,9 @@ public class PointService {
     private PointHistory generatePointHistory(PointType pointType, int dealAmount, User user) {
         int point;
         if (pointType.isCharge()) {
-            point = dealAmount + user.getAvailablePoint();
+            point = dealAmount + user.getPoints();
         } else {
-            point = user.getAvailablePoint() - dealAmount;
+            point = user.getPoints() - dealAmount;
         }
         return PointHistory.createPointHistory(user, pointType, dealAmount, point);
     }

@@ -1,18 +1,24 @@
-package com.inq.wishhair.wesharewishhair.user.domain;
+package com.inq.wishhair.wesharewishhair.user.domain.point;
 
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
-import com.inq.wishhair.wesharewishhair.user.domain.point.PointType;
+
 import javax.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.inq.wishhair.wesharewishhair.global.exception.ErrorCode.*;
 
 @Getter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Embeddable
-public class AvailablePoint {
+public class Points {
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
+    private final List<PointHistory> pointHistories = new ArrayList<>();
 
     @Column(name = "available_point")
     private int value = 0;
