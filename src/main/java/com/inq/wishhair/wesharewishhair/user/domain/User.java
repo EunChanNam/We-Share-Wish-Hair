@@ -73,7 +73,7 @@ public class User {
     }
 
     public int getPoints() {
-        return points.getValue();
+        return points.getAvailablePoint();
     }
 
     public void updateAvailablePoint(PointType pointType, int dealAmount) {

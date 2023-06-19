@@ -20,16 +20,15 @@ public class Points {
     @OneToMany(mappedBy = "user", cascade = CascadeType.PERSIST)
     private final List<PointHistory> pointHistories = new ArrayList<>();
 
-    @Column(name = "available_point")
-    private int value = 0;
+    private int availablePoint = 0;
 
     public void updateAvailablePoint(PointType pointType, int dealAmount) {
         if (pointType.isCharge()) {
             validateChargeAmount(dealAmount);
-            value += dealAmount;
+            availablePoint += dealAmount;
         } else if (pointType.isUSE()) {
             validateUseAmount(dealAmount);
-            value -= dealAmount;
+            availablePoint -= dealAmount;
         }
     }
 
@@ -40,7 +39,7 @@ public class Points {
     }
 
     private void validateUseAmount(int useAmount) {
-        if (value - useAmount < 0) {
+        if (availablePoint - useAmount < 0) {
             throw new WishHairException(POINT_NOT_ENOUGH);
         }
     }
