@@ -11,6 +11,7 @@ import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpda
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.SignUpRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.UserUpdateRequest;
 import com.inq.wishhair.wesharewishhair.user.domain.*;
+import com.inq.wishhair.wesharewishhair.user.domain.point.PointRepository;
 import com.inq.wishhair.wesharewishhair.user.utils.AiConnector;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,6 +31,7 @@ public class UserService {
     private final ReviewService reviewService;
     private final TokenRepository tokenRepository;
     private final AiConnector connector;
+    private final PointRepository pointRepository;
 
     @Transactional
     public Long createUser(SignUpRequest request) {
@@ -46,6 +48,7 @@ public class UserService {
     public void deleteUser(Long userId) {
         tokenRepository.deleteByUserId(userId);
         reviewService.deleteReviewByWriter(userId);
+        pointRepository.deleteByUserId(userId);
         userRepository.deleteById(userId);
     }
 
