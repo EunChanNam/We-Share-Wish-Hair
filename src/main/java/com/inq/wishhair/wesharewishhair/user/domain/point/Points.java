@@ -39,7 +39,7 @@ public class Points {
     }
 
     private void validateUseAmount(int useAmount) {
-        if (availablePoint - useAmount < 0) {
+        if (useAmount <= 0 || availablePoint - useAmount < 0) {
             throw new WishHairException(POINT_NOT_ENOUGH);
         }
     }
