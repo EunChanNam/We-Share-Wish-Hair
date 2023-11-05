@@ -1,10 +1,13 @@
 package com.inq.wishhair.wesharewishhair.user.service;
 
+import java.util.List;
+
 import com.inq.wishhair.wesharewishhair.auth.domain.TokenRepository;
 import com.inq.wishhair.wesharewishhair.global.dto.response.SimpleResponseWrapper;
 import com.inq.wishhair.wesharewishhair.global.exception.ErrorCode;
 import com.inq.wishhair.wesharewishhair.global.exception.WishHairException;
 import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.RecommendResponse;
 import com.inq.wishhair.wesharewishhair.review.service.ReviewService;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordRefreshRequest;
 import com.inq.wishhair.wesharewishhair.user.controller.dto.request.PasswordUpdateRequest;
@@ -77,6 +80,21 @@ public class UserService {
 
         user.updateFaceShape(new FaceShape(faceShapeTag));
         return new SimpleResponseWrapper<>(user.getFaceShapeTag().getDescription());
+    }
+
+    @Transactional
+    public RecommendResponse recommendHairStyle(
+        Long userId,
+        MultipartFile file,
+        List<Tag> tags
+    ) {
+        User user = userFindService.findByUserId(userId);
+        RecommendResponse recommendResponse = connector.recommend(file, tags);
+
+        Tag tag = Tag.valueOf(recommendResponse.faceShape().toUpperCase());
+        user.updateFaceShape(new FaceShape(tag));
+
+        return recommendResponse;
     }
 
     @Transactional

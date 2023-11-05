@@ -1,9 +1,14 @@
 package com.inq.wishhair.wesharewishhair.user.utils;
 
-import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.Tag;
+import java.util.List;
+
 import org.springframework.web.multipart.MultipartFile;
 
-@FunctionalInterface
+import com.inq.wishhair.wesharewishhair.hairstyle.domain.hashtag.Tag;
+import com.inq.wishhair.wesharewishhair.hairstyle.service.dto.response.RecommendResponse;
+
 public interface AiConnector {
     Tag detectFaceShape(MultipartFile file);
+
+    RecommendResponse recommend(MultipartFile file, List<Tag> tags);
 }
