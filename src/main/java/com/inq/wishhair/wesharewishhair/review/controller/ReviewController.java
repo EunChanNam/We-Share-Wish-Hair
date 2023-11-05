@@ -13,7 +13,7 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/reviews")
+@RequestMapping("/api/review")
 public class ReviewController {
 
     private final ReviewService reviewService;
@@ -29,7 +29,7 @@ public class ReviewController {
                 .body(new Success());
     }
 
-    @DeleteMapping(path = "{reviewId}")
+    @DeleteMapping("/{reviewId}")
     public ResponseEntity<Success> deleteReview(@ExtractPayload Long userId,
                                                 @PathVariable Long reviewId) {
 

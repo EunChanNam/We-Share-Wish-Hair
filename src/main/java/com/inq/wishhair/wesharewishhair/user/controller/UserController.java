@@ -13,7 +13,7 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 public class UserController {
 
     private final UserService userService;
@@ -23,7 +23,7 @@ public class UserController {
         Long userId = userService.createUser(createRequest);
 
         return ResponseEntity
-                .created(URI.create("/api/users/" + userId))
+                .created(URI.create("/api/user/" + userId))
                 .body(new Success());
     }
 

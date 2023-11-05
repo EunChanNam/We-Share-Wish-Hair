@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/reviews/like/")
+@RequestMapping("/api/review/like/")
 public class LikeReviewController {
 
     private final LikeReviewService likeReviewService;
 
-    @PostMapping(path = "{reviewId}")
+    @PostMapping("/{reviewId}")
     public ResponseEntity<Success> executeLike(
             @PathVariable Long reviewId,
             @ExtractPayload Long userId) {
@@ -24,7 +24,7 @@ public class LikeReviewController {
         return ResponseEntity.ok(new Success());
     }
 
-    @DeleteMapping("/{reviewId}")
+    @PostMapping("/cancel/{reviewId}")
     public ResponseEntity<Success> cancelLike(
             @PathVariable Long reviewId,
             @ExtractPayload Long userId) {
@@ -33,7 +33,7 @@ public class LikeReviewController {
         return ResponseEntity.ok(new Success());
     }
 
-    @GetMapping(path = "{reviewId}")
+    @GetMapping("/{reviewId}")
     public ResponseEntity<LikeReviewResponse> checkIsLiking(@ExtractPayload Long userId,
                                                             @PathVariable Long reviewId) {
 

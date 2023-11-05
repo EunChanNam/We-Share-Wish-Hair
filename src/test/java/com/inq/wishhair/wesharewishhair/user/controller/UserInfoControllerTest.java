@@ -36,7 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("User-MyPageControllerTest - WebMvcTest")
 public class UserInfoControllerTest extends ControllerTest {
 
-    private static final String BASE_URL = "/api/users";
+    private static final String BASE_URL = "/api/user";
 
     @Nested
     @DisplayName("마이 페이지 조회 API 테스트")

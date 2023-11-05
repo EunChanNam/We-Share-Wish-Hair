@@ -33,7 +33,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("UserControllerTest - Mock")
 public class UserControllerTest extends ControllerTest {
 
-    private static final String BASE_URL = "/api/users";
+    private static final String BASE_URL = "/api/user";
 
     @Nested
     @DisplayName("회원가입 API 테스트")

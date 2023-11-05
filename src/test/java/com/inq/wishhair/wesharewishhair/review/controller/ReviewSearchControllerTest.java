@@ -45,7 +45,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("ReviewFindControllerTest - WebMvcTest")
 public class ReviewSearchControllerTest extends ControllerTest {
 
-    private static final String BASE_URL = "/api/reviews";
+    private static final String BASE_URL = "/api/review";
 
     @Nested
     @DisplayName("리뷰 단건 조회 API 테스트")

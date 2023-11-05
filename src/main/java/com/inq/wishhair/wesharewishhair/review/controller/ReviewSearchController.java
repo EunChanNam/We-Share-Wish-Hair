@@ -21,12 +21,12 @@ import static com.inq.wishhair.wesharewishhair.global.utils.SortCondition.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/reviews")
+@RequestMapping("/api/review")
 public class ReviewSearchController {
 
     private final ReviewSearchService reviewSearchService;
 
-    @GetMapping(path = "{reviewId}")
+    @GetMapping("/{reviewId}")
     public ResponseEntity<ReviewDetailResponse> findReview(@PathVariable Long reviewId,
                                                            @ExtractPayload Long userId) {
 

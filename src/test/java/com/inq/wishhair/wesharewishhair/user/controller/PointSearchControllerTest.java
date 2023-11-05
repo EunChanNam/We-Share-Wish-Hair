@@ -11,6 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.data.domain.Pageable;
+import org.springframework.restdocs.payload.PayloadDocumentation;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -29,7 +30,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @DisplayName("User-PointSearchControllerTest - WebMvcTest")
 public class PointSearchControllerTest extends ControllerTest {
 
-    private static final String BASE_URL = "/api/users/point";
+    private static final String BASE_URL = "/api/point";
 
     @Nested
     @DisplayName("포인트 내역 조회 API 테스트")
