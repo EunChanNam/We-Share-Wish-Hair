@@ -2,8 +2,13 @@
 💇‍♀️ AI 기반 헤어스타일 추천 어플리케이션 💇‍♂️
 
 ## ✅ 테스트
+### 수행시간
+![image](https://github.com/EunChanNam/We-Share-Wish-Hair/assets/75837025/b54c92b7-b932-4cf2-979d-1513a0692560)
 ### 커버리지
-<img src="https://github.com/EunChanNam/We-Share-Wish-Hair/assets/75837025/a497ae0a-568c-4443-a7d8-029a5b651946" width="50%">
+![image](https://github.com/EunChanNam/We-Share-Wish-Hair/assets/75837025/68cb8a0b-a3d5-4ae2-9bf0-c9179fb34d69)
+
+
+
 
 ## 프로젝트 소개
 <img width="900" alt="image" src="https://github.com/EunChanNam/We-Share-Wish-Hair/assets/75837025/91db7148-d5c1-48bf-b5d2-ec29ac691591">
