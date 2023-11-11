@@ -1,15 +1,6 @@
 # We-Share-Wish-Hair - Backend
 💇‍♀️ AI 기반 헤어스타일 추천 어플리케이션 💇‍♂️
 
-## ✅ 테스트
-### 수행시간
-![image](https://github.com/EunChanNam/We-Share-Wish-Hair/assets/75837025/b54c92b7-b932-4cf2-979d-1513a0692560)
-### 커버리지
-![image](https://github.com/EunChanNam/We-Share-Wish-Hair/assets/75837025/68cb8a0b-a3d5-4ae2-9bf0-c9179fb34d69)
-
-
-
-
 ## 프로젝트 소개
 <img width="900" alt="image" src="https://github.com/EunChanNam/We-Share-Wish-Hair/assets/75837025/91db7148-d5c1-48bf-b5d2-ec29ac691591">
 <img width="900" alt="image" src="https://github.com/EunChanNam/We-Share-Wish-Hair/assets/75837025/70582e7b-3f39-4cbf-94e3-88b3d6cd3cca">
@@ -18,11 +9,15 @@
 <img width="900" alt="image" src="https://github.com/EunChanNam/We-Share-Wish-Hair/assets/75837025/5fe4837c-fbdb-46fc-b88e-2cf7381018dc">
 <img width="900" alt="image" src="https://github.com/EunChanNam/We-Share-Wish-Hair/assets/75837025/fea1efc0-00da-4b38-8d34-844b2d82a242">
 
-
-
-
 ## 🛠️ 기술 스택
 <img width="688" alt="image" src="https://github.com/EunChanNam/We-Share-Wish-Hair/assets/75837025/c46954f4-0fb4-4256-8389-555c1830e983">
+
+## ✅ 테스트
+### 수행시간
+![image](https://github.com/EunChanNam/We-Share-Wish-Hair/assets/75837025/b54c92b7-b932-4cf2-979d-1513a0692560)
+### 커버리지
+![image](https://github.com/EunChanNam/We-Share-Wish-Hair/assets/75837025/68cb8a0b-a3d5-4ae2-9bf0-c9179fb34d69)
+
 
 
 ## 🕹️ API 목록
